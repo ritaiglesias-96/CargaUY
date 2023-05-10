@@ -1,11 +1,10 @@
-package tse.java.cdi;
+package tse.java.beans;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 import tse.java.dto.RubroDTO;
 import tse.java.exception.RubroExisteException;
 import tse.java.service.IRubrosService;
-import tse.java.service.impl.RubrosService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

@@ -7,8 +7,10 @@ import tse.java.service.IRubrosService;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Named;
 import java.util.List;
 @Stateless
+@Named("rubrosService")
 public class RubrosService implements IRubrosService {
 
     @EJB
