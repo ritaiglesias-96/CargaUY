@@ -4,6 +4,7 @@ import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 import tse.java.dto.RubroDTO;
 import tse.java.exception.RubroExisteException;
+import tse.java.service.IRubrosService;
 import tse.java.service.impl.RubrosService;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +26,7 @@ import java.util.logging.Logger;
 public class GestionRubrosBean {
 
     @EJB
-    RubrosService rubejb;
+    IRubrosService rubejb;
 
     private String nombre;
 
@@ -68,7 +69,7 @@ public class GestionRubrosBean {
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
         try {
-            ec.redirect("/practico1-web/jsf/GestionRubros.xhtml");
+            ec.redirect("/CargaUy-web/admin/gestionRubros.xhtml");
             fc.responseComplete();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -102,7 +103,7 @@ public class GestionRubrosBean {
             rubejb.altaRubro(dtr);
             FacesContext fc = FacesContext.getCurrentInstance();
             ExternalContext ec = fc.getExternalContext();
-            ec.redirect("/practico1-web/jsf/GestionRubros.xhtml");
+            ec.redirect("/CargaUy-web/admin/gestionRubros.xhtml");
             fc.responseComplete();
         } catch (RubroExisteException e) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());

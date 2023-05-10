@@ -35,8 +35,12 @@ public class RubrosDAO implements IRubrosDAO {
 
     @Override
     public RubroDTO buscarRubroPorId(Long id) {
-        Rubro r = em.find(Rubro.class, id);
-        return r.darDTO();
+        if (id == null) {
+            return null;
+        } else {
+            Rubro r = em.find(Rubro.class, id);
+            return r.darDTO();
+        }
     }
 
     @Override

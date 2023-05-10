@@ -2,6 +2,7 @@ package tse.java.service.impl;
 
 import tse.java.dto.RubroDTO;
 import tse.java.exception.RubroExisteException;
+import tse.java.persistance.IRubrosDAO;
 import tse.java.service.IRubrosService;
 
 import javax.ejb.EJB;
@@ -11,30 +12,30 @@ import java.util.List;
 public class RubrosService implements IRubrosService {
 
     @EJB
-    IRubrosService rs;
+    IRubrosDAO rd;
 
     @Override
     public List<RubroDTO> listarRubros() {
-        return rs.listarRubros();
+        return rd.listarRubros();
     }
 
     @Override
     public void altaRubro(RubroDTO r) throws RubroExisteException {
-        rs.altaRubro(r);
+        rd.altaRubro(r);
     }
 
     @Override
     public void modificarRubro(RubroDTO r) throws RubroExisteException {
-        rs.modificarRubro(r);
+        rd.modificarRubro(r);
     }
 
     @Override
     public void eliminarRubro(Long id) {
-        rs.eliminarRubro(id);
+        rd.borrarRubro(id);
     }
 
     @Override
     public RubroDTO buscarRubro(Long id) {
-        return rs.buscarRubro(id);
+        return rd.buscarRubroPorId(id);
     }
 }
