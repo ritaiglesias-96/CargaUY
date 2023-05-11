@@ -5,13 +5,15 @@ import tse.java.dto.RubroDTO;
 import javax.persistence.*;
 
 @Entity
-public class Rubro {
+@Table(name="\"Rubro\"")
+@NamedQuery(name="Rubro.findAll", query="SELECT r FROM Rubro r")
+public class Rubro implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column
+    
     private String nombre;
 
     public Rubro(Long id, String nombre) {
