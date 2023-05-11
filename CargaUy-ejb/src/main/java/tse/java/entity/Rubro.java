@@ -3,6 +3,8 @@ package tse.java.entity;
 import tse.java.dto.RubroDTO;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
 
 @Entity
 @Table(name="\"Rubro\"")
