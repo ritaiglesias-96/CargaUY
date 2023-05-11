@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class GestionRubrosBean {
 
     @EJB
-    IRubrosService rubejb;
+    IRubrosService rubrosService;
 
     private String nombre;
 
@@ -59,12 +59,12 @@ public class GestionRubrosBean {
 
     @PostConstruct
     public void cargarListado() {
-        rubros = rubejb.listarRubros();
+        rubros = rubrosService.listarRubros();
         rubros.sort(Comparator.comparing(RubroDTO::getId));
     }
 
     public void borrarRubro(RubroDTO dtr) {
-        rubejb.eliminarRubro(dtr.getId());
+        rubrosService.eliminarRubro(dtr.getId());
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
         try {
@@ -80,12 +80,12 @@ public class GestionRubrosBean {
         String msg = "Me pasaron para modificar el rubro con id " + dtr.getId() + " con el nombre " + dtr.getNombre();
         Logger.getLogger(GestionRubrosBean.class.getName()).log(Level.INFO, msg);
         try {
-            rubejb.modificarRubro(dtr);
+            rubrosService.modificarRubro(dtr);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Rubro actualizado.");
             PrimeFaces.current().dialog().showMessageDynamic(message);
         } catch (RubroExisteException e) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ya existe un rubro con el nombre " + dtr.getNombre());
-            RubroDTO dtraux = rubejb.buscarRubro(dtr.getId());
+            RubroDTO dtraux = rubrosService.buscarRubro(dtr.getId());
             event.getObject().setNombre(dtraux.getNombre());
             PrimeFaces.current().dialog().showMessageDynamic(message);
         }
@@ -99,7 +99,7 @@ public class GestionRubrosBean {
     public void AltaRubro() {
         RubroDTO dtr = new RubroDTO(null, nombre);
         try {
-            rubejb.altaRubro(dtr);
+            rubrosService.altaRubro(dtr);
             FacesContext fc = FacesContext.getCurrentInstance();
             ExternalContext ec = fc.getExternalContext();
             ec.redirect("/CargaUy-web/admin/gestionRubros.xhtml");
