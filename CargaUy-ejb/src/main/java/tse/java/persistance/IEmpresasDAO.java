@@ -1,0 +1,21 @@
+package tse.java.persistance;
+
+
+import javax.ejb.Local;
+import java.util.ArrayList;
+
+import tse.java.dto.EmpresaDTO;
+
+@Local
+public interface IEmpresasDAO {
+
+    EmpresaDTO obtenerEmpresaPorId(int id);
+
+    ArrayList<EmpresaDTO> obtenerEmpresas();
+
+    void guardarEmpresa(String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal);
+
+    void modificarEmpresa(EmpresaDTO empresaDTO);
+
+    void eliminarEmpresa(EmpresaDTO empresaDTO);
+}
