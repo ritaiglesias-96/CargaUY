@@ -8,6 +8,7 @@ import tse.java.service.IRubrosService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
 
 @Named("gestionarRubrosBean")
 @RequestScoped
-public class GestionRubrosBean {
+public class GestionRubrosBean implements Serializable {
 
     @EJB
     IRubrosService rubrosService;
