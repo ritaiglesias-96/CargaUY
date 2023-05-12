@@ -4,6 +4,7 @@ import tse.java.entity.Administrador;
 import tse.java.persistance.IAdministradorDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Stateless
+@Local
 public class AdministradorDAO implements IAdministradorDAO {
 
     @TSE2023DB

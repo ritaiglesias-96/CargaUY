@@ -9,6 +9,7 @@ import java.util.Date;
 @Table(name="\"Vehiculo\"")
 @NamedQuery(name="Vehiculo.findAll", query="SELECT v FROM Vehiculo v")
 public class Vehiculo implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")

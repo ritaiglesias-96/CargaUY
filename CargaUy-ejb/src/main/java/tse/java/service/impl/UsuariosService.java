@@ -1,11 +1,11 @@
 package tse.java.service.impl;
 
 import tse.java.entity.Administrador;
-import tse.java.entity.Funcionario;
+import tse.java.entity.Autoridad;
 import tse.java.entity.Usuario;
-import tse.java.persistance.impl.AdministradorDAO;
-import tse.java.persistance.impl.FuncionarioDAO;
-import tse.java.persistance.impl.UsuarioDAO;
+import tse.java.persistance.IAdministradorDAO;
+import tse.java.persistance.IAutoridadDAO;
+import tse.java.persistance.IUsuarioDAO;
 import tse.java.service.IUsuariosService;
 
 import javax.ejb.EJB;
@@ -17,16 +17,16 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 @Stateless
-@Named("UsuariosService")
+@Named("usuariosService")
 public class UsuariosService implements IUsuariosService {
 
     @EJB
-    private UsuarioDAO usuarioDAO;
+    IUsuarioDAO usuarioDAO;
 
     @EJB
-    private AdministradorDAO administradorDAO;
+    IAdministradorDAO administradorDAO;
     @EJB
-    private FuncionarioDAO funcionarioDAO;
+    IAutoridadDAO autoridadDAO;
 
     @Override
     public boolean autenticarUsuario(String username, String password) {
@@ -60,7 +60,7 @@ public class UsuariosService implements IUsuariosService {
             }
 
             try {
-                funcionarioDAO.persist((Funcionario) user);
+                autoridadDAO.persist((Autoridad) user);
             } catch(Exception e) {
                 try {
                     administradorDAO.persist((Administrador) user);

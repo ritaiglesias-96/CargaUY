@@ -6,12 +6,14 @@ import tse.java.service.IUsuariosService;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import javax.inject.Named;
 
 @Singleton
+@Named("sessionService")
 public class SessionService implements ISessionService {
 
     @EJB
-    private IUsuariosService usuariosService;
+    IUsuariosService usuariosService;
 
     @Override
     public AuthResponse iniciarSesion(String username, String password){

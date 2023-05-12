@@ -6,7 +6,7 @@ import java.io.Serializable;
 import tse.java.dto.EmpresaDTO;
 @Entity
 @Table(name="\"Empresa\"")
-//@NamedQuery(name="Empresa.findAll", query="SELECT e FROM Empresa e")
+@NamedQuery(name="Empresa.findAll", query="SELECT e FROM Empresa e")
 public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
 

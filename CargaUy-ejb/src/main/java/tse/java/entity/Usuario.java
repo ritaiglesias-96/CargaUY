@@ -5,7 +5,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 @Entity
-@Table(name = "usuario")
+@Table(name="\"Usuario\"")
+@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
 @DiscriminatorColumn(name="tipo_usuario")
 public abstract class Usuario implements Serializable {
     private static final long serialVersionUID = 3827070902901902553L;
@@ -103,3 +104,4 @@ public abstract class Usuario implements Serializable {
         this.password = password;
     }
 }
+
