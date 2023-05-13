@@ -8,7 +8,7 @@ import javax.ejb.Local;
 import tse.java.dto.GuiaDeViajeDTO;
 
 @Local
-public interface IGuiaDeViajeDTO {
+public interface IGuiaDeViajeDAO {
     public void altaGuiaDeViaje(GuiaDeViajeDTO dtg);
     public GuiaDeViajeDTO buscarGuiaDeViaje(Long id);
     public List<GuiaDeViajeDTO> listarGuiasDeViaje();

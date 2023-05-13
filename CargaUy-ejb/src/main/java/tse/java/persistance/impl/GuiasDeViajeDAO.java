@@ -12,10 +12,10 @@ import javax.persistence.Query;
 
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.entity.GuiaDeViaje;
-import tse.java.persistance.IGuiaDeViajeDTO;
+import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
-public class GuiasDeViajeDAO implements IGuiaDeViajeDTO{
+public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
 
     @TSE2023DB
     @Inject
