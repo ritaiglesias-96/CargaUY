@@ -16,6 +16,7 @@ public class Vehiculo implements Serializable {
     @Column(name="id")
     private Long id;
     private String matricula;
+    private String pais;
     private String marca;
     private String modelo;
     private Float peso;
@@ -29,10 +30,11 @@ public class Vehiculo implements Serializable {
     @OneToMany
     private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();    
 
-    public Vehiculo(Long id, String matricula, String marca, String modelo, Float peso, Float capacidadCarga,
+    public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
             Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViaje> guiasDeViaje) {
         this.id = id;
         this.matricula = matricula;
+        this.pais = pais;
         this.marca = marca;
         this.modelo = modelo;
         this.peso = peso;
@@ -45,6 +47,7 @@ public class Vehiculo implements Serializable {
 
     public Vehiculo(VehiculoDTO vehiculo) {
         this.matricula = vehiculo.getMatricula();
+        this.pais = vehiculo.getPais();
         this.marca = vehiculo.getMarca();
         this.modelo = vehiculo.getModelo();
         this.peso = vehiculo.getPeso();
@@ -67,6 +70,14 @@ public class Vehiculo implements Serializable {
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     public String getMarca() {
@@ -134,7 +145,7 @@ public class Vehiculo implements Serializable {
     }
 
     public VehiculoDTO darDto(){
-        Vehiculo v = new Vehiculo(id, matricula, marca, modelo, peso, capacidadCarga, fechaFinITV, fechaInicioPNC, fechaFinPNC, guiasDeViaje);
+        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, fechaInicioPNC, fechaFinPNC, guiasDeViaje);
         return new VehiculoDTO(v);
     }
 

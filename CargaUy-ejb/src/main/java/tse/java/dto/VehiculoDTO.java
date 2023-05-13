@@ -10,6 +10,7 @@ import java.util.List;
 public class VehiculoDTO {
     private Long id;
     private String matricula;
+    private String pais;
     private String marca;
     private String modelo;
     private Float peso;
@@ -21,10 +22,11 @@ public class VehiculoDTO {
 
     
 
-    public VehiculoDTO(Long id, String matricula, String marca, String modelo, Float peso, Float capacidadCarga,
+    public VehiculoDTO(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
             Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViajeDTO> guiasDeViaje) {
         this.id = id;
         this.matricula = matricula;
+        this.pais = pais;
         this.marca = marca;
         this.modelo = modelo;
         this.peso = peso;
@@ -38,6 +40,7 @@ public class VehiculoDTO {
     public VehiculoDTO(Vehiculo v) {
         this.id = v.getId();
         this.matricula = v.getMatricula();
+        this.pais = v.getPais();
         this.marca = v.getMarca();
         this.modelo = v.getModelo();
         this.peso = v.getPeso();
@@ -73,6 +76,14 @@ public class VehiculoDTO {
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     public String getModelo() {
@@ -138,4 +149,5 @@ public class VehiculoDTO {
         }
         return result;
     }
+
 }

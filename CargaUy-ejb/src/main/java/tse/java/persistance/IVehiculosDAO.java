@@ -9,10 +9,9 @@ import java.util.ArrayList;
 public interface IVehiculosDAO {
 
     public ArrayList<VehiculoDTO> obtenerVehiculos();
-    public VehiculoDTO obtenerVehiculoId(int id);
+    public VehiculoDTO obtenerVehiculoId(Long id);
     public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculo);
     public void eliminarVehiculoId(int id);
-    public void  agregarVehiculo(VehiculoDTO vehiculo);
-    public VehiculoDTO obtenerVehiculoMatricula(String matricula);
-
+    public void agregarVehiculo(VehiculoDTO vehiculo);
+    public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
 }

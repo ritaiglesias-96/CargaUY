@@ -1,9 +1,7 @@
 package tse.java.persistance.impl;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -42,21 +40,6 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
         List<GuiaDeViaje> guias = q.getResultList();
         for(GuiaDeViaje g:guias){
             ret.add(g.darDto());
-        }
-        return ret;
-    }
-
-    @Override
-    public List<GuiaDeViajeDTO> listarGuiasDeViajePorFecha(Date fecha) {
-        LocalDate fechabusq = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        List<GuiaDeViajeDTO> ret = new ArrayList<GuiaDeViajeDTO>();
-        Query q = em.createQuery("select g from GuiaDeViaje g");
-        List<GuiaDeViaje> guias = q.getResultList();
-        for(GuiaDeViaje g:guias){
-            LocalDate fechaguia = g.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if(fechaguia.isEqual(fechabusq)){
-                ret.add(g.darDto());
-            }
         }
         return ret;
     }
