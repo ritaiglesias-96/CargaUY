@@ -1,6 +1,7 @@
-package persistence;
+package tse.java.persistance;
 
-import entity.Tracking;
+import tse.java.dto.TrackingDTO;
+import tse.java.entity.Tracking;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -9,11 +10,11 @@ import java.util.List;
 public interface ITrackingDAO {
 
     public List<Tracking> listAll(Integer startPosition, Integer maxResult);
-    public Tracking findById(Long id);
+    public TrackingDTO find(String matricula, String pais);
 
     public void create(Tracking entity);
 
     public void update(Tracking entity);
 
-    public void deleteById(Long id);
+    //public void delete(String matricula, String pais);
 }
