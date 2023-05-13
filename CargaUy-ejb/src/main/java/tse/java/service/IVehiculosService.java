@@ -12,5 +12,5 @@ public interface IVehiculosService {
     public void agregarVehiculo(VehiculoDTO nuevoVehiculo);
     public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculoModificado);
     public void eliminarVehiculo(int id);
-
+    public VehiculoDTO obtenerVehiculoMatriculaPais(String mat, String pais);
 }

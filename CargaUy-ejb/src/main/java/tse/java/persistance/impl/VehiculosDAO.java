@@ -53,4 +53,15 @@ public class VehiculosDAO implements IVehiculosDAO {
         Vehiculo nuevo = new Vehiculo(vehiculo);
         em.merge(nuevo);
     }
+
+    @Override
+    public VehiculoDTO obtenerVehiculoMatricula(String matricula) {
+        Query q = em.createQuery("select v from Vehiculo v where v.matricula='" + matricula + "'");
+        if(q.getResultList().isEmpty()) {
+            return null;
+        } else {
+            Vehiculo v = (Vehiculo) q.getResultList().get(0);
+            return new VehiculoDTO(v);
+        }
+    }
 }

@@ -1,8 +1,11 @@
 package tse.java.dto;
 
+import tse.java.entity.GuiaDeViaje;
 import tse.java.entity.Vehiculo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class VehiculoDTO {
     private Long id;
@@ -14,8 +17,12 @@ public class VehiculoDTO {
     private Date fechaFinITV;
     private Date fechaInicioPNC;
     private Date fechaFinPNC;
+    private List<GuiaDeViajeDTO> guiasDeViaje = new ArrayList<GuiaDeViajeDTO>();
 
-    public VehiculoDTO(Long id, String matricula, String marca, String modelo, Float peso, Float capacidadCarga, Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC) {
+    
+
+    public VehiculoDTO(Long id, String matricula, String marca, String modelo, Float peso, Float capacidadCarga,
+            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViajeDTO> guiasDeViaje) {
         this.id = id;
         this.matricula = matricula;
         this.marca = marca;
@@ -25,6 +32,7 @@ public class VehiculoDTO {
         this.fechaFinITV = fechaFinITV;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
+        this.guiasDeViaje = guiasDeViaje;
     }
 
     public VehiculoDTO(Vehiculo v) {
@@ -37,6 +45,7 @@ public class VehiculoDTO {
         this.fechaFinITV = v.getFechaFinITV();
         this.fechaInicioPNC = v.getFechaInicioPNC();
         this.fechaFinPNC = v.getFechaFinPNC();
+        this.guiasDeViaje = procesarLista(v.getGuiasDeViaje());
     }
 
     public VehiculoDTO() {
@@ -112,5 +121,21 @@ public class VehiculoDTO {
 
     public void setFechaFinPNC(Date fechaFinPNC) {
         this.fechaFinPNC = fechaFinPNC;
+    }
+
+    public List<GuiaDeViajeDTO> getGuiasDeViaje() {
+        return guiasDeViaje;
+    }
+
+    public void setGuiasDeViaje(List<GuiaDeViajeDTO> guiasDeViaje) {
+        this.guiasDeViaje = guiasDeViaje;
+    }
+    
+    public List<GuiaDeViajeDTO> procesarLista(List<GuiaDeViaje> guias){
+        List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
+        for(GuiaDeViaje g:guias){
+            result.add(g.darDto());
+        }
+        return result;
     }
 }

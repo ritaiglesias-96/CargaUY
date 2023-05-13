@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -15,6 +16,7 @@ import tse.java.entity.GuiaDeViaje;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
+@Stateless
 public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
 
     @TSE2023DB
