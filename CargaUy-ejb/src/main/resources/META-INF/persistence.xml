@@ -27,6 +27,8 @@
       <class>tse.java.entity.Vehiculo</class>
       <class>tse.java.entity.Empresa</class>
       <class>tse.java.entity.Rubro</class>
+      <class>tse.java.entity.GuiaDeViaje</class>
+      <class>tse.java.entity.Pesaje</class>
       <properties>
          <!--The database schema is auto created on deployment and dropped before redeploy.
              Note: the following configuration does not drop the tables on undeploy. If you prefer this, use this
