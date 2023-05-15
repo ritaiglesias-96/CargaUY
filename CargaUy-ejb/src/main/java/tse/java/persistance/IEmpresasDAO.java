@@ -11,6 +11,8 @@ public interface IEmpresasDAO {
 
     EmpresaDTO obtenerEmpresaPorId(int id);
 
+    EmpresaDTO obtenerEmpresaPorNumero(int numero_empresa);
+
     ArrayList<EmpresaDTO> obtenerEmpresas();
 
     void guardarEmpresa(String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal);

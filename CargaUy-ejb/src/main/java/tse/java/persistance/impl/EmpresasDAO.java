@@ -74,4 +74,15 @@ public class EmpresasDAO implements IEmpresasDAO {
         }
 
     }
+
+    @Override
+    public EmpresaDTO obtenerEmpresaPorNumero(int numero_empresa) {
+        Query q = em.createQuery("select e from Empresa e where e.nroEmpresa=" + numero_empresa);
+        if(q.getResultList().isEmpty()) {
+            return null;
+        } else {
+            Empresa e = (Empresa) q.getResultList().get(0);
+            return new EmpresaDTO(e);
+        }
+    }
 }
