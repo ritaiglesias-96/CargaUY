@@ -1,6 +1,7 @@
 package tse.java.service;
 
 import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
 
 import java.util.Date;
@@ -16,5 +17,5 @@ public interface IVehiculosService {
     //public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculoModificado);
     //public void eliminarVehiculo(int id);
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
-    public List<GuiaDeViajeDTO> listarGuiasDeVehiculo(Long id, Date fecha);
+    public List<PesajeDTO> listarGuiasDeVehiculo(Long id, Date fecha);
 }

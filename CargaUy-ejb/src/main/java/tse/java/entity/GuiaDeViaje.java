@@ -1,16 +1,14 @@
 package tse.java.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+import java.util.List;
 
 import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.PesajeDTO;
 
 @Entity
 @Table(name = "\"GuiaDeViaje\"")
@@ -37,8 +35,11 @@ public class GuiaDeViaje {
 
     private String destino;
 
+    @OneToMany
+    private List<Pesaje> pesajes = new ArrayList<Pesaje>();
+
     public GuiaDeViaje(Long id, String rubroCliente, float volumenCarga, Date fecha, String origen, Date inicio, Date fin,
-            String destino) {
+            String destino, List<Pesaje> pesajes) {
         this.id = id;
         this.rubroCliente = rubroCliente;
         this.volumenCarga = volumenCarga;
@@ -47,6 +48,7 @@ public class GuiaDeViaje {
         this.inicio = inicio;
         this.fin = fin;
         this.destino = destino;
+        this.pesajes = pesajes;
     }
 
     public GuiaDeViaje(){}
@@ -115,8 +117,17 @@ public class GuiaDeViaje {
         this.destino = destino;
     }
 
-    public GuiaDeViajeDTO darDto(){
-        return new GuiaDeViajeDTO(id, rubroCliente, volumenCarga, fecha, origen, inicio, fin, destino);
+    public List<PesajeDTO> procesarLista(){
+        List<PesajeDTO> result = new ArrayList<PesajeDTO>();
+        for(Pesaje p:pesajes){
+            result.add(p.darDTO());
+        }
+        return result;
     }
+
+    public GuiaDeViajeDTO darDto(){
+        return new GuiaDeViajeDTO(id, rubroCliente, volumenCarga, fecha, origen, inicio, fin, destino, procesarLista());
+    }
+
     
 }

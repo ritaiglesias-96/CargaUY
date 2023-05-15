@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.PesajeDTO;
 
 @Local
 public interface IGuiaDeViajesService {
@@ -14,7 +15,7 @@ public interface IGuiaDeViajesService {
     public void borrarGuiaDeViaje(Long id);
     public void modificarGuiaDeViaje(GuiaDeViajeDTO g);
     public List<GuiaDeViajeDTO> listarGuiasDeViajes();
-    public List<GuiaDeViajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha);
+    public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha);
     public GuiaDeViajeDTO buscarGuiaDeViaje(Long id);
 
     

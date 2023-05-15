@@ -1,6 +1,10 @@
 package tse.java.dto;
 
+import tse.java.entity.Pesaje;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class GuiaDeViajeDTO {
     private Long id;
@@ -19,8 +23,10 @@ public class GuiaDeViajeDTO {
 
     private String destino;
 
+    private List<PesajeDTO> pesajes = new ArrayList<PesajeDTO>();
+
     public GuiaDeViajeDTO(Long id, String rubroCliente, float volumenCarga, Date fecha, String origen, Date inicio,
-            Date fin, String destino) {
+            Date fin, String destino, List<PesajeDTO> pesajes) {
         this.id = id;
         this.rubroCliente = rubroCliente;
         this.volumenCarga = volumenCarga;
@@ -29,6 +35,7 @@ public class GuiaDeViajeDTO {
         this.inicio = inicio;
         this.fin = fin;
         this.destino = destino;
+        this.pesajes = pesajes;
     }
 
     public GuiaDeViajeDTO(){}
@@ -97,7 +104,11 @@ public class GuiaDeViajeDTO {
         this.destino = destino;
     }
 
-    
+    public List<PesajeDTO> getPesajes() {
+        return pesajes;
+    }
 
-    
+    public void setPesajes(List<PesajeDTO> pesajes) {
+        this.pesajes = pesajes;
+    }
 }

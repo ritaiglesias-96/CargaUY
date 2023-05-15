@@ -1,7 +1,6 @@
 package tse.java.service.impl;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,14 +11,19 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.PesajeDTO;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.service.IGuiaDeViajesService;
+import tse.java.service.IPesajesService;
 
 @Stateless
 public class GuiasDeViajeService implements IGuiaDeViajesService{
 
     @EJB
     IGuiaDeViajeDAO gdao;
+
+    @EJB
+    IPesajesService pesajesService;
 
     @Override
     public void crearGuiaDeViaje(GuiaDeViajeDTO g) {
@@ -47,21 +51,18 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     }
 
     @Override
-    public List<GuiaDeViajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha) {
+    public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha) {
         String msg = "Me pasaron por rest " + guiasViaje.size() + " guias de viaje y fecha=" + fecha;
         Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
-        List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
         for(GuiaDeViajeDTO g:guiasViaje){
             msg = "Busco la guiaid=" + g.getId();
             Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
-            Date fechaguia = g.getFecha();
-            if(fecha.getYear()==fechaguia.getYear() && fecha.getMonth()==fechaguia.getMonth() && fecha.getDay()==fechaguia.getDay()) {
-                msg = "Son iguales...Fecha guia=" + g.getFecha() + ", Fecha busqueda=" + fecha;
-                Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
-                result.add(g);
+            Date fechaInicioGuia = g.getInicio();
+            if(fecha.after(fechaInicioGuia) && g.getFin()==null) {
+                return pesajesService.listarPesajesDeGuia(g, fecha);
             }
         }
-        return result; 
+        return new ArrayList<PesajeDTO>();
     }
 
     

@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 
 import tse.java.dto.EmpresaDTO;
 import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Empresa;
 import tse.java.entity.GuiaDeViaje;
@@ -44,9 +45,9 @@ public class NodoBalanzasEndpoint {
         Date fecha = null;
         try {
             fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fec);
-            List<GuiaDeViajeDTO> guias = eService.listarGuias(numemp, mat, pais, fecha);
-            if(guias.size()>0)
-                return Response.status(Response.Status.OK).entity(guias).build();
+            List<PesajeDTO> pesajes = eService.listarGuias(numemp, mat, pais, fecha);
+            if(pesajes.size()>0)
+                return Response.status(Response.Status.OK).entity(pesajes).build();
             else
                 return Response.status(Response.Status.NOT_FOUND).build();
         } catch (ParseException e) {

@@ -1,8 +1,8 @@
 package tse.java.service.impl;
 
-import tse.java.api.endpoint.NodoBalanzasEndpoint;
+
 import tse.java.dto.EmpresaDTO;
-import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.model.Empresas;
 import tse.java.persistance.IEmpresasDAO;
@@ -58,17 +58,17 @@ public class EmpresasService implements IEmpresasService {
     }
 
     @Override
-    public List<GuiaDeViajeDTO> listarGuias(int numero_empresa, String matricula, String pais, Date fecha) {
+    public List<PesajeDTO> listarGuias(int numero_empresa, String matricula, String pais, Date fecha) {
         String msg = "Me pasaron por rest los parametros: numemp=" + numero_empresa + ", pais=" + pais + ", matricula=" + matricula + ", fecha=" + fecha.toString();
         Logger.getLogger(EmpresasService.class.getName()).log(Level.INFO, msg);
         EmpresaDTO e = empresasDAO.obtenerEmpresaPorNumero(numero_empresa);
         VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(matricula, pais);
         if(e != null && v != null && e.contieneVehiculo(v)){
-            Logger.getLogger(NodoBalanzasEndpoint.class.getName()).log(Level.INFO, "Encontre el vehiculo y la empresa, busco las guias");
+            Logger.getLogger(EmpresasService.class.getName()).log(Level.INFO, "Encontre el vehiculo y la empresa, busco las guias");
             return vehiculosService.listarGuiasDeVehiculo(v.getId(), fecha);
         } else {
             Logger.getLogger(EmpresasService.class.getName()).log(Level.INFO, "No se encontro el vehiculo y/o la empresa con los parametros ingresados");
-            return new ArrayList<GuiaDeViajeDTO>();
+            return new ArrayList<PesajeDTO>();
         }
     }
 

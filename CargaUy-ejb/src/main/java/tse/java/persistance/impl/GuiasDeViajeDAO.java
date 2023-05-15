@@ -10,7 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.PesajeDTO;
 import tse.java.entity.GuiaDeViaje;
+import tse.java.entity.Pesaje;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -23,7 +25,7 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
 
     @Override
     public void altaGuiaDeViaje(GuiaDeViajeDTO dtg) {
-        GuiaDeViaje g = new GuiaDeViaje(dtg.getId(), dtg.getRubroCliente(), dtg.getVolumenCarga(), dtg.getFecha(), dtg.getOrigen(), dtg.getInicio(), dtg.getFin(), dtg.getDestino());
+        GuiaDeViaje g = new GuiaDeViaje(dtg.getId(), dtg.getRubroCliente(), dtg.getVolumenCarga(), dtg.getFecha(), dtg.getOrigen(), dtg.getInicio(), dtg.getFin(), dtg.getDestino(), new ArrayList<Pesaje>());
         em.persist(g);
     }
 

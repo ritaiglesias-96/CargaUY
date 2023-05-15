@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.persistance.IVehiculosDAO;
 import tse.java.service.IGuiaDeViajesService;
@@ -29,7 +29,7 @@ public class VehiculosService implements IVehiculosService{
     }
 
     @Override
-    public List<GuiaDeViajeDTO> listarGuiasDeVehiculo(Long id, Date fecha) {
+    public List<PesajeDTO> listarGuiasDeVehiculo(Long id, Date fecha) {
         String msg = "Me pasaron por rest los parametros: idvehiculo=" + id + ", fechaViajes=" + fecha;
         Logger.getLogger(VehiculosService.class.getName()).log(Level.INFO, msg);
         VehiculoDTO v = vehiculosDAO.obtenerVehiculoId(id);
