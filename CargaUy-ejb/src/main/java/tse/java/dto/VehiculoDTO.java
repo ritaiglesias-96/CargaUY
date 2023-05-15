@@ -6,6 +6,7 @@ import tse.java.entity.Vehiculo;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class VehiculoDTO {
     private Long id;
@@ -149,5 +150,4 @@ public class VehiculoDTO {
         }
         return result;
     }
-
 }

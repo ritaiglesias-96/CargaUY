@@ -1,5 +1,6 @@
 package tse.java.api.endpoint;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,7 +17,16 @@ import javax.ws.rs.core.Response;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import tse.java.dto.EmpresaDTO;
 import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.VehiculoDTO;
+import tse.java.entity.Empresa;
+import tse.java.entity.GuiaDeViaje;
+import tse.java.entity.Vehiculo;
+import tse.java.persistance.IEmpresasDAO;
+import tse.java.persistance.IGuiaDeViajeDAO;
+import tse.java.persistance.IVehiculosDAO;
 import tse.java.service.IEmpresasService;
 
 @RequestScoped
@@ -29,11 +39,13 @@ public class NodoBalanzasEndpoint {
 
     @GET
     public Response listarBalanzas(@QueryParam("numemp") int numemp, @QueryParam("pais") String pais, @QueryParam("matricula") String mat, @QueryParam("fecha") String fec){
+        String msg = "Me pasaron por rest los parametros: numemp=" + numemp + ", pais=" + pais + ", matricula=" + mat + ", fecha=" + fec;
+        Logger.getLogger(NodoBalanzasEndpoint.class.getName()).log(Level.INFO, msg);
         Date fecha = null;
         try {
             fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fec);
             List<GuiaDeViajeDTO> guias = eService.listarGuias(numemp, mat, pais, fecha);
-            if(guias.size()==0)
+            if(guias.size()>0)
                 return Response.status(Response.Status.OK).entity(guias).build();
             else
                 return Response.status(Response.Status.NOT_FOUND).build();

@@ -3,6 +3,7 @@ package tse.java.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import tse.java.dto.EmpresaDTO;
 @Entity
@@ -20,7 +21,7 @@ public class Empresa implements Serializable {
     private String dirPrincipal;
     
     @OneToMany
-    private ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
+    private List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
     /*private ArrayList<Choferes> choferes
 TODO    */
     public Empresa(){
@@ -101,11 +102,11 @@ TODO    */
         this.dirPrincipal = dirPrincipal;
     }
 
-    public ArrayList<Vehiculo> getVehiculos() {
+    public List<Vehiculo> getVehiculos() {
         return vehiculos;
     }
 
-    public void setVehiculos(ArrayList<Vehiculo> vehiculos) {
+    public void setVehiculos(List<Vehiculo> vehiculos) {
         this.vehiculos = vehiculos;
     }
 

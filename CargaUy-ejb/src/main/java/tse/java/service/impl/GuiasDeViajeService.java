@@ -5,6 +5,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -46,12 +48,18 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
 
     @Override
     public List<GuiaDeViajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha) {
-        LocalDate fechabusq = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String msg = "Me pasaron por rest " + guiasViaje.size() + " guias de viaje y fecha=" + fecha;
+        Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
         List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
         for(GuiaDeViajeDTO g:guiasViaje){
-            LocalDate fechaguia = g.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if(fechaguia.isEqual(fechabusq))
+            msg = "Busco la guiaid=" + g.getId();
+            Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
+            Date fechaguia = g.getFecha();
+            if(fecha.getYear()==fechaguia.getYear() && fecha.getMonth()==fechaguia.getMonth() && fecha.getDay()==fechaguia.getDay()) {
+                msg = "Son iguales...Fecha guia=" + g.getFecha() + ", Fecha busqueda=" + fecha;
+                Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
                 result.add(g);
+            }
         }
         return result; 
     }

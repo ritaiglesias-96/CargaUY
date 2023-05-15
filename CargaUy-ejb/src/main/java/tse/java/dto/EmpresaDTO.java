@@ -95,4 +95,15 @@ public class EmpresaDTO {
         return result;
     }
 
+    public boolean contieneVehiculo(VehiculoDTO v){
+        boolean encontrado = false;
+        for(VehiculoDTO v1:vehiculos){
+            if(v1.getId().equals(v.getId())) {
+                encontrado = true;
+                break;
+            }
+        }
+        return encontrado;
+    }
+
 }

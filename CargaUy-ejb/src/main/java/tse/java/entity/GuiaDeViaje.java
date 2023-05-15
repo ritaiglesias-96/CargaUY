@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 import tse.java.dto.GuiaDeViajeDTO;
 
 @Entity
-@Table(name = "GuiaDeViaje")
+@Table(name = "\"GuiaDeViaje\"")
 public class GuiaDeViaje {
     
     @Id
