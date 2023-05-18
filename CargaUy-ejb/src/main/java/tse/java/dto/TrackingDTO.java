@@ -1,6 +1,10 @@
 package tse.java.dto;
 
+import javax.ejb.Local;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class TrackingDTO implements Serializable {
 
@@ -9,21 +13,24 @@ public class TrackingDTO implements Serializable {
 
     private String matricula;
 
-    //private String Pais;
+    private String pais;
 
     private String longitude;
 
     private String latitude;
 
+    private String timestamp;
     public TrackingDTO(Long id) {
         this.id = id;
     }
 
-    public TrackingDTO(Long id, String matricula, String longitude, String latitude) {
+    public TrackingDTO(Long id, String matricula, String pais, String longitude, String latitude, String timestamp) {
         this.id = id;
         this.matricula = matricula;
+        this.pais = pais;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.timestamp = timestamp;
     }
 
     public TrackingDTO() {
@@ -42,7 +49,7 @@ public class TrackingDTO implements Serializable {
         return matricula;
     }
 
-    public void setMatricula(String truckId) {
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 
@@ -60,5 +67,21 @@ public class TrackingDTO implements Serializable {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimeStamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }

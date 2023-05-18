@@ -1,6 +1,7 @@
 package tse.java.api;
 
 
+import tse.java.dto.TrackingDTO;
 import tse.java.entity.Tracking;
 import tse.java.service.ITrackingService;
 
@@ -10,6 +11,9 @@ import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RequestScoped
 @Path("/tracking")
@@ -26,23 +30,22 @@ public class TrackingRest {
 
     @POST
     @Path("/trackings")
-    public Response addTracking(Tracking tracking){
-        service.create(tracking);
+    public Response addTracking(ArrayList<TrackingDTO> list){
+        String msg = "Me pasaron para agregar una lista de tracking de tamaño " + list.size();
+        Logger.getLogger(TrackingRest.class.getName()).log(Level.INFO, msg);
+        for (TrackingDTO aux : list) {
+            msg = "id: " + aux.getId() + ". matricula: " + aux.getMatricula() + ". pais: " + aux.getPais() + ". longitude: " + aux.getLongitude() + ". latitude: " + aux.getLatitude() + ". fecha: " + aux.getTimestamp() +  ". class: " + aux.getClass();
+            Logger.getLogger(TrackingRest.class.getName()).log(Level.INFO, msg);
+            Tracking t = new Tracking(aux);
+            service.create(t);
+        }
         return Response.status(Response.Status.CREATED).build();
     }
 
-    @PUT
-    @Path("/trackings")
-    public Response updateTracking(Tracking tracking){
-        service.update(tracking);
-        return Response.status(Response.Status.OK).build();
-    }
-
-
     @GET
     @Path("/trackings")
-    public void getTracking(@QueryParam("matricula") String matricula,@QueryParam("pais") String pais){
-        service.find(matricula, pais);
+    public TrackingDTO getTracking(@QueryParam("matricula") String matricula,@QueryParam("pais") String pais){
+        return service.find(matricula, pais);
     }
 
 }
