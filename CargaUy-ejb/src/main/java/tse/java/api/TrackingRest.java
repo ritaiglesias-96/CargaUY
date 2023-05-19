@@ -1,6 +1,9 @@
 package tse.java.api;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import tse.java.dto.TrackingDTO;
 import tse.java.entity.Tracking;
 import tse.java.service.ITrackingService;
@@ -12,6 +15,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,12 +34,23 @@ public class TrackingRest {
 
     @POST
     @Path("/trackings")
-    public Response addTracking(ArrayList<TrackingDTO> list){
-        String msg = "Me pasaron para agregar una lista de tracking de tamaño " + list.size();
+    public Response addTracking(String body) throws JsonProcessingException {
+        String msg = "Request: " + body;
         Logger.getLogger(TrackingRest.class.getName()).log(Level.INFO, msg);
-        for (TrackingDTO aux : list) {
-            msg = "id: " + aux.getId() + ". matricula: " + aux.getMatricula() + ". pais: " + aux.getPais() + ". longitude: " + aux.getLongitude() + ". latitude: " + aux.getLatitude() + ". fecha: " + aux.getTimestamp() +  ". class: " + aux.getClass();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jn = objectMapper.readTree(body);
+        Iterator<JsonNode> iter = jn.elements();
+        while(iter.hasNext()){
+            JsonNode node = iter.next();
+            String id = node.get("id").asText();
+            String mat = node.get("matricula").asText();
+            String pais = node.get("pais").asText();
+            String lat = node.get("latitude").asText();
+            String lon = node.get("longitude").asText();
+            String ts = node.get("timestamp").asText();
+            msg = "id: " + id + ". matricula: " + mat + ". pais: " + pais + ". longitude: " + lon + ". latitude: " + lat + ". fecha: " + ts;
             Logger.getLogger(TrackingRest.class.getName()).log(Level.INFO, msg);
+            TrackingDTO aux = new TrackingDTO(Long.parseLong(id), mat, pais, lon, lat, ts);
             Tracking t = new Tracking(aux);
             service.create(t);
         }
