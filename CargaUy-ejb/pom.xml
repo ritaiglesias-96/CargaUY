@@ -94,6 +94,11 @@
             <artifactId>jboss-annotations-api_1.3_spec</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.jalasoft</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>1.0.5</version>
+        </dependency>
     </dependencies>
 
     <build>
