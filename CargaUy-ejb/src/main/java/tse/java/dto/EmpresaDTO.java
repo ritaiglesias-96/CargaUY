@@ -38,7 +38,6 @@ public class EmpresaDTO {
 
 // Getters y Setters
 
-
     public Integer getId() {
         return this.id;
     }

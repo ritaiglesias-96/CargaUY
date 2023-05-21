@@ -19,7 +19,7 @@ public class Empresa implements Serializable {
     private String razonSocial;
     private int nroEmpresa;
     private String dirPrincipal;
-    
+
     @OneToMany
     private List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
     /*private ArrayList<Choferes> choferes
@@ -42,7 +42,7 @@ TODO    */
         this.nroEmpresa = nroEmpresa;
         this.dirPrincipal = dirPrincipal;
     }
-    
+
     public Empresa(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal,
             ArrayList<Vehiculo> vehiculos) {
         this.id = id;
@@ -110,5 +110,5 @@ TODO    */
         this.vehiculos = vehiculos;
     }
 
-    
+
 }
