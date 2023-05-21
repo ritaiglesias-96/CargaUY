@@ -1,5 +1,7 @@
 package tse.java.entity;
 
+import tse.java.dto.UsuarioDTO;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -17,5 +19,9 @@ public class Autoridad extends Usuario implements Serializable {
 
     public Autoridad() {
         super();
+    }
+
+    public Autoridad(UsuarioDTO usuario) {
+        super(usuario);
     }
 }

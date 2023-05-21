@@ -1,6 +1,8 @@
 package tse.java.entity;
 
 
+import tse.java.dto.UsuarioDTO;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -14,6 +16,10 @@ public class Administrador extends Usuario implements Serializable {
 
     public Administrador(String nombre, String apellido, Calendar fechaNacimiento, String correo, String username, String password) {
         super(nombre, apellido,fechaNacimiento,correo,username, password);
+    }
+
+    public Administrador(UsuarioDTO usuario) {
+        super(usuario);
     }
 
     public Administrador() {

@@ -33,7 +33,6 @@ public class UsuariosService implements IUsuariosService {
         Usuario user = usuarioDAO.findByUsername(username);
         if (user == null)
             return false; // El usuario no existe en la base de datos.
-
         try {
             return (Objects.equals(user.getPassword(), hashPassword(password)));
         } catch (NoSuchAlgorithmException e) {

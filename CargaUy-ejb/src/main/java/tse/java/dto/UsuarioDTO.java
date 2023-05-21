@@ -1,63 +1,27 @@
-package tse.java.entity;
+package tse.java.dto;
 
-import tse.java.dto.UsuarioDTO;
+import tse.java.enumerated.TipoUsuario;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Calendar;
 
-@Entity
-@Table(name="\"Usuario\"")
-@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
-@DiscriminatorColumn(name="tipo_usuario")
-public abstract class Usuario implements Serializable {
-    private static final long serialVersionUID = 3827070902901902553L;
-
-    @Id
-    @Column(name="id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+public class UsuarioDTO {
     private int idUsuario;
     private String nombre;
     private String apellido;
     private Calendar fechaNacimiento;
-
     private String correo;
-
-    /** atributos login **/
     private String username;
-
     private String password;
+    private TipoUsuario tipo;
 
-    public Usuario(String nombre, String apellido, String correo, String username) {
-        super();
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
-        this.username = username;
-    }
-
-    public Usuario(String nombre, String apellido, Calendar fechaNacimiento, String correo, String username, String password) {
-        super();
+    public UsuarioDTO(String nombre, String apellido, Calendar fechaNacimiento, String correo, String username, String password, TipoUsuario tipo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.username = username;
         this.password = password;
-    }
-
-    public Usuario() {
-        super();
-    }
-
-    public Usuario(UsuarioDTO usuario) {
-        super();
-        this.nombre = usuario.getNombre();
-        this.apellido = usuario.getApellido();
-        this.fechaNacimiento = this.getFechaNacimiento();
-        this.correo = usuario.getCorreo();
-        this.username = usuario.getUsername();
-        this.password = usuario.getPassword();
+        this.tipo = tipo;
     }
 
     public int getIdUsuario() {
@@ -115,5 +79,12 @@ public abstract class Usuario implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-}
 
+    public TipoUsuario getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoUsuario tipo) {
+        this.tipo = tipo;
+    }
+}
