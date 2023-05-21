@@ -22,7 +22,7 @@ public class VehiculosDAO implements IVehiculosDAO {
 
     @Override
     public ArrayList<VehiculoDTO> obtenerVehiculos() {
-        Query q = em.createNativeQuery("select * from public.\"Vehiculo\" ", Vehiculo.class);
+        Query q = em.createQuery("select v from Vehiculo v");
         List<Vehiculo> result = q.getResultList();
         ArrayList<VehiculoDTO> res = new ArrayList<>();
         result.forEach( v -> res.add(new VehiculoDTO(v)));

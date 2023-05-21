@@ -11,6 +11,7 @@ import java.util.List;
 @Table(name="\"Vehiculo\"")
 @NamedQuery(name="Vehiculo.findAll", query="SELECT v FROM Vehiculo v")
 public class Vehiculo implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
