@@ -86,15 +86,6 @@ public class UserManager implements Serializable {
             this.message = "Usuario inexistente o credenciales incorrectas";
         }
     }
-//
-//    @PostConstruct
-//    public void registrarAdmin() throws ParseException {
-//        Calendar cal = Calendar.getInstance();
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//        cal.setTime(sdf.parse("12-06-1996 00:00:00"));
-//        Usuario admin = new Administrador("Rita", "Iglesias", cal, "rita.iglesias.adrover@gmail.com", "admin", "admin");
-//        iUsuariosService.registrarUsuario(admin);
-//    }
 
 }
 
