@@ -106,6 +106,12 @@
             <artifactId>HttpClient</artifactId>
             <version>1.0.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
+            <version>2.0.1.Final</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,4 +1,4 @@
-package tse.java.service.external;
+package tse.java.service;
 
 public interface GubUyAuth {
 

@@ -1,23 +1,16 @@
-package tse.java.service.external;
+package tse.java.service.impl;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLParameters;
+import tse.java.service.GubUyAuth;
+
 import java.io.IOException;
 import java.net.*;
 import java.net.http.HttpClient;
-import java.time.Duration;
 import java.util.Base64;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadLocalRandom;
-import java.net.http.HttpClient.Redirect;
-import java.net.http.HttpClient.Version;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 
-public class GubUyAuthImpl implements GubUyAuth{
+public class GubUyAuthImpl implements GubUyAuth {
     private static final String AUTH_ENDPOINT = "https://auth-testing.iduruguay.gub.uy/oidc/v1/authorize?";
     private static final String CLIENT_ID = "890192";
     private static final String CLIENT_SECRET ="457d52f181bf11804a3365b49ae4d29a2e03bbabe74997a2f510b179" ;
@@ -39,7 +32,7 @@ public class GubUyAuthImpl implements GubUyAuth{
     }
 
     @Override
-    public String getTokens(String accessCode) {
+    public String getTokens(String accessCode) { //TODO No debe funcionar. Investigar como armar la request correctamente.
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(ENDPOINT_TOKEN))
@@ -51,9 +44,7 @@ public class GubUyAuthImpl implements GubUyAuth{
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             String responseBody = response.body();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e ) {
             throw new RuntimeException(e);
         }
         return null;
