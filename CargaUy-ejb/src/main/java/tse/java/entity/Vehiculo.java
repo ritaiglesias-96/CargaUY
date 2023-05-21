@@ -3,17 +3,21 @@ package tse.java.entity;
 import tse.java.dto.VehiculoDTO;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="\"Vehiculo\"")
 @NamedQuery(name="Vehiculo.findAll", query="SELECT v FROM Vehiculo v")
 public class Vehiculo implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private Long id;
     private String matricula;
+    private String pais;
     private String marca;
     private String modelo;
     private Float peso;
@@ -24,9 +28,14 @@ public class Vehiculo implements Serializable {
     private Date fechaInicioPNC;
     @Temporal(TemporalType.DATE)
     private Date fechaFinPNC;
+    @OneToMany
+    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();    
 
-    public Vehiculo(String matricula, String marca, String modelo, Float peso, Float capacidadCarga, Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC) {
+    public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
+            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViaje> guiasDeViaje) {
+        this.id = id;
         this.matricula = matricula;
+        this.pais = pais;
         this.marca = marca;
         this.modelo = modelo;
         this.peso = peso;
@@ -34,10 +43,12 @@ public class Vehiculo implements Serializable {
         this.fechaFinITV = fechaFinITV;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
+        this.guiasDeViaje = guiasDeViaje;
     }
 
     public Vehiculo(VehiculoDTO vehiculo) {
         this.matricula = vehiculo.getMatricula();
+        this.pais = vehiculo.getPais();
         this.marca = vehiculo.getMarca();
         this.modelo = vehiculo.getModelo();
         this.peso = vehiculo.getPeso();
@@ -60,6 +71,14 @@ public class Vehiculo implements Serializable {
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     public String getMarca() {
@@ -116,6 +135,19 @@ public class Vehiculo implements Serializable {
 
     public void setFechaFinPNC(Date fechaFinPNC) {
         this.fechaFinPNC = fechaFinPNC;
+    }
+
+    public List<GuiaDeViaje> getGuiasDeViaje() {
+        return guiasDeViaje;
+    }
+
+    public void setGuiasDeViaje(List<GuiaDeViaje> guiasDeViaje) {
+        this.guiasDeViaje = guiasDeViaje;
+    }
+
+    public VehiculoDTO darDto(){
+        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, fechaInicioPNC, fechaFinPNC, guiasDeViaje);
+        return new VehiculoDTO(v);
     }
 
 }

@@ -2,11 +2,13 @@ package tse.java.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import tse.java.dto.EmpresaDTO;
 @Entity
 @Table(name="\"Empresa\"")
-//@NamedQuery(name="Empresa.findAll", query="SELECT e FROM Empresa e")
+@NamedQuery(name="Empresa.findAll", query="SELECT e FROM Empresa e")
 public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -17,8 +19,10 @@ public class Empresa implements Serializable {
     private String razonSocial;
     private int nroEmpresa;
     private String dirPrincipal;
-    /*private ArrayList<Vehiculo> vehiculos;
-    private ArrayList<Choferes> choferes
+
+    @OneToMany
+    private List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
+    /*private ArrayList<Choferes> choferes
 TODO    */
     public Empresa(){
 
@@ -38,6 +42,17 @@ TODO    */
         this.nroEmpresa = nroEmpresa;
         this.dirPrincipal = dirPrincipal;
     }
+
+    public Empresa(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal,
+            ArrayList<Vehiculo> vehiculos) {
+        this.id = id;
+        this.nombrePublico = nombrePublico;
+        this.razonSocial = razonSocial;
+        this.nroEmpresa = nroEmpresa;
+        this.dirPrincipal = dirPrincipal;
+        this.vehiculos = vehiculos;
+    }
+
     public Empresa(EmpresaDTO e){
         this.id = e.getId();
         this.nombrePublico = e.getNombrePublico();
@@ -86,4 +101,14 @@ TODO    */
     public void setDirPrincipal(String dirPrincipal) {
         this.dirPrincipal = dirPrincipal;
     }
+
+    public List<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void setVehiculos(List<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
+    }
+
+
 }

@@ -1,6 +1,10 @@
 package tse.java.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tse.java.entity.Empresa;
+import tse.java.entity.Vehiculo;
 
 public class EmpresaDTO {
     private Integer id;
@@ -8,6 +12,7 @@ public class EmpresaDTO {
     private String razonSocial;
     private int nroEmpresa;
     private String dirPrincipal;
+    private List<VehiculoDTO> vehiculos = new ArrayList<VehiculoDTO>();
 
     public EmpresaDTO(){
     }
@@ -18,14 +23,17 @@ public class EmpresaDTO {
         this.razonSocial = e.getRazonSocial();
         this.nroEmpresa = e.getNroEmpresa();
         this.dirPrincipal = e.getDirPrincipal();
+        this.vehiculos=procesarLista(e.getVehiculos());
     }
 
-    public EmpresaDTO(Integer id,String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal) {
+    public EmpresaDTO(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal,
+            List<VehiculoDTO> vehiculos) {
         this.id = id;
         this.nombrePublico = nombrePublico;
         this.razonSocial = razonSocial;
         this.nroEmpresa = nroEmpresa;
         this.dirPrincipal = dirPrincipal;
+        this.vehiculos = vehiculos;
     }
 
 // Getters y Setters
@@ -69,4 +77,32 @@ public class EmpresaDTO {
     public void setDirPrincipal(String dirPrincipal) {
         this.dirPrincipal = dirPrincipal;
     }
+
+    public List<VehiculoDTO> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void setVehiculos(List<VehiculoDTO> vehiculos) {
+        this.vehiculos = vehiculos;
+    }
+
+    public List<VehiculoDTO> procesarLista(List<Vehiculo> vehiculos){
+        List<VehiculoDTO> result = new ArrayList<VehiculoDTO>();
+        for(Vehiculo v:vehiculos){
+            result.add(v.darDto());
+        }
+        return result;
+    }
+
+    public boolean contieneVehiculo(VehiculoDTO v){
+        boolean encontrado = false;
+        for(VehiculoDTO v1:vehiculos){
+            if(v1.getId().equals(v.getId())) {
+                encontrado = true;
+                break;
+            }
+        }
+        return encontrado;
+    }
+
 }

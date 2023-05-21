@@ -22,7 +22,7 @@ public class VehiculosDAO implements IVehiculosDAO {
 
     @Override
     public ArrayList<VehiculoDTO> obtenerVehiculos() {
-        Query q = em.createNativeQuery("select * from public.\"Vehiculo\" ", Vehiculo.class);
+        Query q = em.createQuery("select v from Vehiculo v");
         List<Vehiculo> result = q.getResultList();
         ArrayList<VehiculoDTO> res = new ArrayList<>();
         result.forEach( v -> res.add(new VehiculoDTO(v)));
@@ -30,7 +30,7 @@ public class VehiculosDAO implements IVehiculosDAO {
     }
 
     @Override
-    public VehiculoDTO obtenerVehiculoId(int id) throws NoResultException {
+    public VehiculoDTO obtenerVehiculoId(Long id) throws NoResultException {
         Vehiculo result = em.find(Vehiculo.class, id);
         return new VehiculoDTO(result);
     }
@@ -52,5 +52,16 @@ public class VehiculosDAO implements IVehiculosDAO {
     public void agregarVehiculo(VehiculoDTO vehiculo) {
         Vehiculo nuevo = new Vehiculo(vehiculo);
         em.merge(nuevo);
+    }
+
+    @Override
+    public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais) {
+        Query q = em.createQuery("select v from Vehiculo v where v.matricula='" + matricula + "' and v.pais='" + pais + "'");
+        if(q.getResultList().isEmpty()) {
+            return null;
+        } else {
+            Vehiculo v = (Vehiculo) q.getResultList().get(0);
+            return new VehiculoDTO(v);
+        }
     }
 }
