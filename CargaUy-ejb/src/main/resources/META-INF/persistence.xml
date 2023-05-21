@@ -24,10 +24,12 @@
       <!-- If you are running in a production environment, add a managed
          data source, this configuration uses the JakartaEE default data source is just for development and testing! -->
       <jta-data-source>java:/CargaUy</jta-data-source>
-      <class>tse.java.entity.Rubro</class>
-      <class>tse.java.entity.Empresa</class>
-      <class>tse.java.entity.Usuario</class>
       <class>tse.java.entity.Vehiculo</class>
+      <class>tse.java.entity.Empresa</class>
+      <class>tse.java.entity.Rubro</class>
+      <class>tse.java.entity.GuiaDeViaje</class>
+      <class>tse.java.entity.Pesaje</class>
+      <class>tse.java.entity.Usuario</class>
       <properties>
          <!--The database schema is auto created on deployment and dropped before redeploy.
              Note: the following configuration does not drop the tables on undeploy. If you prefer this, use this
@@ -43,7 +45,6 @@
 
          <!-- Properties for Hibernate -->
          <property name="hibernate.show_sql" value="false" />
-
       </properties>
    </persistence-unit>
 </persistence>

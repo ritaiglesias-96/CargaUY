@@ -1,40 +1,40 @@
 package tse.java.service.impl;
 
-import tse.java.dto.VehiculoDTO;
-import tse.java.model.Vehiculos;
-import tse.java.persistance.IVehiculosDAO;
-import tse.java.service.IVehiculosService;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.EJB;
-import javax.persistence.NoResultException;
+import javax.ejb.Stateless;
 
-public class VehiculosService implements IVehiculosService {
+import tse.java.dto.PesajeDTO;
+import tse.java.dto.VehiculoDTO;
+import tse.java.persistance.IVehiculosDAO;
+import tse.java.service.IGuiaDeViajesService;
+import tse.java.service.IVehiculosService;
+
+@Stateless
+public class VehiculosService implements IVehiculosService{
+
     @EJB
     IVehiculosDAO vehiculosDAO;
+
+    @EJB
+    IGuiaDeViajesService guiasDeViajeService;
+
     @Override
-    public Vehiculos obtenerVehiculos() {
-        Vehiculos v = new Vehiculos();
-        v.setListaVehiculos(vehiculosDAO.obtenerVehiculos());
-        return v;
+    public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais) {
+        return vehiculosDAO.obtenerVehiculoMatriculaPais(matricula, pais);
     }
 
     @Override
-    public VehiculoDTO obtenerVehiculoId(int id) throws NoResultException {
-        return vehiculosDAO.obtenerVehiculoId(id);
+    public List<PesajeDTO> listarGuiasDeVehiculo(Long id, Date fecha) {
+        String msg = "Me pasaron por rest los parametros: idvehiculo=" + id + ", fechaViajes=" + fecha;
+        Logger.getLogger(VehiculosService.class.getName()).log(Level.INFO, msg);
+        VehiculoDTO v = vehiculosDAO.obtenerVehiculoId(id);
+        return guiasDeViajeService.listarGuiasDeViajesPorFecha(v.getGuiasDeViaje(), fecha);
     }
 
-    @Override
-    public void agregarVehiculo(VehiculoDTO nuevoVehiculo) {
-        vehiculosDAO.agregarVehiculo(nuevoVehiculo);
-    }
 
-    @Override
-    public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculoModificado) {
-        return vehiculosDAO.modificarVehiculo(vehiculoModificado);
-    }
-
-    @Override
-    public void eliminarVehiculo(int id) {
-        vehiculosDAO.eliminarVehiculoId(id);
-    }
 }

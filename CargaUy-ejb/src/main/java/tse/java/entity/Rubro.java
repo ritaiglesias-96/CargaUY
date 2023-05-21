@@ -5,7 +5,7 @@ import tse.java.dto.RubroDTO;
 import javax.persistence.*;
 
 @Entity
-@Table(name="\"Rubro\"")
+@Table(name = "\"Rubro\"")
 public class Rubro {
 
     @Id
