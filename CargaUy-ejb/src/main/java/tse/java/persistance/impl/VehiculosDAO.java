@@ -36,16 +36,24 @@ public class VehiculosDAO implements IVehiculosDAO {
     }
 
     @Override
-    public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculo) {
-        Vehiculo updated = new Vehiculo(vehiculo);
-        Vehiculo newOne = em.merge(updated);
-        return new VehiculoDTO(newOne);
+    public void modificarVehiculo(VehiculoDTO vehiculo) {
+        Vehiculo v = em.find(Vehiculo.class, vehiculo.getId());
+        v.setMatricula(vehiculo.getMatricula());
+        v.setPais(vehiculo.getPais());
+        v.setMarca(vehiculo.getMarca());
+        v.setModelo(vehiculo.getModelo());
+        v.setPeso(vehiculo.getPeso());
+        v.setCapacidadCarga(vehiculo.getCapacidadCarga());
+        v.setFechaFinITV(vehiculo.getFechaFinITV());
+        v.setFechaInicioPNC(vehiculo.getFechaInicioPNC());
+        v.setGuiasDeViaje(vehiculo.getGuiasDeViaje());
+        em.persist(v);
     }
 
     @Override
-    public void eliminarVehiculoId(int id) {
-        Vehiculo result = em.find(Vehiculo.class, id);
-        em.remove(result);
+    public void eliminarVehiculo(Long id) {
+        Vehiculo v = em.find(Vehiculo.class, id);
+        em.remove(v);
     }
 
     @Override

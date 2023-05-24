@@ -13,9 +13,9 @@ import javax.ejb.Local;
 public interface IVehiculosService {
     //public Vehiculos obtenerVehiculos();
     //public VehiculoDTO obtenerVehiculoId(int id);
-    //public void agregarVehiculo(VehiculoDTO nuevoVehiculo);
-    //public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculoModificado);
-    //public void eliminarVehiculo(int id);
+    public void agregarVehiculo(VehiculoDTO nuevoVehiculo);
+    public void modificarVehiculo(VehiculoDTO vehiculoModificado);
+    public void eliminarVehiculo(Long id);
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
     public List<PesajeDTO> listarGuiasDeVehiculo(Long id, Date fecha);
 }
