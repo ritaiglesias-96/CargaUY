@@ -1,23 +1,21 @@
 package tse.java.vistas;
 
 
-import tse.java.entity.Administrador;
+import org.primefaces.PrimeFaces;
 import tse.java.entity.Usuario;
 import tse.java.enumerated.AuthResponse;
 import tse.java.service.ISessionService;
 import tse.java.service.IUsuariosService;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 @Named("UserManager")
 @SessionScoped
@@ -27,6 +25,9 @@ public class UserManager implements Serializable {
     ISessionService iSessionService;
     @EJB
     IUsuariosService iUsuariosService;
+
+    private static final HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+
     private String username;
     private String password;
     private String message;
@@ -66,16 +67,15 @@ public class UserManager implements Serializable {
 
 
     public void login() {
-        AuthResponse response = iSessionService.iniciarSesion(username, password);
+        FacesMessage message = null;
+        boolean loggedIn = false;
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
+        AuthResponse response = iSessionService.iniciarSesion(username, password);
         if(response.equals(AuthResponse.OK)){
+            loggedIn = true;
             setCurrentUser(iSessionService.getUsuarioLogueado(username));
-            if(currentUser instanceof Administrador) {
-                System.out.println("type is admin");
-            } else {
-                System.out.println("is autoridad");
-            }
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
             try {
                 ec.redirect("/CargaUy-web/admin/index.xhtml");
                 fc.responseComplete();
@@ -83,7 +83,27 @@ public class UserManager implements Serializable {
                 throw new RuntimeException(e2);
             }
         }else {
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
             this.message = "Usuario inexistente o credenciales incorrectas";
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        PrimeFaces.current().ajax().addCallbackParam("loggedIn", loggedIn);
+    }
+
+    public void logout() {
+        System.out.println("asafsaf");
+        System.out.println(getCurrentUser().getUsername());
+        this.setCurrentUser(null);
+        System.out.println(session.getAttribute("currentUser"));
+        session.removeAttribute("currentUser");
+        try {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            ec.redirect("/CargaUy-web/");
+            fc.responseComplete();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -9,5 +9,5 @@ import java.util.List;
 
 @Local
 public interface IPesajesService {
-    public List<PesajeDTO> listarPesajesDeGuia(GuiaDeViajeDTO g, Date fecha);
+    List<PesajeDTO> listarPesajesDeGuia(GuiaDeViajeDTO g, Date fecha);
 }

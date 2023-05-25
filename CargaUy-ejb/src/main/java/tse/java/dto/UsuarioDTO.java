@@ -1,26 +1,39 @@
 package tse.java.dto;
 
 import tse.java.enumerated.TipoUsuario;
-
-import java.util.Calendar;
+import tse.java.entity.Usuario;
+import java.util.Date;
 
 public class UsuarioDTO {
     private int idUsuario;
     private String nombre;
     private String apellido;
-    private Calendar fechaNacimiento;
+    private Date fechaNacimiento;
     private String correo;
     private String username;
     private String password;
     private TipoUsuario tipo;
 
-    public UsuarioDTO(String nombre, String apellido, Calendar fechaNacimiento, String correo, String username, String password, TipoUsuario tipo) {
+    public UsuarioDTO(String nombre, String apellido, Date fechaNacimiento, String correo, String username, String password, TipoUsuario tipo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.username = username;
         this.password = password;
+        this.tipo = tipo;
+    }
+
+    public UsuarioDTO() {
+    }
+
+    public UsuarioDTO(Usuario usr, TipoUsuario tipo) {
+        this.nombre = usr.getNombre();
+        this.apellido = usr.getApellido();
+        this.fechaNacimiento = usr.getFechaNacimiento();
+        this.correo = usr.getCorreo();
+        this.username = usr.getUsername();
+        this.password = usr.getPassword();
         this.tipo = tipo;
     }
 
@@ -48,11 +61,11 @@ public class UsuarioDTO {
         this.apellido = apellido;
     }
 
-    public Calendar getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Calendar fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

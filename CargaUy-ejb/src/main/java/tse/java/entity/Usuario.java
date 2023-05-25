@@ -4,7 +4,7 @@ import tse.java.dto.UsuarioDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 @Table(name="\"Usuario\"")
@@ -19,7 +19,8 @@ public abstract class Usuario implements Serializable {
     private int idUsuario;
     private String nombre;
     private String apellido;
-    private Calendar fechaNacimiento;
+    @Temporal(TemporalType.DATE)
+    private Date fechaNacimiento;
 
     private String correo;
 
@@ -36,7 +37,7 @@ public abstract class Usuario implements Serializable {
         this.username = username;
     }
 
-    public Usuario(String nombre, String apellido, Calendar fechaNacimiento, String correo, String username, String password) {
+    public Usuario(String nombre, String apellido, Date fechaNacimiento, String correo, String username, String password) {
         super();
         this.nombre = nombre;
         this.apellido = apellido;
@@ -58,6 +59,7 @@ public abstract class Usuario implements Serializable {
         this.correo = usuario.getCorreo();
         this.username = usuario.getUsername();
         this.password = usuario.getPassword();
+
     }
 
     public int getIdUsuario() {
@@ -84,11 +86,11 @@ public abstract class Usuario implements Serializable {
         this.apellido = apellido;
     }
 
-    public Calendar getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Calendar fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

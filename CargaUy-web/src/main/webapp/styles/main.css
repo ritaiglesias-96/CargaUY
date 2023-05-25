@@ -1,0 +1,64 @@
+@font-face {
+    font-family: WixBold;
+    src: url(./fonts/WixMadeforDisplay-Bold.ttf);
+}
+
+@font-face {
+    font-family: WixExtraBold;
+    src: url(./fonts/WixMadeforDisplay-ExtraBold.ttf);
+}
+
+@font-face {
+    font-family: WixMedium;
+    src: url(./fonts/WixMadeforDisplay-Medium.ttf);
+}
+
+@font-face {
+    font-family: WixRegular;
+    src: url(./fonts/WixMadeforDisplay-Regular.ttf);
+}
+
+html {
+    min-height: 100vh;
+}
+
+h1 {
+    font-family: WixBold, sans-serif;
+    font-size: xx-large;
+}
+
+h2, h2, h3, h4 {
+    font-family: WixMedium, sans-serif;
+    font-size: large;
+}
+
+p {
+    font-family: WixRegular, sans-serif;
+    font-size: medium;
+}
+
+.loginButton {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    color: black;
+    padding: 5px 15px;
+    border: solid 1px black;
+    border-radius: 15px;
+}
+
+.loginButton:hover {
+    background-color: lightgray;
+}
+
+i {
+    font-size: 1.5rem;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: -webkit-fill-available;
+}
