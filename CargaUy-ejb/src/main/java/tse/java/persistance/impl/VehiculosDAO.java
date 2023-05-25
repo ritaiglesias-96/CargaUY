@@ -37,17 +37,8 @@ public class VehiculosDAO implements IVehiculosDAO {
 
     @Override
     public void modificarVehiculo(VehiculoDTO vehiculo) {
-        Vehiculo v = em.find(Vehiculo.class, vehiculo.getId());
-        v.setMatricula(vehiculo.getMatricula());
-        v.setPais(vehiculo.getPais());
-        v.setMarca(vehiculo.getMarca());
-        v.setModelo(vehiculo.getModelo());
-        v.setPeso(vehiculo.getPeso());
-        v.setCapacidadCarga(vehiculo.getCapacidadCarga());
-        v.setFechaFinITV(vehiculo.getFechaFinITV());
-        v.setFechaInicioPNC(vehiculo.getFechaInicioPNC());
-        v.setGuiasDeViaje(vehiculo.getGuiasDeViaje());
-        em.persist(v);
+        Vehiculo v = new Vehiculo(vehiculo);
+        em.merge(v);
     }
 
     @Override
@@ -59,7 +50,7 @@ public class VehiculosDAO implements IVehiculosDAO {
     @Override
     public void agregarVehiculo(VehiculoDTO vehiculo) {
         Vehiculo nuevo = new Vehiculo(vehiculo);
-        em.merge(nuevo);
+        em.persist(nuevo);
     }
 
     @Override

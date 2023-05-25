@@ -8,11 +8,16 @@ import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
+import tse.java.dto.EmpresaDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Administrador;
 import tse.java.entity.Autoridad;
+import tse.java.entity.Empresa;
+import tse.java.entity.Vehiculo;
 import tse.java.persistance.IVehiculosDAO;
 import tse.java.service.IGuiaDeViajesService;
 import tse.java.service.IVehiculosService;
@@ -49,6 +54,11 @@ public class VehiculosService implements IVehiculosService{
         VehiculoDTO v = vehiculosDAO.obtenerVehiculoId(id);
         return guiasDeViajeService.listarGuiasDeViajesPorFecha(v.getGuiasDeViaje(), fecha);
     }
+
+    public VehiculoDTO obtenerVehiculoPorId(Long id) {
+        return vehiculosDAO.obtenerVehiculoId(id);
+    }
+
 
 
 }

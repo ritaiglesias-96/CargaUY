@@ -134,7 +134,7 @@ public class VehiculoDTO {
         this.fechaFinPNC = fechaFinPNC;
     }
 
-    public List<GuiaDeViaje> getGuiasDeViaje() {
+    public List<GuiaDeViajeDTO> getGuiasDeViaje() {
         return guiasDeViaje;
     }
 

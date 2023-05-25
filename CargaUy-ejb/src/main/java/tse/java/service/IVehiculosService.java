@@ -11,8 +11,7 @@ import javax.ejb.Local;
 
 @Local
 public interface IVehiculosService {
-    //public Vehiculos obtenerVehiculos();
-    //public VehiculoDTO obtenerVehiculoId(int id);
+    public VehiculoDTO obtenerVehiculoPorId(Long id);
     public void agregarVehiculo(VehiculoDTO nuevoVehiculo);
     public void modificarVehiculo(VehiculoDTO vehiculoModificado);
     public void eliminarVehiculo(Long id);

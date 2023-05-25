@@ -47,6 +47,7 @@ public class Vehiculo implements Serializable {
     }
 
     public Vehiculo(VehiculoDTO vehiculo) {
+        this.id = vehiculo.getId();
         this.matricula = vehiculo.getMatricula();
         this.pais = vehiculo.getPais();
         this.marca = vehiculo.getMarca();
