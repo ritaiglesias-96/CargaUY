@@ -1,11 +1,8 @@
 package tse.java.api.endpoint;
 
-import tse.java.dto.EmpresaDTO;
 import tse.java.dto.VehiculoDTO;
-import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
-import tse.java.model.Empresas;
-import tse.java.service.IEmpresasService;
+import tse.java.model.Vehiculos;
 import tse.java.service.IVehiculosService;
 
 import javax.ejb.EJB;
@@ -35,6 +32,16 @@ public class gestionVehiculosEndpoint {
         }
     }
 
+    @GET
+    public Response getVehiculos(){
+        try{
+            Vehiculos vehiculos = vs.obtenerVehiculos();
+            return Response.status(Response.Status.OK).entity(vehiculos).build();
+        }catch (NoResultException e ){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
     @POST
     public Response agregarVehiculo(Vehiculo vehiculo){
         try{
@@ -46,9 +53,11 @@ public class gestionVehiculosEndpoint {
     }
 
     @PUT
-    public Response modificarVehiculo(Vehiculo vehiculo){
+    @Path("/{id}")
+    public Response modificarVehiculo(@PathParam("id") Long id, Vehiculo vehiculo){
         try{
             VehiculoDTO vehiculoDTO = new VehiculoDTO(vehiculo);
+            vehiculoDTO.setId(id);
             vs.modificarVehiculo(vehiculoDTO);
             return Response.status(Response.Status.OK).entity(vehiculo).build();
         } catch (NoResultException e){
@@ -57,9 +66,10 @@ public class gestionVehiculosEndpoint {
     }
 
     @DELETE
-    public Response eliminarVehiculo(Vehiculo vehiculo){
+    @Path("/{id}")
+    public Response eliminarVehiculo(@PathParam("id") Long id, Vehiculo vehiculo){
         try{
-            vs.eliminarVehiculo(vehiculo.getId());
+            vs.eliminarVehiculo(id);
             return Response.status(Response.Status.OK).entity(vehiculo).build();
         } catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();

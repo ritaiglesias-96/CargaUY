@@ -50,6 +50,7 @@ public class VehiculosDAO implements IVehiculosDAO {
     @Override
     public void agregarVehiculo(VehiculoDTO vehiculo) {
         Vehiculo nuevo = new Vehiculo(vehiculo);
+        nuevo.setId(vehiculo.getId());
         em.persist(nuevo);
     }
 

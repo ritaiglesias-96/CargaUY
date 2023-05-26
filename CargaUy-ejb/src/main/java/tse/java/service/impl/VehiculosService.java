@@ -18,6 +18,8 @@ import tse.java.entity.Administrador;
 import tse.java.entity.Autoridad;
 import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
+import tse.java.model.Empresas;
+import tse.java.model.Vehiculos;
 import tse.java.persistance.IVehiculosDAO;
 import tse.java.service.IGuiaDeViajesService;
 import tse.java.service.IVehiculosService;
@@ -30,6 +32,13 @@ public class VehiculosService implements IVehiculosService{
 
     @EJB
     IGuiaDeViajesService guiasDeViajeService;
+
+    @Override
+    public Vehiculos obtenerVehiculos() {
+        Vehiculos vehiculos = new Vehiculos();
+        vehiculos.setListaVehiculos(vehiculosDAO.obtenerVehiculos());
+        return vehiculos;
+    }
 
     public void agregarVehiculo(VehiculoDTO nuevoVehiculo){
         vehiculosDAO.agregarVehiculo(nuevoVehiculo);
