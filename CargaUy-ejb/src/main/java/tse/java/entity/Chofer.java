@@ -37,7 +37,7 @@ public class Chofer extends Ciudadano implements Serializable {
         this.guiasDeViaje = guiasDeViaje;
     }
 
-    public Chofer(String email, String cedula, ArrayList<GuiaDeViaje> guiasDeViaje) {
+    public Chofer(String email, String cedula, List<GuiaDeViaje> guiasDeViaje) {
         super(email, cedula);
         this.guiasDeViaje = guiasDeViaje;
     }
