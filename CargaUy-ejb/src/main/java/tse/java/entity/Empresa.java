@@ -19,6 +19,9 @@ public class Empresa implements Serializable {
     private String razonSocial;
     private int nroEmpresa;
     private String dirPrincipal;
+   @OneToOne
+   @JoinColumn(name = "responsable_id", nullable = true)
+    private Responsable responsable;
 
     @OneToMany
     private List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();

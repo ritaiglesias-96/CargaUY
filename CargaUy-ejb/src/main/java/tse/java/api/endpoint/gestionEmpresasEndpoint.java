@@ -55,9 +55,11 @@ public class gestionEmpresasEndpoint {
     }
 
     @PUT
-    public Response modificarEmpresa(Empresa empresa){
+    @Path("/{id}")
+    public Response modificarEmpresa(Empresa empresa,@PathParam("id") int id){
         try{
             EmpresaDTO empresaDTO = new EmpresaDTO(empresa);
+            empresaDTO.setId(id);
             empresasService.modificarEmpresa(empresaDTO);
             return Response.status(Response.Status.OK).entity(empresa).build();
         } catch (NoResultException e){
@@ -66,9 +68,11 @@ public class gestionEmpresasEndpoint {
     }
 
     @DELETE
-    public Response eliminarEmpresa(Empresa empresa){
+    @Path("/{id}")
+    public Response eliminarEmpresa(Empresa empresa, @PathParam("id")int id){
         try{
             EmpresaDTO empresaDTO = new EmpresaDTO(empresa);
+            empresaDTO.setId(id);
             empresasService.eliminarEmpresa(empresaDTO);
             return Response.status(Response.Status.OK).entity(empresa).build();
         } catch (NoResultException e){
