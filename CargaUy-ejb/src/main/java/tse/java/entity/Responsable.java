@@ -17,9 +17,6 @@ public class Responsable extends Ciudadano implements Serializable {
     @JoinColumn(name = "empresa_id", nullable = true)
     private Empresa empresa;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();
-
     public Responsable() {
         super();
     }
@@ -41,18 +38,6 @@ public class Responsable extends Ciudadano implements Serializable {
         this.empresa = empresa;
     }
 
-    public List<GuiaDeViaje> getGuiasDeViaje() {
-        return guiasDeViaje;
-    }
-
-    public void setGuiasDeViaje(List<GuiaDeViaje> guiasDeViaje) {
-        this.guiasDeViaje = guiasDeViaje;
-    }
-
-    public Responsable(String email, String cedula, ArrayList<GuiaDeViaje> guiasDeViaje) {
-        super(email, cedula);
-        this.guiasDeViaje = guiasDeViaje;
-    }
 
     public ResponsableDTO darDTO(){
         return new ResponsableDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(),RolCiudadano.RESPONSABLE);

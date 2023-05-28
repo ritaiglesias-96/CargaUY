@@ -17,29 +17,12 @@ public class Chofer extends Ciudadano implements Serializable {
 
     private static final long serialVersionUID = 3827070902901902553L;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();
-
     public Chofer() {
         super();
     }
 
     public Chofer(String email, String cedula) {
         super(email, cedula);
-    }
-
-
-    public List<GuiaDeViaje> getGuiasDeViaje() {
-        return guiasDeViaje;
-    }
-
-    public void setGuiasDeViaje(List<GuiaDeViaje> guiasDeViaje) {
-        this.guiasDeViaje = guiasDeViaje;
-    }
-
-    public Chofer(String email, String cedula, List<GuiaDeViaje> guiasDeViaje) {
-        super(email, cedula);
-        this.guiasDeViaje = guiasDeViaje;
     }
 
     public ChoferDTO darDTO(){

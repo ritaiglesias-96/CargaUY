@@ -30,7 +30,7 @@ public class Vehiculo implements Serializable {
     private Date fechaInicioPNC;
     @Temporal(TemporalType.DATE)
     private Date fechaFinPNC;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();    
 
     public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
