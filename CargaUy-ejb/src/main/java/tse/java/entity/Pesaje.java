@@ -28,6 +28,14 @@ public class Pesaje {
 
     public Pesaje(){}
 
+    public Pesaje(PesajeDTO pesaje){
+        this.id = pesaje.getId();
+        this.latitud = pesaje.getLatitud();
+        this.longuitud = pesaje.getLonguitud();
+        this.carga = pesaje.getCarga();
+        this.fecha = pesaje.getFecha();
+    }
+
     public Long getId() {
         return id;
     }
@@ -69,6 +77,6 @@ public class Pesaje {
     }
 
     public PesajeDTO darDTO(){
-        return new PesajeDTO(latitud, longuitud, fecha, carga);
+        return new PesajeDTO(id,latitud, longuitud, fecha, carga);
     }
 }
