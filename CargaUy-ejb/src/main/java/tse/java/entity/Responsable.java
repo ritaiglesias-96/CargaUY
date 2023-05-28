@@ -1,12 +1,12 @@
 package tse.java.entity;
 
+import tse.java.dto.ResponsableDTO;
 import tse.java.enumerated.RolCiudadano;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @DiscriminatorValue("Responsable")
@@ -36,5 +36,10 @@ public class Responsable extends Ciudadano implements Serializable {
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
+    }
+
+
+    public ResponsableDTO darDTO(){
+        return new ResponsableDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(),RolCiudadano.RESPONSABLE);
     }
 }

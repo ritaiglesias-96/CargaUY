@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.persistance.IVehiculosDAO;
@@ -24,6 +25,11 @@ public class VehiculosService implements IVehiculosService{
     IGuiaDeViajesService guiasDeViajeService;
 
     @Override
+    public void modificarVehiculo(VehiculoDTO vehiculoModificado) {
+        vehiculosDAO.modificarVehiculo(vehiculoModificado);
+    }
+
+    @Override
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais) {
         return vehiculosDAO.obtenerVehiculoMatriculaPais(matricula, pais);
     }
@@ -34,6 +40,15 @@ public class VehiculosService implements IVehiculosService{
         Logger.getLogger(VehiculosService.class.getName()).log(Level.INFO, msg);
         VehiculoDTO v = vehiculosDAO.obtenerVehiculoId(id);
         return guiasDeViajeService.listarGuiasDeViajesPorFecha(v.getGuiasDeViaje(), fecha);
+    }
+
+    @Override
+    public boolean viajeContieneGuia(VehiculoDTO v, GuiaDeViajeDTO g) {
+        List<GuiaDeViajeDTO> guias = v.getGuiasDeViaje();
+        for(GuiaDeViajeDTO g1:guias)
+            if(g1.getId().equals(g))
+                return true;
+        return false;
     }
 
 
