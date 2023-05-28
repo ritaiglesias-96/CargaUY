@@ -1,26 +1,18 @@
-package tse.java.entity;
+package tse.java.dto;
 
-import tse.java.dto.RubroDTO;
+public class TipoCargaDTO {
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "\"Rubro\"")
-public class Rubro{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String nombre;
 
-    public Rubro(Long id, String nombre) {
+    public TipoCargaDTO() {
+    }
+
+    public TipoCargaDTO(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
-
-    public Rubro(){}
 
     public Long getId() {
         return id;
@@ -38,7 +30,4 @@ public class Rubro{
         this.nombre = nombre;
     }
 
-    public RubroDTO darDTO(){
-        return new RubroDTO(id,nombre);
-    }
 }
