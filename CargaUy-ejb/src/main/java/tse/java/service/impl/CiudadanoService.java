@@ -1,10 +1,10 @@
 package tse.java.service.impl;
 
+import tse.java.dto.ChoferDTO;
 import tse.java.dto.FuncionarioDTO;
+import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.ResponsableDTO;
-import tse.java.entity.Chofer;
-import tse.java.entity.Ciudadano;
-import tse.java.entity.Responsable;
+import tse.java.entity.*;
 import tse.java.model.Ciudadanos;
 import tse.java.persistance.IChoferDAO;
 import tse.java.persistance.ICiudadanoDAO;
@@ -13,11 +13,11 @@ import tse.java.persistance.IResponsableDAO;
 import tse.java.persistance.impl.CiudadanoDAO;
 import tse.java.persistance.impl.FuncionarioDAO;
 import tse.java.service.ICiudadanosService;
-import tse.java.entity.Funcionario;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Named;
+import java.util.List;
 
 @Stateless
 @Named("ciudadanosService")
@@ -71,5 +71,25 @@ public class CiudadanoService implements ICiudadanosService {
         } else {
             choferDAO.eliminiarChofer((Chofer) ciudadano);
         }
+    }
+
+    @Override
+    public void asingarViajeChofer(int chofer_id, GuiaDeViajeDTO g) {
+        Chofer chofer = (Chofer) ciudadanoDAO.buscarCiudadanoPorId(chofer_id);
+        List<GuiaDeViaje> guias = chofer.getGuiasDeViaje();
+        GuiaDeViaje gnew = new GuiaDeViaje(g);
+        guias.add(gnew);
+        chofer.setGuiasDeViaje(guias);
+        choferDAO.modificarChofer(chofer);
+    }
+
+    @Override
+    public void asingarViajeResponsable(int responsable_id, GuiaDeViajeDTO g) {
+        Responsable responsable = (Responsable) ciudadanoDAO.buscarCiudadanoPorId(responsable_id);
+        List<GuiaDeViaje> guias = responsable.getGuiasDeViaje();
+        GuiaDeViaje gnew = new GuiaDeViaje(g);
+        guias.add(gnew);
+        responsable.setGuiasDeViaje(guias);
+        responsableDAO.modificarResponsable(responsable);
     }
 }

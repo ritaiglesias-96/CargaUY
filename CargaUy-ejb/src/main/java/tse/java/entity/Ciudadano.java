@@ -74,4 +74,6 @@ public abstract class Ciudadano  implements Serializable {
     public void setGuiasDeViaje(List<GuiaDeViaje> guiasDeViaje) {
         this.guiasDeViaje = guiasDeViaje;
     }
+
+    public abstract CiudadanoDTO darDTO();
 }

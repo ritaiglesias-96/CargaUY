@@ -14,4 +14,6 @@ public interface IGuiaDeViajeDAO {
     public List<GuiaDeViajeDTO> listarGuiasDeViaje();
     public void borrarGuiaDeViaje(Long id);
     public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg);
+
+    public Long getLastid();
 }

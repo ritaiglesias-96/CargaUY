@@ -64,5 +64,10 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
         gv.setVolumenCarga(dtg.getVolumenCarga());
         em.persist(gv);
     }
+
+    public Long getLastid(){
+        Query q = em.createQuery("select max(g.id) from GuiaDeViaje g");
+        return Long.parseLong(q.getResultList().get(0).toString());
+    }
     
 }

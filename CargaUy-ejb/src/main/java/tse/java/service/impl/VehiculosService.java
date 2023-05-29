@@ -51,5 +51,14 @@ public class VehiculosService implements IVehiculosService{
         return false;
     }
 
+    @Override
+    public void asignarGuia(Long vehiculo_id, GuiaDeViajeDTO g) {
+        VehiculoDTO v = vehiculosDAO.obtenerVehiculoId(vehiculo_id);
+        List<GuiaDeViajeDTO> guias = v.getGuiasDeViaje();
+        guias.add(g);
+        v.setGuiasDeViaje(guias);
+        vehiculosDAO.modificarVehiculo(v);
+    }
+
 
 }

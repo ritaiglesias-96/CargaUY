@@ -30,4 +30,9 @@ public class CiudadanoDAO implements ICiudadanoDAO {
         retorno.forEach(c->ret.add(new CiudadanoDTO(c)));
         return ret;
     }
+
+    @Override
+    public Ciudadano buscarCiudadanoPorId(int id) {
+        return em.find(Ciudadano.class, id);
+    }
 }
