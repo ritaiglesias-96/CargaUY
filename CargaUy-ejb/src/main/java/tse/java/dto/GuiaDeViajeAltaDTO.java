@@ -3,12 +3,17 @@ package tse.java.dto;
 import java.util.Date;
 import java.util.List;
 
-public class GuiaDeViajeAltaDTO extends GuiaDeViajeDTO{
+public class GuiaDeViajeAltaDTO{
 
-    private String pais_vehiculo, matricula_vehiculo, cedula_chofer, cedula_responsable;
+    private String rubroCliente;
+    private float volumenCarga;
+    private String origen, destino, pais_vehiculo, matricula_vehiculo, cedula_chofer, cedula_responsable;
 
-    public GuiaDeViajeAltaDTO(Long id, String rubroCliente, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<PesajeDTO> pesajes, String pais_vehiculo, String matricula_vehiculo, String cedula_chofer, String cedula_responsable) {
-        super(id, rubroCliente, volumenCarga, fecha, origen, inicio, fin, destino, pesajes);
+    public GuiaDeViajeAltaDTO(String rubroCliente, float volumenCarga, String origen, String destino, String pais_vehiculo, String matricula_vehiculo, String cedula_chofer, String cedula_responsable) {
+        this.rubroCliente = rubroCliente;
+        this.volumenCarga = volumenCarga;
+        this.origen = origen;
+        this.destino = destino;
         this.pais_vehiculo = pais_vehiculo;
         this.matricula_vehiculo = matricula_vehiculo;
         this.cedula_chofer = cedula_chofer;
@@ -47,5 +52,37 @@ public class GuiaDeViajeAltaDTO extends GuiaDeViajeDTO{
 
     public void setCedula_responsable(String cedula_responsable) {
         this.cedula_responsable = cedula_responsable;
+    }
+
+    public String getRubroCliente() {
+        return rubroCliente;
+    }
+
+    public void setRubroCliente(String rubroCliente) {
+        this.rubroCliente = rubroCliente;
+    }
+
+    public float getVolumenCarga() {
+        return volumenCarga;
+    }
+
+    public void setVolumenCarga(float volumenCarga) {
+        this.volumenCarga = volumenCarga;
+    }
+
+    public String getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(String origen) {
+        this.origen = origen;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
     }
 }

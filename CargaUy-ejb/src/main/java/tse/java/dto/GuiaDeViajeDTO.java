@@ -9,6 +9,8 @@ import java.util.List;
 public class GuiaDeViajeDTO {
     private Long id;
 
+    private int numero;
+
     private String rubroCliente;
 
     private float volumenCarga;
@@ -25,9 +27,10 @@ public class GuiaDeViajeDTO {
 
     private List<PesajeDTO> pesajes = new ArrayList<PesajeDTO>();
 
-    public GuiaDeViajeDTO(Long id, String rubroCliente, float volumenCarga, Date fecha, String origen, Date inicio,
+    public GuiaDeViajeDTO(Long id, int numero, String rubroCliente, float volumenCarga, Date fecha, String origen, Date inicio,
             Date fin, String destino, List<PesajeDTO> pesajes) {
         this.id = id;
+        this.numero = numero;
         this.rubroCliente = rubroCliente;
         this.volumenCarga = volumenCarga;
         this.fecha = fecha;
@@ -110,5 +113,13 @@ public class GuiaDeViajeDTO {
 
     public void setPesajes(List<PesajeDTO> pesajes) {
         this.pesajes = pesajes;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 }

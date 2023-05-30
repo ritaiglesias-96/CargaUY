@@ -1,9 +1,6 @@
 package tse.java.service.impl;
 
-import tse.java.dto.ChoferDTO;
-import tse.java.dto.FuncionarioDTO;
-import tse.java.dto.GuiaDeViajeDTO;
-import tse.java.dto.ResponsableDTO;
+import tse.java.dto.*;
 import tse.java.entity.*;
 import tse.java.model.Ciudadanos;
 import tse.java.persistance.IChoferDAO;
@@ -17,6 +14,7 @@ import tse.java.service.ICiudadanosService;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Named;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Stateless
