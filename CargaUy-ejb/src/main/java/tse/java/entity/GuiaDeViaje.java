@@ -53,6 +53,18 @@ public class GuiaDeViaje {
 
     public GuiaDeViaje(){}
 
+    public GuiaDeViaje(GuiaDeViajeDTO guia){
+        this.id = guia.getId();
+        this.pesajes = procesarListaPesajes(guia.getPesajes());
+        this.fin = guia.getFin();
+        this.destino = guia.getDestino();
+        this.fecha = guia.getFecha();
+        this.inicio = guia.getInicio();
+        this.origen = guia.getOrigen();
+        this.rubroCliente = guia.getRubroCliente();
+        this.volumenCarga = guia.getVolumenCarga();
+    }
+
     public Long getId() {
         return id;
     }
@@ -127,6 +139,15 @@ public class GuiaDeViaje {
 
     public GuiaDeViajeDTO darDto(){
         return new GuiaDeViajeDTO(id, rubroCliente, volumenCarga, fecha, origen, inicio, fin, destino, procesarLista());
+    }
+
+    public List<Pesaje> procesarListaPesajes(List<PesajeDTO> pesajes){
+        List<Pesaje> result = new ArrayList<Pesaje>();
+        for(PesajeDTO p:pesajes){
+            Pesaje pnew = new Pesaje(p);
+            result.add(pnew);
+        }
+        return result;
     }
 
     

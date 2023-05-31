@@ -12,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Administrador;
@@ -62,6 +63,15 @@ public class VehiculosService implements IVehiculosService{
         Logger.getLogger(VehiculosService.class.getName()).log(Level.INFO, msg);
         VehiculoDTO v = vehiculosDAO.obtenerVehiculoId(id);
         return guiasDeViajeService.listarGuiasDeViajesPorFecha(v.getGuiasDeViaje(), fecha);
+    }
+
+    @Override
+    public boolean viajeContieneGuia(VehiculoDTO v, GuiaDeViajeDTO g) {
+        List<GuiaDeViajeDTO> guias = v.getGuiasDeViaje();
+        for(GuiaDeViajeDTO g1:guias)
+            if(g1.getId().equals(g))
+                return true;
+        return false;
     }
 
     public VehiculoDTO obtenerVehiculoPorId(Long id) {
