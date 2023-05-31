@@ -166,40 +166,4 @@ public class gestionGuiasDeViajeEndpoint {
         return Response.status(Response.Status.OK).build();
     }
 
-    @GET
-    @Path("/vehiculos")
-    public Response listarGuiasDeVehiculo(@QueryParam("matricula") String mat, @QueryParam("pais") String pais){
-        VehiculoDTO v = vs.obtenerVehiculoMatriculaPais(mat, pais);
-        if(v==null)
-            return Response.status(Response.Status.NOT_FOUND).build();
-        else
-            return Response.status(Response.Status.OK).entity(v.getGuiasDeViaje()).build();
-
-    }
-
-    @GET
-    public Response cargarDatosTest(){
-        Chofer c = new Chofer("pepe@gmail.com","1234");
-        c.setGuiasDeViaje(new ArrayList<GuiaDeViaje>());
-        cd.agregarChofer(c);
-        Chofer c2 = new Chofer("jperez@gmail.com","1999");
-        c.setGuiasDeViaje(new ArrayList<GuiaDeViaje>());
-        cd.agregarChofer(c2);
-        Responsable r = new Responsable("cavani@gmail.com","1445");
-        r.setGuiasDeViaje(new ArrayList<GuiaDeViaje>());
-        rd.agregarResponsable(r);
-        VehiculoDTO v = new VehiculoDTO(null, "ACA112", "URY", "Fiat", "Saveiro", Float.valueOf("200"), Float.valueOf("80"), new Date(), new Date(), new Date(), new ArrayList<GuiaDeViajeDTO>());
-        vd.agregarVehiculo(v);
-        /*
-        int num = gd.getNextNumeroViaje();
-        GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(null, num, "Carnes", 100, new Date(),"MVD",new Date(),new Date(),"CAN",new ArrayList<PesajeDTO>());
-        gs.crearGuiaDeViaje(dtguia);
-        ChoferDTO c2 = cd.buscarChoferPorCedula("1234");
-        List<GuiaDeViajeDTO> guias = c2.getGuiasDeViaje();
-        GuiaDeViajeDTO g = gd.buscarGuiaViajePorNumero(num);
-        guias.add(g);
-         */
-        return Response.status(Response.Status.OK).build();
-    }
-
 }
