@@ -3,10 +3,7 @@ package tse.java.service.impl;
 import tse.java.dto.*;
 import tse.java.entity.*;
 import tse.java.model.Ciudadanos;
-import tse.java.persistance.IChoferDAO;
-import tse.java.persistance.ICiudadanoDAO;
-import tse.java.persistance.IFuncionarioDAO;
-import tse.java.persistance.IResponsableDAO;
+import tse.java.persistance.*;
 import tse.java.persistance.impl.CiudadanoDAO;
 import tse.java.persistance.impl.FuncionarioDAO;
 import tse.java.service.ICiudadanosService;
@@ -28,6 +25,8 @@ public class CiudadanoService implements ICiudadanosService {
     IChoferDAO choferDAO;
     @EJB
     IResponsableDAO responsableDAO;
+    @EJB
+    IGuiaDeViajeDAO guiaDAO;
 
     @Override
     public Ciudadanos obtenerCiudadanos() {
@@ -89,5 +88,48 @@ public class CiudadanoService implements ICiudadanosService {
         guias.add(gnew);
         responsable.setGuiasDeViaje(guias);
         responsableDAO.modificarResponsable(responsable);
+    }
+
+    @Override
+    public boolean contieneGuiaViajeChofer(String cedula_chofer, int numero_viaje) {
+        ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
+        for(GuiaDeViajeDTO g : c.getGuiasDeViaje())
+            if(g.getNumero() == numero_viaje)
+                return true;
+        return false;
+    }
+
+    @Override
+    public boolean contieneGuiaViajeResponsable(String cedula_responsable, int numero_viaje) {
+        ResponsableDTO r = responsableDAO.buscarResponsablePorCedula(cedula_responsable);
+        for(GuiaDeViajeDTO g : r.getGuiasDeViaje())
+            if(g.getNumero() == numero_viaje)
+                return true;
+        return false;
+    }
+
+    @Override
+    public void borrarGuia(int numero_guia) {
+        GuiaDeViajeDTO g = guiaDAO.buscarGuiaViajePorNumero(numero_guia);
+        GuiaDeViaje gnew = guiaDAO.buscarGuiaDeViaje(g.getId());
+        for(CiudadanoDTO c:ciudadanoDAO.listarCiudadanos()){
+            if(responsableDAO.buscarResponsablePorCedula(c.getCedula())!=null){
+                if(contieneGuiaViajeResponsable(c.getCedula(),numero_guia)){
+                    Responsable r = (Responsable) ciudadanoDAO.buscarCiudadanoPorId(c.getIdCiudadano());
+                    List<GuiaDeViaje> guias = r.getGuiasDeViaje();
+                    guias.remove(gnew);
+                    r.setGuiasDeViaje(guias);
+                    responsableDAO.modificarResponsable(r);
+                }
+            } else {
+                if(contieneGuiaViajeChofer(c.getCedula(),numero_guia)){
+                    Chofer ch = (Chofer) ciudadanoDAO.buscarCiudadanoPorId(c.getIdCiudadano());
+                    List<GuiaDeViaje> guias = ch.getGuiasDeViaje();
+                    guias.remove(gnew);
+                    ch.setGuiasDeViaje(guias);
+                    choferDAO.modificarChofer(ch);
+                }
+            }
+        }
     }
 }

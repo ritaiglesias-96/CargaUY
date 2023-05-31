@@ -16,7 +16,6 @@ public interface IGuiaDeViajesService {
     public void modificarGuiaDeViaje(GuiaDeViajeDTO g);
     public List<GuiaDeViajeDTO> listarGuiasDeViajes();
     public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha);
-    public GuiaDeViajeDTO buscarGuiaDeViaje(Long id);
 
     
 }

@@ -31,9 +31,8 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
     }
 
     @Override
-    public GuiaDeViajeDTO buscarGuiaDeViaje(Long id) {
-        GuiaDeViaje g = em.find(GuiaDeViaje.class, id);
-        return g.darDto();
+    public GuiaDeViaje buscarGuiaDeViaje(Long id) {
+        return em.find(GuiaDeViaje.class, id);
     }
 
     @Override

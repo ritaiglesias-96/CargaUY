@@ -109,6 +109,15 @@ public class gestionGuiasDeViajeEndpoint {
         if(g == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numero_viaje).build();
         }
+
+        if(!is.contieneGuiaViajeChofer(c.getCedula(),g.getNumero())){
+            return Response.status(Response.Status.NOT_FOUND).entity("El chofer " + c.getCedula() + " no tiene el viaje con el identificador " + numero_viaje).build();
+        }
+
+        if(g.getFin()!=null){
+            Response.status(Response.Status.CONFLICT).entity("El viaje con el identificador " + g.getNumero() + " ya esta finalizado");
+        }
+
         g.setFin(new Date());
         gs.modificarGuiaDeViaje(g);
         return Response.status(Response.Status.OK).build();
@@ -126,20 +135,46 @@ public class gestionGuiasDeViajeEndpoint {
         if(g == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numero_viaje).build();
         }
+
+        if(!is.contieneGuiaViajeChofer(c.getCedula(),g.getNumero())){
+            return Response.status(Response.Status.NOT_FOUND).entity("El chofer " + c.getCedula() + " no tiene el viaje con el identificador " + numero_viaje).build();
+        }
+
+        if(g.getInicio()!=null){
+            Response.status(Response.Status.CONFLICT).entity("El viaje con el identificador " + g.getNumero() + " ya esta inicializado");
+        }
+
         g.setInicio(new Date());
         gs.modificarGuiaDeViaje(g);
         return Response.status(Response.Status.OK).build();
     }
 
     @DELETE
-    @Path("/borrar/{numero}")
-    public Response borrarGuia(@PathParam("numero") int numero_viaje){
+    @Path("/borrar/{cedula}/{numero}")
+    public Response borrarGuia(@PathParam("numero") int numero_viaje, @PathParam("cedula") String cedula_responsable){
         GuiaDeViajeDTO g = gd.buscarGuiaViajePorNumero(numero_viaje);
         if(g == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numero_viaje).build();
         }
+        ResponsableDTO r = rd.buscarResponsablePorCedula(cedula_responsable);
+        if(r == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe responsable con la cedula " + cedula_responsable).build();
+        }
+        vs.borrarGuia(numero_viaje);
+        is.borrarGuia(numero_viaje);
         gs.borrarGuiaDeViaje(g.getId());
         return Response.status(Response.Status.OK).build();
+    }
+
+    @GET
+    @Path("/vehiculos")
+    public Response listarGuiasDeVehiculo(@QueryParam("matricula") String mat, @QueryParam("pais") String pais){
+        VehiculoDTO v = vs.obtenerVehiculoMatriculaPais(mat, pais);
+        if(v==null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+        else
+            return Response.status(Response.Status.OK).entity(v.getGuiasDeViaje()).build();
+
     }
 
     @GET
@@ -147,6 +182,9 @@ public class gestionGuiasDeViajeEndpoint {
         Chofer c = new Chofer("pepe@gmail.com","1234");
         c.setGuiasDeViaje(new ArrayList<GuiaDeViaje>());
         cd.agregarChofer(c);
+        Chofer c2 = new Chofer("jperez@gmail.com","1999");
+        c.setGuiasDeViaje(new ArrayList<GuiaDeViaje>());
+        cd.agregarChofer(c2);
         Responsable r = new Responsable("cavani@gmail.com","1445");
         r.setGuiasDeViaje(new ArrayList<GuiaDeViaje>());
         rd.agregarResponsable(r);

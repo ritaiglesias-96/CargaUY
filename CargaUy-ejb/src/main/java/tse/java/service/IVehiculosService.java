@@ -20,4 +20,6 @@ public interface IVehiculosService {
     public List<PesajeDTO> listarGuiasDeVehiculo(Long id, Date fecha);
     public boolean viajeContieneGuia(VehiculoDTO v, GuiaDeViajeDTO g);
     public void asignarGuia(Long vehiculo_id, GuiaDeViajeDTO g);
+    public void borrarGuia(int numero_guia);
+    public GuiaDeViajeDTO buscarGuiaenVehiculos(VehiculoDTO v, GuiaDeViajeDTO g);
 }
