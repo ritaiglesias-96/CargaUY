@@ -48,12 +48,17 @@ public class ResponsableDAO implements IResponsableDAO {
 
     @Override
     public ResponsableDTO buscarResponsablePorCedula(String cedula) {
-        Query q = em.createQuery("select c from Ciudadano c where c.rol='Responsable' and c.cedula='" + cedula + "'");
+        Query q = em.createQuery("select c from Ciudadano c where c.cedula='" + cedula + "'");
         if(q.getResultList().isEmpty()) {
             return null;
         } else {
-            Responsable r = (Responsable) q.getResultList().get(0);
-            return r.darDTO();
+            Object o = q.getResultList().get(0);
+            if(o instanceof Responsable){
+                Responsable r = (Responsable) o;
+                return r.darDTO();
+            } else {
+                return null;
+            }
         }
     }
 

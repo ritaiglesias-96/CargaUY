@@ -13,6 +13,7 @@ import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.entity.GuiaDeViaje;
 import tse.java.entity.Pesaje;
+import tse.java.entity.Rubro;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -25,14 +26,13 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
 
     @Override
     public void altaGuiaDeViaje(GuiaDeViajeDTO dtg) {
-        GuiaDeViaje g = new GuiaDeViaje(dtg.getId(), dtg.getRubroCliente(), dtg.getVolumenCarga(), dtg.getFecha(), dtg.getOrigen(), dtg.getInicio(), dtg.getFin(), dtg.getDestino(), new ArrayList<Pesaje>());
+        GuiaDeViaje g = new GuiaDeViaje(dtg.getId(), dtg.getNumero(), dtg.getRubroCliente(), dtg.getVolumenCarga(), dtg.getFecha(), dtg.getOrigen(), dtg.getInicio(), dtg.getFin(), dtg.getDestino(), new ArrayList<Pesaje>());
         em.persist(g);
     }
 
     @Override
-    public GuiaDeViajeDTO buscarGuiaDeViaje(Long id) {
-        GuiaDeViaje g = em.find(GuiaDeViaje.class, id);
-        return g.darDto();
+    public GuiaDeViaje buscarGuiaDeViaje(Long id) {
+        return em.find(GuiaDeViaje.class, id);
     }
 
     @Override
@@ -64,5 +64,26 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
         gv.setVolumenCarga(dtg.getVolumenCarga());
         em.persist(gv);
     }
-    
+
+    @Override
+    public int getNextNumeroViaje() {
+        Query q = em.createQuery("select max(g.numero) from GuiaDeViaje g");
+        if(q.getResultList().get(0)==null)
+            return 1;
+        else
+            return Integer.parseInt(q.getResultList().get(0).toString())+1;
+    }
+
+    @Override
+    public GuiaDeViajeDTO buscarGuiaViajePorNumero(int numero_guia) {
+        Query q = em.createQuery("select g from GuiaDeViaje g where g.numero=" + numero_guia);
+        if(q.getResultList().isEmpty()) {
+            return null;
+        } else {
+            GuiaDeViaje g = (GuiaDeViaje) q.getResultList().get(0);
+            return g.darDto();
+        }
+    }
+
+
 }
