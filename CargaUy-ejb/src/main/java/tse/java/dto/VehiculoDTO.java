@@ -17,6 +17,7 @@ public class VehiculoDTO {
     private Float peso;
     private Float capacidadCarga;
     private Date fechaFinITV;
+    private Long pnc;
     private Date fechaInicioPNC;
     private Date fechaFinPNC;
     private List<GuiaDeViajeDTO> guiasDeViaje = new ArrayList<GuiaDeViajeDTO>();
@@ -24,7 +25,7 @@ public class VehiculoDTO {
     
 
     public VehiculoDTO(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViajeDTO> guiasDeViaje) {
+            Date fechaFinITV, Long pnc, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViajeDTO> guiasDeViaje) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -33,6 +34,7 @@ public class VehiculoDTO {
         this.peso = peso;
         this.capacidadCarga = capacidadCarga;
         this.fechaFinITV = fechaFinITV;
+        this.pnc = pnc;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
         this.guiasDeViaje = guiasDeViaje;
@@ -47,6 +49,7 @@ public class VehiculoDTO {
         this.peso = v.getPeso();
         this.capacidadCarga = v.getCapacidadCarga();
         this.fechaFinITV = v.getFechaFinITV();
+        this.pnc = v.getPnc();
         this.fechaInicioPNC = v.getFechaInicioPNC();
         this.fechaFinPNC = v.getFechaFinPNC();
         this.guiasDeViaje = procesarLista(v.getGuiasDeViaje());
@@ -134,6 +137,10 @@ public class VehiculoDTO {
     public void setFechaFinPNC(Date fechaFinPNC) {
         this.fechaFinPNC = fechaFinPNC;
     }
+
+    public Long getPnc() { return pnc; }
+
+    public void setPnc(Long pnc) { this.pnc = pnc; }
 
     public List<GuiaDeViajeDTO> getGuiasDeViaje() {
         return guiasDeViaje;

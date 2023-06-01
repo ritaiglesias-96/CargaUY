@@ -72,4 +72,10 @@ public class EmpresasService implements IEmpresasService {
         }
     }
 
+    public List<VehiculoDTO> listarVehiculos(int id){
+        EmpresaDTO empresa = obtenerEmpresa(id);
+        List<VehiculoDTO> vehiculos = empresa.getVehiculos();
+        return vehiculos;
+    }
+
 }

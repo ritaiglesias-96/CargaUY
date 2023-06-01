@@ -26,15 +26,17 @@ public class Vehiculo implements Serializable {
     private Float capacidadCarga;
     @Temporal(TemporalType.DATE)
     private Date fechaFinITV;
+    private Long pnc;
+
     @Temporal(TemporalType.DATE)
     private Date fechaInicioPNC;
     @Temporal(TemporalType.DATE)
     private Date fechaFinPNC;
     @OneToMany
-    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();    
+    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();
 
     public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViaje> guiasDeViaje) {
+            Date fechaFinITV, Long pnc, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViaje> guiasDeViaje) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -43,6 +45,7 @@ public class Vehiculo implements Serializable {
         this.peso = peso;
         this.capacidadCarga = capacidadCarga;
         this.fechaFinITV = fechaFinITV;
+        this.pnc = pnc;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
         this.guiasDeViaje = guiasDeViaje;
@@ -56,6 +59,7 @@ public class Vehiculo implements Serializable {
         this.peso = vehiculo.getPeso();
         this.capacidadCarga = vehiculo.getCapacidadCarga();
         this.fechaFinITV = vehiculo.getFechaFinITV();
+        this.pnc = vehiculo.getPnc();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
         this.guiasDeViaje = procesarLista(vehiculo.getGuiasDeViaje());
@@ -148,8 +152,16 @@ public class Vehiculo implements Serializable {
         this.guiasDeViaje = guiasDeViaje;
     }
 
+    public Long getPnc() {
+        return pnc;
+    }
+
+    public void setPnc(Long pnc) {
+        this.pnc = pnc;
+    }
+
     public VehiculoDTO darDto(){
-        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, fechaInicioPNC, fechaFinPNC, guiasDeViaje);
+        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, pnc, fechaInicioPNC, fechaFinPNC, guiasDeViaje);
         return new VehiculoDTO(v);
     }
 
