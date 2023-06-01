@@ -23,7 +23,7 @@ public abstract class Ciudadano  implements Serializable {
     @Column(unique = true)
     private String cedula;
 
-    @OneToMany
+    @ManyToMany
     private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();
 
     public Ciudadano() {
@@ -74,4 +74,6 @@ public abstract class Ciudadano  implements Serializable {
     public void setGuiasDeViaje(List<GuiaDeViaje> guiasDeViaje) {
         this.guiasDeViaje = guiasDeViaje;
     }
+
+    public abstract CiudadanoDTO darDTO();
 }

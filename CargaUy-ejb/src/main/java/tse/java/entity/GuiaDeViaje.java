@@ -18,6 +18,8 @@ public class GuiaDeViaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private int numero;
+
     private String rubroCliente;
 
     private float volumenCarga;
@@ -38,9 +40,10 @@ public class GuiaDeViaje {
     @OneToMany
     private List<Pesaje> pesajes = new ArrayList<Pesaje>();
 
-    public GuiaDeViaje(Long id, String rubroCliente, float volumenCarga, Date fecha, String origen, Date inicio, Date fin,
+    public GuiaDeViaje(Long id, int numero, String rubroCliente, float volumenCarga, Date fecha, String origen, Date inicio, Date fin,
             String destino, List<Pesaje> pesajes) {
         this.id = id;
+        this.numero = numero;
         this.rubroCliente = rubroCliente;
         this.volumenCarga = volumenCarga;
         this.fecha = fecha;
@@ -55,6 +58,7 @@ public class GuiaDeViaje {
 
     public GuiaDeViaje(GuiaDeViajeDTO guia){
         this.id = guia.getId();
+        this.numero = guia.getNumero();
         this.pesajes = procesarListaPesajes(guia.getPesajes());
         this.fin = guia.getFin();
         this.destino = guia.getDestino();
@@ -129,6 +133,22 @@ public class GuiaDeViaje {
         this.destino = destino;
     }
 
+    public List<Pesaje> getPesajes() {
+        return pesajes;
+    }
+
+    public void setPesajes(List<Pesaje> pesajes) {
+        this.pesajes = pesajes;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
     public List<PesajeDTO> procesarLista(){
         List<PesajeDTO> result = new ArrayList<PesajeDTO>();
         for(Pesaje p:pesajes){
@@ -138,7 +158,7 @@ public class GuiaDeViaje {
     }
 
     public GuiaDeViajeDTO darDto(){
-        return new GuiaDeViajeDTO(id, rubroCliente, volumenCarga, fecha, origen, inicio, fin, destino, procesarLista());
+        return new GuiaDeViajeDTO(id, numero, rubroCliente, volumenCarga, fecha, origen, inicio, fin, destino, procesarLista());
     }
 
     public List<Pesaje> procesarListaPesajes(List<PesajeDTO> pesajes){
