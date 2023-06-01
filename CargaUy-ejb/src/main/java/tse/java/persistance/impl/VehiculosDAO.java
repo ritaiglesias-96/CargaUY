@@ -64,4 +64,12 @@ public class VehiculosDAO implements IVehiculosDAO {
             return new VehiculoDTO(v);
         }
     }
+
+    public Long getNextIdVehiculo(){
+        Query q = em.createQuery("select max(g.id) from GuiaDeViaje g");
+        if(q.getResultList().get(0)==null)
+            return (long) 1;
+        else
+            return Long.parseLong(q.getResultList().get(0).toString())+1;
+    }
 }

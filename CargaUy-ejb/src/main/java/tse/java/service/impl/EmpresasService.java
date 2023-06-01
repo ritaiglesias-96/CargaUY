@@ -4,8 +4,10 @@ package tse.java.service.impl;
 import tse.java.dto.EmpresaDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
+import tse.java.entity.Vehiculo;
 import tse.java.model.Empresas;
 import tse.java.persistance.IEmpresasDAO;
+import tse.java.persistance.IVehiculosDAO;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IVehiculosService;
 
@@ -28,6 +30,9 @@ public class EmpresasService implements IEmpresasService {
 
     @EJB
     IVehiculosService vehiculosService;
+
+    @EJB
+    IVehiculosDAO vehiculosDAO;
 
     @Override
     public Empresas obtenerEmpresas() {
@@ -71,5 +76,12 @@ public class EmpresasService implements IEmpresasService {
             return new ArrayList<PesajeDTO>();
         }
     }
+
+    public void agregarVehiculoAEmpresa(int idEmpresa, VehiculoDTO vehiculo){
+        EmpresaDTO e = obtenerEmpresa(idEmpresa);
+        List<VehiculoDTO> vehiculos = e.getVehiculos();
+        vehiculos.add(vehiculo);
+        e.setVehiculos(vehiculos);
+        empresasDAO.modificarEmpresa(e);}
 
 }

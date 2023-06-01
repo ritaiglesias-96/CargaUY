@@ -78,6 +78,4 @@ public class VehiculosService implements IVehiculosService{
         return vehiculosDAO.obtenerVehiculoId(id);
     }
 
-
-
 }

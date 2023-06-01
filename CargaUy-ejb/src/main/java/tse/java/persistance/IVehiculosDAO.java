@@ -14,4 +14,5 @@ public interface IVehiculosDAO {
     public void eliminarVehiculo(Long id);
     public void agregarVehiculo(VehiculoDTO vehiculo);
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
+    public Long getNextIdVehiculo();
 }

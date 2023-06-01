@@ -21,6 +21,5 @@ public interface IVehiculosService {
     public void eliminarVehiculo(Long id);
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
     public List<PesajeDTO> listarGuiasDeVehiculo(Long id, Date fecha);
-
     public boolean viajeContieneGuia(VehiculoDTO v, GuiaDeViajeDTO g);
 }
