@@ -6,7 +6,7 @@ import tse.java.dto.UsuarioDTO;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @DiscriminatorValue("administrador")

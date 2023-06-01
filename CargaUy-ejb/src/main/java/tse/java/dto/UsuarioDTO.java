@@ -2,19 +2,22 @@ package tse.java.dto;
 
 import tse.java.enumerated.TipoUsuario;
 import tse.java.entity.Usuario;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class UsuarioDTO {
     private int idUsuario;
     private String nombre;
     private String apellido;
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private String correo;
     private String username;
     private String password;
     private TipoUsuario tipo;
 
-    public UsuarioDTO(String nombre, String apellido, Date fechaNacimiento, String correo, String username, String password, TipoUsuario tipo) {
+    public UsuarioDTO(String nombre, String apellido, LocalDate fechaNacimiento, String correo, String username, String password, TipoUsuario tipo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
@@ -28,9 +31,10 @@ public class UsuarioDTO {
     }
 
     public UsuarioDTO(Usuario usr, TipoUsuario tipo) {
+        this.idUsuario = usr.getIdUsuario();
         this.nombre = usr.getNombre();
         this.apellido = usr.getApellido();
-        this.fechaNacimiento = usr.getFechaNacimiento();
+        this.fechaNacimiento = usr.getFechaNacimiento().toLocalDate();
         this.correo = usr.getCorreo();
         this.username = usr.getUsername();
         this.password = usr.getPassword();
@@ -61,11 +65,11 @@ public class UsuarioDTO {
         this.apellido = apellido;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

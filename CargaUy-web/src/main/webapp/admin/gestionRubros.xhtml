@@ -5,7 +5,7 @@
 
 <h:head>
     <title>Gestion de Rubros</title>
-    <link href="../styles/main.css" rel="stylesheet"/>
+    <link href="./../styles/main.css" rel="stylesheet"/>
 </h:head>
 
 <h:body>
@@ -21,9 +21,12 @@
             </div>
         </div>
         <div class="ui-g-12 ui-md-3">
-            <h3>Opciones</h3>
-            <p:link outcome="gestionRubros" value="Gestionar Rubros"/>
-            <p:link outcome="gestionUsuarios" value="Gestionar Usuarios"/>
+            <p:menu style="width: 100%">
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Gestionar usuarios" url="gestionUsuarios.xhtml" icon="pi pi-users"/>
+                    <p:menuitem value="Gestionar Rubros" url="gestionRubros.xhtml" icon="pi pi-star"/>
+                </p:submenu>
+            </p:menu>
         </div>
         <div class="ui-g-12 ui-md-9 ui-g-nopad">
             <div class="ui-g-12 ui-g-nopad">

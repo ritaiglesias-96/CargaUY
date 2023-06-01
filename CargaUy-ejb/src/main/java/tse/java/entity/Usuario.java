@@ -4,7 +4,8 @@ import tse.java.dto.UsuarioDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.sql.Date;
 
 @Entity
 @Table(name="\"Usuario\"")
@@ -19,12 +20,12 @@ public abstract class Usuario implements Serializable {
     private int idUsuario;
     private String nombre;
     private String apellido;
-    @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
 
     private String correo;
 
     /** atributos login **/
+
     private String username;
 
     private String password;
@@ -55,7 +56,7 @@ public abstract class Usuario implements Serializable {
         super();
         this.nombre = usuario.getNombre();
         this.apellido = usuario.getApellido();
-        this.fechaNacimiento = this.getFechaNacimiento();
+        this.fechaNacimiento = Date.valueOf(usuario.getFechaNacimiento());
         this.correo = usuario.getCorreo();
         this.username = usuario.getUsername();
         this.password = usuario.getPassword();

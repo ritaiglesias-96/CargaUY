@@ -8,7 +8,7 @@
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Administrador</title>
-    <link href="../styles/main.css" rel="stylesheet"/>
+    <link href="./../styles/main.css" rel="stylesheet"/>
 </h:head>
 <h:body>
     <div class="ui-g">
@@ -18,22 +18,22 @@
         <div class="ui-g-12 ui-md-9 ui-g-nopad">
             <div class="ui-g-12">
                 <div style="justify-content: flex-end;display: flex;">
-                    <p:commandButton action="#{UserManager.logout}" value="Salir" class="loginButton" icon="pi pi-sign-out" />
+                    <p:commandButton action="#{UserManager.logout}" value="Salir" class="loginButton"
+                                     icon="pi pi-sign-out"/>
                 </div>
             </div>
         </div>
         <div class="ui-g-12 ui-md-3">
-            <h3>Opciones</h3>
-            <p:link outcome="gestionRubros" value="Gestionar Rubros"/>
-            <p:link outcome="gestionUsuarios" value="Gestionar Usuarios"/>
+            <p:menu style="width: 100%">
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Gestionar usuarios" url="gestionUsuarios.xhtml" icon="pi pi-users"/>
+                    <p:menuitem value="Gestionar Rubros" url="gestionRubros.xhtml" icon="pi pi-star"/>
+                </p:submenu>
+            </p:menu>
         </div>
         <div class="ui-g-12 ui-md-9 ui-g-nopad">
             <div class="ui-g-12 ui-g-nopad">
-                <div class="ui-g">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet, orci nec dictum convallis, ligula mauris vestibulum turpis, nec varius tortor quam at diam. Nullam a viverra nibh. In tincidunt tempor lectus quis vulputate. Pellentesque nec dui aliquam, lobortis est in, lobortis ante
-                    Maecenas vel nisi aliquet, vulputate tortor id, laoreet massa. Maecenas mattis tristique bibendum. Suspendisse vel mi dictum, vestibulum lacus quis, pulvinar quam. Proin vulputate, nibh at finibus varius, leo eros lacinia elit, nec blandit odio tellus a justo. Donec nec ex auctor, tristique nulla nec, rutrum sapien.
-                    Proin efficitur in leo eget ornare. Nam vestibulum neque sed velit sagittis sodales. Sed scelerisque hendrerit magna a hendrerit. Cras tempor sem at justo pharetra convallis. Curabitur vel sodales purus. Vestibulum interdum facilisis nulla imperdiet suscipit. Quisque lectus felis, condimentum eget hendrerit sit amet.
-                </div>
+
             </div>
         </div>
         <div class="ui-g-12 footer">

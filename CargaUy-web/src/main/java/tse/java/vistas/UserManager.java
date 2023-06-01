@@ -23,8 +23,6 @@ public class UserManager implements Serializable {
 
     @EJB
     ISessionService iSessionService;
-    @EJB
-    IUsuariosService iUsuariosService;
 
     private static final HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 
