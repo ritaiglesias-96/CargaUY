@@ -71,16 +71,12 @@ public class gestionVehiculosEndpoint {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe responsable con la cedula " + dtAlta.getCedula_responsable()).build();
         }
 
-
         VehiculoDTO v = new VehiculoDTO(null, dtAlta.getMatricula(), dtAlta.getPais(), dtAlta.getMarca(), dtAlta.getModelo(), dtAlta.getPeso(), dtAlta.getCapacidadCarga(),
                 dtAlta.getFechaFinITV(), dtAlta.getFechaFinPNC(), dtAlta.getFechaInicioPNC(), null);
         vs.agregarVehiculo(v);
         v = vs.obtenerVehiculoMatriculaPais(dtAlta.getMatricula(), dtAlta.getPais());
         Long idVehiculo = v.getId();
         es.agregarVehiculoAEmpresa(dtAlta.getIdEmpresa(), v);
-        Vehiculo vaux = vd.obtenerVehiculoId(idVehiculo);
-        VehiculoDTO vehiculo = vaux.darDto();
-        es.agregarVehiculoAEmpresa(e.getId(), vehiculo);
         return Response.status(Response.Status.CREATED).build();
     }
 
