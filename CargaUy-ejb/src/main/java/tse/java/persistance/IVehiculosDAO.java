@@ -1,6 +1,7 @@
 package tse.java.persistance;
 
 import tse.java.dto.VehiculoDTO;
+import tse.java.entity.Vehiculo;
 
 import javax.ejb.Local;
 import java.util.ArrayList;
@@ -9,8 +10,8 @@ import java.util.ArrayList;
 public interface IVehiculosDAO {
 
     public ArrayList<VehiculoDTO> obtenerVehiculos();
-    public VehiculoDTO obtenerVehiculoId(Long id);
-    public void modificarVehiculo(VehiculoDTO vehiculo);
+    public Vehiculo obtenerVehiculoId(Long id);
+    public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculo);
     public void eliminarVehiculo(Long id);
     public void agregarVehiculo(VehiculoDTO vehiculo);
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);

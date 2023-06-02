@@ -30,9 +30,9 @@ public class VehiculosDAO implements IVehiculosDAO {
     }
 
     @Override
-    public VehiculoDTO obtenerVehiculoId(Long id) throws NoResultException {
+    public Vehiculo obtenerVehiculoId(Long id) throws NoResultException {
         Vehiculo result = em.find(Vehiculo.class, id);
-        return new VehiculoDTO(result);
+        return result;
     }
 
     @Override

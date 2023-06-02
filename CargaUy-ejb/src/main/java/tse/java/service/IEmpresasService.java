@@ -30,4 +30,8 @@ public interface IEmpresasService {
 
     public void agregarVehiculoAEmpresa(int idEmpresa, VehiculoDTO vehiculo);
 
+    public boolean empresaContieneVehiculo(EmpresaDTO e, VehiculoDTO v);
+
+    public void borrarVehiculo(Long id);
+
 }

@@ -65,7 +65,8 @@ public class VehiculosService implements IVehiculosService{
     public List<PesajeDTO> listarGuiasDeVehiculo(Long id, Date fecha) {
         String msg = "Me pasaron por rest los parametros: idvehiculo=" + id + ", fechaViajes=" + fecha;
         Logger.getLogger(VehiculosService.class.getName()).log(Level.INFO, msg);
-        VehiculoDTO v = vehiculosDAO.obtenerVehiculoId(id);
+        Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(id);
+        VehiculoDTO v = vehiculo.darDto();
         return guiasDeViajeService.listarGuiasDeViajesPorFecha(v.getGuiasDeViaje(), fecha);
     }
 
@@ -79,11 +80,13 @@ public class VehiculosService implements IVehiculosService{
     }
 
     public VehiculoDTO obtenerVehiculoPorId(Long id) {
-        return vehiculosDAO.obtenerVehiculoId(id);
+        Vehiculo v = vehiculosDAO.obtenerVehiculoId(id);
+        return v.darDto();
     }
     @Override
     public void asignarGuia(Long vehiculo_id, GuiaDeViajeDTO g) {
-        VehiculoDTO v = vehiculosDAO.obtenerVehiculoId(vehiculo_id);
+        Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(vehiculo_id);
+        VehiculoDTO v = vehiculo.darDto();
         List<GuiaDeViajeDTO> guias = v.getGuiasDeViaje();
         guias.add(g);
         v.setGuiasDeViaje(guias);

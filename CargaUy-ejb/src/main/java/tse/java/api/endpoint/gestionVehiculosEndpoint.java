@@ -17,6 +17,7 @@ import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.logging.Logger;
 
 @RequestScoped
 @Path("/vehiculos")
@@ -70,13 +71,16 @@ public class gestionVehiculosEndpoint {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe responsable con la cedula " + dtAlta.getCedula_responsable()).build();
         }
 
-        Long idVehiculo = vd.getNextIdVehiculo();
+
         VehiculoDTO v = new VehiculoDTO(null, dtAlta.getMatricula(), dtAlta.getPais(), dtAlta.getMarca(), dtAlta.getModelo(), dtAlta.getPeso(), dtAlta.getCapacidadCarga(),
                 dtAlta.getFechaFinITV(), dtAlta.getFechaFinPNC(), dtAlta.getFechaInicioPNC(), null);
         vs.agregarVehiculo(v);
+        v = vs.obtenerVehiculoMatriculaPais(dtAlta.getMatricula(), dtAlta.getPais());
+        Long idVehiculo = v.getId();
         es.agregarVehiculoAEmpresa(dtAlta.getIdEmpresa(), v);
-        VehiculoDTO vehiculoDTO = vd.obtenerVehiculoId(idVehiculo);
-        es.agregarVehiculoAEmpresa(e.getId(), vehiculoDTO);
+        Vehiculo vaux = vd.obtenerVehiculoId(idVehiculo);
+        VehiculoDTO vehiculo = vaux.darDto();
+        es.agregarVehiculoAEmpresa(e.getId(), vehiculo);
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -94,12 +98,21 @@ public class gestionVehiculosEndpoint {
     }
 
     @DELETE
-    @Path("/{id}")
-    public Response eliminarVehiculo(@PathParam("id") Long id, Vehiculo vehiculo){
+    @Path("/eliminar/{idEmpresa}/{idVehiculo}")
+    public Response eliminarVehiculo(@PathParam("idEmpresa") int idEmpresa, @PathParam("idVehiculo") Long idVehiculo, Vehiculo vehiculo){
+        VehiculoDTO v = vs.obtenerVehiculoPorId(idVehiculo);
+        if(v == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo").build();
+        }
+        EmpresaDTO e = es.obtenerEmpresa(idEmpresa);
+        if(e == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con id " + idEmpresa).build();
+        }
         try{
-            vs.eliminarVehiculo(id);
+            es.borrarVehiculo(idVehiculo);
+            vs.eliminarVehiculo(idVehiculo);
             return Response.status(Response.Status.OK).entity(vehiculo).build();
-        } catch (NoResultException e){
+        } catch (NoResultException error){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
