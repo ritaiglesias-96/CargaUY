@@ -5,6 +5,9 @@ import tse.java.enumerated.RolCiudadano;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="\"Ciudadano\"")
 @DiscriminatorColumn(name = "rol")
@@ -20,6 +23,8 @@ public abstract class Ciudadano  implements Serializable {
     @Column(unique = true)
     private String cedula;
 
+    @ManyToMany
+    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();
 
     public Ciudadano() {
         super();
@@ -29,6 +34,13 @@ public abstract class Ciudadano  implements Serializable {
         super();
         this.email = email;
         this.cedula = cedula;
+    }
+
+    public Ciudadano(String email, String cedula, List<GuiaDeViaje> guias) {
+        super();
+        this.email = email;
+        this.cedula = cedula;
+        this.guiasDeViaje = guias;
     }
 
     public int getIdCiudadano() {
@@ -55,4 +67,13 @@ public abstract class Ciudadano  implements Serializable {
         this.cedula = cedula;
     }
 
+    public List<GuiaDeViaje> getGuiasDeViaje() {
+        return guiasDeViaje;
+    }
+
+    public void setGuiasDeViaje(List<GuiaDeViaje> guiasDeViaje) {
+        this.guiasDeViaje = guiasDeViaje;
+    }
+
+    public abstract CiudadanoDTO darDTO();
 }

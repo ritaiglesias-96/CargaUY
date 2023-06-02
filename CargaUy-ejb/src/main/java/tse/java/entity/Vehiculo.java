@@ -1,5 +1,7 @@
 package tse.java.entity;
 
+import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -56,6 +58,20 @@ public class Vehiculo implements Serializable {
         this.fechaFinITV = vehiculo.getFechaFinITV();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
+        this.guiasDeViaje = procesarLista(vehiculo.getGuiasDeViaje());
+    }
+
+    public void modificarVehiculo(VehiculoDTO vehiculo) {
+        this.matricula = vehiculo.getMatricula();
+        this.pais = vehiculo.getPais();
+        this.marca = vehiculo.getMarca();
+        this.modelo = vehiculo.getModelo();
+        this.peso = vehiculo.getPeso();
+        this.capacidadCarga = vehiculo.getCapacidadCarga();
+        this.fechaFinITV = vehiculo.getFechaFinITV();
+        this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
+        this.fechaFinPNC = vehiculo.getFechaFinPNC();
+        this.guiasDeViaje = procesarLista(vehiculo.getGuiasDeViaje());
     }
 
     public Vehiculo() {
@@ -148,6 +164,15 @@ public class Vehiculo implements Serializable {
     public VehiculoDTO darDto(){
         Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, fechaInicioPNC, fechaFinPNC, guiasDeViaje);
         return new VehiculoDTO(v);
+    }
+
+    public List<GuiaDeViaje> procesarLista(List<GuiaDeViajeDTO> guias){
+        List<GuiaDeViaje> result = new ArrayList<GuiaDeViaje>();
+        for(GuiaDeViajeDTO g : guias){
+            GuiaDeViaje gnew = new GuiaDeViaje(g);
+            result.add(gnew);
+        }
+        return result;
     }
 
 }

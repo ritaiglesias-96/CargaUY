@@ -1,9 +1,7 @@
 package tse.java.persistance.impl;
 
-import tse.java.entity.Administrador;
-import tse.java.entity.Chofer;
-import tse.java.entity.Ciudadano;
-import tse.java.entity.Empresa;
+import tse.java.dto.ChoferDTO;
+import tse.java.entity.*;
 import tse.java.persistance.IChoferDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -43,6 +41,21 @@ public class ChoferDAO implements IChoferDAO {
         Chofer c = em.find(Chofer.class,chofer.getIdCiudadano());
         if(c!=null){
             em.remove(c);
+        }
+    }
+
+    public ChoferDTO buscarChoferPorCedula(String cedula){
+        Query q = em.createQuery("select c from Ciudadano c where c.cedula='" + cedula + "'");
+        if(q.getResultList().isEmpty()) {
+            return null;
+        } else {
+            Object o = q.getResultList().get(0);
+            if(o instanceof Chofer){
+                Chofer c = (Chofer) o;
+                return c.darDTO();
+            } else {
+                return null;
+            }
         }
     }
 }

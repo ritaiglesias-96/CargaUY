@@ -4,11 +4,14 @@ package tse.java.dto;
 import java.time.LocalDateTime;
 
 public class PesajeDTO {
+
+    private Long id;
     private double latitud, longuitud;
     private LocalDateTime fecha;
     private float carga;
 
-    public PesajeDTO(double latitud, double longuitud, LocalDateTime fecha, float carga) {
+    public PesajeDTO(Long id, double latitud, double longuitud, LocalDateTime fecha, float carga) {
+        this.id = id;
         this.latitud = latitud;
         this.longuitud = longuitud;
         this.fecha = fecha;
@@ -16,6 +19,14 @@ public class PesajeDTO {
     }
 
     public PesajeDTO(){}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public double getLatitud() {
         return latitud;
