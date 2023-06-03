@@ -1,12 +1,16 @@
 package tse.java.dto;
 
+import tse.java.entity.GuiaDeViaje;
 import tse.java.entity.Vehiculo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class VehiculoDTO {
     private Long id;
     private String matricula;
+    private String pais;
     private String marca;
     private String modelo;
     private Float peso;
@@ -14,10 +18,15 @@ public class VehiculoDTO {
     private Date fechaFinITV;
     private Date fechaInicioPNC;
     private Date fechaFinPNC;
+    private List<GuiaDeViajeDTO> guiasDeViaje = new ArrayList<GuiaDeViajeDTO>();
 
-    public VehiculoDTO(Long id, String matricula, String marca, String modelo, Float peso, Float capacidadCarga, Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC) {
+    
+
+    public VehiculoDTO(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
+            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViajeDTO> guiasDeViaje) {
         this.id = id;
         this.matricula = matricula;
+        this.pais = pais;
         this.marca = marca;
         this.modelo = modelo;
         this.peso = peso;
@@ -25,11 +34,13 @@ public class VehiculoDTO {
         this.fechaFinITV = fechaFinITV;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
+        this.guiasDeViaje = guiasDeViaje;
     }
 
     public VehiculoDTO(Vehiculo v) {
         this.id = v.getId();
         this.matricula = v.getMatricula();
+        this.pais = v.getPais();
         this.marca = v.getMarca();
         this.modelo = v.getModelo();
         this.peso = v.getPeso();
@@ -37,6 +48,7 @@ public class VehiculoDTO {
         this.fechaFinITV = v.getFechaFinITV();
         this.fechaInicioPNC = v.getFechaInicioPNC();
         this.fechaFinPNC = v.getFechaFinPNC();
+        this.guiasDeViaje = procesarLista(v.getGuiasDeViaje());
     }
 
     public VehiculoDTO() {
@@ -64,6 +76,14 @@ public class VehiculoDTO {
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     public String getModelo() {
@@ -113,4 +133,21 @@ public class VehiculoDTO {
     public void setFechaFinPNC(Date fechaFinPNC) {
         this.fechaFinPNC = fechaFinPNC;
     }
+
+    public List<GuiaDeViajeDTO> getGuiasDeViaje() {
+        return guiasDeViaje;
+    }
+
+    public void setGuiasDeViaje(List<GuiaDeViajeDTO> guiasDeViaje) {
+        this.guiasDeViaje = guiasDeViaje;
+    }
+    
+    public List<GuiaDeViajeDTO> procesarLista(List<GuiaDeViaje> guias){
+        List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
+        for(GuiaDeViaje g:guias){
+            result.add(g.darDto());
+        }
+        return result;
+    }
+
 }

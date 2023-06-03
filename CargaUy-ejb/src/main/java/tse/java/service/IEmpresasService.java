@@ -1,8 +1,15 @@
 package tse.java.service;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.ejb.Local;
 
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.PesajeDTO;
+import tse.java.dto.VehiculoDTO;
+import tse.java.entity.Vehiculo;
 import tse.java.model.Empresas;
 
 
@@ -18,5 +25,13 @@ public interface IEmpresasService {
     public void modificarEmpresa(EmpresaDTO empresaDTO);
 
     public void eliminarEmpresa(EmpresaDTO empresaDTO);
+
+    public List<PesajeDTO> listarGuias(int numero_empresa, String matricula, String pais, Date fecha);
+
+    public void agregarVehiculoAEmpresa(int idEmpresa, VehiculoDTO vehiculo);
+
+    public boolean empresaContieneVehiculo(EmpresaDTO e, VehiculoDTO v);
+
+    public void borrarVehiculo(Long id);
 
 }
