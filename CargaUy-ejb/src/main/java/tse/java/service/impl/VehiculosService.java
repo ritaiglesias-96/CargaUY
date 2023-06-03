@@ -86,5 +86,17 @@ public class VehiculosService implements IVehiculosService{
         return null;
     }
 
+    @Override
+    public VehiculoDTO buscarVehiculoPorGuia(int numero_guia) {
+        for(VehiculoDTO v:vehiculosDAO.obtenerVehiculos()){
+            for(GuiaDeViajeDTO g:v.getGuiasDeViaje()) {
+                if(g.getNumero()==numero_guia) {
+                    return v;
+                }
+            }
+        }
+        return null;
+    }
+
 
 }
