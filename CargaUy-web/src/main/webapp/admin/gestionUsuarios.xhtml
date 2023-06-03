@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Gestion de Usuarios</title>
+    <link href="./../styles/main.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-3">
+            <h1>CargaUy Backoffice - #{UserManager.currentUser.username}</h1>
+        </div>
+        <div class="ui-g-12 ui-md-9 ui-g-nopad">
+            <div class="ui-g-12">
+                <div style="justify-content: flex-end;display: flex;" class="log">
+                    <p:commandButton action="#{UserManager.logout}" value="Salir" class="loginButton"
+                                     icon="pi pi-sign-out"/>
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-2">
+            <p:menu style="width: 100%">
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Gestionar usuarios" url="gestionUsuarios.xhtml" icon="pi pi-users"/>
+                    <p:menuitem value="Gestionar Rubros" url="gestionRubros.xhtml" icon="pi pi-star"/>
+                </p:submenu>
+            </p:menu>
+        </div>
+        <div class="ui-g-12 ui-md-10 ui-g-nopad">
+            <div class="ui-g-12">
+                <div class="ui-g">
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true"/>
+
+                        <h:outputText>Listado de usuarios</h:outputText>
+
+                        <p:dataTable value="#{gestionarUsuarios.getListaUsuarios()}" var="usuario" editable="true">
+
+                            <p:ajax event="rowEdit" listener="#{gestionarUsuarios.onRowEdit}" update=":form:msgs"/>
+                            <p:ajax event="rowEditCancel" listener="#{gestionarUsuarios.onRowCancel}"
+                                    update=":form:msgs"/>
+
+                            <p:column headerText="Nombre">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{usuario.nombre}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="nombreInput" value="#{usuario.nombre}" style="width:100%" />
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Apellido">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{usuario.apellido}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="apellidoInput" value="#{usuario.apellido}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Tipo de Usuario">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{usuario.tipo}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu id="typeInput" value="#{usuario.tipo}" disabled="true">
+                                            <f:selectItem itemLabel="Administrador" itemValue="Administrador"/>
+                                            <f:selectItem itemLabel="Autoridad" itemValue="Autoridad"/>
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Username">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{usuario.username}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="usernameInput" value="#{usuario.username}" disabled="true" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Correo">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{usuario.correo}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="correoInput" value="#{usuario.correo}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Fecha de Nacimiento">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{usuario.fechaNacimiento}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:datePicker id="fechaNacimientoInput" value="#{usuario.fechaNacimiento}"
+                                                      showIcon="true" yearNavigator="true" yearRange="1950:2023"
+                                                      monthNavigator="true" pattern="yyyy-MM-dd"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column style="width:6rem">
+                                <p:rowEditor editTitle="Editar Usuario" cancelTitle="Cancelar Edicion"
+                                             saveTitle="Guardar Cambios"/>
+                            </p:column>
+                            <p:column style="width:6rem">
+                                <p:growl id="message" showDetail="true"/>
+                                <p:commandButton value="Borrar" action="#{gestionarUsuarios.borrarUsuario(usuario)}"
+                                                 update=":form:msgs" styleClass="ui-button-danger"
+                                                 icon="pi pi-times" disabled="#{UserManager.currentUser.idUsuario == usuario.idUsuario ? true : false}">
+                                    <p:confirm header="Confirmar" message="Esta seguro de eliminar este usuario?"
+                                               icon="pi pi-info-circle"/>
+                                </p:commandButton>
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true"
+                                                 width="350">
+                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"/>
+                                    <p:commandButton value="No" type="button"
+                                                     styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                </p:confirmDialog>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-g-nopad">
+                <div class="ui-g">
+                    <h:form style="justify-content: flex-end;display: flex;">
+                        <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="agregar"
+                                      class="loginButton">
+                            <p>Agregar Usuario</p>
+                            <i class="pi pi-user-plus"/>
+                        </h:outputLink>
+                        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+
+                        <p:dialog header="Agregar Usuario" widgetVar="dlg" resizable="false">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="nombre" value="Nombre:"/>
+                                <p:inputText id="nombre" value="#{gestionarUsuarios.usuario.nombre}" required="true"
+                                             label="nombre"/>
+
+                                <h:outputLabel for="apellido" value="Apellido:"/>
+                                <p:inputText id="apellido" value="#{gestionarUsuarios.usuario.apellido}" required="true"
+                                             label="apellido"/>
+
+                                <h:outputLabel for="correo" value="Correo:"/>
+                                <p:inputText id="correo" value="#{gestionarUsuarios.usuario.correo}" required="true"
+                                             label="correo"/>
+
+                                <p:outputLabel for="fechaNacimiento" value="Fecha de nacimiento:"/>
+                                <p:datePicker id="fechaNacimiento" value="#{gestionarUsuarios.usuario.fechaNacimiento}"
+                                              showIcon="true" yearNavigator="true" yearRange="1950:2023"
+                                              monthNavigator="true" pattern="yyyy-MM-dd"/>
+
+                                <h:outputLabel for="username" value="Username:"/>
+                                <p:inputText id="username" value="#{gestionarUsuarios.usuario.username}" required="true"
+                                             label="username"/>
+
+                                <h:outputLabel for="password" value="Contraseña:"/>
+                                <p:password id="password" value="#{gestionarUsuarios.usuario.password}" required="true"
+                                            label="password"/>
+
+                                <p:outputLabel for="@next" value="Tipo de usuario:"/>
+                                <p:selectOneMenu id="selectTypeValues" value="#{gestionarUsuarios.selectTypeValues}"
+                                                 required="true">
+                                    <f:selectItem itemLabel="Administrador" itemValue="Administrador"/>
+                                    <f:selectItem itemLabel="Autoridad" itemValue="Autoridad"/>
+                                </p:selectOneMenu>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Agregar" update="growl"
+                                                     action="#{gestionarUsuarios.altaUsuario()}" class="loginButton"
+                                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-12 footer">
+            <div class="ui-g-2"><p>Cerrar Sesion</p></div>
+            <div class="ui-g-2"><p>Otras opciones?</p></div>
+            <div class="ui-g-2"><p>No se me ocurre</p></div>
+        </div>
+    </div>
+</h:body>
+</html>
