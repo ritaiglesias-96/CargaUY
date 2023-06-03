@@ -35,7 +35,6 @@ public class gestionCiudadanosEndpoint {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-
     @POST
     public Response agregarCiudadano(Ciudadano ciudadano){
         try{

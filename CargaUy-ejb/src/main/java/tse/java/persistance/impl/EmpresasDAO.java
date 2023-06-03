@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Empresa;
+import tse.java.entity.Pesaje;
+import tse.java.entity.Vehiculo;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -59,11 +62,20 @@ public class EmpresasDAO implements IEmpresasDAO {
     }
 
     @Override
-    public void modificarEmpresa(EmpresaDTO empresaDTO) {
+    public Empresa modificarEmpresa(EmpresaDTO empresaDTO) {
         Empresa e = em.find(Empresa.class,empresaDTO.getId());
-        e = new Empresa(empresaDTO);
+        if (e.getVehiculos().size() != empresaDTO.getVehiculos().size()) {
+            List<VehiculoDTO> vehiculos = empresaDTO.getVehiculos();
+            List<Vehiculo> vehiculosADevolver = new ArrayList<Vehiculo>();
+            for(VehiculoDTO v:vehiculos){
+                Vehiculo insertar = new Vehiculo(v);
+                insertar.setId(v.getId());
+                vehiculosADevolver.add(insertar);
+            }
+            e.setVehiculos(vehiculosADevolver);
+        }
         em.merge(e);
-
+        return e;
     }
 
     @Override
