@@ -15,7 +15,7 @@
         </div>
         <div class="ui-g-12 ui-md-9 ui-g-nopad">
             <div class="ui-g-12">
-                <div style="justify-content: flex-end;display: flex;">
+                <div style="justify-content: flex-end;display: flex;" class="log">
                     <p:commandButton action="#{UserManager.logout}" value="Salir" class="loginButton" icon="pi pi-sign-out" />
                 </div>
             </div>
@@ -88,6 +88,7 @@
                     <h:form>
                         <p:outputLabel value="Alta de rubro"/><p:spacer/><br/><br/>
                         <p:panelGrid columns="2" cellpadding="7">
+
                             <h:outputLabel value="Nombre:" for="nombre"/>
                             <p:inputText id="nombre" value="#{gestionarRubrosBean.nombre}" required="true"/>
                         </p:panelGrid>

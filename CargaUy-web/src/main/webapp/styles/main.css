@@ -37,7 +37,7 @@ p {
     font-size: medium;
 }
 
-.loginButton {
+body div .log .loginButton {
     display: flex;
     text-decoration: none;
     align-items: center;
@@ -47,7 +47,7 @@ p {
     border-radius: 15px;
 }
 
-.loginButton:hover {
+body div .log .loginButton:hover {
     background-color: lightgray;
 }
 
