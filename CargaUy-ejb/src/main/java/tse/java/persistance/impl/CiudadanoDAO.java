@@ -32,6 +32,24 @@ public class CiudadanoDAO implements ICiudadanoDAO {
     }
 
     @Override
+    public void agregarCiudadano(Ciudadano ciudadano) {
+        em.persist(ciudadano);
+    }
+
+    @Override
+    public void modificarCiudadano(Ciudadano ciudadano) {
+        em.merge(ciudadano);
+    }
+
+    @Override
+    public void eliminiarCiudadano(Ciudadano ciudadano) {
+        Ciudadano c = em.find(Ciudadano.class, ciudadano.getIdCiudadano());
+        if(c!=null){
+            em.remove(c);
+        }
+    }
+
+    @Override
     public Ciudadano buscarCiudadanoPorId(int id) {
         return em.find(Ciudadano.class, id);
     }

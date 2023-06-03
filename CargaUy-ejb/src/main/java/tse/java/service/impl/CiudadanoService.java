@@ -37,6 +37,21 @@ public class CiudadanoService implements ICiudadanosService {
 
     @Override
     public void agregarCiudadano(Ciudadano ciudadano) {
+        ciudadanoDAO.agregarCiudadano(ciudadano);
+    }
+
+    @Override
+    public void modificarCiudadano(Ciudadano ciudadano) {
+        ciudadanoDAO.modificarCiudadano(ciudadano);
+    }
+
+    @Override
+    public void eliminarCiudadano(Ciudadano ciudadano) {
+        ciudadanoDAO.eliminiarCiudadano(ciudadano);
+    }
+
+    @Override
+    public void agregarHijoCiudadano(Ciudadano ciudadano) {
         if (ciudadano instanceof Funcionario) {
             funcionarioDAO.agregarFuncionario((Funcionario) ciudadano);
         } else if (ciudadano instanceof Responsable) {
@@ -49,7 +64,7 @@ public class CiudadanoService implements ICiudadanosService {
     }
 
     @Override
-    public void modificarCiudadano(Ciudadano ciudadano) {
+    public void modificarHijoCiudadano(Ciudadano ciudadano) {
         if (ciudadano instanceof Funcionario) {
             funcionarioDAO.modificarFuncionario((Funcionario) ciudadano);
         } else if (ciudadano instanceof Responsable) {
@@ -60,7 +75,7 @@ public class CiudadanoService implements ICiudadanosService {
     }
 
     @Override
-    public void eliminarCiudadano(Ciudadano ciudadano) {
+    public void eliminarHijoCiudadano(Ciudadano ciudadano) {
         if (ciudadano instanceof Funcionario) {
             funcionarioDAO.eliminiarFuncionario((Funcionario) ciudadano);
         } else if (ciudadano instanceof Responsable) {

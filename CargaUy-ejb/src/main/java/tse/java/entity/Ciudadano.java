@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name="\"Ciudadano\"")
 @DiscriminatorColumn(name = "rol")
-public abstract class Ciudadano  implements Serializable {
+public class Ciudadano  implements Serializable {
 
     private static final long serialVersionUID = 3827070902901902553L;
 
@@ -75,5 +75,5 @@ public abstract class Ciudadano  implements Serializable {
         this.guiasDeViaje = guiasDeViaje;
     }
 
-    public abstract CiudadanoDTO darDTO();
+
 }
