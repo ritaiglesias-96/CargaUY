@@ -8,10 +8,10 @@ import java.util.List;
 
 @Local
 public interface IRubrosDAO {
-    public void altaRubro(RubroDTO dtr) throws RubroExisteException;
-    public RubroDTO buscarRubroPorId(Long id);
-    public RubroDTO buscarRubroPorNombre(String nom);
-    public List<RubroDTO> listarRubros();
-    public void borrarRubro(Long id);
-    public void modificarRubro(RubroDTO dtr) throws RubroExisteException;
+    void altaRubro(RubroDTO dtr) throws RubroExisteException;
+    RubroDTO buscarRubroPorId(Long id);
+    RubroDTO buscarRubroPorNombre(String nom);
+    List<RubroDTO> listarRubros();
+    void borrarRubro(Long id);
+    void modificarRubro(RubroDTO dtr) throws RubroExisteException;
 }

@@ -1,65 +1,42 @@
 package tse.java.dto;
 
-import tse.java.entity.GuiaDeViaje;
-import tse.java.entity.Vehiculo;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class VehiculoDTO {
-    private Long id;
-    private String matricula;
-    private String pais;
-    private String marca;
-    private String modelo;
+public class VehiculoAltaDTO {
+    private int idEmpresa ;
+    private String matricula, pais, marca, modelo, cedula_responsable;
     private Float peso;
     private Float capacidadCarga;
     private Date fechaFinITV;
     private Date fechaInicioPNC;
     private Date fechaFinPNC;
-    private List<GuiaDeViajeDTO> guiasDeViaje = new ArrayList<GuiaDeViajeDTO>();
 
-    
+    public VehiculoAltaDTO() {
+    }
 
-    public VehiculoDTO(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViajeDTO> guiasDeViaje) {
-        this.id = id;
+    public VehiculoAltaDTO(int idEmpresa, String matricula, String pais, String marca, String modelo, String cedula_responsable,
+                           Float peso, Float capacidadCarga, Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC) {
+        this.idEmpresa = idEmpresa;
         this.matricula = matricula;
         this.pais = pais;
         this.marca = marca;
         this.modelo = modelo;
+        this.cedula_responsable = cedula_responsable;
         this.peso = peso;
         this.capacidadCarga = capacidadCarga;
         this.fechaFinITV = fechaFinITV;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
-        this.guiasDeViaje = guiasDeViaje;
     }
 
-    public VehiculoDTO(Vehiculo v) {
-        this.id = v.getId();
-        this.matricula = v.getMatricula();
-        this.pais = v.getPais();
-        this.marca = v.getMarca();
-        this.modelo = v.getModelo();
-        this.peso = v.getPeso();
-        this.capacidadCarga = v.getCapacidadCarga();
-        this.fechaFinITV = v.getFechaFinITV();
-        this.fechaInicioPNC = v.getFechaInicioPNC();
-        this.fechaFinPNC = v.getFechaFinPNC();
-        this.guiasDeViaje = procesarLista(v.getGuiasDeViaje());
+    public int getIdEmpresa() {
+        return idEmpresa;
     }
 
-    public VehiculoDTO() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdEmpresa(int idEmpresa) {
+        this.idEmpresa = idEmpresa;
     }
 
     public String getMatricula() {
@@ -70,14 +47,6 @@ public class VehiculoDTO {
         this.matricula = matricula;
     }
 
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
     public String getPais() {
         return pais;
     }
@@ -86,12 +55,28 @@ public class VehiculoDTO {
         this.pais = pais;
     }
 
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
     public String getModelo() {
         return modelo;
     }
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
+    }
+
+    public String getCedula_responsable() {
+        return cedula_responsable;
+    }
+
+    public void setCedula_responsable(String cedula_responsable) {
+        this.cedula_responsable = cedula_responsable;
     }
 
     public Float getPeso() {
@@ -133,21 +118,4 @@ public class VehiculoDTO {
     public void setFechaFinPNC(Date fechaFinPNC) {
         this.fechaFinPNC = fechaFinPNC;
     }
-
-    public List<GuiaDeViajeDTO> getGuiasDeViaje() {
-        return guiasDeViaje;
-    }
-
-    public void setGuiasDeViaje(List<GuiaDeViajeDTO> guiasDeViaje) {
-        this.guiasDeViaje = guiasDeViaje;
-    }
-    
-    public List<GuiaDeViajeDTO> procesarLista(List<GuiaDeViaje> guias){
-        List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
-        for(GuiaDeViaje g:guias){
-            result.add(g.darDto());
-        }
-        return result;
-    }
-
 }

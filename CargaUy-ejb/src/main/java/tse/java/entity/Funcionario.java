@@ -24,7 +24,6 @@ public class Funcionario extends Ciudadano implements Serializable{
         super(email, cedula);
     }
 
-    @Override
     public FuncionarioDTO darDTO() {
         return new FuncionarioDTO(this.getIdCiudadano(), this.getEmail(), this.getCedula(), RolCiudadano.FUNCIONARIO);
     }

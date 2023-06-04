@@ -12,6 +12,9 @@ public interface ICiudadanosService {
     void agregarCiudadano(Ciudadano ciudadano);
     void modificarCiudadano(Ciudadano ciudadano);
     void eliminarCiudadano(Ciudadano ciudadano);
+    void agregarHijoCiudadano(Ciudadano ciudadano);
+    void modificarHijoCiudadano(Ciudadano ciudadano);
+    void eliminarHijoCiudadano(Ciudadano ciudadano);
     public void asingarViajeChofer(int chofer_id, GuiaDeViajeDTO g);
     public void asingarViajeResponsable(int responsable_id, GuiaDeViajeDTO g);
     public boolean contieneGuiaViajeChofer(String cedula_chofer, int numero_viaje);

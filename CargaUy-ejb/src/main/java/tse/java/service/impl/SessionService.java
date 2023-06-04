@@ -33,4 +33,9 @@ public class SessionService implements ISessionService {
     public Usuario getUsuarioLogueado(String username) {
         return userConectados.get(username);
     }
+
+    @Override
+    public void cerrarSesion(String username) {
+        userConectados.remove(username);
+    }
 }

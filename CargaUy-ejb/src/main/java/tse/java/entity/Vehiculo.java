@@ -58,8 +58,12 @@ public class Vehiculo implements Serializable {
         this.fechaFinITV = vehiculo.getFechaFinITV();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
-        this.guiasDeViaje = procesarLista(vehiculo.getGuiasDeViaje());
+        if (vehiculo.getGuiasDeViaje()!= null) {
+            this.guiasDeViaje = procesarLista(vehiculo.getGuiasDeViaje());
+        }
     }
+
+
 
     public void modificarVehiculo(VehiculoDTO vehiculo) {
         this.matricula = vehiculo.getMatricula();
@@ -79,6 +83,10 @@ public class Vehiculo implements Serializable {
     }
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getMatricula() {
