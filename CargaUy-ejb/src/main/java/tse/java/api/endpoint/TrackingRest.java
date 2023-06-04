@@ -1,4 +1,4 @@
-package tse.java.api;
+package tse.java.api.endpoint;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,11 +10,9 @@ import tse.java.service.ITrackingService;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
