@@ -134,8 +134,7 @@ public class gestionGuiasDeViajeEndpoint {
             Response.status(Response.Status.CONFLICT).entity("El viaje con el identificador " + g.getNumero() + " ya esta finalizado");
         }
 
-        g.setFin(new Date());
-
+        
         try{
             CloseableHttpClient hc = HttpClientBuilder.create().build();
             VehiculoDTO v = vehiculoService.buscarVehiculoPorGuia(g.getNumero());
@@ -169,7 +168,9 @@ public class gestionGuiasDeViajeEndpoint {
         } catch (Exception e) {
             Logger.getLogger(gestionGuiasDeViajeEndpoint.class.getName()).log(Level.SEVERE, null, e);
         }
+        
         g = guiaviajeDao.buscarGuiaViajePorNumero(g.getNumero());
+        g.setFin(new Date());
         guiaviajeService.modificarGuiaDeViaje(g);
 
 
