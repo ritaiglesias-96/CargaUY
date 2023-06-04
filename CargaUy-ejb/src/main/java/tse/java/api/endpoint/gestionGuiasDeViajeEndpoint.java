@@ -22,6 +22,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -138,7 +141,7 @@ public class gestionGuiasDeViajeEndpoint {
             VehiculoDTO v = vehiculoService.buscarVehiculoPorGuia(g.getNumero());
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-            HttpGet hg = new HttpGet("http://localhost:9096/vehiculos/listarPesajesPorFecha?matricula=" + v.getMatricula() + "&pais=" + v.getPais() + "&fecha=" + simpleDateFormat.format(new Date()));
+            HttpGet hg = new HttpGet("http://localhost:9096/vehiculos/listarPesajesPorFecha?matricula=" + v.getMatricula() + "&pais=" + v.getPais() + "&fecha=" + simpleDateFormat.format(new Date()) + "&numeroviaje=" + g.getNumero());
             CloseableHttpResponse hr = hc.execute(hg);
             if(hr.getStatusLine().getStatusCode()==200){
                 HttpEntity entity = hr.getEntity();
@@ -146,21 +149,27 @@ public class gestionGuiasDeViajeEndpoint {
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(responseBody);
                 Iterator<JsonNode> iter = jsonNode.elements();
+                List<PesajeDTO> pesajes = new ArrayList<PesajeDTO>();
                 while (iter.hasNext()) {
                     JsonNode node = iter.next();
-                    String fecha = node.get("fecha").asText();
+                    String hora = node.get("hora").asText();
                     double latitud = node.get("latitud").asDouble();
                     double longuitud = node.get("longuitud").asDouble();
-                    double carga = node.get("carga").asDouble();
-                    String msg = "Datos pesaje, fecha:" + fecha + ", latitud: " + latitud + ", longuitud: " + longuitud + ", carga: " + carga;
+                    float carga = Float.valueOf(node.get("carga").asText());
+                    LocalDateTime fecha = LocalDateTime.of(LocalDate.now(), LocalTime.parse(hora));
+                    PesajeDTO p = new PesajeDTO(null, latitud, longuitud, fecha, carga);
+                    pesajes.add(p);
+                    String msg = "Datos pesaje, fecha:" + hora + ", latitud: " + latitud + ", longuitud: " + longuitud + ", carga: " + carga;
                     Logger.getLogger(gestionGuiasDeViajeEndpoint.class.getName()).log(Level.INFO, msg);
                 }
+                guiaviajeService.asignarPesajes(g.getNumero(), pesajes);
             } else {
                 Logger.getLogger(gestionGuiasDeViajeEndpoint.class.getName()).log(Level.INFO, "No se encontraron pesajes con los parametros ingresados...");
             }
         } catch (Exception e) {
             Logger.getLogger(gestionGuiasDeViajeEndpoint.class.getName()).log(Level.SEVERE, null, e);
         }
+        g = guiaviajeDao.buscarGuiaViajePorNumero(g.getNumero());
         guiaviajeService.modificarGuiaDeViaje(g);
 
 
@@ -208,18 +217,6 @@ public class gestionGuiasDeViajeEndpoint {
         ciudadanoService.borrarGuia(numero_viaje);
         guiaviajeService.borrarGuiaDeViaje(g.getId());
         return Response.status(Response.Status.OK).build();
-    }
-
-    @GET
-    public void cargarDatos(){
-        Chofer c = new Chofer("hola@gmail.com", "1234");
-        c.setGuiasDeViaje(new ArrayList<GuiaDeViaje>());
-        choferDao.agregarChofer(c);
-        Responsable r = new Responsable("chau@gmail.com","1111");
-        r.setGuiasDeViaje(new ArrayList<GuiaDeViaje>());
-        responsableDao.agregarResponsable(r);
-        //VehiculoDTO v = new VehiculoDTO(null, "ACA112", "URY", "Fiat", "Uno", " ");
-        //vehiculoDao.agregarVehiculo(v);
     }
 
 }

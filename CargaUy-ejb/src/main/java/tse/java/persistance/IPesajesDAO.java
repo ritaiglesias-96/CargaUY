@@ -13,4 +13,5 @@ public interface IPesajesDAO {
     public PesajeDTO buscarPesaje(Long id);
     public List<PesajeDTO> listarPesajes();
     public void borrarPesaje(Long id);
+    public Long getLastId();
 }
