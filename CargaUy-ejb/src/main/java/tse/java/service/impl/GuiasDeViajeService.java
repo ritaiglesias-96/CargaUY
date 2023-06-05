@@ -46,11 +46,6 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     }
 
     @Override
-    public GuiaDeViajeDTO buscarGuiaDeViaje(Long id) {
-        return gdao.buscarGuiaDeViaje(id);
-    }
-
-    @Override
     public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha) {
         String msg = "Me pasaron por rest " + guiasViaje.size() + " guias de viaje y fecha=" + fecha;
         Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);

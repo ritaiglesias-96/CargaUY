@@ -1,5 +1,7 @@
 package tse.java.entity;
 
+import tse.java.dto.CiudadanoDTO;
+import tse.java.dto.FuncionarioDTO;
 import tse.java.enumerated.RolCiudadano;
 
 import javax.persistence.Column;
@@ -22,4 +24,7 @@ public class Funcionario extends Ciudadano implements Serializable{
         super(email, cedula);
     }
 
+    public FuncionarioDTO darDTO() {
+        return new FuncionarioDTO(this.getIdCiudadano(), this.getEmail(), this.getCedula(), RolCiudadano.FUNCIONARIO);
+    }
 }

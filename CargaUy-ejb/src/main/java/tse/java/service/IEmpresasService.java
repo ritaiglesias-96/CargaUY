@@ -9,6 +9,10 @@ import tse.java.dto.EmpresaDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
+<<<<<<< HEAD
+=======
+import tse.java.entity.Vehiculo;
+>>>>>>> 71c10c05336d8b504a712fe10ee908557f10a1cf
 import tse.java.model.Empresas;
 
 
@@ -19,13 +23,19 @@ public interface IEmpresasService {
 
     EmpresaDTO obtenerEmpresa(int id);
 
-    public void agregarEmpresa(String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal);
+    void agregarEmpresa(String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal);
 
-    public void modificarEmpresa(EmpresaDTO empresaDTO);
+    void modificarEmpresa(EmpresaDTO empresaDTO);
 
-    public void eliminarEmpresa(EmpresaDTO empresaDTO);
+    void eliminarEmpresa(EmpresaDTO empresaDTO);
 
-    public List<PesajeDTO> listarGuias(int numero_empresa, String matricula, String pais, Date fecha);
+    List<PesajeDTO> listarGuias(int numero_empresa, String matricula, String pais, Date fecha);
+
+    public void agregarVehiculoAEmpresa(int idEmpresa, VehiculoDTO vehiculo);
+
+    public boolean empresaContieneVehiculo(EmpresaDTO e, VehiculoDTO v);
+
+    public void borrarVehiculo(Long id);
 
     public List<VehiculoDTO> listarVehiculos(int id);
 

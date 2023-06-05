@@ -24,7 +24,7 @@ public class ChoferDTO extends CiudadanoDTO{
         this.guiasDeViaje = guiasDeViaje;
     }
 
-    public ChoferDTO(int idCiudadano, String email, String cedula, RolCiudadano rol, ArrayList<GuiaDeViajeDTO> guiasDeViaje) {
+    public ChoferDTO(int idCiudadano, String email, String cedula, RolCiudadano rol, List<GuiaDeViajeDTO> guiasDeViaje) {
         super(idCiudadano, email, cedula, rol);
         this.guiasDeViaje = guiasDeViaje;
     }
