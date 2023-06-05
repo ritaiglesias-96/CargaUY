@@ -7,8 +7,12 @@ import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
 import org.primefaces.model.DefaultDashboardModel;
+import tse.java.service.IEmpresasService;
+import tse.java.service.IGuiaDeViajesService;
+import tse.java.service.IVehiculosService;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -21,21 +25,31 @@ public class dashboardAutoridadBean implements Serializable {
 
     private DashboardModel model;
 
+    private int cant_vehiculos, cant_empresas, cant_guias;
+
+    @EJB
+    IVehiculosService vehiculosService;
+
+    @EJB
+    IEmpresasService empresasService;
+
+    @EJB
+    IGuiaDeViajesService guiaDeViajesService;
+
     @PostConstruct
     public void init() {
         model = new DefaultDashboardModel();
         DashboardColumn column1 = new DefaultDashboardColumn();
         DashboardColumn column2 = new DefaultDashboardColumn();
         DashboardColumn column3 = new DefaultDashboardColumn();
+        cant_vehiculos = vehiculosService.obtenerVehiculos().getListaVehiculos().size();
+        cant_empresas = empresasService.obtenerEmpresas().getTotalRows();
+        cant_guias = guiaDeViajesService.listarGuiasDeViajes().size();
+        column1.addWidget("empresas");
 
-        column1.addWidget("sports");
-        column1.addWidget("finance");
+        column2.addWidget("vehiculos");
 
-        column2.addWidget("lifestyle");
-        column2.addWidget("weather");
-
-        column3.addWidget("politics");
-
+        column3.addWidget("guias");
         model.addColumn(column1);
         model.addColumn(column2);
         model.addColumn(column3);
@@ -71,5 +85,29 @@ public class dashboardAutoridadBean implements Serializable {
 
     public DashboardModel getModel() {
         return model;
+    }
+
+    public int getCant_vehiculos() {
+        return cant_vehiculos;
+    }
+
+    public void setCant_vehiculos(int cant_vehiculos) {
+        this.cant_vehiculos = cant_vehiculos;
+    }
+
+    public int getCant_empresas() {
+        return cant_empresas;
+    }
+
+    public void setCant_empresas(int cant_empresas) {
+        this.cant_empresas = cant_empresas;
+    }
+
+    public int getCant_guias() {
+        return cant_guias;
+    }
+
+    public void setCant_guias(int cant_guias) {
+        this.cant_guias = cant_guias;
     }
 }
