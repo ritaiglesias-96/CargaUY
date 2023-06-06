@@ -1,5 +1,7 @@
 package tse.java.api.endpoint;
 
+import tse.java.dto.EmpresaDTO;
+import tse.java.dto.PermisosVehiculoDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IVehiculosService;
@@ -10,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestScoped
@@ -29,7 +32,12 @@ public class estadoVehiculosEmpresaEndpoint {
     public Response getVehiculos(@PathParam("id") int id){
         try{
             List<VehiculoDTO> vehiculos = es.listarVehiculos(id);
-            return Response.status(Response.Status.OK).entity(vehiculos).build();
+            List<PermisosVehiculoDTO> permisos = new ArrayList<PermisosVehiculoDTO>();
+            for(VehiculoDTO v:vehiculos){
+                PermisosVehiculoDTO p = new PermisosVehiculoDTO(v);
+                permisos.add(p);
+            }
+            return Response.status(Response.Status.OK).entity(permisos).build();
         }catch (NoResultException e ){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
