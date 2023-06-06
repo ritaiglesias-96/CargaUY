@@ -16,7 +16,7 @@ public class VehiculoDTO {
     private Float peso;
     private Float capacidadCarga;
     private Date fechaFinITV;
-    private Long pnc;
+    private int pnc;
     private Date fechaInicioPNC;
     private Date fechaFinPNC;
     private List<GuiaDeViajeDTO> guiasDeViaje = new ArrayList<GuiaDeViajeDTO>();
@@ -24,7 +24,7 @@ public class VehiculoDTO {
     
 
     public VehiculoDTO(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, Long pnc, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViajeDTO> guiasDeViaje) {
+            Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViajeDTO> guiasDeViaje) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -137,9 +137,9 @@ public class VehiculoDTO {
         this.fechaFinPNC = fechaFinPNC;
     }
 
-    public Long getPnc() { return pnc; }
+    public int getPnc() { return pnc; }
 
-    public void setPnc(Long pnc) { this.pnc = pnc; }
+    public void setPnc(int pnc) { this.pnc = pnc; }
 
     public List<GuiaDeViajeDTO> getGuiasDeViaje() {
         return guiasDeViaje;

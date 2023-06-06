@@ -24,10 +24,9 @@ public class Vehiculo implements Serializable {
     private String modelo;
     private Float peso;
     private Float capacidadCarga;
+    private int pnc;
     @Temporal(TemporalType.DATE)
     private Date fechaFinITV;
-    private Long pnc;
-
     @Temporal(TemporalType.DATE)
     private Date fechaInicioPNC;
     @Temporal(TemporalType.DATE)
@@ -36,7 +35,7 @@ public class Vehiculo implements Serializable {
     private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();
 
     public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, Long pnc, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViaje> guiasDeViaje) {
+            Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViaje> guiasDeViaje) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -173,11 +172,11 @@ public class Vehiculo implements Serializable {
         this.guiasDeViaje = guiasDeViaje;
     }
 
-    public Long getPnc() {
+    public int getPnc() {
         return pnc;
     }
 
-    public void setPnc(Long pnc) {
+    public void setPnc(int pnc) {
         this.pnc = pnc;
     }
 

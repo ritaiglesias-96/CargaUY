@@ -9,10 +9,6 @@ import tse.java.dto.EmpresaDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
-<<<<<<< HEAD
-=======
-import tse.java.entity.Vehiculo;
->>>>>>> 71c10c05336d8b504a712fe10ee908557f10a1cf
 import tse.java.model.Empresas;
 
 
