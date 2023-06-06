@@ -1,5 +1,6 @@
 package tse.java.dto;
 
+import tse.java.entity.Asignacion;
 import tse.java.entity.GuiaDeViaje;
 import tse.java.entity.Vehiculo;
 
@@ -18,12 +19,12 @@ public class VehiculoDTO {
     private Date fechaFinITV;
     private Date fechaInicioPNC;
     private Date fechaFinPNC;
-    private List<GuiaDeViajeDTO> guiasDeViaje = new ArrayList<GuiaDeViajeDTO>();
+    private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
 
     
 
     public VehiculoDTO(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViajeDTO> guiasDeViaje) {
+            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<AsignacionDTO> asignaciones) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -34,7 +35,7 @@ public class VehiculoDTO {
         this.fechaFinITV = fechaFinITV;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
-        this.guiasDeViaje = guiasDeViaje;
+        this.asignaciones = asignaciones;
     }
 
     public VehiculoDTO(Vehiculo v) {
@@ -48,7 +49,7 @@ public class VehiculoDTO {
         this.fechaFinITV = v.getFechaFinITV();
         this.fechaInicioPNC = v.getFechaInicioPNC();
         this.fechaFinPNC = v.getFechaFinPNC();
-        this.guiasDeViaje = procesarLista(v.getGuiasDeViaje());
+        this.asignaciones = procesarLista(v.getAsignaciones());
     }
 
     public VehiculoDTO() {
@@ -134,18 +135,18 @@ public class VehiculoDTO {
         this.fechaFinPNC = fechaFinPNC;
     }
 
-    public List<GuiaDeViajeDTO> getGuiasDeViaje() {
-        return guiasDeViaje;
+    public List<AsignacionDTO> getAsignaciones() {
+        return asignaciones;
     }
 
-    public void setGuiasDeViaje(List<GuiaDeViajeDTO> guiasDeViaje) {
-        this.guiasDeViaje = guiasDeViaje;
+    public void setAsignaciones(List<AsignacionDTO> asignaciones) {
+        this.asignaciones = asignaciones;
     }
-    
-    public List<GuiaDeViajeDTO> procesarLista(List<GuiaDeViaje> guias){
-        List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
-        for(GuiaDeViaje g:guias){
-            result.add(g.darDto());
+
+    public List<AsignacionDTO> procesarLista(List<Asignacion> asignaciones){
+        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
+        for(Asignacion a:asignaciones){
+            result.add(a.darDTO());
         }
         return result;
     }

@@ -1,6 +1,7 @@
 package tse.java.entity;
 
 import tse.java.dto.AsignacionDTO;
+import tse.java.dto.GuiaDeViajeDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,6 +29,12 @@ public class Asignacion {
 
     public Asignacion(){}
 
+    public Asignacion(AsignacionDTO a){
+        this.id = a.getId();
+        this.guia = convertirGuia(a.getGuia());
+        this.fechaCambio = a.getFechaCambio();
+    }
+
     public Long getId() {
         return id;
     }
@@ -54,5 +61,9 @@ public class Asignacion {
 
     public AsignacionDTO darDTO(){
         return new AsignacionDTO(id, guia.darDto(), fechaCambio);
+    }
+
+    public GuiaDeViaje convertirGuia(GuiaDeViajeDTO g){
+        return new GuiaDeViaje(g);
     }
 }
