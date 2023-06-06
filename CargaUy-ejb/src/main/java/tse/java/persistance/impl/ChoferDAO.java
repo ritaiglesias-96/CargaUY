@@ -45,12 +45,17 @@ public class ChoferDAO implements IChoferDAO {
     }
 
     public ChoferDTO buscarChoferPorCedula(String cedula){
-        Query q = em.createQuery("select c from Ciudadano c where c.rol='Chofer' and c.cedula='" + cedula + "'");
+        Query q = em.createQuery("select c from Ciudadano c where c.cedula='" + cedula + "'");
         if(q.getResultList().isEmpty()) {
             return null;
         } else {
-            Chofer c = (Chofer) q.getResultList().get(0);
-            return c.darDTO();
+            Object o = q.getResultList().get(0);
+            if(o instanceof Chofer){
+                Chofer c = (Chofer) o;
+                return c.darDTO();
+            } else {
+                return null;
+            }
         }
     }
 }

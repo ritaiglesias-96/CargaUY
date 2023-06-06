@@ -30,28 +30,30 @@ public class VehiculosDAO implements IVehiculosDAO {
     }
 
     @Override
-    public VehiculoDTO obtenerVehiculoId(Long id) throws NoResultException {
+    public Vehiculo obtenerVehiculoId(Long id) throws NoResultException {
         Vehiculo result = em.find(Vehiculo.class, id);
-        return new VehiculoDTO(result);
+        return result;
     }
 
     @Override
     public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculo) {
-        Vehiculo updated = new Vehiculo(vehiculo);
-        Vehiculo newOne = em.merge(updated);
-        return new VehiculoDTO(newOne);
+        Vehiculo v = em.find(Vehiculo.class, vehiculo.getId());
+        v.modificarVehiculo(vehiculo);
+        em.persist(v);
+        return v.darDto();
     }
 
     @Override
-    public void eliminarVehiculoId(int id) {
-        Vehiculo result = em.find(Vehiculo.class, id);
-        em.remove(result);
+    public void eliminarVehiculo(Long id) {
+        Vehiculo v = em.find(Vehiculo.class, id);
+        em.remove(v);
     }
 
     @Override
     public void agregarVehiculo(VehiculoDTO vehiculo) {
         Vehiculo nuevo = new Vehiculo(vehiculo);
-        em.merge(nuevo);
+        nuevo.setId(vehiculo.getId());
+        em.persist(nuevo);
     }
 
     @Override
@@ -63,5 +65,13 @@ public class VehiculosDAO implements IVehiculosDAO {
             Vehiculo v = (Vehiculo) q.getResultList().get(0);
             return new VehiculoDTO(v);
         }
+    }
+
+    public Long getNextIdVehiculo(){
+        Query q = em.createQuery("select max(g.id) from GuiaDeViaje g");
+        if(q.getResultList().get(0)==null)
+            return (long) 1;
+        else
+            return Long.parseLong(q.getResultList().get(0).toString())+1;
     }
 }

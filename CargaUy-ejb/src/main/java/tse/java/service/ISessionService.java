@@ -10,4 +10,6 @@ public interface ISessionService {
     AuthResponse iniciarSesion(String username, String password);
 
     Usuario getUsuarioLogueado(String username);
+
+    void cerrarSesion(String username);
 }

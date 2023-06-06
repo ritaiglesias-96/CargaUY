@@ -1,12 +1,14 @@
 package tse.java.persistance;
 
+import tse.java.dto.UsuarioDTO;
 import tse.java.entity.Usuario;
 
 import javax.ejb.Local;
+import java.util.List;
 
 @Local
 public interface IUsuarioDAO {
-    public Usuario findByUsername(String username);
-
-    public boolean existUserByUsername(String username);
+    Usuario findByUsername(String username);
+    List<UsuarioDTO> listarUsuarios();
+    boolean existUserByUsername(String username);
 }
