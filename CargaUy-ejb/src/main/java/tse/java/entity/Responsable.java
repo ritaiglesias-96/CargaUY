@@ -1,5 +1,7 @@
 package tse.java.entity;
 
+import tse.java.dto.AsignacionDTO;
+import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.ResponsableDTO;
 import tse.java.enumerated.RolCiudadano;
 
@@ -38,8 +40,13 @@ public class Responsable extends Ciudadano implements Serializable {
         this.empresa = empresa;
     }
 
-
+    public List<AsignacionDTO> procesarListaAsignaciones(List<Asignacion> asignaciones){
+        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
+        for(Asignacion a:asignaciones)
+            result.add(a.darDTO());
+        return result;
+    }
     public ResponsableDTO darDTO(){
-        return new ResponsableDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(),RolCiudadano.RESPONSABLE);
+        return new ResponsableDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(),RolCiudadano.RESPONSABLE, procesarListaAsignaciones(this.getAsignaciones()));
     }
 }
