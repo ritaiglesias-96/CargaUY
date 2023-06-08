@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
+import tse.java.entity.Asignacion;
 import tse.java.entity.GuiaDeViaje;
 import tse.java.entity.Pesaje;
 import tse.java.entity.Rubro;

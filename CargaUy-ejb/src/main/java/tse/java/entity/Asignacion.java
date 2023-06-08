@@ -3,10 +3,7 @@ package tse.java.entity;
 import tse.java.dto.AsignacionDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,9 +11,9 @@ import java.time.LocalDateTime;
 public class Asignacion {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
+    @ManyToOne
     private GuiaDeViaje guia;
 
     private LocalDateTime fechaCambio;
@@ -64,6 +61,9 @@ public class Asignacion {
     }
 
     public GuiaDeViaje convertirGuia(GuiaDeViajeDTO g){
-        return new GuiaDeViaje(g);
+        if(g==null)
+            return null;
+        else
+            return new GuiaDeViaje(g);
     }
 }

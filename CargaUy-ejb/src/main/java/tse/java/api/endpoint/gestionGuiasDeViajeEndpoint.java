@@ -2,19 +2,20 @@ package tse.java.api.endpoint;
 
 import tse.java.dto.*;
 import tse.java.entity.*;
-import tse.java.persistance.IChoferDAO;
-import tse.java.persistance.IGuiaDeViajeDAO;
-import tse.java.persistance.IResponsableDAO;
-import tse.java.persistance.IVehiculosDAO;
+import tse.java.persistance.*;
 import tse.java.service.ICiudadanosService;
 import tse.java.service.IGuiaDeViajesService;
 import tse.java.service.IVehiculosService;
+import tse.java.util.qualifier.TSE2023DB;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +47,9 @@ public class gestionGuiasDeViajeEndpoint {
     @EJB
     ICiudadanosService is;
 
+    @EJB
+    IAsignacionDAO ad;
+
     @GET
     @Path("/listar")
     public Response listarViajesAsignados(@QueryParam("cedula") String cedula_chofer, @QueryParam("pais") String pais_matricula, @QueryParam("matricula") String matricula){
@@ -58,10 +62,10 @@ public class gestionGuiasDeViajeEndpoint {
         if(v == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + matricula + " y pais " + pais_matricula).build();
         }
-        List<GuiaDeViajeDTO> guias_de_viaje = c.getGuiasDeViaje();
-        for(GuiaDeViajeDTO g:guias_de_viaje){
-            if(g.getFin()==null && vs.viajeContieneGuia(v,g))
-                result.add(g);
+        List<AsignacionDTO> asignaciones = c.getAsignaciones();
+        for(AsignacionDTO a:asignaciones){
+            if(a.getGuia().getFin()==null && vs.viajeContieneGuia(v,a.getGuia()))
+                result.add(a.getGuia());
         }
         if(result.size()>0)
             return Response.status(Response.Status.OK).entity(result).build();
@@ -88,12 +92,17 @@ public class gestionGuiasDeViajeEndpoint {
         }
 
         int nueva_guia = gd.getNextNumeroViaje();
-        GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(null, nueva_guia, dtalta.getRubroCliente(), dtalta.getVolumenCarga(), new Date(), dtalta.getOrigen(), null, null, dtalta.getDestino(), new ArrayList<PesajeDTO>());
+        GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(null, nueva_guia, dtalta.getRubroCliente(), dtalta.getTipoCarga(), dtalta.getVolumenCarga(), new Date(), dtalta.getOrigen(), null, null, dtalta.getDestino(), new ArrayList<PesajeDTO>());
         gs.crearGuiaDeViaje(dtguia);
         GuiaDeViajeDTO guiadto = gd.buscarGuiaViajePorNumero(nueva_guia);
-        vs.asignarGuia(v.getId(),guiadto);
-        is.asingarViajeResponsable(r.getIdCiudadano(),guiadto);
-        is.asingarViajeChofer(c.getIdCiudadano(),guiadto);
+        GuiaDeViaje galta = new GuiaDeViaje(guiadto);
+        AsignacionDTO adt = new AsignacionDTO(null, guiadto, LocalDateTime.now());
+        Long id_asignacion = ad.altaAsignacion(adt);
+        adt = ad.buscarAsignacion(id_asignacion);
+        vs.asignarGuia(v.getId(), adt);
+        Asignacion anew = new Asignacion(adt);
+        is.asingarViajeResponsable(r.getIdCiudadano(), anew);
+        is.asingarViajeChofer(c.getIdCiudadano(), anew);
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -162,8 +171,35 @@ public class gestionGuiasDeViajeEndpoint {
         }
         vs.borrarGuia(numero_viaje);
         is.borrarGuia(numero_viaje);
+        borrarGuiaEnAsignacion(numero_viaje);
         gs.borrarGuiaDeViaje(g.getId());
         return Response.status(Response.Status.OK).build();
+    }
+
+    @GET
+    public void cargarDatos(){
+        Chofer c = new Chofer("pepe@gmail.com","1234");
+        c.setAsignaciones(new ArrayList<Asignacion>());
+        cd.agregarChofer(c);
+        Responsable r = new Responsable("hola@gmail.com", "1111");
+        r.setAsignaciones(new ArrayList<Asignacion>());
+        rd.agregarResponsable(r);
+        VehiculoDTO veh = new VehiculoDTO(null, "ACA112", "URY", "Fiat", "Saveiro", Float.valueOf("200"), Float.valueOf("1000"), new Date(), new Date(), new Date(), new ArrayList<AsignacionDTO>());
+        vd.agregarVehiculo(veh);
+    }
+
+    private void borrarGuiaEnAsignacion(int numero_viaje){
+        List<Long> asignaciones_borrar = new ArrayList<Long>();
+        for(AsignacionDTO a : ad.listarAsignaciones()){
+            if(a.getGuia().getNumero() == numero_viaje){
+                a.setGuia(null);
+                ad.modificarAsignacion(a);
+                asignaciones_borrar.add(a.getId());
+            }
+        }
+
+        for(Long id:asignaciones_borrar)
+            ad.borrarAsignacion(id);
     }
 
 }
