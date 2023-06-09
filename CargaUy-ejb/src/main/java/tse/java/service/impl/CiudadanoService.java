@@ -6,6 +6,7 @@ import tse.java.model.Ciudadanos;
 import tse.java.persistance.*;
 import tse.java.persistance.impl.CiudadanoDAO;
 import tse.java.persistance.impl.FuncionarioDAO;
+import tse.java.service.IAsignacionesService;
 import tse.java.service.ICiudadanosService;
 
 import javax.ejb.EJB;
@@ -27,6 +28,9 @@ public class CiudadanoService implements ICiudadanosService {
     IResponsableDAO responsableDAO;
     @EJB
     IGuiaDeViajeDAO guiaDAO;
+
+    @EJB
+    IAsignacionesService asignacionesService;
 
     @Override
     public Ciudadanos obtenerCiudadanos() {
@@ -105,18 +109,20 @@ public class CiudadanoService implements ICiudadanosService {
 
     @Override
     public boolean contieneGuiaViajeChofer(String cedula_chofer, int numero_viaje) {
+        Long id = asignacionesService.ultimaAsignacionViaje(numero_viaje);
         ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
         for(AsignacionDTO a : c.getAsignaciones())
-            if(a.getGuia().getNumero() == numero_viaje)
+            if(a.getId() == id)
                 return true;
         return false;
     }
 
     @Override
     public boolean contieneGuiaViajeResponsable(String cedula_responsable, int numero_viaje) {
+        Long id = asignacionesService.ultimaAsignacionViaje(numero_viaje);
         ResponsableDTO r = responsableDAO.buscarResponsablePorCedula(cedula_responsable);
         for(AsignacionDTO a : r.getAsignaciones())
-            if(a.getGuia().getNumero() == numero_viaje)
+            if(a.getId() == id)
                 return true;
         return false;
     }

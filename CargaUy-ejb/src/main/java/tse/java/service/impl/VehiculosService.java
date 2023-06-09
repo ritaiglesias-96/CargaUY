@@ -21,6 +21,7 @@ import tse.java.model.Empresas;
 import tse.java.model.Vehiculos;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.persistance.IVehiculosDAO;
+import tse.java.service.IAsignacionesService;
 import tse.java.service.IGuiaDeViajesService;
 import tse.java.service.IVehiculosService;
 
@@ -35,6 +36,9 @@ public class VehiculosService implements IVehiculosService{
 
     @EJB
     IGuiaDeViajeDAO guiaDeViajeDAO;
+
+    @EJB
+    IAsignacionesService asignacionService;
 
     @Override
     public Vehiculos obtenerVehiculos() {
@@ -75,9 +79,18 @@ public class VehiculosService implements IVehiculosService{
     @Override
     public boolean viajeContieneGuia(VehiculoDTO v, GuiaDeViajeDTO g) {
         List<AsignacionDTO> asignaciones = v.getAsignaciones();
-        for(AsignacionDTO a:asignaciones)
-            if(a.getGuia().getNumero() == g.getNumero())
-                return true;
+        for(AsignacionDTO a:asignaciones){
+            if(a.getGuia().getNumero() == g.getNumero()){
+                Long id = asignacionService.ultimaAsignacionViaje(g.getNumero());
+                if(a.getId()==id){
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
         return false;
     }
 
@@ -107,6 +120,17 @@ public class VehiculosService implements IVehiculosService{
                 vehiculosDAO.modificarVehiculo(v);
             }
         }
+    }
+
+    @Override
+    public VehiculoDTO buscarVehiculoPorGuia(int numero) {
+        for(VehiculoDTO v:vehiculosDAO.obtenerVehiculos()){
+            for(AsignacionDTO a:v.getAsignaciones()){
+                if(a.getId().intValue()==asignacionService.ultimaAsignacionViaje(numero).intValue())
+                    return v;
+            }
+        }
+        return null;
     }
 
     private AsignacionDTO buscarGuiaenVehiculos(VehiculoDTO v, GuiaDeViajeDTO g) {

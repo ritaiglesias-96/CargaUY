@@ -64,6 +64,7 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
         gv.setRubroCliente(dtg.getRubroCliente());
         gv.setVolumenCarga(dtg.getVolumenCarga());
         gv.setTipoCarga(dtg.getTipoCarga());
+        gv.setPesajes(gv.procesarListaPesajes(dtg.getPesajes()));
         em.persist(gv);
     }
 

@@ -25,4 +25,5 @@ public interface IVehiculosService {
     public boolean viajeContieneGuia(VehiculoDTO v, GuiaDeViajeDTO g);
     public void asignarGuia(Long vehiculo_id, AsignacionDTO a);
     public void borrarGuia(int numero_guia);
+    public VehiculoDTO buscarVehiculoPorGuia(int numero);
 }
