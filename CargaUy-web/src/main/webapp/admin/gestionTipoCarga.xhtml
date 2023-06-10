@@ -4,7 +4,7 @@
       xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-    <title>Gestion de Rubros</title>
+    <title>Gestion de Tipos de Carga</title>
     <link href="./../styles/main.css" rel="stylesheet"/>
 </h:head>
 
@@ -35,21 +35,21 @@
                     <h:form id="form">
                         <p:growl id="msgs" showDetail="true"/>
 
-                        <h:outputText>Listado de rubros</h:outputText>
+                        <h:outputText>Listado de tipos de carga</h:outputText>
 
-                        <p:dataTable value="#{gestionarRubrosBean.getRubros()}" var="rubro" editable="true">
+                        <p:dataTable value="#{gestionTiposCargaBean.getTiposDeCarga()}" var="tipoDeCarga" editable="true">
 
-                            <p:ajax event="rowEdit" listener="#{gestionarRubrosBean.onRowEdit}" update=":form:msgs"/>
-                            <p:ajax event="rowEditCancel" listener="#{gestionarRubrosBean.onRowCancel}"
+                            <p:ajax event="rowEdit" listener="#{gestionTiposCargaBean.onRowEdit}" update=":form:msgs"/>
+                            <p:ajax event="rowEditCancel" listener="#{gestionTiposCargaBean.onRowCancel}"
                                     update=":form:msgs"/>
 
                             <p:column headerText="Id">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{rubro.id}"/>
+                                        <h:outputText value="#{tipoDeCarga.id}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputNumber id="modelInput2" value="#{rubro.id}" style="width:100%"
+                                        <p:inputNumber id="modelInput2" value="#{tipoDeCarga.id}" style="width:100%"
                                                        readonly="true"/>
                                     </f:facet>
                                 </p:cellEditor>
@@ -57,21 +57,21 @@
                             <p:column headerText="Nombre">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{rubro.nombre}"/>
+                                        <h:outputText value="#{tipoDeCarga.nombre}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText id="modelInput" value="#{rubro.nombre}" style="width:100%"/>
+                                        <p:inputText id="modelInput" value="#{tipoDeCarga.nombre}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
 
                             <p:column style="width:6rem">
-                                <p:rowEditor editTitle="Editar Rubro" cancelTitle="Cancelar Edicion"
+                                <p:rowEditor editTitle="Editar tipo de carga" cancelTitle="Cancelar Edicion"
                                              saveTitle="Guardar Cambios"/>
                             </p:column>
                             <p:column style="width:6rem">
                                 <p:growl id="message" showDetail="true"/>
-                                <p:commandButton value="Borrar" action="#{gestionarRubrosBean.borrarRubro(rubro)}"
+                                <p:commandButton value="Borrar" action="#{gestionTiposCargaBean.borrarTipoCarga(tipoDeCarga)}"
                                                  update=":form:msgs" styleClass="ui-button-danger" icon="pi pi-times">
                                     <p:confirm header="Confirmar" message="Esta seguro de eliminar este Rubro ?"
                                                icon="pi pi-info-circle"/>
@@ -87,15 +87,15 @@
                     </h:form>
                     <br/><br/>
                     <h:form>
-                        <p:outputLabel value="Alta de rubro"/><p:spacer/><br/><br/>
+                        <p:outputLabel value="Alta de tipo de carga"/><p:spacer/><br/><br/>
                         <p:panelGrid columns="2" cellpadding="7">
 
                             <h:outputLabel value="Nombre:" for="nombre"/>
-                            <p:inputText id="nombre" value="#{gestionarRubrosBean.nombre}" required="true"/>
+                            <p:inputText id="nombre" value="#{gestionTiposCargaBean.nombre}" required="true"/>
                         </p:panelGrid>
                         <br/>
 
-                        <p:commandButton value="Aceptar" action="#{gestionarRubrosBean.AltaRubro}"/>
+                        <p:commandButton value="Aceptar" action="#{gestionTiposCargaBean.AltaTipoCarga}"/>
                     </h:form>
                 </div>
             </div>
