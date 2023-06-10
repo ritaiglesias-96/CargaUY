@@ -72,13 +72,9 @@ public class gestionTipoCargaBean {
     }
 
     @PostConstruct
-    public void init() throws ParseException {
+    public void init() {
         tiposDeCarga = tipoCargaDAO.listarTipoCarga();
         tiposDeCarga.sort(Comparator.comparing(TipoCargaDTO::getId));
-
-
-        UsuarioDTO u2 = new UsuarioDTO("Rita", "Iglesias", LocalDate.now(), "rita.iglesias.adrover@gmail.com", "admin", "admin", TipoUsuario.ADMIN);
-        iUsuariosService.registrarUsuario(u2);
     }
 
     public void borrarTipoCarga(TipoCargaDTO tc) {
