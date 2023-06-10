@@ -1,13 +1,12 @@
 package tse.java.entity;
 
+import tse.java.dto.AsignacionDTO;
 import tse.java.dto.ChoferDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.enumerated.RolCiudadano;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +25,13 @@ public class Chofer extends Ciudadano implements Serializable {
         super(email, cedula);
     }
 
-    public List<GuiaDeViajeDTO> procesarListaViajes(List<GuiaDeViaje> viajes){
-        List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
-        for(GuiaDeViaje g:viajes)
-            result.add(g.darDto());
+    public List<AsignacionDTO> procesarListaAsignaciones(List<Asignacion> asignaciones){
+        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
+        for(Asignacion a:asignaciones)
+            result.add(a.darDTO());
         return result;
     }
     public ChoferDTO darDTO(){
-        return new ChoferDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(), RolCiudadano.CHOFER, procesarListaViajes(this.getGuiasDeViaje()));
+        return new ChoferDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(), RolCiudadano.CHOFER, procesarListaAsignaciones(this.getAsignaciones()));
     }
 }

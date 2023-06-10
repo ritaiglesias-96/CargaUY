@@ -10,9 +10,15 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import tse.java.dto.AsignacionDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
+import tse.java.entity.GuiaDeViaje;
+import tse.java.entity.Pesaje;
+import tse.java.persistance.IAsignacionDAO;
 import tse.java.persistance.IGuiaDeViajeDAO;
+import tse.java.persistance.IPesajesDAO;
+import tse.java.service.IAsignacionesService;
 import tse.java.service.IGuiaDeViajesService;
 import tse.java.service.IPesajesService;
 
@@ -20,29 +26,44 @@ import tse.java.service.IPesajesService;
 public class GuiasDeViajeService implements IGuiaDeViajesService{
 
     @EJB
-    IGuiaDeViajeDAO gdao;
+    IGuiaDeViajeDAO guiaviajeDao;
 
     @EJB
     IPesajesService pesajesService;
 
+    @EJB
+    IPesajesDAO pesajesDAO;
+
+    @EJB
+    IAsignacionesService asignacionesService;
+
+    @EJB
+    IAsignacionDAO asignacionDAO;
+
     @Override
     public void crearGuiaDeViaje(GuiaDeViajeDTO g) {
-        gdao.altaGuiaDeViaje(g);
+        guiaviajeDao.altaGuiaDeViaje(g);
     }
 
     @Override
     public void borrarGuiaDeViaje(Long id) {
-        gdao.borrarGuiaDeViaje(id);
+        GuiaDeViaje g = guiaviajeDao.buscarGuiaDeViaje(id);
+        List<Pesaje> pesajes = g.getPesajes();
+        g.setPesajes(new ArrayList<Pesaje>());
+        guiaviajeDao.modificarGuiaDeViaje(g.darDto());
+        for(Pesaje p:pesajes)
+            pesajesDAO.borrarPesaje(p.getId());
+        guiaviajeDao.borrarGuiaDeViaje(id);
     }
 
     @Override
     public void modificarGuiaDeViaje(GuiaDeViajeDTO g) {
-        gdao.modificarGuiaDeViaje(g);
+        guiaviajeDao.modificarGuiaDeViaje(g);
     }
 
     @Override
     public List<GuiaDeViajeDTO> listarGuiasDeViajes() {
-        return gdao.listarGuiasDeViaje();
+        return guiaviajeDao.listarGuiasDeViaje();
     }
 
     @Override
@@ -60,5 +81,20 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
         return new ArrayList<PesajeDTO>();
     }
 
-    
+    @Override
+    public void asignarPesajes(int numero_viaje, List<PesajeDTO> pesajes) {
+        AsignacionDTO a = asignacionDAO.buscarAsignacion(asignacionesService.ultimaAsignacionViaje(numero_viaje));
+        GuiaDeViajeDTO g = a.getGuia();
+        List<PesajeDTO> result = new ArrayList<PesajeDTO>();
+        for(PesajeDTO p:pesajes){
+            pesajesDAO.altaPesaje(p);
+            PesajeDTO paux = pesajesDAO.buscarPesaje(pesajesDAO.getLastId());
+            result.add(paux);
+        }
+        g.setPesajes(result);
+        guiaviajeDao.modificarGuiaDeViaje(g);
+    }
+
+
+
 }

@@ -1,5 +1,6 @@
 package tse.java.entity;
 
+import tse.java.dto.AsignacionDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
@@ -31,10 +32,10 @@ public class Vehiculo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaFinPNC;
     @OneToMany
-    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();    
+    private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
 
     public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViaje> guiasDeViaje) {
+            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<Asignacion> asignaciones) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -45,7 +46,7 @@ public class Vehiculo implements Serializable {
         this.fechaFinITV = fechaFinITV;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
-        this.guiasDeViaje = guiasDeViaje;
+        this.asignaciones = asignaciones;
     }
 
     public Vehiculo(VehiculoDTO vehiculo) {
@@ -58,8 +59,8 @@ public class Vehiculo implements Serializable {
         this.fechaFinITV = vehiculo.getFechaFinITV();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
-        if (vehiculo.getGuiasDeViaje()!= null) {
-            this.guiasDeViaje = procesarLista(vehiculo.getGuiasDeViaje());
+        if (vehiculo.getAsignaciones()!= null) {
+            this.asignaciones = procesarLista(vehiculo.getAsignaciones());
         }
     }
 
@@ -75,7 +76,7 @@ public class Vehiculo implements Serializable {
         this.fechaFinITV = vehiculo.getFechaFinITV();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
-        this.guiasDeViaje = procesarLista(vehiculo.getGuiasDeViaje());
+        this.asignaciones = procesarLista(vehiculo.getAsignaciones());
     }
 
     public Vehiculo() {
@@ -161,23 +162,23 @@ public class Vehiculo implements Serializable {
         this.fechaFinPNC = fechaFinPNC;
     }
 
-    public List<GuiaDeViaje> getGuiasDeViaje() {
-        return guiasDeViaje;
+    public List<Asignacion> getAsignaciones() {
+        return asignaciones;
     }
 
-    public void setGuiasDeViaje(List<GuiaDeViaje> guiasDeViaje) {
-        this.guiasDeViaje = guiasDeViaje;
+    public void setAsignaciones(List<Asignacion> asignaciones) {
+        this.asignaciones = asignaciones;
     }
 
     public VehiculoDTO darDto(){
-        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, fechaInicioPNC, fechaFinPNC, guiasDeViaje);
+        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, fechaInicioPNC, fechaFinPNC, asignaciones);
         return new VehiculoDTO(v);
     }
 
-    public List<GuiaDeViaje> procesarLista(List<GuiaDeViajeDTO> guias){
-        List<GuiaDeViaje> result = new ArrayList<GuiaDeViaje>();
-        for(GuiaDeViajeDTO g : guias){
-            GuiaDeViaje gnew = new GuiaDeViaje(g);
+    public List<Asignacion> procesarLista(List<AsignacionDTO> asignaciones){
+        List<Asignacion> result = new ArrayList<Asignacion>();
+        for(AsignacionDTO a : asignaciones){
+            Asignacion gnew = new Asignacion(a);
             result.add(gnew);
         }
         return result;

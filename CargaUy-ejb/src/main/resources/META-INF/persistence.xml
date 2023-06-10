@@ -32,6 +32,7 @@
       <class>tse.java.entity.Usuario</class>
       <class>tse.java.entity.Ciudadano</class>
       <class>tse.java.entity.TipoCarga</class>
+      <class>tse.java.entity.Asignacion</class>
       <properties>
          <!--The database schema is auto created on deployment and dropped before redeploy.
              Note: the following configuration does not drop the tables on undeploy. If you prefer this, use this
