@@ -4,9 +4,14 @@ import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 import tse.java.dto.RubroDTO;
 import tse.java.dto.TipoCargaDTO;
+import tse.java.dto.UsuarioDTO;
+import tse.java.entity.Administrador;
+import tse.java.entity.Usuario;
+import tse.java.enumerated.TipoUsuario;
 import tse.java.exception.RubroExisteException;
 import tse.java.exception.TipoCargaExisteException;
 import tse.java.persistance.ITipoCargaDAO;
+import tse.java.service.IUsuariosService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -16,7 +21,12 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,6 +39,8 @@ public class gestionTipoCargaBean {
     @EJB
     ITipoCargaDAO tipoCargaDAO;
 
+    @EJB
+    IUsuariosService iUsuariosService;
     private String nombre;
 
     private TipoCargaDTO tc = new TipoCargaDTO();
@@ -60,9 +72,13 @@ public class gestionTipoCargaBean {
     }
 
     @PostConstruct
-    public void init(){
+    public void init() throws ParseException {
         tiposDeCarga = tipoCargaDAO.listarTipoCarga();
         tiposDeCarga.sort(Comparator.comparing(TipoCargaDTO::getId));
+
+
+        UsuarioDTO u2 = new UsuarioDTO("Rita", "Iglesias", LocalDate.now(), "rita.iglesias.adrover@gmail.com", "admin", "admin", TipoUsuario.ADMIN);
+        iUsuariosService.registrarUsuario(u2);
     }
 
     public void borrarTipoCarga(TipoCargaDTO tc) {
@@ -92,4 +108,27 @@ public class gestionTipoCargaBean {
             PrimeFaces.current().dialog().showMessageDynamic(message);
         }
     }
+
+    public void onRowCancel(RowEditEvent<RubroDTO> event) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Edicion Cancelada.");
+        PrimeFaces.current().dialog().showMessageDynamic(message);
+    }
+
+    public void AltaTipoCarga() {
+        TipoCargaDTO tc = new TipoCargaDTO(null, nombre);
+        try {
+            tipoCargaDAO.altaTipoCarga(tc);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            ec.redirect("/CargaUy-web/admin/gestionTipoCarga.xhtml");
+            fc.responseComplete();
+        } catch (TipoCargaExisteException e) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
+            PrimeFaces.current().dialog().showMessageDynamic(message);
+        } catch (IOException e2) {
+            throw new RuntimeException(e2);
+        }
+    }
+
+
 }
