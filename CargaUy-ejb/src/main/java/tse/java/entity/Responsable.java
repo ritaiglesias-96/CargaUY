@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("Responsable")
+@Table(name="\"Responsable\"")
 public class Responsable extends Ciudadano implements Serializable {
 
     private static final long serialVersionUID = 3827070902901902553L;
@@ -28,7 +28,7 @@ public class Responsable extends Ciudadano implements Serializable {
     }
 
     public Responsable(String email, String cedula) {
-        super(email, cedula);
+        super(email, cedula, RolCiudadano.RESPONSABLE);
     }
 
 
@@ -40,13 +40,8 @@ public class Responsable extends Ciudadano implements Serializable {
         this.empresa = empresa;
     }
 
-    public List<AsignacionDTO> procesarListaAsignaciones(List<Asignacion> asignaciones){
-        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
-        for(Asignacion a:asignaciones)
-            result.add(a.darDTO());
-        return result;
+    public ResponsableDTO darDto(){
+        return new ResponsableDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(),RolCiudadano.RESPONSABLE);
     }
-    public ResponsableDTO darDTO(){
-        return new ResponsableDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(),RolCiudadano.RESPONSABLE, procesarListaAsignaciones(this.getAsignaciones()));
-    }
+
 }
