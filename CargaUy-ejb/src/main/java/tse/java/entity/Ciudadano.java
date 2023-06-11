@@ -1,7 +1,5 @@
 package tse.java.entity;
 
-import tse.java.dto.CiudadanoDTO;
-import tse.java.enumerated.RolCiudadano;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,7 +22,7 @@ public class Ciudadano  implements Serializable {
     private String cedula;
 
     @ManyToMany
-    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();
+    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<>();
 
     public Ciudadano() {
         super();

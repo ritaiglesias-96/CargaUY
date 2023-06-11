@@ -1,12 +1,10 @@
 package tse.java.api.endpoint;
 
 
-import tse.java.dto.CiudadanoDTO;
 import tse.java.entity.Chofer;
 import tse.java.entity.Ciudadano;
 import tse.java.entity.Funcionario;
 import tse.java.entity.Responsable;
-import tse.java.exception.ErrorException;
 import tse.java.model.Ciudadanos;
 import tse.java.service.ICiudadanosService;
 
@@ -74,7 +72,7 @@ public class gestionCiudadanosEndpoint {
     @Path("/funcionario")
     public Response agregarFuncionario(Funcionario funcionario){
         try {
-            ciudadanosService.agregarHijoCiudadano((Funcionario) funcionario);
+            ciudadanosService.agregarHijoCiudadano(funcionario);
             return Response.status(Response.Status.OK).entity(funcionario).build();
         } catch (Exception e) {
             throw new RuntimeException(e);

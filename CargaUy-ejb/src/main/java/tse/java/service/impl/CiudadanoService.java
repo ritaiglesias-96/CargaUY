@@ -4,8 +4,6 @@ import tse.java.dto.*;
 import tse.java.entity.*;
 import tse.java.model.Ciudadanos;
 import tse.java.persistance.*;
-import tse.java.persistance.impl.CiudadanoDAO;
-import tse.java.persistance.impl.FuncionarioDAO;
 import tse.java.service.ICiudadanosService;
 
 import javax.ejb.EJB;

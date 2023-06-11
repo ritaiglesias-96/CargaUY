@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
-import java.util.List;
 
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
