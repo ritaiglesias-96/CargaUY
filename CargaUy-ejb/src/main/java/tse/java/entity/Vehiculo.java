@@ -25,6 +25,7 @@ public class Vehiculo implements Serializable {
     private String modelo;
     private Float peso;
     private Float capacidadCarga;
+    private int pnc;
     @Temporal(TemporalType.DATE)
     private Date fechaFinITV;
     @Temporal(TemporalType.DATE)
@@ -35,7 +36,7 @@ public class Vehiculo implements Serializable {
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
 
     public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<Asignacion> asignaciones) {
+            Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, List<Asignacion> asignaciones) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -44,6 +45,7 @@ public class Vehiculo implements Serializable {
         this.peso = peso;
         this.capacidadCarga = capacidadCarga;
         this.fechaFinITV = fechaFinITV;
+        this.pnc = pnc;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
         this.asignaciones = asignaciones;
@@ -57,6 +59,7 @@ public class Vehiculo implements Serializable {
         this.peso = vehiculo.getPeso();
         this.capacidadCarga = vehiculo.getCapacidadCarga();
         this.fechaFinITV = vehiculo.getFechaFinITV();
+        this.pnc = vehiculo.getPnc();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
         if (vehiculo.getAsignaciones()!= null) {
@@ -170,8 +173,16 @@ public class Vehiculo implements Serializable {
         this.asignaciones = asignaciones;
     }
 
+    public int getPnc() {
+        return pnc;
+    }
+
+    public void setPnc(int pnc) {
+        this.pnc = pnc;
+    }
+
     public VehiculoDTO darDto(){
-        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, fechaInicioPNC, fechaFinPNC, asignaciones);
+        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, pnc, fechaInicioPNC, fechaFinPNC, asignaciones);
         return new VehiculoDTO(v);
     }
 

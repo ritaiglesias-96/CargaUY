@@ -9,7 +9,6 @@ import tse.java.dto.EmpresaDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
-import tse.java.entity.Vehiculo;
 import tse.java.model.Empresas;
 
 
@@ -33,5 +32,7 @@ public interface IEmpresasService {
     public boolean empresaContieneVehiculo(EmpresaDTO e, VehiculoDTO v);
 
     public void borrarVehiculo(Long id);
+
+    public List<VehiculoDTO> listarVehiculos(int id);
 
 }

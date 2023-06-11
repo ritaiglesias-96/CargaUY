@@ -17,6 +17,7 @@ public class VehiculoDTO {
     private Float peso;
     private Float capacidadCarga;
     private Date fechaFinITV;
+    private int pnc;
     private Date fechaInicioPNC;
     private Date fechaFinPNC;
     private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
@@ -24,7 +25,7 @@ public class VehiculoDTO {
     
 
     public VehiculoDTO(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<AsignacionDTO> asignaciones) {
+            Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, List<AsignacionDTO> asignaciones) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -33,6 +34,7 @@ public class VehiculoDTO {
         this.peso = peso;
         this.capacidadCarga = capacidadCarga;
         this.fechaFinITV = fechaFinITV;
+        this.pnc = pnc;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
         this.asignaciones = asignaciones;
@@ -47,6 +49,7 @@ public class VehiculoDTO {
         this.peso = v.getPeso();
         this.capacidadCarga = v.getCapacidadCarga();
         this.fechaFinITV = v.getFechaFinITV();
+        this.pnc = v.getPnc();
         this.fechaInicioPNC = v.getFechaInicioPNC();
         this.fechaFinPNC = v.getFechaFinPNC();
         this.asignaciones = procesarLista(v.getAsignaciones());
@@ -142,6 +145,10 @@ public class VehiculoDTO {
     public void setAsignaciones(List<AsignacionDTO> asignaciones) {
         this.asignaciones = asignaciones;
     }
+    
+    public int getPnc() { return pnc; }
+
+    public void setPnc(int pnc) { this.pnc = pnc; }
 
     public List<AsignacionDTO> procesarLista(List<Asignacion> asignaciones){
         List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
