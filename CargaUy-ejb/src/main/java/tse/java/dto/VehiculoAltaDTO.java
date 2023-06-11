@@ -6,7 +6,7 @@ import java.util.List;
 
 public class VehiculoAltaDTO {
     private int idEmpresa, pnc ;
-    private String matricula, pais, marca, modelo, cedula_responsable;
+    private String matricula, pais, marca, modelo;
     private Float peso;
     private Float capacidadCarga;
     private Date fechaFinITV;
@@ -16,14 +16,13 @@ public class VehiculoAltaDTO {
     public VehiculoAltaDTO() {
     }
 
-    public VehiculoAltaDTO(int idEmpresa, String matricula, String pais, String marca, String modelo, String cedula_responsable,
-                           Float peso, Float capacidadCarga, int pnc, Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC) {
+    public VehiculoAltaDTO(int idEmpresa, String matricula, String pais, String marca, String modelo, Float peso,
+                           Float capacidadCarga, int pnc, Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC) {
         this.idEmpresa = idEmpresa;
         this.matricula = matricula;
         this.pais = pais;
         this.marca = marca;
         this.modelo = modelo;
-        this.cedula_responsable = cedula_responsable;
         this.peso = peso;
         this.capacidadCarga = capacidadCarga;
         this.pnc = pnc;
@@ -72,14 +71,6 @@ public class VehiculoAltaDTO {
         this.modelo = modelo;
     }
 
-    public String getCedula_responsable() {
-        return cedula_responsable;
-    }
-
-    public void setCedula_responsable(String cedula_responsable) {
-        this.cedula_responsable = cedula_responsable;
-    }
-
     public Float getPeso() {
         return peso;
     }
@@ -120,11 +111,7 @@ public class VehiculoAltaDTO {
         this.fechaFinPNC = fechaFinPNC;
     }
 
-    public int getPnc() {
-        return pnc;
-    }
+    public int getPnc() { return pnc; }
 
-    public void setPnc(int pnc) {
-        this.pnc = pnc;
-    }
+    public void setPnc(int pnc) { this.pnc = pnc; }
 }

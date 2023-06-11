@@ -66,16 +66,10 @@ public class gestionVehiculosEndpoint {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con la id " + dtAlta.getIdEmpresa()).build();
         }
 
-        ResponsableDTO r = rd.buscarResponsablePorCedula(dtAlta.getCedula_responsable());
-        if(r == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe responsable con la cedula " + dtAlta.getCedula_responsable()).build();
-        }
-
         VehiculoDTO v = new VehiculoDTO(null, dtAlta.getMatricula(), dtAlta.getPais(), dtAlta.getMarca(), dtAlta.getModelo(), dtAlta.getPeso(), dtAlta.getCapacidadCarga(),
                 dtAlta.getFechaFinITV(), dtAlta.getPnc(),  dtAlta.getFechaFinPNC(), dtAlta.getFechaInicioPNC(), null);
         vs.agregarVehiculo(v);
         v = vs.obtenerVehiculoMatriculaPais(dtAlta.getMatricula(), dtAlta.getPais());
-        Long idVehiculo = v.getId();
         es.agregarVehiculoAEmpresa(dtAlta.getIdEmpresa(), v);
         return Response.status(Response.Status.CREATED).build();
     }
