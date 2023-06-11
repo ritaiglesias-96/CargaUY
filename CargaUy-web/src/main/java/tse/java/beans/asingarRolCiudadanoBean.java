@@ -2,13 +2,8 @@ package tse.java.beans;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
-import tse.java.dto.CiudadanoDTO;
-import tse.java.dto.RubroDTO;
-import tse.java.dto.UsuarioDTO;
-import tse.java.entity.Chofer;
-import tse.java.entity.Ciudadano;
-import tse.java.entity.Funcionario;
-import tse.java.entity.Responsable;
+import tse.java.dto.*;
+import tse.java.entity.*;
 import tse.java.enumerated.RolCiudadano;
 import tse.java.enumerated.TipoUsuario;
 import tse.java.exception.RubroExisteException;
@@ -43,13 +38,24 @@ public class asingarRolCiudadanoBean {
 
     private List<CiudadanoDTO> listaCiudadanos = new ArrayList<CiudadanoDTO>();
 
+    private String rol="";
+
+
     @PostConstruct
     public void init(){
-        listaCiudadanos = ciudadanosService.obtenerCiudadanos().getListaCiudadanos();
-        listaCiudadanos.sort(Comparator.comparing(CiudadanoDTO::getIdCiudadano));
-
         UsuarioDTO u2 = new UsuarioDTO("Rita", "Iglesias", LocalDate.now(), "rita.iglesias.adrover@gmail.com", "admin", "admin", TipoUsuario.ADMIN);
         iUsuariosService.registrarUsuario(u2);
+        if(ciudadanoDAO.buscarCiudadanoPorId(1)==null){
+            Chofer c = new Chofer("marce","1234");
+            c.setAsignaciones(new ArrayList<Asignacion>());
+            ciudadanosService.agregarHijoCiudadano(c);
+        }
+        if(ciudadanoDAO.buscarCiudadanoPorId(2)==null) {
+            Ciudadano a = new Ciudadano("ciuda", "1111", new ArrayList<Asignacion>());
+            ciudadanosService.agregarCiudadano(a);
+        }
+        listaCiudadanos = ciudadanoDAO.listarCiudadanos();
+        listaCiudadanos.sort(Comparator.comparing(CiudadanoDTO::getCedula));
     }
 
     public void onRowEdit(RowEditEvent<CiudadanoDTO> event) {
@@ -68,11 +74,15 @@ public class asingarRolCiudadanoBean {
             ciudadanosService.eliminarCiudadano(c);
             ciudadanosService.agregarHijoCiudadano(r);
             r1 = RolCiudadano.RESPONSABLE;
+        } else if(c instanceof Funcionario  && dtr.getRol()!= RolCiudadano.FUNCIONARIO){
+            Funcionario f = (Funcionario) c;
+            ciudadanosService.eliminarCiudadano(c);
+            ciudadanosService.agregarHijoCiudadano(f);
+            r1 = RolCiudadano.FUNCIONARIO;
         } else {
-            if(dtr.getRol()!=RolCiudadano.FUNCIONARIO) {
-                Funcionario f = (Funcionario) c;
+            if(!rol.equals("Ciudadano")) {
                 ciudadanosService.eliminarCiudadano(c);
-                ciudadanosService.agregarHijoCiudadano(f);
+                ciudadanosService.agregarHijoCiudadano(c);
                 r1 = RolCiudadano.FUNCIONARIO;
             }
         }
@@ -91,5 +101,25 @@ public class asingarRolCiudadanoBean {
 
     public void setListaCiudadanos(List<CiudadanoDTO> listaCiudadanos) {
         this.listaCiudadanos = listaCiudadanos;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public String getRolUsuario(CiudadanoDTO ciud){
+        Ciudadano c = ciudadanoDAO.buscarCiudadanoPorId(ciud.getIdCiudadano());
+        if(c instanceof Chofer)
+            return "Chofer";
+        else if(c instanceof Funcionario)
+            return "Funcionario";
+        else if(c instanceof Responsable)
+            return "Responsable";
+        else
+            return "Ciudadano";
     }
 }
