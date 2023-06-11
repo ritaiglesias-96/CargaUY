@@ -22,9 +22,8 @@ public class Ciudadano  implements Serializable {
     private String email;
     @Column(unique = true)
     private String cedula;
-
     @ManyToMany
-    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();
+    private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
 
     public Ciudadano() {
         super();
@@ -36,11 +35,11 @@ public class Ciudadano  implements Serializable {
         this.cedula = cedula;
     }
 
-    public Ciudadano(String email, String cedula, List<GuiaDeViaje> guias) {
+    public Ciudadano(String email, String cedula, List<Asignacion> asignaciones) {
         super();
         this.email = email;
         this.cedula = cedula;
-        this.guiasDeViaje = guias;
+        this.asignaciones = asignaciones;
     }
 
     public int getIdCiudadano() {
@@ -67,13 +66,11 @@ public class Ciudadano  implements Serializable {
         this.cedula = cedula;
     }
 
-    public List<GuiaDeViaje> getGuiasDeViaje() {
-        return guiasDeViaje;
+    public List<Asignacion> getAsignaciones() {
+        return asignaciones;
     }
 
-    public void setGuiasDeViaje(List<GuiaDeViaje> guiasDeViaje) {
-        this.guiasDeViaje = guiasDeViaje;
+    public void setAsignaciones(List<Asignacion> asignaciones) {
+        this.asignaciones = asignaciones;
     }
-
-
 }

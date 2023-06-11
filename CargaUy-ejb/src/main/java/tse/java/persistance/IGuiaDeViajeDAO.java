@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.entity.Asignacion;
 import tse.java.entity.GuiaDeViaje;
 
 @Local

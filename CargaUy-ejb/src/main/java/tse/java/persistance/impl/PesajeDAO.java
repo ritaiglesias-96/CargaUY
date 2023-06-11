@@ -49,4 +49,9 @@ public class PesajeDAO implements IPesajesDAO {
         Pesaje p = em.find(Pesaje.class, id);
         em.remove(p);
     }
+
+    public Long getLastId(){
+        Query q = em.createQuery("select max(p.id) from Pesaje p");
+        return Long.parseLong(q.getResultList().get(0).toString());
+    }
 }

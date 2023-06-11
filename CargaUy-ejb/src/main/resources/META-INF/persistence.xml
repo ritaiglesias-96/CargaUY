@@ -31,6 +31,7 @@
       <class>tse.java.entity.Pesaje</class>
       <class>tse.java.entity.Usuario</class>
       <class>tse.java.entity.Ciudadano</class>
+      <class>tse.java.entity.Asignacion</class>
       <class>tse.java.entity.Tracking</class>
       <class>tse.java.entity.TipoCarga</class>
       <properties>
