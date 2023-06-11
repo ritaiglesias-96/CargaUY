@@ -10,8 +10,9 @@ public class GuiaDeViajeDTO {
     private Long id;
 
     private int numero;
-
     private String rubroCliente;
+
+    private String tipoCarga;
 
     private float volumenCarga;
 
@@ -27,11 +28,11 @@ public class GuiaDeViajeDTO {
 
     private List<PesajeDTO> pesajes = new ArrayList<PesajeDTO>();
 
-    public GuiaDeViajeDTO(Long id, int numero, String rubroCliente, float volumenCarga, Date fecha, String origen, Date inicio,
-            Date fin, String destino, List<PesajeDTO> pesajes) {
+    public GuiaDeViajeDTO(Long id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<PesajeDTO> pesajes) {
         this.id = id;
         this.numero = numero;
         this.rubroCliente = rubroCliente;
+        this.tipoCarga = tipoCarga;
         this.volumenCarga = volumenCarga;
         this.fecha = fecha;
         this.origen = origen;
@@ -121,5 +122,13 @@ public class GuiaDeViajeDTO {
 
     public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public String getTipoCarga() {
+        return tipoCarga;
+    }
+
+    public void setTipoCarga(String tipoCarga) {
+        this.tipoCarga = tipoCarga;
     }
 }

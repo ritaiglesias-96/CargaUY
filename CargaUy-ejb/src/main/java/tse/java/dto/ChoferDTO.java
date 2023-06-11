@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ChoferDTO extends CiudadanoDTO{
 
-    private List<GuiaDeViajeDTO> guiasDeViaje = new ArrayList<GuiaDeViajeDTO>();
+    private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
 
     public ChoferDTO() {
     }
@@ -16,16 +16,16 @@ public class ChoferDTO extends CiudadanoDTO{
         super(idCiudadano, email, cedula, rol);
     }
 
-    public List<GuiaDeViajeDTO> getGuiasDeViaje() {
-        return guiasDeViaje;
-    }
-
-    public void setGuiasDeViaje(List<GuiaDeViajeDTO> guiasDeViaje) {
-        this.guiasDeViaje = guiasDeViaje;
-    }
-
-    public ChoferDTO(int idCiudadano, String email, String cedula, RolCiudadano rol, List<GuiaDeViajeDTO> guiasDeViaje) {
+    public ChoferDTO(int idCiudadano, String email, String cedula, RolCiudadano rol, List<AsignacionDTO> asignaciones) {
         super(idCiudadano, email, cedula, rol);
-        this.guiasDeViaje = guiasDeViaje;
+        this.asignaciones = asignaciones;
+    }
+
+    public List<AsignacionDTO> getAsignaciones() {
+        return asignaciones;
+    }
+
+    public void setAsignaciones(List<AsignacionDTO> asignaciones) {
+        this.asignaciones = asignaciones;
     }
 }

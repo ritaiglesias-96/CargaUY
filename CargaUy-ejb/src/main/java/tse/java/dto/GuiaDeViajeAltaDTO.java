@@ -5,12 +5,13 @@ import java.util.List;
 
 public class GuiaDeViajeAltaDTO{
 
-    private String rubroCliente;
+    private String rubroCliente, tipoCarga;
     private float volumenCarga;
     private String origen, destino, pais_vehiculo, matricula_vehiculo, cedula_chofer, cedula_responsable;
 
-    public GuiaDeViajeAltaDTO(String rubroCliente, float volumenCarga, String origen, String destino, String pais_vehiculo, String matricula_vehiculo, String cedula_chofer, String cedula_responsable) {
+    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String pais_vehiculo, String matricula_vehiculo, String cedula_chofer, String cedula_responsable) {
         this.rubroCliente = rubroCliente;
+        this.tipoCarga = tipoCarga;
         this.volumenCarga = volumenCarga;
         this.origen = origen;
         this.destino = destino;
@@ -84,5 +85,13 @@ public class GuiaDeViajeAltaDTO{
 
     public void setDestino(String destino) {
         this.destino = destino;
+    }
+
+    public String getTipoCarga() {
+        return tipoCarga;
+    }
+
+    public void setTipoCarga(String tipoCarga) {
+        this.tipoCarga = tipoCarga;
     }
 }

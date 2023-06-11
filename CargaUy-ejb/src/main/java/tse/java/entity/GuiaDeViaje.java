@@ -20,6 +20,7 @@ public class GuiaDeViaje {
     private int numero;
 
     private String rubroCliente;
+    private String tipoCarga;
 
     private float volumenCarga;
 
@@ -39,11 +40,11 @@ public class GuiaDeViaje {
     @OneToMany
     private List<Pesaje> pesajes = new ArrayList<Pesaje>();
 
-    public GuiaDeViaje(Long id, int numero, String rubroCliente, float volumenCarga, Date fecha, String origen, Date inicio, Date fin,
-            String destino, List<Pesaje> pesajes) {
+    public GuiaDeViaje(Long id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<Pesaje> pesajes) {
         this.id = id;
         this.numero = numero;
         this.rubroCliente = rubroCliente;
+        this.tipoCarga = tipoCarga;
         this.volumenCarga = volumenCarga;
         this.fecha = fecha;
         this.origen = origen;
@@ -66,6 +67,7 @@ public class GuiaDeViaje {
         this.origen = guia.getOrigen();
         this.rubroCliente = guia.getRubroCliente();
         this.volumenCarga = guia.getVolumenCarga();
+        this.tipoCarga = guia.getTipoCarga();
     }
 
     public Long getId() {
@@ -148,6 +150,14 @@ public class GuiaDeViaje {
         this.numero = numero;
     }
 
+    public String getTipoCarga() {
+        return tipoCarga;
+    }
+
+    public void setTipoCarga(String tipoCarga) {
+        this.tipoCarga = tipoCarga;
+    }
+
     public List<PesajeDTO> procesarLista(){
         List<PesajeDTO> result = new ArrayList<PesajeDTO>();
         for(Pesaje p:pesajes){
@@ -157,7 +167,7 @@ public class GuiaDeViaje {
     }
 
     public GuiaDeViajeDTO darDto(){
-        return new GuiaDeViajeDTO(id, numero, rubroCliente, volumenCarga, fecha, origen, inicio, fin, destino, procesarLista());
+        return new GuiaDeViajeDTO(id, numero, rubroCliente, tipoCarga, volumenCarga, fecha, origen, inicio, fin, destino, procesarLista());
     }
 
     public List<Pesaje> procesarListaPesajes(List<PesajeDTO> pesajes){

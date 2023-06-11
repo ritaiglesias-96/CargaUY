@@ -4,67 +4,109 @@
       xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-    <title>Lista de rubros</title>
+    <title>Gestion de Rubros</title>
+    <link href="./../styles/main.css" rel="stylesheet"/>
 </h:head>
 
 <h:body>
-    <h:form id="form">
-        <p:growl id="msgs" showDetail="true"/>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-3">
+            <h1>CargaUy Backoffice - #{UserManager.currentUser.username}</h1>
+        </div>
+        <div class="ui-g-12 ui-md-9 ui-g-nopad">
+            <div class="ui-g-12">
+                <div style="justify-content: flex-end;display: flex;" class="log">
+                    <p:commandButton action="#{UserManager.logout}" value="Salir" class="loginButton" icon="pi pi-sign-out" />
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-3">
+            <p:menu style="width: 100%">
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Gestionar usuarios" url="gestionUsuarios.xhtml" icon="pi pi-users"/>
+                    <p:menuitem value="Gestionar Rubros" url="gestionRubros.xhtml" icon="pi pi-star"/>
+                    <p:menuitem value="Gestionar tipos de carga" url="gestionTipoCarga.xhtml" icon="pi pi-wrench"/>
+                </p:submenu>
+            </p:menu>
+        </div>
+        <div class="ui-g-12 ui-md-9 ui-g-nopad">
+            <div class="ui-g-12 ui-g-nopad">
+                <div class="ui-g">
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true"/>
 
-        <h:outputText>Listado de rubros</h:outputText>
+                        <h:outputText>Listado de rubros</h:outputText>
 
-        <p:dataTable value="#{gestionarRubrosBean.getRubros()}" var="rubro" editable="true">
+                        <p:dataTable value="#{gestionarRubrosBean.getRubros()}" var="rubro" editable="true">
 
-            <p:ajax event="rowEdit" listener="#{gestionarRubrosBean.onRowEdit}" update=":form:msgs" />
-            <p:ajax event="rowEditCancel" listener="#{gestionarRubrosBean.onRowCancel}" update=":form:msgs"/>
+                            <p:ajax event="rowEdit" listener="#{gestionarRubrosBean.onRowEdit}" update=":form:msgs"/>
+                            <p:ajax event="rowEditCancel" listener="#{gestionarRubrosBean.onRowCancel}"
+                                    update=":form:msgs"/>
 
-            <p:column headerText="Id">
-                <p:cellEditor>
-                    <f:facet name="output">
-                        <h:outputText value="#{rubro.id}"/>
-                    </f:facet>
-                    <f:facet name="input">
-                        <p:inputNumber id="modelInput2" value="#{rubro.id}" style="width:100%" readonly="true"/>
-                    </f:facet>
-                </p:cellEditor>
-            </p:column>
-            <p:column headerText="Nombre">
-                <p:cellEditor>
-                    <f:facet name="output">
-                        <h:outputText value="#{rubro.nombre}"/>
-                    </f:facet>
-                    <f:facet name="input">
-                        <p:inputText id="modelInput" value="#{rubro.nombre}" style="width:100%"/>
-                    </f:facet>
-                </p:cellEditor>
-            </p:column>
+                            <p:column headerText="Id">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{rubro.id}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputNumber id="modelInput2" value="#{rubro.id}" style="width:100%"
+                                                       readonly="true"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{rubro.nombre}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="modelInput" value="#{rubro.nombre}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
 
-            <p:column style="width:6rem">
-                <p:rowEditor editTitle="Editar Rubro" cancelTitle="Cancelar Edicion" saveTitle="Guardar Cambios"/>
-            </p:column>
-            <p:column style="width:6rem">
-                <p:growl id="message" showDetail="true"/>
-                <p:commandButton value="Borrar" action="#{gestionarRubrosBean.borrarRubro(rubro)}" update=":form:msgs" styleClass="ui-button-danger" icon="pi pi-times">
-                    <p:confirm header="Confirmar" message="Esta seguro de eliminar este Rubro ?" icon="pi pi-info-circle"/>
-                </p:commandButton>
-                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
-                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"/>
-                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-                </p:confirmDialog>
-            </p:column>
-        </p:dataTable>
-    </h:form>
-    <br/><br/>
-    <h:form>
-        <p:outputLabel value="Alta de rubro" /><p:spacer/><br/><br/>
-        <p:panelGrid columns="2" cellpadding="7">
-            <h:outputLabel value="Nombre:" for="nombre"/>
-            <p:inputText id="nombre" value="#{gestionarRubrosBean.nombre}" required="true"></p:inputText>
-        </p:panelGrid>
-        <br/>
+                            <p:column style="width:6rem">
+                                <p:rowEditor editTitle="Editar Rubro" cancelTitle="Cancelar Edicion"
+                                             saveTitle="Guardar Cambios"/>
+                            </p:column>
+                            <p:column style="width:6rem">
+                                <p:growl id="message" showDetail="true"/>
+                                <p:commandButton value="Borrar" action="#{gestionarRubrosBean.borrarRubro(rubro)}"
+                                                 update=":form:msgs" styleClass="ui-button-danger" icon="pi pi-times">
+                                    <p:confirm header="Confirmar" message="Esta seguro de eliminar este Rubro ?"
+                                               icon="pi pi-info-circle"/>
+                                </p:commandButton>
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true"
+                                                 width="350">
+                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes"/>
+                                    <p:commandButton value="No" type="button"
+                                                     styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                </p:confirmDialog>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                    <br/><br/>
+                    <h:form>
+                        <p:outputLabel value="Alta de rubro"/><p:spacer/><br/><br/>
+                        <p:panelGrid columns="2" cellpadding="7">
 
-        <p:commandButton value="Aceptar" action="#{gestionarRubrosBean.AltaRubro}" />
-    </h:form>
+                            <h:outputLabel value="Nombre:" for="nombre"/>
+                            <p:inputText id="nombre" value="#{gestionarRubrosBean.nombre}" required="true"/>
+                        </p:panelGrid>
+                        <br/>
+
+                        <p:commandButton value="Aceptar" action="#{gestionarRubrosBean.AltaRubro}"/>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-12 footer">
+            <p:inputText style="display: none;"/>
+            <div class="ui-g-2"><p>Cerrar Sesion</p></div>
+            <div class="ui-g-2"><p>Otras opciones?</p></div>
+            <div class="ui-g-2"><p>No se me ocurre</p></div>
+        </div>
+    </div>
 </h:body>
 
 </html>

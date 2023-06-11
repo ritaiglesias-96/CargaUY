@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
+import tse.java.entity.Asignacion;
 import tse.java.entity.GuiaDeViaje;
 import tse.java.entity.Pesaje;
 import tse.java.entity.Rubro;
@@ -26,7 +27,7 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
 
     @Override
     public void altaGuiaDeViaje(GuiaDeViajeDTO dtg) {
-        GuiaDeViaje g = new GuiaDeViaje(dtg.getId(), dtg.getNumero(), dtg.getRubroCliente(), dtg.getVolumenCarga(), dtg.getFecha(), dtg.getOrigen(), dtg.getInicio(), dtg.getFin(), dtg.getDestino(), new ArrayList<Pesaje>());
+        GuiaDeViaje g = new GuiaDeViaje(dtg.getId(), dtg.getNumero(), dtg.getRubroCliente(), dtg.getTipoCarga(),dtg.getVolumenCarga(), dtg.getFecha(), dtg.getOrigen(), dtg.getInicio(), dtg.getFin(), dtg.getDestino(), new ArrayList<Pesaje>());
         em.persist(g);
     }
 
@@ -62,6 +63,8 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
         gv.setOrigen(dtg.getOrigen());
         gv.setRubroCliente(dtg.getRubroCliente());
         gv.setVolumenCarga(dtg.getVolumenCarga());
+        gv.setTipoCarga(dtg.getTipoCarga());
+        gv.setPesajes(gv.procesarListaPesajes(dtg.getPesajes()));
         em.persist(gv);
     }
 

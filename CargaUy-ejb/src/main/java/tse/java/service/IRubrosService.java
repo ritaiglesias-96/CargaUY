@@ -8,9 +8,9 @@ import java.util.List;
 
 @Local
 public interface IRubrosService {
-    public List<RubroDTO> listarRubros();
-    public void altaRubro(RubroDTO r) throws RubroExisteException;
-    public void modificarRubro(RubroDTO r) throws RubroExisteException;
-    public void eliminarRubro(Long id);
-    public RubroDTO buscarRubro(Long id);
+    List<RubroDTO> listarRubros();
+    void altaRubro(RubroDTO r) throws RubroExisteException;
+    void modificarRubro(RubroDTO r) throws RubroExisteException;
+    void eliminarRubro(Long id);
+    RubroDTO buscarRubro(Long id);
 }
