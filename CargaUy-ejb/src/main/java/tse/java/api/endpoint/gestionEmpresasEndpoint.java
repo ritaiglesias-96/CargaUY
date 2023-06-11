@@ -1,6 +1,8 @@
 package tse.java.api.endpoint;
 
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.PesajeDTO;
+import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Empresa;
 import tse.java.model.Empresas;
 import tse.java.service.IEmpresasService;
@@ -11,6 +13,12 @@ import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @RequestScoped
@@ -76,6 +84,17 @@ public class gestionEmpresasEndpoint {
             empresasService.eliminarEmpresa(empresaDTO);
             return Response.status(Response.Status.OK).entity(empresa).build();
         } catch (NoResultException e){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @GET
+    @Path("/{id}/vehiculos")
+    public Response listarVehiculos(@PathParam("id") int id){
+        try{
+            List<VehiculoDTO> vehiculos = empresasService.listarVehiculos(id);
+            return Response.status(Response.Status.OK).entity(vehiculos).build();
+        }catch (NoResultException e ){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
