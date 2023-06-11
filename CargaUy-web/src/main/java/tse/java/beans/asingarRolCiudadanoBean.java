@@ -62,32 +62,49 @@ public class asingarRolCiudadanoBean {
         CiudadanoDTO dtr = event.getObject();
         String msg = "Me pasaron para modificar el ciudadano con id " + dtr.getIdCiudadano() + " con el documento " + dtr.getCedula();
         Logger.getLogger(asingarRolCiudadanoBean.class.getName()).log(Level.INFO, msg);
-        RolCiudadano r1;
         Ciudadano c = ciudadanoDAO.buscarCiudadanoPorId(dtr.getIdCiudadano());
-        if(c instanceof Chofer && dtr.getRol()!= RolCiudadano.CHOFER) {
-            Chofer ch = (Chofer) c;
-            ciudadanosService.eliminarCiudadano(c);
-            ciudadanosService.agregarHijoCiudadano(ch);
-            r1 = RolCiudadano.CHOFER;
-        } else if(c instanceof Responsable  && dtr.getRol()!= RolCiudadano.RESPONSABLE){
-            Responsable r = (Responsable) c;
-            ciudadanosService.eliminarCiudadano(c);
-            ciudadanosService.agregarHijoCiudadano(r);
-            r1 = RolCiudadano.RESPONSABLE;
-        } else if(c instanceof Funcionario  && dtr.getRol()!= RolCiudadano.FUNCIONARIO){
-            Funcionario f = (Funcionario) c;
-            ciudadanosService.eliminarCiudadano(c);
-            ciudadanosService.agregarHijoCiudadano(f);
-            r1 = RolCiudadano.FUNCIONARIO;
-        } else {
-            if(!rol.equals("Ciudadano")) {
+        if(rol.equals("Chofer") && !(c instanceof Chofer)) {
+            Chofer ch = new Chofer(c.getEmail(),c.getCedula());
+            ch.setAsignaciones(new ArrayList<Asignacion>());
+            if((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario))
+                ciudadanosService.eliminarHijoCiudadano(c);
+            else
                 ciudadanosService.eliminarCiudadano(c);
-                ciudadanosService.agregarHijoCiudadano(c);
-                r1 = RolCiudadano.FUNCIONARIO;
-            }
+            ciudadanosService.agregarHijoCiudadano(ch);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Ciudadano actualizado.");
+            PrimeFaces.current().dialog().showMessageDynamic(message);
+        } else if(rol.equals("Responsable") && !(c instanceof Responsable)){
+            Responsable r = new Responsable(c.getEmail(),c.getCedula());
+            r.setAsignaciones(new ArrayList<Asignacion>());
+            if((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario))
+                ciudadanosService.eliminarHijoCiudadano(c);
+            else
+                ciudadanosService.eliminarCiudadano(c);
+            ciudadanosService.agregarHijoCiudadano(r);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Ciudadano actualizado.");
+            PrimeFaces.current().dialog().showMessageDynamic(message);
+        } else if(rol.equals("Funcionario") && !(c instanceof Funcionario)){
+            Funcionario f = new Funcionario(c.getEmail(),c.getCedula());
+            f.setAsignaciones(new ArrayList<Asignacion>());
+            if((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario))
+                ciudadanosService.eliminarHijoCiudadano(c);
+            else
+                ciudadanosService.eliminarCiudadano(c);
+            ciudadanosService.agregarHijoCiudadano(f);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Ciudadano actualizado.");
+            PrimeFaces.current().dialog().showMessageDynamic(message);
+        } else if(rol.equals("Ciudadano") && !(c instanceof Ciudadano)){
+            if((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario))
+                ciudadanosService.eliminarHijoCiudadano(c);
+            else
+                ciudadanosService.eliminarCiudadano(c);
+            ciudadanosService.agregarCiudadano(c);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Ciudadano actualizado.");
+            PrimeFaces.current().dialog().showMessageDynamic(message);
+        } else {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Se intenta modificar el ciudadano por el rol que ya tiene");
+            PrimeFaces.current().dialog().showMessageDynamic(message);
         }
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Rubro actualizado.");
-        PrimeFaces.current().dialog().showMessageDynamic(message);
     }
 
     public void onRowCancel(RowEditEvent<RubroDTO> event) {
