@@ -7,6 +7,7 @@ import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
 import org.primefaces.model.DefaultDashboardModel;
+import org.primefaces.model.charts.bar.BarChartModel;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IGuiaDeViajesService;
 import tse.java.service.IVehiculosService;
@@ -26,6 +27,9 @@ public class dashboardAutoridadBean implements Serializable {
     private DashboardModel model;
 
     private int cant_vehiculos, cant_empresas, cant_guias;
+
+    private BarChartModel graficoGuias;
+
 
     @EJB
     IVehiculosService vehiculosService;
@@ -53,6 +57,7 @@ public class dashboardAutoridadBean implements Serializable {
         model.addColumn(column1);
         model.addColumn(column2);
         model.addColumn(column3);
+        crearGraficoGuias();
     }
 
     public void handleReorder(DashboardReorderEvent event) {
@@ -77,6 +82,16 @@ public class dashboardAutoridadBean implements Serializable {
                 "Status:" + event.getVisibility().name());
 
         addMessage(message);
+    }
+
+    private BarChartModel inicializarGraficoGuias(){
+        BarChartModel model = new BarChartModel();
+
+        return model;
+    }
+
+    private void crearGraficoGuias(){
+        graficoGuias = inicializarGraficoGuias();
     }
 
     private void addMessage(FacesMessage message) {
