@@ -5,10 +5,11 @@ import tse.java.enumerated.RolCiudadano;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@DiscriminatorValue("Funcionario")
+@Table(name="\"Funcionario\"")
 public class Funcionario extends Ciudadano implements Serializable{
 
     private static final long serialVersionUID = 3827070902901902553L;
@@ -18,7 +19,7 @@ public class Funcionario extends Ciudadano implements Serializable{
     }
 
     public Funcionario(String email, String cedula) {
-        super(email, cedula);
+        super(email, cedula, RolCiudadano.FUNCIONARIO);
     }
 
     public FuncionarioDTO darDTO() {

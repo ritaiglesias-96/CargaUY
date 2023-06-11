@@ -114,7 +114,7 @@ public class gestionGuiasDeViajeEndpoint {
         adt = asignacionDAO.buscarAsignacion(id_asignacion);
         vehiculosService.asignarGuia(v.getId(), adt);
         Asignacion anew = new Asignacion(adt);
-        ciudadanosService.asingarViajeResponsable(r.getIdCiudadano(), anew);
+    //    ciudadanosService.asingarViajeResponsable(r.getIdCiudadano(), anew);
         ciudadanosService.asingarViajeChofer(c.getIdCiudadano(), anew);
         return Response.status(Response.Status.CREATED).build();
     }
@@ -153,7 +153,7 @@ public class gestionGuiasDeViajeEndpoint {
         a = asignacionDAO.buscarAsignacion(id_asignacion);
         vehiculosService.asignarGuia(v.getId(), a);
         Asignacion anew = new Asignacion(a);
-        ciudadanosService.asingarViajeResponsable(r.getIdCiudadano(), anew);
+    //    ciudadanosService.asingarViajeResponsable(r.getIdCiudadano(), anew);
         ciudadanosService.asingarViajeChofer(c.getIdCiudadano(), anew);
         return Response.status(Response.Status.CREATED).build();
     }

@@ -1,10 +1,8 @@
 package tse.java.api.endpoint;
 
 
-import tse.java.entity.Chofer;
-import tse.java.entity.Ciudadano;
-import tse.java.entity.Funcionario;
-import tse.java.entity.Responsable;
+import tse.java.entity.*;
+import tse.java.enumerated.RolCiudadano;
 import tse.java.model.Ciudadanos;
 import tse.java.service.ICiudadanosService;
 
@@ -71,6 +69,7 @@ public class gestionCiudadanosEndpoint {
     @POST
     @Path("/funcionario")
     public Response agregarFuncionario(Funcionario funcionario){
+        funcionario.setRol(RolCiudadano.FUNCIONARIO);
         try {
             ciudadanosService.agregarHijoCiudadano(funcionario);
             return Response.status(Response.Status.OK).entity(funcionario).build();
@@ -81,8 +80,8 @@ public class gestionCiudadanosEndpoint {
     @POST
     @Path("/responsable")
     public Response agregarResponsable(Responsable responsable){
+        responsable.setRol(RolCiudadano.RESPONSABLE);
         try {
-            ciudadanosService.agregarHijoCiudadano(responsable);
             ciudadanosService.agregarHijoCiudadano(responsable);
             return Response.status(Response.Status.OK).entity(responsable).build();
         } catch (Exception e) {
@@ -92,8 +91,8 @@ public class gestionCiudadanosEndpoint {
     @POST
     @Path("/chofer")
     public Response agregarChofer(Chofer chofer){
+        chofer.setRol(RolCiudadano.CHOFER);
         try {
-            ciudadanosService.agregarHijoCiudadano(chofer);
             ciudadanosService.agregarHijoCiudadano(chofer);
             return Response.status(Response.Status.OK).entity(chofer).build();
         } catch (Exception e) {
@@ -108,7 +107,6 @@ public class gestionCiudadanosEndpoint {
         try{
             funcionario.setIdCiudadano(id);
             ciudadanosService.modificarHijoCiudadano(funcionario);
-            ciudadanosService.modificarHijoCiudadano(funcionario);
             return Response.status(Response.Status.OK).entity(funcionario).build();
         } catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -120,7 +118,6 @@ public class gestionCiudadanosEndpoint {
     public Response modificarResponsable(Responsable responsable,@PathParam("id")int id){
         try{
             responsable.setIdCiudadano(id);
-            ciudadanosService.modificarHijoCiudadano(responsable);
             ciudadanosService.modificarHijoCiudadano(responsable);
             return Response.status(Response.Status.OK).entity(responsable).build();
         } catch (NoResultException e){
@@ -134,7 +131,6 @@ public class gestionCiudadanosEndpoint {
         try{
             chofer.setIdCiudadano(id);
             ciudadanosService.modificarHijoCiudadano(chofer);
-            ciudadanosService.modificarHijoCiudadano(chofer);
             return Response.status(Response.Status.OK).entity(chofer).build();
         } catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -146,7 +142,6 @@ public class gestionCiudadanosEndpoint {
     public Response eliminarFuncionario(Funcionario funcionario,@PathParam("id")int id){
         try{
             funcionario.setIdCiudadano(id);
-            ciudadanosService.eliminarHijoCiudadano(funcionario);
             ciudadanosService.eliminarHijoCiudadano(funcionario);
             return Response.status(Response.Status.OK).entity(funcionario).build();
         }catch (NoResultException e){
@@ -160,7 +155,6 @@ public class gestionCiudadanosEndpoint {
         try{
             responsable.setIdCiudadano(id);
             ciudadanosService.eliminarHijoCiudadano(responsable);
-            ciudadanosService.eliminarHijoCiudadano(responsable);
             return Response.status(Response.Status.OK).entity(responsable).build();
         }catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -172,10 +166,54 @@ public class gestionCiudadanosEndpoint {
         try{
             chofer.setIdCiudadano(id);
             ciudadanosService.eliminarHijoCiudadano(chofer);
-            ciudadanosService.eliminarHijoCiudadano(chofer);
             return Response.status(Response.Status.OK).entity(chofer).build();
         }catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+    @PUT
+    @Path("/responsable/empresa/{id}/{empresa_id}")
+    public Response asignarEmpresa(Empresa empresa, @PathParam("id")int id,@PathParam("empresa_id") int empresaId ){
+        try{
+            empresa.setId(empresaId);
+            ciudadanosService.asignarEmpresa(id, empresa);
+            return Response.status(Response.Status.OK).entity(empresa).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    @DELETE
+    @Path("/responsable/empresa/{id}/{empresa_id}")
+    public Response eliminarEmpresa(Empresa empresa, @PathParam("id")int id,@PathParam("empresa_id") int empresaId ){
+        try{
+            empresa.setId(empresaId);
+            ciudadanosService.eliminarEmpresa(id, empresa);
+            return Response.status(Response.Status.OK).entity(empresa).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    @PUT
+    @Path("/chofer/empresa/{id}/{empresa_id}")
+    public Response asignarEmpresaChofer(Empresa empresa, @PathParam("id")int id,@PathParam("empresa_id") int empresaId ){
+        try{
+            empresa.setId(empresaId);
+            ciudadanosService.asignarEmpresaChofer(id, empresa);
+            return Response.status(Response.Status.OK).entity(empresa).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    @DELETE
+    @Path("/chofer/empresa/{id}/{empresa_id}")
+    public Response eliminarEmpresaChofer(Empresa empresa, @PathParam("id")int id,@PathParam("empresa_id") int empresaId ){
+        try{
+            empresa.setId(empresaId);
+            ciudadanosService.eliminarEmpresaChofer(id, empresa);
+            return Response.status(Response.Status.OK).entity(empresa).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
 }
