@@ -70,7 +70,18 @@
                             <p:column headerText="Rol">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{asignarRoles.getRolUsuario(ciudadano)}"/>
+                                        <h:outputText value="#{ciudadano.rol eq null ? 'CIUDADANO' : ciudadano.rol}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="rolInput" value="#{ciudadano.rol eq null ? 'CIUDADANO' : ciudadano.rol}" style="width:100%" readonly="true"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Nuevo rol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value=""/>
                                     </f:facet>
                                     <f:facet name="input">
                                         <p:selectOneMenu id="typeInput" value="#{asignarRoles.rol}">
