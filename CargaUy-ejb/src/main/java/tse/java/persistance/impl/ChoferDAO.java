@@ -44,6 +44,24 @@ public class ChoferDAO implements IChoferDAO {
         }
     }
 
+    @Override
+    public void asignarEmpresaChofer(int id, Empresa empresa) {
+        Chofer c = em.find(Chofer.class,id);
+        List<Empresa> empresas = c.getEmpresas();
+        empresas.add(empresa);
+        c.setEmpresas(empresas);
+        em.merge(c);
+    }
+
+    @Override
+    public void eliminarEmpresaChofer(int id, Empresa empresa) {
+        Chofer c = em.find(Chofer.class,id);
+        List<Empresa> empresas = c.getEmpresas();
+        empresas.remove(empresa);
+        c.setEmpresas(empresas);
+        em.merge(c);
+    }
+
     public ChoferDTO buscarChoferPorCedula(String cedula){
         Query q = em.createQuery("select c from Ciudadano c where c.cedula='" + cedula + "'");
         if(q.getResultList().isEmpty()) {
