@@ -23,13 +23,12 @@ public class Empresa implements Serializable {
 
 
     @OneToOne
-   @JoinColumn(name = "responsable_id", nullable = true)
+    @JoinColumn(name = "responsable_id", nullable = true)
     private Responsable responsable;
 
     @OneToMany
     private List<Vehiculo> vehiculos = new ArrayList<>();
-    /*private ArrayList<Choferes> choferes
-TODO    */
+    /* private ArrayList<Choferes> choferes TODO */
     public Empresa(){
 
     }

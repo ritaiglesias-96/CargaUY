@@ -1,6 +1,8 @@
 package tse.java.persistance;
 
+import tse.java.dto.EmpresaDTO;
 import tse.java.dto.VehiculoDTO;
+import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
 
 import javax.ejb.Local;
@@ -16,4 +18,5 @@ public interface IVehiculosDAO {
     public void agregarVehiculo(VehiculoDTO vehiculo);
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
     public Long getNextIdVehiculo();
+    public EmpresaDTO obtenerEmpresaDeVehiculo(Long id);
 }

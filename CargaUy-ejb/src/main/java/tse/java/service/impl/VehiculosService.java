@@ -140,5 +140,9 @@ public class VehiculosService implements IVehiculosService{
         return null;
     }
 
+    @Override
+    public EmpresaDTO obtenerEmpresaDeVehiculo(Long id){
+        return vehiculosDAO.obtenerEmpresaDeVehiculo(id);
+    }
 
 }

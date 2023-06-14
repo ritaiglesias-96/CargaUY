@@ -89,7 +89,7 @@ public class gestionVehiculosEndpoint {
 
     @DELETE
     @Path("/eliminar/{idEmpresa}/{idVehiculo}")
-    public Response eliminarVehiculo(@PathParam("idEmpresa") int idEmpresa, @PathParam("idVehiculo") Long idVehiculo, Vehiculo vehiculo){
+    public Response eliminarVehiculo(@PathParam("idEmpresa") int idEmpresa, @PathParam("idVehiculo") Long idVehiculo){
         VehiculoDTO v = vs.obtenerVehiculoPorId(idVehiculo);
         if(v == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo").build();
@@ -101,7 +101,7 @@ public class gestionVehiculosEndpoint {
         try{
             es.borrarVehiculo(idVehiculo);
             vs.eliminarVehiculo(idVehiculo);
-            return Response.status(Response.Status.OK).entity(vehiculo).build();
+            return Response.status(Response.Status.OK).entity(getVehiculoById(idVehiculo)).build();
         } catch (NoResultException error){
             return Response.status(Response.Status.NOT_FOUND).build();
         }

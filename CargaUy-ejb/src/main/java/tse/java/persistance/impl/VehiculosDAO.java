@@ -1,5 +1,6 @@
 package tse.java.persistance.impl;
 
+import tse.java.dto.EmpresaDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Vehiculo;
 import tse.java.persistance.IVehiculosDAO;
@@ -73,5 +74,11 @@ public class VehiculosDAO implements IVehiculosDAO {
             return (long) 1;
         else
             return Long.parseLong(q.getResultList().get(0).toString())+1;
+    }
+
+    @Override
+    public EmpresaDTO obtenerEmpresaDeVehiculo(Long id){
+        Query q = em.createQuery("select ev from Empresa_Vehiculo ev where ev.vehiculo_id='" + id +"'");
+
     }
 }
