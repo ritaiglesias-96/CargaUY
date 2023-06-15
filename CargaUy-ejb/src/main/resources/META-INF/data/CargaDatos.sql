@@ -24,3 +24,15 @@ INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUE
 
 ---Empresas
 INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1, 'Rivera 1234', 'TATA', 1254,'tatasa',null);
+
+---Guia de Viaje
+INSERT INTO public."GuiaDeViaje" (id, destino, fecha, fin, inicio, numero, origen, rubrocliente, tipocarga, volumencarga) VALUES (1, 'Peñarol', '2023-06-06', null, null, 75, 'Cordon', 'Rubro', 'Tipo', 754);
+INSERT INTO public."GuiaDeViaje" (id, destino, fecha, fin, inicio, numero, origen, rubrocliente, tipocarga, volumencarga) VALUES (2, 'Buceo', '2023-06-06', null, null, 21, 'Palacio Legislativo', 'Bondi', 'Gente', 1000);
+
+---Asignacion
+INSERT INTO public."Asignacion" (id, fechacambio, guia_id) VALUES (1, '2023-06-12 19:25:08.000000', 1);
+INSERT INTO public."Asignacion" (id, fechacambio, guia_id) VALUES (2, '2023-06-14 15:40:00.000000', 2);
+
+---Ciudadano_Asignacion
+INSERT INTO public."Ciudadano_Asignacion" ("Chofer_id", asignaciones_id) VALUES (5, 1);
+INSERT INTO public."Ciudadano_Asignacion" ("Chofer_id", asignaciones_id) VALUES (5, 2);

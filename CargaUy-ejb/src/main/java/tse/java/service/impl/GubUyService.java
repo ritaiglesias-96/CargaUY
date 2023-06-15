@@ -1,22 +1,23 @@
 package tse.java.service.impl;
 
-
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.interfaces.Claim;
+import okhttp3.*;
 import org.primefaces.shaded.json.JSONObject;
 import tse.java.service.IGubUyService;
 
 
 import javax.ejb.Stateless;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Map;
 import java.util.Random;
+
 
 @Stateless
 public class GubUyService implements IGubUyService {
@@ -38,7 +39,7 @@ public class GubUyService implements IGubUyService {
             url += "&scope=openid%20personal_info%20document%20email";
             url += "&client_id=" +"890192";
             url += "&state=" + randomState;
-            url += "&redirect_uri=" + URLEncoder.encode("https://openidconnect.net/callback", StandardCharsets.UTF_8.toString());
+            url += "&redirect_uri=" + URLEncoder.encode("http://localhost:8080", StandardCharsets.UTF_8.toString());
 
             return url;
         } catch (UnsupportedEncodingException e) {
@@ -50,39 +51,79 @@ public class GubUyService implements IGubUyService {
     @Override
     public String loginGubUy(String accessCode, String state) {
         JSONObject tokens = getTokens(accessCode);
-        return tokens.getString("id_token"); //TODO ? PREGUNTAR SOBRE ESTO
+        System.out.println("tokens" + tokens);
+        String token = tokens.getString("id_token");
+        Map<String, Claim> tokenDecodeado = decodeToken(token);
+        String cedula = tokenDecodeado.get("numero_documento").asString();
+        return token;
     }
+
+    @Override
+    public String agarrarUrl(Response r) throws IOException {
+        return r.body().string();
+    }
+
+   /* private String getCodeState(String url){
+        OkHttpClient httpClient = new OkHttpClient();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("grant_type", "authorization_code")
+                .add("code", accessCode)
+                .add("redirect_uri", "https://openidconnect.net/callback")
+                .build();
+
+        Request request = new Request.Builder()
+                .url("https://auth-testing.iduruguay.gub.uy/oidc/v1/token")//TODO VER COMO PONER ESTO EN OTRO LADO
+                .addHeader("Authorization", "Basic " + Base64.getUrlDecoder().decode(CLIENT_ID + ":" + CLIENT_SECRET))
+                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("Accept", "application/json")
+                .post(requestBody)
+                .build();
+
+        Response response = httpClient.newCall(request).execute();
+        String responseData = response.body().string();
+    }*/
+
     private JSONObject getTokens(String accessCode){
+        System.out.println(accessCode);
+        String credentials = CLIENT_ID + ":" + CLIENT_SECRET;
+        //Base64.getEncoder().encodeToString((CLIENT_ID + ":" + CLIENT_SECRET).getBytes()))
+        byte[] bytes = credentials.getBytes();
+        String base64 = Base64.getUrlEncoder().encodeToString(bytes);
+        System.out.println(base64);
+
+
         try {
             OkHttpClient httpClient = new OkHttpClient();
 
-            RequestBody requestBody = new FormBody.Builder()
+           RequestBody requestBody = new FormBody.Builder()
                     .add("grant_type", "authorization_code")
                     .add("code", accessCode)
                     .add("redirect_uri", "https://openidconnect.net/callback")
                     .build();
 
             Request request = new Request.Builder()
-                    .url("https://auth-testing.iduruguay.gub.uy/oidc/v1/token")//TODO VER COMO PONER ESTO EN OTRO LADO
-                    .addHeader("Authorization", "Basic " + Base64.getUrlDecoder().decode(CLIENT_ID + ":" + CLIENT_SECRET))
+                    .url(TOKEN_ENDPOINT)  //TODO VER COMO PONER ESTO EN OTRO LADO
+                    .addHeader("Authorization", "Basic " + base64)
                     .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                    .addHeader("Accept", "application/json")
                     .post(requestBody)
                     .build();
-
             Response response = httpClient.newCall(request).execute();
+            System.out.println("Request: " + request);
+            System.out.println("Response: "+ response);
             String responseData = response.body().string();
 
             if (!response.isSuccessful()) {
                 //LOGGER.severe("Error en el intercambio de access code por token en el servicio de GubUy. Respuesta: " + response.toString());
                 throw new Exception("No se pudo intercambiar el access code por el token en el servicio de GubUy.");
             }
-
+            System.out.println("Respondedata: " + responseData);
             return new JSONObject(responseData);
         } catch (Exception e) {
             //LOGGER.severe(e.getMessage());
             //throw new MensajeErrorException(e.getMessage());
             JSONObject a = new JSONObject();
+            System.out.println("ENTRO EN EL CATCH POR ACA");
             return a;
         }
     }
@@ -98,5 +139,14 @@ public class GubUyService implements IGubUyService {
         }
 
         return sb.toString();
+    }
+
+    public Map<String, Claim> decodeToken(String token) {
+        try {
+            return JWT.decode(token).getClaims();
+        } catch (JWTDecodeException e) {
+           // LOGGER.severe(e.getMessage());
+        }
+        return null;
     }
 }

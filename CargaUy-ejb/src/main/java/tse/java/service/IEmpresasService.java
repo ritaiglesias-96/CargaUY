@@ -23,7 +23,7 @@ public interface IEmpresasService {
 
     void modificarEmpresa(EmpresaDTO empresaDTO);
 
-    void eliminarEmpresa(EmpresaDTO empresaDTO);
+    void eliminarEmpresa(int id);
 
     List<PesajeDTO> listarGuias(int numero_empresa, String matricula, String pais, Date fecha);
 

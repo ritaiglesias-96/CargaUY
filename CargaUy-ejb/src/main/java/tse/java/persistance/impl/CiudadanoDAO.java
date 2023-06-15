@@ -42,8 +42,8 @@ public class CiudadanoDAO implements ICiudadanoDAO {
     }
 
     @Override
-    public void eliminiarCiudadano(Ciudadano ciudadano) {
-        Ciudadano c = em.find(Ciudadano.class, ciudadano.getIdCiudadano());
+    public void eliminiarCiudadano(int id) {
+        Ciudadano c = em.find(Ciudadano.class,id);
         if(c!=null){
             em.remove(c);
         }
@@ -51,6 +51,7 @@ public class CiudadanoDAO implements ICiudadanoDAO {
 
     @Override
     public Ciudadano buscarCiudadanoPorId(int id) {
-        return em.find(Ciudadano.class, id);
+        return
+                em.find(Ciudadano.class, id);
     }
 }

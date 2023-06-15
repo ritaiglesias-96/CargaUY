@@ -11,7 +11,6 @@ import java.util.List;
 import tse.java.dto.EmpresaDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Empresa;
-import tse.java.entity.Pesaje;
 import tse.java.entity.Vehiculo;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.util.qualifier.TSE2023DB;
@@ -62,7 +61,7 @@ public class EmpresasDAO implements IEmpresasDAO {
     }
 
     @Override
-    public Empresa modificarEmpresa(EmpresaDTO empresaDTO) {
+    public void modificarEmpresa(EmpresaDTO empresaDTO) {
         Empresa e = em.find(Empresa.class,empresaDTO.getId());
         if (e.getVehiculos().size() != empresaDTO.getVehiculos().size()) {
             List<VehiculoDTO> vehiculos = empresaDTO.getVehiculos();
@@ -74,13 +73,13 @@ public class EmpresasDAO implements IEmpresasDAO {
             }
             e.setVehiculos(vehiculosADevolver);
         }
+        e = new Empresa(empresaDTO);
         em.merge(e);
-        return e;
     }
 
     @Override
-    public void eliminarEmpresa(EmpresaDTO empresaDTO) {
-        Empresa e = em.find(Empresa.class,empresaDTO.getId());
+    public void eliminarEmpresa(int id) {
+        Empresa e = em.find(Empresa.class,id);
         if(e!=null) {
             em.remove(e);
         }

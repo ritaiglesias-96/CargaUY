@@ -85,6 +85,24 @@ public class gestionGuiasDeViajeEndpoint {
         else
             return Response.status(Response.Status.OK).entity("No tiene viajes asignados").build();
     }
+    @GET
+    @Path("/listar/chofer")
+    public Response listarViajesChofer(@QueryParam("cedula") String cedula_chofer){
+        List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
+        ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
+        if(c == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedula_chofer).build();
+        }
+
+        List<AsignacionDTO> asignaciones = c.getAsignaciones();
+        for(AsignacionDTO a:asignaciones){
+            result.add(a.getGuia());
+        }
+        if(result.size()>0)
+            return Response.status(Response.Status.OK).entity(result).build();
+        else
+            return Response.status(Response.Status.OK).entity("No tiene viajes asignados").build();
+    }
 
     @POST
     @Path("/crear")

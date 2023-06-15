@@ -56,11 +56,10 @@ public class gestionCiudadanosEndpoint {
 
     @DELETE
     @Path("/{id}")
-    public Response eliminarCiudadano(Ciudadano ciudadano,@PathParam("id")int id){
+    public Response eliminarCiudadano(@PathParam("id")int id){
         try{
-            ciudadano.setIdCiudadano(id);
-            ciudadanosService.eliminarCiudadano(ciudadano);
-            return Response.status(Response.Status.OK).entity(ciudadano).build();
+            ciudadanosService.eliminarCiudadano(id);
+            return Response.status(Response.Status.OK).entity(ciudadanosService.obtenerCiudadano(id)).build();
         }catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -139,11 +138,10 @@ public class gestionCiudadanosEndpoint {
 
     @DELETE
     @Path("/funcionario/{id}")
-    public Response eliminarFuncionario(Funcionario funcionario,@PathParam("id")int id){
+    public Response eliminarFuncionario(@PathParam("id")int id){
         try{
-            funcionario.setIdCiudadano(id);
-            ciudadanosService.eliminarHijoCiudadano(funcionario);
-            return Response.status(Response.Status.OK).entity(funcionario).build();
+            ciudadanosService.eliminarHijoCiudadano(id);
+            return Response.status(Response.Status.OK).entity(ciudadanosService.obtenerCiudadano(id)).build();
         }catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -151,22 +149,20 @@ public class gestionCiudadanosEndpoint {
 
     @DELETE
     @Path("/responsable/{id}")
-    public Response eliminarResponsable(Responsable responsable,@PathParam("id")int id){
+    public Response eliminarResponsable(@PathParam("id")int id){
         try{
-            responsable.setIdCiudadano(id);
-            ciudadanosService.eliminarHijoCiudadano(responsable);
-            return Response.status(Response.Status.OK).entity(responsable).build();
+            ciudadanosService.eliminarHijoCiudadano(id);
+            return Response.status(Response.Status.OK).entity(ciudadanosService.obtenerCiudadano(id)).build();
         }catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
     @DELETE
     @Path("/chofer/{id}")
-    public Response eliminarChofer(Chofer chofer,@PathParam("id")int id){
+    public Response eliminarChofer(@PathParam("id")int id){
         try{
-            chofer.setIdCiudadano(id);
-            ciudadanosService.eliminarHijoCiudadano(chofer);
-            return Response.status(Response.Status.OK).entity(chofer).build();
+            ciudadanosService.eliminarHijoCiudadano(id);
+            return Response.status(Response.Status.OK).entity(ciudadanosService.obtenerCiudadano(id)).build();
         }catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
