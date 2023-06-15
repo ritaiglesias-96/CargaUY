@@ -23,7 +23,9 @@ public class EmpresaEndpoint {
     @ResponsePayload
     public GetEmpresaResponse getEmpresaRequest(@RequestPayload GetEmpresaRequest request) {
         GetEmpresaResponse response = new GetEmpresaResponse();
-        response.setEmpresa(empresaRepository.findEmpresa(request.getCedula()));
+        System.out.println(request.getCedula());
+        response.setEmpresa(empresaRepository.findEmpresa(request.getCedula().toString()));
+        System.out.println(response.getEmpresa().getCedula());
         return response;
     }
 }
