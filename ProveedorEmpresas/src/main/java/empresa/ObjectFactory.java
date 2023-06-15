@@ -53,4 +53,12 @@ public class ObjectFactory {
         return new Empresa();
     }
 
+    /**
+     * Create an instance of {@link Responsable }
+     * 
+     */
+    public Responsable createResponsable() {
+        return new Responsable();
+    }
+
 }
