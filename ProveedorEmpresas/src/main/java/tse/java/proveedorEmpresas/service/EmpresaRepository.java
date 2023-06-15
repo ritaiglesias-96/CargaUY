@@ -1,81 +1,44 @@
 package tse.java.proveedorEmpresas.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import empresa.Empresa;
 import jakarta.annotation.PostConstruct;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 @Component
 public class EmpresaRepository {
-    private static final Map<String, Empresa> empresas = new HashMap<>();
+    private static Empresa[] empresaList = new Empresa[]{};
+
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    public EmpresaRepository() throws IOException {
+    }
 
     @PostConstruct
-    public void initData() {
-        Empresa e1 = new Empresa();
-        e1.setCedula("56587008");
-        e1.setId(1);
-        e1.setNombrePublico("Tata");
-        e1.setRazonSocial("TataSA");
-        e1.setDirPrincipal("18 de Julio 4444");
-        e1.setNroEmpresa(1);
+    public void initData() throws IOException {
+        File jsonFile = new ClassPathResource("data.json").getFile();
 
-        empresas.put(e1.getCedula(), e1);
+        empresaList = objectMapper.readValue(jsonFile, Empresa[].class);
 
-        Empresa e2 = new Empresa();
-        e1.setCedula("58587008");
-        e2.setId(2);
-        e2.setNombrePublico("Tata");
-        e2.setRazonSocial("TataSA");
-        e2.setDirPrincipal("18 de Julio 4444");
-        e2.setNroEmpresa(2);
+        for (Empresa e:empresaList
+             ) {
+            System.out.println(e.getCedula());
 
-        empresas.put(e2.getCedula(), e2);
-
-        Empresa e3 = new Empresa();
-        e1.setCedula("45587008");
-        e3.setId(3);
-        e3.setNombrePublico("Tata");
-        e3.setRazonSocial("TataSA");
-        e3.setDirPrincipal("18 de Julio 4444");
-        e3.setNroEmpresa(3);
-
-        empresas.put(e3.getCedula(), e3);
-
-        Empresa e4 = new Empresa();
-        e1.setCedula("56586950");
-        e4.setId(4);
-        e4.setNombrePublico("Tata");
-        e4.setRazonSocial("TataSA");
-        e4.setDirPrincipal("18 de Julio 4444");
-        e4.setNroEmpresa(4);
-
-        empresas.put(e4.getCedula(), e4);
-
-        Empresa e5 = new Empresa();
-        e1.setCedula("35614705");
-        e5.setId(5);
-        e5.setNombrePublico("Tata");
-        e5.setRazonSocial("TataSA");
-        e5.setDirPrincipal("18 de Julio 4444");
-        e5.setNroEmpresa(5);
-
-        empresas.put(e5.getCedula(), e5);
-
-        Empresa e6 = new Empresa();
-        e1.setCedula("25478610");
-        e6.setId(6);
-        e6.setNombrePublico("Tata");
-        e6.setRazonSocial("TataSA");
-        e6.setDirPrincipal("18 de Julio 4444");
-        e6.setNroEmpresa(6);
-
-        empresas.put(e6.getCedula(), e6);
-
+        }
     }
 
     public Empresa findEmpresa(String cedula) {
-        return empresas.get(cedula);
+        for (Empresa i : empresaList) {
+            if(Objects.equals(i.getCedula(), cedula)){
+                return i;
+            }
+        }
+        return null;
     }
 }
