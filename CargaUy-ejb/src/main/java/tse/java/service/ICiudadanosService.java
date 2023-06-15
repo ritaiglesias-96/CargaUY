@@ -13,6 +13,8 @@ import javax.ejb.Local;
 public interface ICiudadanosService {
 
     Ciudadano obtenerCiudadano(int id);
+
+    Ciudadano obtenerCiudadanoPorCedula(String ci);
     Ciudadanos obtenerCiudadanos();
     void agregarCiudadano(Ciudadano ciudadano);
     void modificarCiudadano(Ciudadano ciudadano);

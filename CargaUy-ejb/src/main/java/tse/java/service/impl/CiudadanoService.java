@@ -40,6 +40,11 @@ public class CiudadanoService implements ICiudadanosService {
     }
 
     @Override
+    public Ciudadano obtenerCiudadanoPorCedula(String cedula) {
+        return ciudadanoDAO.buscarCiudadanoPorCedula(cedula);
+    }
+
+    @Override
     public Ciudadanos obtenerCiudadanos() {
         Ciudadanos c = new Ciudadanos();
         c.setListaCiudadanos(ciudadanoDAO.listarCiudadanos());

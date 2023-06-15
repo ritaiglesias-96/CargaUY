@@ -141,7 +141,7 @@ public class gestionCiudadanosEndpoint {
     public Response eliminarFuncionario(@PathParam("id")int id){
         try{
             ciudadanosService.eliminarHijoCiudadano(id);
-            return Response.status(Response.Status.OK).entity(ciudadanosService.obtenerCiudadano(id)).build();
+            return Response.status(Response.Status.OK).entity(id).build();
         }catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -152,7 +152,7 @@ public class gestionCiudadanosEndpoint {
     public Response eliminarResponsable(@PathParam("id")int id){
         try{
             ciudadanosService.eliminarHijoCiudadano(id);
-            return Response.status(Response.Status.OK).entity(ciudadanosService.obtenerCiudadano(id)).build();
+            return Response.status(Response.Status.OK).entity(id).build();
         }catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -162,7 +162,7 @@ public class gestionCiudadanosEndpoint {
     public Response eliminarChofer(@PathParam("id")int id){
         try{
             ciudadanosService.eliminarHijoCiudadano(id);
-            return Response.status(Response.Status.OK).entity(ciudadanosService.obtenerCiudadano(id)).build();
+            return Response.status(Response.Status.OK).entity(id).build();
         }catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }

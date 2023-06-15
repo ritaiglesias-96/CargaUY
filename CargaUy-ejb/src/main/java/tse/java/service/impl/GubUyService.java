@@ -1,13 +1,20 @@
 package tse.java.service.impl;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.Claim;
 import okhttp3.*;
 import org.primefaces.shaded.json.JSONObject;
+import tse.java.dto.CiudadanoDTO;
+import tse.java.dto.UsuarioDTO;
+import tse.java.entity.Ciudadano;
+import tse.java.service.ICiudadanosService;
 import tse.java.service.IGubUyService;
 
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -15,6 +22,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
@@ -29,6 +37,9 @@ public class GubUyService implements IGubUyService {
     private static final String CLIENT_ID = "890192" ;
     private static final String CLIENT_SECRET = "457d52f181bf11804a3365b49ae4d29a2e03bbabe74997a2f510b179";
     private static final String REDIRECT_URI = "https://openidconnect.net/callback";
+
+    @EJB
+    ICiudadanosService ciudadanosService;
 
     @Override
     public String getAuthGubUy() {
@@ -51,10 +62,14 @@ public class GubUyService implements IGubUyService {
     @Override
     public String loginGubUy(String accessCode, String state) {
         JSONObject tokens = getTokens(accessCode);
-        System.out.println("tokens" + tokens);
         String token = tokens.getString("id_token");
         Map<String, Claim> tokenDecodeado = decodeToken(token);
         String cedula = tokenDecodeado.get("numero_documento").asString();
+        Ciudadano ciudadano = ciudadanosService.obtenerCiudadanoPorCedula(cedula);
+        if(ciudadano!=null){
+
+        }
+
         return token;
     }
 
@@ -85,12 +100,10 @@ public class GubUyService implements IGubUyService {
     }*/
 
     private JSONObject getTokens(String accessCode){
-        System.out.println(accessCode);
         String credentials = CLIENT_ID + ":" + CLIENT_SECRET;
         //Base64.getEncoder().encodeToString((CLIENT_ID + ":" + CLIENT_SECRET).getBytes()))
         byte[] bytes = credentials.getBytes();
         String base64 = Base64.getUrlEncoder().encodeToString(bytes);
-        System.out.println(base64);
 
 
         try {
@@ -109,21 +122,18 @@ public class GubUyService implements IGubUyService {
                     .post(requestBody)
                     .build();
             Response response = httpClient.newCall(request).execute();
-            System.out.println("Request: " + request);
-            System.out.println("Response: "+ response);
+
             String responseData = response.body().string();
 
             if (!response.isSuccessful()) {
                 //LOGGER.severe("Error en el intercambio de access code por token en el servicio de GubUy. Respuesta: " + response.toString());
                 throw new Exception("No se pudo intercambiar el access code por el token en el servicio de GubUy.");
             }
-            System.out.println("Respondedata: " + responseData);
             return new JSONObject(responseData);
         } catch (Exception e) {
             //LOGGER.severe(e.getMessage());
             //throw new MensajeErrorException(e.getMessage());
             JSONObject a = new JSONObject();
-            System.out.println("ENTRO EN EL CATCH POR ACA");
             return a;
         }
     }
@@ -148,5 +158,28 @@ public class GubUyService implements IGubUyService {
            // LOGGER.severe(e.getMessage());
         }
         return null;
+    }
+    private String createUserJWT(Ciudadano ciudadano) {
+        int expireTimeMinutes = 30;
+        try {
+            Algorithm alg = Algorithm.HMAC256(/*Aca va la key*/"Key");
+            JWTCreator.Builder jwt = JWT.create()
+//					.withIssuer("")
+                    .withIssuedAt(new Date())//Se pasa la date actual para controlar la vigencia del usuario
+                    .withClaim("id", ciudadano.getIdCiudadano())
+                    .withClaim("cedula", ciudadano.getCedula())
+                    .withClaim("email", ciudadano.getEmail());
+
+            if (expireTimeMinutes < 5)
+                expireTimeMinutes = 5; // Aplicar mínimo de tiempo de expiración del token a 5 minutos.
+            long expireTime = (new Date().getTime()) + (60000 * expireTimeMinutes);
+            Date expireDate = new Date(expireTime);
+            jwt.withExpiresAt(expireDate);
+
+            return jwt.sign(alg);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+            return null;
+        }
     }
 }

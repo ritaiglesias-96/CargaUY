@@ -80,7 +80,7 @@ public class gestionEmpresasEndpoint {
     public Response eliminarEmpresa (@PathParam("id")int id){
         try{
             empresasService.eliminarEmpresa(id);
-            return Response.status(Response.Status.OK).entity(getEmpresaById(id)).build();
+            return Response.status(Response.Status.OK).entity(id).build();
         } catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
