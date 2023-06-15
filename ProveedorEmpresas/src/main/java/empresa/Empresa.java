@@ -18,10 +18,12 @@ import jakarta.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="cedula" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="nombrePublico" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="numeroEmpresa" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="dirPrincipal" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="razonSocial" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="nroEmpresa" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="responsable" type="{/empresa}responsable" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -33,21 +35,26 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "empresa", propOrder = {
     "id",
+    "cedula",
     "nombrePublico",
-    "numeroEmpresa",
     "dirPrincipal",
-    "razonSocial"
+    "razonSocial",
+    "nroEmpresa",
+    "responsable"
 })
 public class Empresa {
 
     protected int id;
     @XmlElement(required = true)
+    protected String cedula;
+    @XmlElement(required = true)
     protected String nombrePublico;
-    protected int numeroEmpresa;
     @XmlElement(required = true)
     protected String dirPrincipal;
     @XmlElement(required = true)
     protected String razonSocial;
+    protected int nroEmpresa;
+    protected Responsable responsable;
 
     /**
      * Gets the value of the id property.
@@ -63,6 +70,30 @@ public class Empresa {
      */
     public void setId(int value) {
         this.id = value;
+    }
+
+    /**
+     * Gets the value of the cedula property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCedula() {
+        return cedula;
+    }
+
+    /**
+     * Sets the value of the cedula property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCedula(String value) {
+        this.cedula = value;
     }
 
     /**
@@ -87,22 +118,6 @@ public class Empresa {
      */
     public void setNombrePublico(String value) {
         this.nombrePublico = value;
-    }
-
-    /**
-     * Gets the value of the numeroEmpresa property.
-     * 
-     */
-    public int getNumeroEmpresa() {
-        return numeroEmpresa;
-    }
-
-    /**
-     * Sets the value of the numeroEmpresa property.
-     * 
-     */
-    public void setNumeroEmpresa(int value) {
-        this.numeroEmpresa = value;
     }
 
     /**
@@ -151,6 +166,46 @@ public class Empresa {
      */
     public void setRazonSocial(String value) {
         this.razonSocial = value;
+    }
+
+    /**
+     * Gets the value of the nroEmpresa property.
+     * 
+     */
+    public int getNroEmpresa() {
+        return nroEmpresa;
+    }
+
+    /**
+     * Sets the value of the nroEmpresa property.
+     * 
+     */
+    public void setNroEmpresa(int value) {
+        this.nroEmpresa = value;
+    }
+
+    /**
+     * Gets the value of the responsable property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Responsable }
+     *     
+     */
+    public Responsable getResponsable() {
+        return responsable;
+    }
+
+    /**
+     * Sets the value of the responsable property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Responsable }
+     *     
+     */
+    public void setResponsable(Responsable value) {
+        this.responsable = value;
     }
 
 }
