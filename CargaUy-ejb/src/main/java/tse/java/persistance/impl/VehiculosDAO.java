@@ -76,9 +76,4 @@ public class VehiculosDAO implements IVehiculosDAO {
             return Long.parseLong(q.getResultList().get(0).toString())+1;
     }
 
-    @Override
-    public EmpresaDTO obtenerEmpresaDeVehiculo(Long id){
-        Query q = em.createQuery("select ev from Empresa_Vehiculo ev where ev.vehiculo_id='" + id +"'");
-
-    }
 }

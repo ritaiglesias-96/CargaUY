@@ -23,5 +23,4 @@ public interface IVehiculosService {
     public void asignarGuia(Long vehiculo_id, AsignacionDTO a);
     public void borrarGuia(int numero_guia);
     public VehiculoDTO buscarVehiculoPorGuia(int numero);
-    public EmpresaDTO obtenerEmpresaDeVehiculo(Long id);
 }

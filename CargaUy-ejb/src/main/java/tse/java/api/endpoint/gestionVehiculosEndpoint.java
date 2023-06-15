@@ -32,9 +32,6 @@ public class gestionVehiculosEndpoint {
     IEmpresasService es;
 
     @EJB
-    IResponsableDAO rd;
-
-    @EJB
     IVehiculosDAO vd;
 
 
@@ -101,7 +98,7 @@ public class gestionVehiculosEndpoint {
         try{
             es.borrarVehiculo(idVehiculo);
             vs.eliminarVehiculo(idVehiculo);
-            return Response.status(Response.Status.OK).entity(getVehiculoById(idVehiculo)).build();
+            return Response.status(Response.Status.OK).entity("El Vehiculo con id " + idVehiculo + " fue borrado").build();
         } catch (NoResultException error){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
