@@ -8,6 +8,11 @@ import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
 import org.primefaces.model.DefaultDashboardModel;
 import org.primefaces.model.charts.bar.BarChartModel;
+import org.primefaces.model.charts.pie.PieChartModel;
+import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.ListadoPieDTO;
+import tse.java.dto.TipoCargaDTO;
+import tse.java.persistance.ITipoCargaDAO;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IGuiaDeViajesService;
 import tse.java.service.IVehiculosService;
@@ -19,6 +24,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named("dashboardBean")
 @ViewScoped
@@ -30,6 +37,8 @@ public class dashboardAutoridadBean implements Serializable {
 
     private BarChartModel graficoGuias;
 
+    private PieChartModel graficoTipoCarga;
+
 
     @EJB
     IVehiculosService vehiculosService;
@@ -39,6 +48,9 @@ public class dashboardAutoridadBean implements Serializable {
 
     @EJB
     IGuiaDeViajesService guiaDeViajesService;
+
+    @EJB
+    ITipoCargaDAO tipoCargaDAO;
 
     @PostConstruct
     public void init() {
@@ -50,49 +62,46 @@ public class dashboardAutoridadBean implements Serializable {
         cant_empresas = empresasService.obtenerEmpresas().getTotalRows();
         cant_guias = guiaDeViajesService.listarGuiasDeViajes().size();
         column1.addWidget("empresas");
-
+        column1.addWidget("graficoguias");
         column2.addWidget("vehiculos");
-
         column3.addWidget("guias");
+        column3.addWidget("pietipo");
         model.addColumn(column1);
         model.addColumn(column2);
         model.addColumn(column3);
         crearGraficoGuias();
+        crearGraficoTipoCarga();
     }
 
-    public void handleReorder(DashboardReorderEvent event) {
-        FacesMessage message = new FacesMessage();
-        message.setSeverity(FacesMessage.SEVERITY_INFO);
-        message.setSummary("Reordered: " + event.getWidgetId());
-        message.setDetail("Item index: " + event.getItemIndex() + ", Column index: " + event.getColumnIndex()
-                + ", Sender index: " + event.getSenderColumnIndex());
-
-        addMessage(message);
-    }
-
-    public void handleClose(CloseEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Panel Closed",
-                "Closed panel id:'" + event.getComponent().getId() + "'");
-
-        addMessage(message);
-    }
-
-    public void handleToggle(ToggleEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, event.getComponent().getId() + " toggled",
-                "Status:" + event.getVisibility().name());
-
-        addMessage(message);
-    }
-
-    private BarChartModel inicializarGraficoGuias(){
-        BarChartModel model = new BarChartModel();
-
-        return model;
-    }
 
     private void crearGraficoGuias(){
-        graficoGuias = inicializarGraficoGuias();
+        graficoGuias = new BarChartModel();
     }
+
+    private void crearGraficoTipoCarga(){
+        graficoTipoCarga = new PieChartModel();
+        List<TipoCargaDTO> listadoCargas = tipoCargaDAO.listarTipoCarga();
+        List<ListadoPieDTO> listadoCargasNew = new ArrayList<ListadoPieDTO>();
+        for(TipoCargaDTO t:listadoCargas){
+            ListadoPieDTO aux = new ListadoPieDTO(t.getNombre(), 0);
+            listadoCargasNew.add(aux);
+        }
+        List<Integer> listadoCargasCant = new ArrayList<Integer>();
+        for(GuiaDeViajeDTO g:guiaDeViajesService.listarGuiasDeViajes()){
+            buscarEnListado(listadoCargasNew, g.getTipoCarga());
+        }
+    }
+
+    private void buscarEnListado(List<ListadoPieDTO> list, String tipo){
+        for(ListadoPieDTO l:list){
+            if(l.getNombreTipoCarga().equals(tipo)){
+                int num = l.getCantidad();
+                l.setCantidad(num++);
+            }
+        }
+    }
+
+
 
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
@@ -124,5 +133,21 @@ public class dashboardAutoridadBean implements Serializable {
 
     public void setCant_guias(int cant_guias) {
         this.cant_guias = cant_guias;
+    }
+
+    public PieChartModel getGraficoTipoCarga() {
+        return graficoTipoCarga;
+    }
+
+    public void setGraficoTipoCarga(PieChartModel graficoTipoCarga) {
+        this.graficoTipoCarga = graficoTipoCarga;
+    }
+
+    public BarChartModel getGraficoGuias() {
+        return graficoGuias;
+    }
+
+    public void setGraficoGuias(BarChartModel graficoGuias) {
+        this.graficoGuias = graficoGuias;
     }
 }
