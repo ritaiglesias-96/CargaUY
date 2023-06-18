@@ -1,5 +1,6 @@
 package tse.java.persistance.impl;
 
+import tse.java.dto.EmpresaDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Vehiculo;
 import tse.java.persistance.IVehiculosDAO;
@@ -74,4 +75,5 @@ public class VehiculosDAO implements IVehiculosDAO {
         else
             return Long.parseLong(q.getResultList().get(0).toString())+1;
     }
+
 }

@@ -24,3 +24,30 @@ INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUE
 
 ---Empresas
 INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1586, 'Rivera 1234', 'TATA', 1254,'tatasa',null);
+
+---Empresa_Vehiculo
+INSERT INTO public."Empresa_Vehiculo" ("Empresa_id", vehiculos_id) VALUES (1586, 1999);
+INSERT INTO public."Empresa_Vehiculo" ("Empresa_id", vehiculos_id) VALUES (1586, 1999);
+
+-- Guia de viaje
+-- Viaje finalizado
+INSERT INTO public."GuiaDeViaje" values(1000,'Montevideo','2023-05-02','2023-05-15','2023-05-02',1,'Artigas','Carnes','Producto no quimico',75.0);
+-- Viaje iniciado sin finalizar
+INSERT INTO public."GuiaDeViaje" values(1001,'Montevideo','2023-06-15',null,'2023-06-15',2,'Salto','Farmacos','Producto quimico',34.0);
+-- Viaje sin iniciar
+INSERT INTO public."GuiaDeViaje" values(1002,'Montevideo',current_date,null,null,3,'Colonia','Carnes','Producto no quimico',50.0);
+
+-- Asignacion
+INSERT INTO public."Asignacion" values(1000,'2023-05-02 11:23:00',1000);
+INSERT INTO public."Asignacion" values(1001,'2023-05-15 12:23:53',1001);
+INSERT INTO public."Asignacion" values(1002,current_timestamp,1002);
+
+-- Chofer-Asignacion
+INSERT INTO public."Ciudadano_Asignacion" values(5856,1000);
+INSERT INTO public."Ciudadano_Asignacion" values(6856,1001);
+INSERT INTO public."Ciudadano_Asignacion" values(6856,1002);
+
+-- Vehiculo-Asignacion
+INSERT INTO public."Vehiculo_Asignacion" values(1999,1000);
+INSERT INTO public."Vehiculo_Asignacion" values(1999,1001);
+INSERT INTO public."Vehiculo_Asignacion" values(2999,1002);

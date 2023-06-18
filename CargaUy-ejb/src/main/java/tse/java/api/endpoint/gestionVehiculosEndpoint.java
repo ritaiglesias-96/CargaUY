@@ -32,9 +32,6 @@ public class gestionVehiculosEndpoint {
     IEmpresasService es;
 
     @EJB
-    IResponsableDAO rd;
-
-    @EJB
     IVehiculosDAO vd;
 
 
@@ -66,16 +63,10 @@ public class gestionVehiculosEndpoint {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con la id " + dtAlta.getIdEmpresa()).build();
         }
 
-        ResponsableDTO r = rd.buscarResponsablePorCedula(dtAlta.getCedula_responsable());
-        if(r == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe responsable con la cedula " + dtAlta.getCedula_responsable()).build();
-        }
-
         VehiculoDTO v = new VehiculoDTO(null, dtAlta.getMatricula(), dtAlta.getPais(), dtAlta.getMarca(), dtAlta.getModelo(), dtAlta.getPeso(), dtAlta.getCapacidadCarga(),
                 dtAlta.getFechaFinITV(), dtAlta.getPnc(),  dtAlta.getFechaFinPNC(), dtAlta.getFechaInicioPNC(), null);
         vs.agregarVehiculo(v);
         v = vs.obtenerVehiculoMatriculaPais(dtAlta.getMatricula(), dtAlta.getPais());
-        Long idVehiculo = v.getId();
         es.agregarVehiculoAEmpresa(dtAlta.getIdEmpresa(), v);
         return Response.status(Response.Status.CREATED).build();
     }
@@ -95,7 +86,7 @@ public class gestionVehiculosEndpoint {
 
     @DELETE
     @Path("/eliminar/{idEmpresa}/{idVehiculo}")
-    public Response eliminarVehiculo(@PathParam("idEmpresa") int idEmpresa, @PathParam("idVehiculo") Long idVehiculo, Vehiculo vehiculo){
+    public Response eliminarVehiculo(@PathParam("idEmpresa") int idEmpresa, @PathParam("idVehiculo") Long idVehiculo){
         VehiculoDTO v = vs.obtenerVehiculoPorId(idVehiculo);
         if(v == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo").build();
@@ -107,7 +98,7 @@ public class gestionVehiculosEndpoint {
         try{
             es.borrarVehiculo(idVehiculo);
             vs.eliminarVehiculo(idVehiculo);
-            return Response.status(Response.Status.OK).entity(vehiculo).build();
+            return Response.status(Response.Status.OK).entity("El Vehiculo con id " + idVehiculo + " fue borrado").build();
         } catch (NoResultException error){
             return Response.status(Response.Status.NOT_FOUND).build();
         }

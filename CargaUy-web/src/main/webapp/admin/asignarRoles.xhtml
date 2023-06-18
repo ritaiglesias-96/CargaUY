@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Gestion de roles ciudadanos</title>
+    <link href="./../styles/main.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-3">
+            <h1>CargaUy Backoffice - #{UserManager.currentUser.username}</h1>
+        </div>
+        <div class="ui-g-12 ui-md-9 ui-g-nopad">
+            <div class="ui-g-12">
+                <div style="justify-content: flex-end;display: flex;" class="log">
+                    <p:commandButton action="#{UserManager.logout}" value="Salir" class="loginButton"
+                                     icon="pi pi-sign-out"/>
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-2">
+            <p:menu style="width: 100%">
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Gestionar usuarios" url="gestionUsuarios.xhtml" icon="pi pi-users"/>
+                    <p:menuitem value="Gestionar Rubros" url="gestionRubros.xhtml" icon="pi pi-star"/>
+                    <p:menuitem value="Gestionar tipos de carga" url="gestionTipoCarga.xhtml" icon="pi pi-wrench"/>
+                    <p:menuitem value="Gestionar roles de ciudadanos" url="asignarRoles.xhtml" icon="pi pi-user-plus"/>
+                </p:submenu>
+            </p:menu>
+        </div>
+        <div class="ui-g-12 ui-md-10 ui-g-nopad">
+            <div class="ui-g-12">
+                <div class="ui-g">
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true"/>
+
+                        <h:outputText>Listado de ciudadanos</h:outputText>
+
+                        <p:dataTable value="#{asignarRoles.getListaCiudadanos()}" var="ciudadano" editable="true">
+
+                            <p:ajax event="rowEdit" listener="#{asignarRoles.onRowEdit}" update=":form:msgs"/>
+                            <p:ajax event="rowEditCancel" listener="#{asignarRoles.onRowCancel}"
+                                    update=":form:msgs"/>
+
+                            <p:column headerText="Cedula">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{ciudadano.cedula}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="nombreInput" value="#{ciudadano.cedula}" style="width:100%" readonly="true" />
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Email">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{ciudadano.email}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="apellidoInput" value="#{ciudadano.email}" style="width:100%" readonly="true"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Rol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{ciudadano.rol eq null ? 'CIUDADANO' : ciudadano.rol}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="rolInput" value="#{ciudadano.rol eq null ? 'CIUDADANO' : ciudadano.rol}" style="width:100%" readonly="true"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Nuevo rol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value=""/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu id="typeInput" value="#{asignarRoles.rol}">
+                                            <f:selectItem itemLabel="Chofer" itemValue="Chofer" />
+                                            <f:selectItem itemLabel="Funcionario" itemValue="Funcionario"/>
+                                            <f:selectItem itemLabel="Responsable" itemValue="Responsable"/>
+                                            <f:selectItem itemLabel="Ciudadano" itemValue="Ciudadano"/>
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+
+                            <p:column style="width:6rem">
+                                <p:rowEditor editTitle="Editar Ciudadano" cancelTitle="Cancelar Edicion"
+                                             saveTitle="Guardar Cambios"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-12 footer">
+            <div class="ui-g-2"><p>Cerrar Sesion</p></div>
+            <div class="ui-g-2"><p>Otras opciones?</p></div>
+            <div class="ui-g-2"><p>No se me ocurre</p></div>
+        </div>
+    </div>
+</h:body>
+</html>
