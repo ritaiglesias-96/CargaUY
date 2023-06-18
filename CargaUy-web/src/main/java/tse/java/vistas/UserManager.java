@@ -125,7 +125,7 @@ public class UserManager implements Serializable {
                 opciones.put("Gestión de roles ciudadanos", getDirVirtual(currentUser) + "asignarRoles.xhtml");
             } else {
                 if (currentUser instanceof Autoridad) {
-                    //TODO: add opciones autoridad
+                    opciones.put("Dashboard", getDirVirtual(currentUser) + "dashboardAutoridad.xhtml");
                 }
             }
         }
