@@ -17,7 +17,6 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="cedula" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="apellido" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
@@ -32,7 +31,6 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "responsable", propOrder = {
-    "id",
     "cedula",
     "nombre",
     "apellido",
@@ -40,7 +38,6 @@ import jakarta.xml.bind.annotation.XmlType;
 })
 public class Responsable {
 
-    protected int id;
     @XmlElement(required = true)
     protected String cedula;
     @XmlElement(required = true)
@@ -49,22 +46,6 @@ public class Responsable {
     protected String apellido;
     @XmlElement(required = true)
     protected String email;
-
-    /**
-     * Gets the value of the id property.
-     * 
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     */
-    public void setId(int value) {
-        this.id = value;
-    }
 
     /**
      * Gets the value of the cedula property.

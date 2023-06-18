@@ -1,12 +1,10 @@
 [
   {
-    "id": "56",
     "cedula": "56587008",
     "nombrePublico": "Primer Empresa",
     "dirPrincipal": "Av Italia 999",
     "nroEmpresa": "25114578",
     "responsable": {
-      "id": "56",
       "cedula": "56587008",
       "nombre": "Maria Rita",
       "apellido": "Iglesias",
@@ -14,13 +12,11 @@
     }
   },
   {
-    "id": "58",
     "cedula": "54877214",
     "nombrePublico": "Segunda Empresa",
     "dirPrincipal": "Av Italia 999",
     "nroEmpresa": "255558",
     "responsable": {
-      "id": "99",
       "cedula": "54877214",
       "nombre": "Maria",
       "apellido": "Adrover",
