@@ -81,7 +81,10 @@ public class UserManager implements Serializable {
             session.setAttribute("currentUser", currentUser);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
             try {
-                ec.redirect("/CargaUy-web/admin/index.xhtml");
+                if (currentUser instanceof Administrador)
+                    ec.redirect("/CargaUy-web/admin/index.xhtml");
+                else
+                    ec.redirect("/CargaUy-web/autoridad/index.xhtml");
                 fc.responseComplete();
             } catch (IOException e2) {
                 throw new RuntimeException(e2);
@@ -118,6 +121,8 @@ public class UserManager implements Serializable {
             if (currentUser instanceof Administrador) {
                 opciones.put("Gestión de usuarios", getDirVirtual(currentUser) + "gestionUsuarios.xhtml");
                 opciones.put("Gestión de rubros", getDirVirtual(currentUser) + "gestionRubros.xhtml");
+                opciones.put("Gestión de tipos de carga", getDirVirtual(currentUser) + "gestionTipoCarga.xhtml");
+                opciones.put("Gestión de roles ciudadanos", getDirVirtual(currentUser) + "asignarRoles.xhtml");
             } else {
                 if (currentUser instanceof Autoridad) {
                     //TODO: add opciones autoridad
