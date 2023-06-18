@@ -7,6 +7,8 @@ import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
 import org.primefaces.model.DefaultDashboardModel;
+import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.ChartDataSet;
 import org.primefaces.model.charts.bar.BarChartModel;
 import org.primefaces.model.charts.pie.PieChartModel;
 import tse.java.dto.GuiaDeViajeDTO;
@@ -38,6 +40,7 @@ public class dashboardAutoridadBean implements Serializable {
     private BarChartModel graficoGuias;
 
     private PieChartModel graficoTipoCarga;
+    private List<ListadoPieDTO> listadoCargasNew = new ArrayList<ListadoPieDTO>();
 
 
     @EJB
@@ -59,7 +62,7 @@ public class dashboardAutoridadBean implements Serializable {
         DashboardColumn column2 = new DefaultDashboardColumn();
         DashboardColumn column3 = new DefaultDashboardColumn();
         cant_vehiculos = vehiculosService.obtenerVehiculos().getListaVehiculos().size();
-        cant_empresas = empresasService.obtenerEmpresas().getTotalRows();
+        cant_empresas = empresasService.obtenerEmpresas().getListaEmpresas().size();
         cant_guias = guiaDeViajesService.listarGuiasDeViajes().size();
         column1.addWidget("empresas");
         column1.addWidget("graficoguias");
@@ -81,7 +84,7 @@ public class dashboardAutoridadBean implements Serializable {
     private void crearGraficoTipoCarga(){
         graficoTipoCarga = new PieChartModel();
         List<TipoCargaDTO> listadoCargas = tipoCargaDAO.listarTipoCarga();
-        List<ListadoPieDTO> listadoCargasNew = new ArrayList<ListadoPieDTO>();
+
         for(TipoCargaDTO t:listadoCargas){
             ListadoPieDTO aux = new ListadoPieDTO(t.getNombre(), 0);
             listadoCargasNew.add(aux);
@@ -90,6 +93,14 @@ public class dashboardAutoridadBean implements Serializable {
         for(GuiaDeViajeDTO g:guiaDeViajesService.listarGuiasDeViajes()){
             buscarEnListado(listadoCargasNew, g.getTipoCarga());
         }
+
+        List<String> labels = new ArrayList<String>();
+        List<Number> values = new ArrayList<>();
+        for(ListadoPieDTO lp:listadoCargasNew){
+            labels.add(lp.getNombreTipoCarga());
+            values.add(lp.getCantidad());
+        }
+
     }
 
     private void buscarEnListado(List<ListadoPieDTO> list, String tipo){

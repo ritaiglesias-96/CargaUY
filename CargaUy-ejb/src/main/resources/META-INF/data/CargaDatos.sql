@@ -24,3 +24,7 @@ INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUE
 
 ---Empresas
 INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1, 'Rivera 1234', 'TATA', 1254,'tatasa',null);
+
+-- Tipo de carga
+insert into public."TipoCarga" values (1000,'Producto quimico');
+insert into public."TipoCarga" values (1001,'Producto no quimico');
