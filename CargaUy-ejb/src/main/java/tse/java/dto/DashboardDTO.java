@@ -1,14 +1,14 @@
 package tse.java.dto;
 
-public class ListadoPieDTO {
+public class DashboardDTO {
 
     private String nombreTipoCarga;
 
     private int cantidad;
 
-    public ListadoPieDTO(){}
+    public DashboardDTO(){}
 
-    public ListadoPieDTO(String nombreTipoCarga, int cantidad) {
+    public DashboardDTO(String nombreTipoCarga, int cantidad) {
         this.nombreTipoCarga = nombreTipoCarga;
         this.cantidad = cantidad;
     }

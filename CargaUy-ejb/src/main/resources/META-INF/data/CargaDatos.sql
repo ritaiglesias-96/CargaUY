@@ -29,6 +29,11 @@ INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razon
 insert into public."TipoCarga" values (1000,'Producto quimico');
 insert into public."TipoCarga" values (1001,'Producto no quimico');
 
+-- Rubros
+insert into public."Rubro" values (1000,'Carnes');
+insert into public."Rubro" values (1001,'Farmacos');
+insert into public."Rubro" values (1002,'Informatica');
+
 -- Guia de viaje
 -- Viaje finalizado
 INSERT INTO public."GuiaDeViaje" values(1000,'Montevideo','2023-05-02','2023-05-15','2023-05-02',1,'Artigas','Carnes','Producto no quimico',75.0);
