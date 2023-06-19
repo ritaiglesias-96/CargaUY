@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Dasboard</title>
+    <title>Dashboard</title>
     <style type="">
         .ui-panel, div.ui-state-hover {
             margin: 10px;
@@ -17,7 +17,6 @@
         .ui-dashboard-column {
             width: 220px;
         }
-
 
     </style>
 </h:head>
@@ -41,7 +40,7 @@
             <p:panel id="graficoguias" header="Grafico de guias">
                 <p:barChart model="#{dashboardBean.graficoGuias}" style="width: 100%; height: 500px;"/>
             </p:panel>
-            <p:panel id="pietipo" header="Tipo de carga">
+            <p:panel id="pietipo" header="Tipo de carga" style="width: 420px;">
                 <p:chart type="pie" model="#{dashboardBean.graficoTipoCarga}" style="width:400px;height:300px"/>
             </p:panel>
         </p:dashboard>
