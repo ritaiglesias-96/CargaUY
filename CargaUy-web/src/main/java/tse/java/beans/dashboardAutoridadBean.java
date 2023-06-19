@@ -7,10 +7,10 @@ import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
 import org.primefaces.model.DefaultDashboardModel;
+import org.primefaces.model.chart.PieChartModel;
 import org.primefaces.model.charts.ChartData;
 import org.primefaces.model.charts.ChartDataSet;
 import org.primefaces.model.charts.bar.BarChartModel;
-import org.primefaces.model.charts.pie.PieChartModel;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.ListadoPieDTO;
 import tse.java.dto.TipoCargaDTO;
@@ -91,23 +91,25 @@ public class dashboardAutoridadBean implements Serializable {
         }
         List<Integer> listadoCargasCant = new ArrayList<Integer>();
         for(GuiaDeViajeDTO g:guiaDeViajesService.listarGuiasDeViajes()){
-            buscarEnListado(listadoCargasNew, g.getTipoCarga());
+            buscarEnListado(g.getTipoCarga());
         }
 
-        List<String> labels = new ArrayList<String>();
-        List<Number> values = new ArrayList<>();
+
         for(ListadoPieDTO lp:listadoCargasNew){
-            labels.add(lp.getNombreTipoCarga());
-            values.add(lp.getCantidad());
+            graficoTipoCarga.set(lp.getNombreTipoCarga(),lp.getCantidad());
         }
+        graficoTipoCarga.setTitle("Cantidad de guias por tipo de carga");
+        graficoTipoCarga.setLegendPosition("w");
+        graficoTipoCarga.setShadow(false);
 
     }
 
-    private void buscarEnListado(List<ListadoPieDTO> list, String tipo){
-        for(ListadoPieDTO l:list){
+    private void buscarEnListado(String tipo){
+        for(ListadoPieDTO l:listadoCargasNew){
             if(l.getNombreTipoCarga().equals(tipo)){
                 int num = l.getCantidad();
-                l.setCantidad(num++);
+                num+=1;
+                l.setCantidad(num);
             }
         }
     }

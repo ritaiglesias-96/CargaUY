@@ -28,3 +28,11 @@ INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razon
 -- Tipo de carga
 insert into public."TipoCarga" values (1000,'Producto quimico');
 insert into public."TipoCarga" values (1001,'Producto no quimico');
+
+-- Guia de viaje
+-- Viaje finalizado
+INSERT INTO public."GuiaDeViaje" values(1000,'Montevideo','2023-05-02','2023-05-15','2023-05-02',1,'Artigas','Carnes','Producto no quimico',75.0);
+-- Viaje iniciado sin finalizar
+INSERT INTO public."GuiaDeViaje" values(1001,'Montevideo','2023-06-15',null,'2023-06-15',2,'Salto','Farmacos','Producto quimico',34.0);
+-- Viaje sin iniciar
+INSERT INTO public."GuiaDeViaje" values(1002,'Montevideo',current_date,null,null,3,'Colonia','Carnes','Producto no quimico',50.0);
