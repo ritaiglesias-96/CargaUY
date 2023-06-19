@@ -2,12 +2,12 @@ package tse.java.persistance.impl;
 
 
 import tse.java.dto.ResponsableDTO;
-import tse.java.entity.Chofer;
-import tse.java.entity.Ciudadano;
-import tse.java.entity.Responsable;
+import tse.java.entity.*;
+import tse.java.persistance.IEmpresasDAO;
 import tse.java.persistance.IResponsableDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,6 +22,8 @@ public class ResponsableDAO implements IResponsableDAO {
     @TSE2023DB
     @Inject
     public EntityManager em;
+    @EJB
+    IEmpresasDAO empresasDAO;
     @Override
     public List<Responsable> findAll() {
         Query q = em.createNativeQuery("select * from public.\"ciudadano\" where rol='Responsable'", Ciudadano.class);
@@ -47,6 +49,26 @@ public class ResponsableDAO implements IResponsableDAO {
     }
 
     @Override
+    public void asignarEmpresa(int id, Empresa empresa) {
+         Responsable responsable = em.find(Responsable.class, id);
+         System.out.println(empresa.getId());
+         Empresa empresa1 = em.find(Empresa.class, empresa.getId());
+         responsable.setEmpresa(empresa1);
+         empresa1.setResponsable(responsable);
+         em.merge(responsable);
+         em.merge(empresa1);
+    }
+
+    @Override
+    public void eliminarEmpresa(int id, Empresa empresa) {
+        Responsable responsable = em.find(Responsable.class, id);
+        responsable.setEmpresa(null);
+        empresa.setResponsable(null);
+        em.merge(responsable);
+        em.merge(empresa);
+    }
+
+    @Override
     public ResponsableDTO buscarResponsablePorCedula(String cedula) {
         Query q = em.createQuery("select c from Ciudadano c where c.cedula='" + cedula + "'");
         if(q.getResultList().isEmpty()) {
@@ -55,7 +77,7 @@ public class ResponsableDAO implements IResponsableDAO {
             Object o = q.getResultList().get(0);
             if(o instanceof Responsable){
                 Responsable r = (Responsable) o;
-                return r.darDTO();
+                return r.darDto();
             } else {
                 return null;
             }

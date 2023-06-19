@@ -1,5 +1,6 @@
 package tse.java.entity;
 
+import tse.java.dto.AsignacionDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
@@ -24,6 +25,7 @@ public class Vehiculo implements Serializable {
     private String modelo;
     private Float peso;
     private Float capacidadCarga;
+    private int pnc;
     @Temporal(TemporalType.DATE)
     private Date fechaFinITV;
     @Temporal(TemporalType.DATE)
@@ -31,10 +33,10 @@ public class Vehiculo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaFinPNC;
     @OneToMany
-    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();    
+    private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
 
     public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, Date fechaInicioPNC, Date fechaFinPNC, List<GuiaDeViaje> guiasDeViaje) {
+            Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, List<Asignacion> asignaciones) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -43,9 +45,10 @@ public class Vehiculo implements Serializable {
         this.peso = peso;
         this.capacidadCarga = capacidadCarga;
         this.fechaFinITV = fechaFinITV;
+        this.pnc = pnc;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
-        this.guiasDeViaje = guiasDeViaje;
+        this.asignaciones = asignaciones;
     }
 
     public Vehiculo(VehiculoDTO vehiculo) {
@@ -56,10 +59,11 @@ public class Vehiculo implements Serializable {
         this.peso = vehiculo.getPeso();
         this.capacidadCarga = vehiculo.getCapacidadCarga();
         this.fechaFinITV = vehiculo.getFechaFinITV();
+        this.pnc = vehiculo.getPnc();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
-        if (vehiculo.getGuiasDeViaje()!= null) {
-            this.guiasDeViaje = procesarLista(vehiculo.getGuiasDeViaje());
+        if (vehiculo.getAsignaciones()!= null) {
+            this.asignaciones = procesarLista(vehiculo.getAsignaciones());
         }
     }
 
@@ -75,7 +79,7 @@ public class Vehiculo implements Serializable {
         this.fechaFinITV = vehiculo.getFechaFinITV();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
-        this.guiasDeViaje = procesarLista(vehiculo.getGuiasDeViaje());
+        this.asignaciones = procesarLista(vehiculo.getAsignaciones());
     }
 
     public Vehiculo() {
@@ -161,23 +165,31 @@ public class Vehiculo implements Serializable {
         this.fechaFinPNC = fechaFinPNC;
     }
 
-    public List<GuiaDeViaje> getGuiasDeViaje() {
-        return guiasDeViaje;
+    public List<Asignacion> getAsignaciones() {
+        return asignaciones;
     }
 
-    public void setGuiasDeViaje(List<GuiaDeViaje> guiasDeViaje) {
-        this.guiasDeViaje = guiasDeViaje;
+    public void setAsignaciones(List<Asignacion> asignaciones) {
+        this.asignaciones = asignaciones;
+    }
+
+    public int getPnc() {
+        return pnc;
+    }
+
+    public void setPnc(int pnc) {
+        this.pnc = pnc;
     }
 
     public VehiculoDTO darDto(){
-        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, fechaInicioPNC, fechaFinPNC, guiasDeViaje);
+        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, pnc, fechaInicioPNC, fechaFinPNC, asignaciones);
         return new VehiculoDTO(v);
     }
 
-    public List<GuiaDeViaje> procesarLista(List<GuiaDeViajeDTO> guias){
-        List<GuiaDeViaje> result = new ArrayList<GuiaDeViaje>();
-        for(GuiaDeViajeDTO g : guias){
-            GuiaDeViaje gnew = new GuiaDeViaje(g);
+    public List<Asignacion> procesarLista(List<AsignacionDTO> asignaciones){
+        List<Asignacion> result = new ArrayList<Asignacion>();
+        for(AsignacionDTO a : asignaciones){
+            Asignacion gnew = new Asignacion(a);
             result.add(gnew);
         }
         return result;

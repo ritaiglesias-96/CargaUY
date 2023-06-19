@@ -1,5 +1,6 @@
 package tse.java.entity;
 
+
 import tse.java.dto.CiudadanoDTO;
 import tse.java.enumerated.RolCiudadano;
 
@@ -10,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name="\"Ciudadano\"")
-@DiscriminatorColumn(name = "rol")
 public class Ciudadano  implements Serializable {
 
     private static final long serialVersionUID = 3827070902901902553L;
@@ -23,25 +23,24 @@ public class Ciudadano  implements Serializable {
     @Column(unique = true)
     private String cedula;
 
-    @ManyToMany
-    private List<GuiaDeViaje> guiasDeViaje = new ArrayList<GuiaDeViaje>();
+
+    @Column (name = "rol" ,nullable = true)
+    private RolCiudadano rol;
+
 
     public Ciudadano() {
         super();
     }
 
-    public Ciudadano(String email, String cedula) {
+    public Ciudadano(String email, String cedula, RolCiudadano rol) {
         super();
         this.email = email;
         this.cedula = cedula;
+        if(rol!=null){
+            this.rol=rol;
+        }
     }
 
-    public Ciudadano(String email, String cedula, List<GuiaDeViaje> guias) {
-        super();
-        this.email = email;
-        this.cedula = cedula;
-        this.guiasDeViaje = guias;
-    }
 
     public int getIdCiudadano() {
         return idCiudadano;
@@ -67,13 +66,14 @@ public class Ciudadano  implements Serializable {
         this.cedula = cedula;
     }
 
-    public List<GuiaDeViaje> getGuiasDeViaje() {
-        return guiasDeViaje;
+    public RolCiudadano getRol() {
+        return rol;
     }
 
-    public void setGuiasDeViaje(List<GuiaDeViaje> guiasDeViaje) {
-        this.guiasDeViaje = guiasDeViaje;
+    public void setRol(RolCiudadano rol) {
+        this.rol = rol;
     }
+
 
 
 }

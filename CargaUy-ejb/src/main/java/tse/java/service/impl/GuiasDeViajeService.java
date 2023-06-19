@@ -10,12 +10,15 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import tse.java.dto.AsignacionDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.PesajeDTO;
 import tse.java.entity.GuiaDeViaje;
 import tse.java.entity.Pesaje;
+import tse.java.persistance.IAsignacionDAO;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.persistance.IPesajesDAO;
+import tse.java.service.IAsignacionesService;
 import tse.java.service.IGuiaDeViajesService;
 import tse.java.service.IPesajesService;
 
@@ -29,8 +32,13 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     IPesajesService pesajesService;
 
     @EJB
-    IPesajesDAO pesajesDao;
+    IPesajesDAO pesajesDAO;
 
+    @EJB
+    IAsignacionesService asignacionesService;
+
+    @EJB
+    IAsignacionDAO asignacionDAO;
 
     @Override
     public void crearGuiaDeViaje(GuiaDeViajeDTO g) {
@@ -43,9 +51,8 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
         List<Pesaje> pesajes = g.getPesajes();
         g.setPesajes(new ArrayList<Pesaje>());
         guiaviajeDao.modificarGuiaDeViaje(g.darDto());
-        for(Pesaje p:pesajes){
-            pesajesDao.borrarPesaje(p.getId());
-        }
+        for(Pesaje p:pesajes)
+            pesajesDAO.borrarPesaje(p.getId());
         guiaviajeDao.borrarGuiaDeViaje(id);
     }
 
@@ -76,16 +83,18 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
 
     @Override
     public void asignarPesajes(int numero_viaje, List<PesajeDTO> pesajes) {
-        GuiaDeViajeDTO g = guiaviajeDao.buscarGuiaViajePorNumero(numero_viaje);
+        AsignacionDTO a = asignacionDAO.buscarAsignacion(asignacionesService.ultimaAsignacionViaje(numero_viaje));
+        GuiaDeViajeDTO g = a.getGuia();
         List<PesajeDTO> result = new ArrayList<PesajeDTO>();
         for(PesajeDTO p:pesajes){
-            pesajesDao.altaPesaje(p);
-            PesajeDTO paux = pesajesDao.buscarPesaje(pesajesDao.getLastId());
+            pesajesDAO.altaPesaje(p);
+            PesajeDTO paux = pesajesDAO.buscarPesaje(pesajesDAO.getLastId());
             result.add(paux);
         }
         g.setPesajes(result);
         guiaviajeDao.modificarGuiaDeViaje(g);
     }
+
 
 
 }

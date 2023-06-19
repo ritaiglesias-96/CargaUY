@@ -1,5 +1,6 @@
 package tse.java.entity;
 
+import tse.java.dto.AsignacionDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.ResponsableDTO;
 import tse.java.enumerated.RolCiudadano;
@@ -10,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("Responsable")
 public class Responsable extends Ciudadano implements Serializable {
 
     private static final long serialVersionUID = 3827070902901902553L;
@@ -27,7 +27,7 @@ public class Responsable extends Ciudadano implements Serializable {
     }
 
     public Responsable(String email, String cedula) {
-        super(email, cedula);
+        super(email, cedula, RolCiudadano.RESPONSABLE);
     }
 
 
@@ -39,13 +39,8 @@ public class Responsable extends Ciudadano implements Serializable {
         this.empresa = empresa;
     }
 
-    public List<GuiaDeViajeDTO> procesarListaViajes(List<GuiaDeViaje> viajes){
-        List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
-        for(GuiaDeViaje g:viajes)
-            result.add(g.darDto());
-        return result;
+    public ResponsableDTO darDto(){
+        return new ResponsableDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(),RolCiudadano.RESPONSABLE);
     }
-    public ResponsableDTO darDTO(){
-        return new ResponsableDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(),RolCiudadano.RESPONSABLE, procesarListaViajes(this.getGuiasDeViaje()));
-    }
+
 }

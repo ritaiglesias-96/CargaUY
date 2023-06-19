@@ -1,12 +1,8 @@
 package tse.java.api.endpoint;
 
 
-import tse.java.dto.CiudadanoDTO;
-import tse.java.entity.Chofer;
-import tse.java.entity.Ciudadano;
-import tse.java.entity.Funcionario;
-import tse.java.entity.Responsable;
-import tse.java.exception.ErrorException;
+import tse.java.entity.*;
+import tse.java.enumerated.RolCiudadano;
 import tse.java.model.Ciudadanos;
 import tse.java.service.ICiudadanosService;
 
@@ -35,6 +31,7 @@ public class gestionCiudadanosEndpoint {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+    
     @POST
     public Response agregarCiudadano(Ciudadano ciudadano){
         try{
@@ -72,8 +69,9 @@ public class gestionCiudadanosEndpoint {
     @POST
     @Path("/funcionario")
     public Response agregarFuncionario(Funcionario funcionario){
+        funcionario.setRol(RolCiudadano.FUNCIONARIO);
         try {
-            ciudadanosService.agregarHijoCiudadano((Funcionario) funcionario);
+            ciudadanosService.agregarHijoCiudadano(funcionario);
             return Response.status(Response.Status.OK).entity(funcionario).build();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -82,6 +80,7 @@ public class gestionCiudadanosEndpoint {
     @POST
     @Path("/responsable")
     public Response agregarResponsable(Responsable responsable){
+        responsable.setRol(RolCiudadano.RESPONSABLE);
         try {
             ciudadanosService.agregarHijoCiudadano(responsable);
             return Response.status(Response.Status.OK).entity(responsable).build();
@@ -92,6 +91,7 @@ public class gestionCiudadanosEndpoint {
     @POST
     @Path("/chofer")
     public Response agregarChofer(Chofer chofer){
+        chofer.setRol(RolCiudadano.CHOFER);
         try {
             ciudadanosService.agregarHijoCiudadano(chofer);
             return Response.status(Response.Status.OK).entity(chofer).build();
@@ -171,4 +171,49 @@ public class gestionCiudadanosEndpoint {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+    @PUT
+    @Path("/responsable/empresa/{id}/{empresa_id}")
+    public Response asignarEmpresa(Empresa empresa, @PathParam("id")int id,@PathParam("empresa_id") int empresaId ){
+        try{
+            empresa.setId(empresaId);
+            ciudadanosService.asignarEmpresa(id, empresa);
+            return Response.status(Response.Status.OK).entity(empresa).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    @DELETE
+    @Path("/responsable/empresa/{id}/{empresa_id}")
+    public Response eliminarEmpresa(Empresa empresa, @PathParam("id")int id,@PathParam("empresa_id") int empresaId ){
+        try{
+            empresa.setId(empresaId);
+            ciudadanosService.eliminarEmpresa(id, empresa);
+            return Response.status(Response.Status.OK).entity(empresa).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    @PUT
+    @Path("/chofer/empresa/{id}/{empresa_id}")
+    public Response asignarEmpresaChofer(Empresa empresa, @PathParam("id")int id,@PathParam("empresa_id") int empresaId ){
+        try{
+            empresa.setId(empresaId);
+            ciudadanosService.asignarEmpresaChofer(id, empresa);
+            return Response.status(Response.Status.OK).entity(empresa).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    @DELETE
+    @Path("/chofer/empresa/{id}/{empresa_id}")
+    public Response eliminarEmpresaChofer(Empresa empresa, @PathParam("id")int id,@PathParam("empresa_id") int empresaId ){
+        try{
+            empresa.setId(empresaId);
+            ciudadanosService.eliminarEmpresaChofer(id, empresa);
+            return Response.status(Response.Status.OK).entity(empresa).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
 }

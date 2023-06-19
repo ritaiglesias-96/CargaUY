@@ -9,9 +9,9 @@ import java.util.List;
 
 @Local
 public interface IPesajesDAO {
-    public void altaPesaje(PesajeDTO p);
-    public PesajeDTO buscarPesaje(Long id);
-    public List<PesajeDTO> listarPesajes();
-    public void borrarPesaje(Long id);
+    void altaPesaje(PesajeDTO p);
+    PesajeDTO buscarPesaje(Long id);
+    List<PesajeDTO> listarPesajes();
+    void borrarPesaje(Long id);
     public Long getLastId();
 }

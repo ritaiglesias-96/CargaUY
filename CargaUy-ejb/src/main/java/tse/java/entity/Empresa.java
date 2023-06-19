@@ -19,14 +19,16 @@ public class Empresa implements Serializable {
     private String razonSocial;
     private int nroEmpresa;
     private String dirPrincipal;
-   @OneToOne
-   @JoinColumn(name = "responsable_id", nullable = true)
+
+
+
+    @OneToOne
+    @JoinColumn(name = "responsable_id", nullable = true)
     private Responsable responsable;
 
     @OneToMany
-    private List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
-    /*private ArrayList<Choferes> choferes
-TODO    */
+    private List<Vehiculo> vehiculos = new ArrayList<>();
+    /* private ArrayList<Choferes> choferes TODO */
     public Empresa(){
 
     }
@@ -111,6 +113,13 @@ TODO    */
 
     public void setVehiculos(List<Vehiculo> vehiculos) {
         this.vehiculos = vehiculos;
+    }
+    public Responsable getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(Responsable responsable) {
+        this.responsable = responsable;
     }
 
 
