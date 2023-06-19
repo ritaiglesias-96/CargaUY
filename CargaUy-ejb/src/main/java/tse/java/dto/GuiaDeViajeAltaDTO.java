@@ -7,9 +7,11 @@ public class GuiaDeViajeAltaDTO{
 
     private String rubroCliente, tipoCarga;
     private float volumenCarga;
-    private String origen, destino, pais_vehiculo, matricula_vehiculo, cedula_chofer, cedula_responsable;
+    private String origen, destino, pais_vehiculo, matricula_vehiculo, cedula_chofer;
 
-    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String pais_vehiculo, String matricula_vehiculo, String cedula_chofer, String cedula_responsable) {
+    private int numero_emp;
+
+    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String pais_vehiculo, String matricula_vehiculo, String cedula_chofer, int numero_emp) {
         this.rubroCliente = rubroCliente;
         this.tipoCarga = tipoCarga;
         this.volumenCarga = volumenCarga;
@@ -18,7 +20,7 @@ public class GuiaDeViajeAltaDTO{
         this.pais_vehiculo = pais_vehiculo;
         this.matricula_vehiculo = matricula_vehiculo;
         this.cedula_chofer = cedula_chofer;
-        this.cedula_responsable = cedula_responsable;
+        this.numero_emp = numero_emp;
     }
 
     public GuiaDeViajeAltaDTO(){}
@@ -45,14 +47,6 @@ public class GuiaDeViajeAltaDTO{
 
     public void setCedula_chofer(String cedula_chofer) {
         this.cedula_chofer = cedula_chofer;
-    }
-
-    public String getCedula_responsable() {
-        return cedula_responsable;
-    }
-
-    public void setCedula_responsable(String cedula_responsable) {
-        this.cedula_responsable = cedula_responsable;
     }
 
     public String getRubroCliente() {
@@ -93,5 +87,13 @@ public class GuiaDeViajeAltaDTO{
 
     public void setTipoCarga(String tipoCarga) {
         this.tipoCarga = tipoCarga;
+    }
+
+    public int getNumero_emp() {
+        return numero_emp;
+    }
+
+    public void setNumero_emp(int numero_emp) {
+        this.numero_emp = numero_emp;
     }
 }

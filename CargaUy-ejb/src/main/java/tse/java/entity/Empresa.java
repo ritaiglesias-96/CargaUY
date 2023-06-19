@@ -29,6 +29,10 @@ public class Empresa implements Serializable {
     @OneToMany
     private List<Vehiculo> vehiculos = new ArrayList<>();
     /* private ArrayList<Choferes> choferes TODO */
+
+    @ManyToMany
+    private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
+
     public Empresa(){
 
     }
@@ -48,14 +52,15 @@ public class Empresa implements Serializable {
         this.dirPrincipal = dirPrincipal;
     }
 
-    public Empresa(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal,
-            ArrayList<Vehiculo> vehiculos) {
+    public Empresa(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal, Responsable responsable, List<Vehiculo> vehiculos, List<Asignacion> asignaciones) {
         this.id = id;
         this.nombrePublico = nombrePublico;
         this.razonSocial = razonSocial;
         this.nroEmpresa = nroEmpresa;
         this.dirPrincipal = dirPrincipal;
+        this.responsable = responsable;
         this.vehiculos = vehiculos;
+        this.asignaciones = asignaciones;
     }
 
     public Empresa(EmpresaDTO e){
@@ -122,5 +127,11 @@ public class Empresa implements Serializable {
         this.responsable = responsable;
     }
 
+    public List<Asignacion> getAsignaciones() {
+        return asignaciones;
+    }
 
+    public void setAsignaciones(List<Asignacion> asignaciones) {
+        this.asignaciones = asignaciones;
+    }
 }

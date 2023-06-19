@@ -1,10 +1,7 @@
 package tse.java.service.impl;
 
 
-import tse.java.dto.EmpresaDTO;
-import tse.java.dto.GuiaDeViajeDTO;
-import tse.java.dto.PesajeDTO;
-import tse.java.dto.VehiculoDTO;
+import tse.java.dto.*;
 import tse.java.entity.Vehiculo;
 import tse.java.model.Empresas;
 import tse.java.persistance.IEmpresasDAO;
@@ -120,6 +117,38 @@ public class EmpresasService implements IEmpresasService {
         EmpresaDTO empresa = obtenerEmpresa(id);
         List<VehiculoDTO> vehiculos = empresa.getVehiculos();
         return vehiculos;
+    }
+
+    @Override
+    public void agregarAsignacionAEmpresa(int idEmpresa, AsignacionDTO a) {
+        EmpresaDTO empresa = obtenerEmpresa(idEmpresa);
+        List<AsignacionDTO> asignaciones = empresa.getAsignaciones();
+        asignaciones.add(a);
+        empresa.setAsignaciones(asignaciones);
+        empresasDAO.modificarEmpresa(empresa);
+    }
+
+    @Override
+    public void borrarGuia(int numeroViaje) {
+        List<EmpresaDTO> empresas = empresasDAO.obtenerEmpresas();
+        for(EmpresaDTO e:empresas){
+            AsignacionDTO a = buscarAsignacionEnLista(e, numeroViaje);
+            if(a != null){
+                List<AsignacionDTO> asignaciones = e.getAsignaciones();
+                asignaciones.remove(a);
+                e.setAsignaciones(asignaciones);
+                empresasDAO.modificarEmpresa(e);
+            }
+        }
+    }
+
+    //Auxiliar
+    private AsignacionDTO buscarAsignacionEnLista(EmpresaDTO e, int numViaje){
+        for(AsignacionDTO a : e.getAsignaciones()){
+            if(a.getGuia().getNumero()==numViaje)
+                return a;
+        }
+        return null;
     }
 
 }
