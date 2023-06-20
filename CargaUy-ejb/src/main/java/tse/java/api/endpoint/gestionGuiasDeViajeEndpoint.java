@@ -111,19 +111,19 @@ public class gestionGuiasDeViajeEndpoint {
     @POST
     @Path("/crear")
     public Response crearGuiaDeViaje(GuiaDeViajeAltaDTO dtalta){
-        VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(dtalta.getMatricula_vehiculo(),dtalta.getPais_vehiculo());
+        VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(dtalta.getMatriculaVehiculo(),dtalta.getPaisVehiculo());
         if(v == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + dtalta.getMatricula_vehiculo() + " y pais " + dtalta.getPais_vehiculo()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + dtalta.getMatriculaVehiculo() + " y pais " + dtalta.getPaisVehiculo()).build();
         }
 
-        EmpresaDTO e = empresasDAO.obtenerEmpresaPorNumero(dtalta.getNumero_emp());
+        EmpresaDTO e = empresasDAO.obtenerEmpresaPorNumero(dtalta.getNumeroEmpresa());
         if(e == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + dtalta.getNumero_emp()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + dtalta.getNumeroEmpresa()).build();
         }
 
-        ChoferDTO c = choferDAO.buscarChoferPorCedula(dtalta.getCedula_chofer());
+        ChoferDTO c = choferDAO.buscarChoferPorCedula(dtalta.getCedulaChofer());
         if(c == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + dtalta.getCedula_chofer()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + dtalta.getCedulaChofer()).build();
         }
 
         int nueva_guia = guiaDeViajeDAO.getNextNumeroViaje();
@@ -145,24 +145,24 @@ public class gestionGuiasDeViajeEndpoint {
     @POST
     @Path("/modificar")
     public Response modificarGuiaDeViaje(GuiaDeViajeModificacionDTO dtmodificacion){
-        VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(dtmodificacion.getMatricula_vehiculo(),dtmodificacion.getPais_vehiculo());
+        VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(dtmodificacion.getMatriculaVehiculo(),dtmodificacion.getPaisVehiculo());
         if(v == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + dtmodificacion.getMatricula_vehiculo() + " y pais " + dtmodificacion.getPais_vehiculo()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + dtmodificacion.getMatriculaVehiculo() + " y pais " + dtmodificacion.getPaisVehiculo()).build();
         }
 
-        EmpresaDTO e = empresasDAO.obtenerEmpresaPorNumero(dtmodificacion.getNumero_emp());
+        EmpresaDTO e = empresasDAO.obtenerEmpresaPorNumero(dtmodificacion.getNumeroEmpresa());
         if(e == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + dtmodificacion.getNumero_emp()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + dtmodificacion.getNumeroEmpresa()).build();
         }
 
-        ChoferDTO c = choferDAO.buscarChoferPorCedula(dtmodificacion.getCedula_chofer());
+        ChoferDTO c = choferDAO.buscarChoferPorCedula(dtmodificacion.getCedulaChofer());
         if(c == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + dtmodificacion.getCedula_chofer()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + dtmodificacion.getCedulaChofer()).build();
         }
 
-        GuiaDeViajeDTO g = guiaDeViajeDAO.buscarGuiaViajePorNumero(dtmodificacion.getNumero_viaje());
+        GuiaDeViajeDTO g = guiaDeViajeDAO.buscarGuiaViajePorNumero(dtmodificacion.getNumeroViaje());
         if(g == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe viaje con el identificador " + dtmodificacion.getNumero_viaje()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe viaje con el identificador " + dtmodificacion.getNumeroViaje()).build();
         }
 
         g.setOrigen(dtmodificacion.getOrigen());

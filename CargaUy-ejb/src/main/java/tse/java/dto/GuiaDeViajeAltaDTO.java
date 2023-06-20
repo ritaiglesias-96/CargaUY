@@ -1,52 +1,49 @@
 package tse.java.dto;
 
-import java.util.Date;
-import java.util.List;
-
 public class GuiaDeViajeAltaDTO{
 
     private String rubroCliente, tipoCarga;
     private float volumenCarga;
-    private String origen, destino, pais_vehiculo, matricula_vehiculo, cedula_chofer;
+    private String origen, destino, paisVehiculo, matriculaVehiculo, cedulaChofer;
 
-    private int numero_emp;
+    private int numeroEmpresa;
 
-    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String pais_vehiculo, String matricula_vehiculo, String cedula_chofer, int numero_emp) {
+    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String paisVehiculo, String matriculaVehiculo, String cedulaChofer, int numeroEmpresa) {
         this.rubroCliente = rubroCliente;
         this.tipoCarga = tipoCarga;
         this.volumenCarga = volumenCarga;
         this.origen = origen;
         this.destino = destino;
-        this.pais_vehiculo = pais_vehiculo;
-        this.matricula_vehiculo = matricula_vehiculo;
-        this.cedula_chofer = cedula_chofer;
-        this.numero_emp = numero_emp;
+        this.paisVehiculo = paisVehiculo;
+        this.matriculaVehiculo = matriculaVehiculo;
+        this.cedulaChofer = cedulaChofer;
+        this.numeroEmpresa = numeroEmpresa;
     }
 
     public GuiaDeViajeAltaDTO(){}
 
-    public String getPais_vehiculo() {
-        return pais_vehiculo;
+    public String getPaisVehiculo() {
+        return paisVehiculo;
     }
 
-    public void setPais_vehiculo(String pais_vehiculo) {
-        this.pais_vehiculo = pais_vehiculo;
+    public void setPaisVehiculo(String paisVehiculo) {
+        this.paisVehiculo = paisVehiculo;
     }
 
-    public String getMatricula_vehiculo() {
-        return matricula_vehiculo;
+    public String getMatriculaVehiculo() {
+        return matriculaVehiculo;
     }
 
-    public void setMatricula_vehiculo(String matricula_vehiculo) {
-        this.matricula_vehiculo = matricula_vehiculo;
+    public void setMatriculaVehiculo(String matriculaVehiculo) {
+        this.matriculaVehiculo = matriculaVehiculo;
     }
 
-    public String getCedula_chofer() {
-        return cedula_chofer;
+    public String getCedulaChofer() {
+        return cedulaChofer;
     }
 
-    public void setCedula_chofer(String cedula_chofer) {
-        this.cedula_chofer = cedula_chofer;
+    public void setCedulaChofer(String cedulaChofer) {
+        this.cedulaChofer = cedulaChofer;
     }
 
     public String getRubroCliente() {
@@ -89,11 +86,11 @@ public class GuiaDeViajeAltaDTO{
         this.tipoCarga = tipoCarga;
     }
 
-    public int getNumero_emp() {
-        return numero_emp;
+    public int getNumeroEmpresa() {
+        return numeroEmpresa;
     }
 
-    public void setNumero_emp(int numero_emp) {
-        this.numero_emp = numero_emp;
+    public void setNumeroEmpresa(int numeroEmpresa) {
+        this.numeroEmpresa = numeroEmpresa;
     }
 }

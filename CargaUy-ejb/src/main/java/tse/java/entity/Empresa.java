@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import tse.java.dto.AsignacionDTO;
 import tse.java.dto.EmpresaDTO;
 @Entity
 @Table(name="\"Empresa\"")
@@ -133,5 +134,14 @@ public class Empresa implements Serializable {
 
     public void setAsignaciones(List<Asignacion> asignaciones) {
         this.asignaciones = asignaciones;
+    }
+
+    public List<Asignacion> procesarListaAsignaciones(List<AsignacionDTO> asignaciones){
+        List<Asignacion> result = new ArrayList<Asignacion>();
+        for(AsignacionDTO a : asignaciones){
+            Asignacion anew = new Asignacion(a);
+            result.add(anew);
+        }
+        return result;
     }
 }
