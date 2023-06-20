@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="\"Responsable\"")
 public class Responsable extends Ciudadano implements Serializable {
 
     private static final long serialVersionUID = 3827070902901902553L;

@@ -9,7 +9,6 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name="\"Funcionario\"")
 public class Funcionario extends Ciudadano implements Serializable{
 
     private static final long serialVersionUID = 3827070902901902553L;
