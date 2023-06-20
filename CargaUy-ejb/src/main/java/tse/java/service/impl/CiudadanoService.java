@@ -120,49 +120,21 @@ public class CiudadanoService implements ICiudadanosService {
         choferDAO.modificarChofer(chofer);
     }
 
-    /*  @Override
-    public void asingarViajeResponsable(int responsable_id, Asignacion a) {
-        Responsable responsable = (Responsable) ciudadanoDAO.buscarCiudadanoPorId(responsable_id);
-        List<Asignacion> asignaciones = responsable.getAsignaciones();
-        asignaciones.add(a);
-        responsable.setAsignaciones(asignaciones);
-        responsableDAO.modificarResponsable(responsable);
-    }*/
-
     @Override
     public boolean contieneGuiaViajeChofer(String cedula_chofer, int numero_viaje) {
-        Long id = asignacionesService.ultimaAsignacionViaje(numero_viaje);
         ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
         for(AsignacionDTO a : c.getAsignaciones())
-            if(a.getId() == id)
+            if(a.getGuia().getNumero() == numero_viaje)
                 return true;
         return false;
     }
 
-  /*  @Override
-    public boolean contieneGuiaViajeResponsable(String cedula_responsable, int numero_viaje) {
-        Long id = asignacionesService.ultimaAsignacionViaje(numero_viaje);
-        ResponsableDTO r = responsableDAO.buscarResponsablePorCedula(cedula_responsable);
-        for(AsignacionDTO a : r.getAsignaciones())
-            if(a.getId() == id)
-                return true;
-        return false;
-    }
-*/
     @Override
     public void borrarGuia(int numero_guia) {
         GuiaDeViajeDTO g = guiaDAO.buscarGuiaViajePorNumero(numero_guia);
         GuiaDeViaje gnew = guiaDAO.buscarGuiaDeViaje(g.getId());
         for(CiudadanoDTO c:ciudadanoDAO.listarCiudadanos()){
-            /*if(responsableDAO.buscarResponsablePorCedula(c.getCedula())!=null){
-                if(contieneGuiaViajeResponsable(c.getCedula(),numero_guia)){
-                    Responsable r = (Responsable) ciudadanoDAO.buscarCiudadanoPorId(c.getIdCiudadano());
-                    List<Asignacion> asignaciones = r.getAsignaciones();
-                    asignaciones.remove(buscarGuiaenResponsable(r,g));
-                    r.setAsignaciones(asignaciones);
-                    responsableDAO.modificarResponsable(r);
-                }
-            } else {*/
+            if(c.getRol()==RolCiudadano.CHOFER){
                 if(contieneGuiaViajeChofer(c.getCedula(),numero_guia)){
                     Chofer ch = (Chofer) ciudadanoDAO.buscarCiudadanoPorId(c.getIdCiudadano());
                     List<Asignacion> asignaciones = ch.getAsignaciones();
@@ -170,7 +142,7 @@ public class CiudadanoService implements ICiudadanosService {
                     ch.setAsignaciones(asignaciones);
                     choferDAO.modificarChofer(ch);
                 }
-            //}
+            }
         }
     }
 
@@ -181,10 +153,4 @@ public class CiudadanoService implements ICiudadanosService {
         return null;
     }
 
-   /* private Asignacion buscarGuiaenResponsable(Responsable r, GuiaDeViajeDTO g) {
-        for(Asignacion a:r.getAsignaciones())
-            if(a.getGuia().getNumero()==g.getNumero())
-                return a;
-        return null;
-    }*/
 }
