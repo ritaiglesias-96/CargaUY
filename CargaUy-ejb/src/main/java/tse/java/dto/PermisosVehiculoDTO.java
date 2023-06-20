@@ -3,7 +3,8 @@ package tse.java.dto;
 import java.util.Date;
 
 public class PermisosVehiculoDTO {
-    private Long id;
+    private Long idVehiculo;
+    private Integer idEmpresa;
     private String matricula;
     private String pais;
     private Date fechaFinITV;
@@ -14,8 +15,9 @@ public class PermisosVehiculoDTO {
     public PermisosVehiculoDTO() {
     }
 
-    public PermisosVehiculoDTO(Long id, String matricula, String pais, Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC) {
-        this.id = id;
+    public PermisosVehiculoDTO(Long idVehiculo, Integer idEmpresa, String matricula, String pais, Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC) {
+        this.idVehiculo = idVehiculo;
+        this.idEmpresa = idEmpresa;
         this.matricula = matricula;
         this.pais = pais;
         this.fechaFinITV = fechaFinITV;
@@ -25,7 +27,8 @@ public class PermisosVehiculoDTO {
     }
 
     public PermisosVehiculoDTO(VehiculoDTO v) {
-        this.id = v.getId();
+        this.idVehiculo = v.getId();
+        this.idEmpresa = v.getIdEmpresa();
         this.matricula = v.getMatricula();
         this.pais = v.getPais();
         this.fechaFinITV = v.getFechaFinITV();
@@ -34,8 +37,8 @@ public class PermisosVehiculoDTO {
         this.fechaFinPNC = v.getFechaFinPNC();
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdVehiculo() {
+        return idVehiculo;
     }
 
     public String getMatricula() {
@@ -60,5 +63,9 @@ public class PermisosVehiculoDTO {
 
     public Date getFechaFinPNC() {
         return fechaFinPNC;
+    }
+
+    public Integer getIdEmpresa() {
+        return idEmpresa;
     }
 }

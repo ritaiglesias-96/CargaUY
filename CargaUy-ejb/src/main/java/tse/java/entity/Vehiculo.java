@@ -32,11 +32,12 @@ public class Vehiculo implements Serializable {
     private Date fechaInicioPNC;
     @Temporal(TemporalType.DATE)
     private Date fechaFinPNC;
+    private Integer idEmpresa;
     @OneToMany
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
 
     public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, List<Asignacion> asignaciones) {
+            Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, Integer idEmpresa, List<Asignacion> asignaciones) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -48,6 +49,7 @@ public class Vehiculo implements Serializable {
         this.pnc = pnc;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
+        this.idEmpresa = idEmpresa;
         this.asignaciones = asignaciones;
     }
 
@@ -62,6 +64,7 @@ public class Vehiculo implements Serializable {
         this.pnc = vehiculo.getPnc();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
+        this.idEmpresa = vehiculo.getIdEmpresa();
         if (vehiculo.getAsignaciones()!= null) {
             this.asignaciones = procesarLista(vehiculo.getAsignaciones());
         }
@@ -79,6 +82,7 @@ public class Vehiculo implements Serializable {
         this.fechaFinITV = vehiculo.getFechaFinITV();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
+        this.idEmpresa = vehiculo.getIdEmpresa();
         this.asignaciones = procesarLista(vehiculo.getAsignaciones());
     }
 
@@ -181,8 +185,16 @@ public class Vehiculo implements Serializable {
         this.pnc = pnc;
     }
 
+    public Integer getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Integer idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
+
     public VehiculoDTO darDto(){
-        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, pnc, fechaInicioPNC, fechaFinPNC, asignaciones);
+        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, pnc, fechaInicioPNC, fechaFinPNC, idEmpresa, asignaciones);
         return new VehiculoDTO(v);
     }
 

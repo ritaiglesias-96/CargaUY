@@ -2,8 +2,9 @@ INSERT INTO public."Usuario"(tipo_usuario, id, apellido, nombre, fechaNacimiento
 
 
 --- Vehiculos
-INSERT INTO public."Vehiculo" (id, capacidadcarga, fechafinitv, fechafinpnc, fechainiciopnc, marca, matricula, modelo, pais, peso, pnc) VALUES (1999, 365, '2023-06-11', '2023-06-29', '2023-06-30', 'Honda', 'SDE5687', 'Camion', 'Uruguay', 2000, 1891);
-INSERT INTO public."Vehiculo" (id, capacidadcarga, fechafinitv, fechafinpnc, fechainiciopnc, marca, matricula, modelo, pais, peso, pnc) VALUES (2999, 200, '2023-06-01', '2023-06-15', '2023-06-15', 'Toyota', 'SDF1254', 'Camion', 'Uruguay', 2000, 1891);
+INSERT INTO public."Vehiculo" (id, capacidadcarga, fechafinitv, fechafinpnc, fechainiciopnc, marca, matricula, modelo, pais, peso, pnc, idEmpresa) VALUES (1999, 365, '2023-06-11', '2023-06-29', '2023-06-30', 'Honda', 'SDE5687', 'Camion', 'Uruguay', 2000, 1891, 1586);
+INSERT INTO public."Vehiculo" (id, capacidadcarga, fechafinitv, fechafinpnc, fechainiciopnc, marca, matricula, modelo, pais, peso, pnc, idEmpresa) VALUES (2999, 200, '2023-06-01', '2023-06-15', '2023-06-15', 'Toyota', 'SDF1254', 'Camion', 'Uruguay', 2000, 1891, 1586);
+INSERT INTO public."Vehiculo" (id, capacidadcarga, fechafinitv, fechafinpnc, fechainiciopnc, marca, matricula, modelo, pais, peso, pnc, idEmpresa) VALUES (3999, 123, '2023-06-01', '2023-06-15', '2023-06-15', 'Volkswagen', 'SDF2112', 'Camion', 'Uruguay', 2000, 1891, 1587);
 
 --- Ciudadano
 
@@ -24,10 +25,12 @@ INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUE
 
 ---Empresas
 INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1586, 'Rivera 1234', 'TATA', 1254,'tatasa',null);
+INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1587, 'Rivera 4321', 'ATAT', 4521,'atatsa',null);
 
 ---Empresa_Vehiculo
 INSERT INTO public."Empresa_Vehiculo" ("Empresa_id", vehiculos_id) VALUES (1586, 1999);
-INSERT INTO public."Empresa_Vehiculo" ("Empresa_id", vehiculos_id) VALUES (1586, 1999);
+INSERT INTO public."Empresa_Vehiculo" ("Empresa_id", vehiculos_id) VALUES (1586, 2999);
+INSERT INTO public."Empresa_Vehiculo" ("Empresa_id", vehiculos_id) VALUES (1587, 3999);
 
 -- Guia de viaje
 -- Viaje finalizado
