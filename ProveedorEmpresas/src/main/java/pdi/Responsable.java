@@ -1,5 +1,5 @@
 
-package empresa;
+package pdi;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;

@@ -1,5 +1,5 @@
 
-package empresa;
+package pdi;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,14 +17,14 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "EmpresaPortService", targetNamespace = "/empresa", wsdlLocation = "file:/home/rita/IdeaProjects/CargaUY/ProveedorEmpresas/src/main/resources/empresas.wsdl")
+@WebServiceClient(name = "EmpresaPortService", targetNamespace = "/pdi", wsdlLocation = "file:/home/rita/IdeaProjects/CargaUY/ProveedorEmpresas/src/main/resources/empresas.wsdl")
 public class EmpresaPortService
     extends Service
 {
 
     private final static URL EMPRESAPORTSERVICE_WSDL_LOCATION;
     private final static WebServiceException EMPRESAPORTSERVICE_EXCEPTION;
-    private final static QName EMPRESAPORTSERVICE_QNAME = new QName("/empresa", "EmpresaPortService");
+    private final static QName EMPRESAPORTSERVICE_QNAME = new QName("/pdi", "EmpresaPortService");
 
     static {
         URL url = null;
@@ -69,7 +69,7 @@ public class EmpresaPortService
      */
     @WebEndpoint(name = "EmpresaPortSoap11")
     public EmpresaPort getEmpresaPortSoap11() {
-        return super.getPort(new QName("/empresa", "EmpresaPortSoap11"), EmpresaPort.class);
+        return super.getPort(new QName("/pdi", "EmpresaPortSoap11"), EmpresaPort.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class EmpresaPortService
      */
     @WebEndpoint(name = "EmpresaPortSoap11")
     public EmpresaPort getEmpresaPortSoap11(WebServiceFeature... features) {
-        return super.getPort(new QName("/empresa", "EmpresaPortSoap11"), EmpresaPort.class, features);
+        return super.getPort(new QName("/pdi", "EmpresaPortSoap11"), EmpresaPort.class, features);
     }
 
     private static URL __getWsdlLocation() {

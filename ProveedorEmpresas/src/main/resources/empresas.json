@@ -1,6 +1,6 @@
 [
   {
-    "cedula": "56587008",
+    "rut": "56587008",
     "nombrePublico": "Primer Empresa",
     "dirPrincipal": "Av Italia 999",
     "nroEmpresa": "25114578",
@@ -12,7 +12,7 @@
     }
   },
   {
-    "cedula": "54877214",
+    "rut": "54877214",
     "nombrePublico": "Segunda Empresa",
     "dirPrincipal": "Av Italia 999",
     "nroEmpresa": "255558",

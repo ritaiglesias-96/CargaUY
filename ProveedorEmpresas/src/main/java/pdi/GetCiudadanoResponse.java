@@ -1,5 +1,5 @@
 
-package empresa;
+package pdi;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -18,7 +18,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="cedula" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="ciudadano" type="{/pdi}ciudadano"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -29,36 +29,36 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "cedula"
+    "ciudadano"
 })
-@XmlRootElement(name = "getEmpresaRequest")
-public class GetEmpresaRequest {
+@XmlRootElement(name = "getCiudadanoResponse")
+public class GetCiudadanoResponse {
 
     @XmlElement(required = true)
-    protected String cedula;
+    protected Ciudadano ciudadano;
 
     /**
-     * Gets the value of the cedula property.
+     * Gets the value of the ciudadano property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Ciudadano }
      *     
      */
-    public String getCedula() {
-        return cedula;
+    public Ciudadano getCiudadano() {
+        return ciudadano;
     }
 
     /**
-     * Sets the value of the cedula property.
+     * Sets the value of the ciudadano property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Ciudadano }
      *     
      */
-    public void setCedula(String value) {
-        this.cedula = value;
+    public void setCiudadano(Ciudadano value) {
+        this.ciudadano = value;
     }
 
 }

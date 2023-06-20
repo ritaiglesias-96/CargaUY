@@ -1,5 +1,5 @@
 
-package empresa;
+package pdi;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -17,12 +17,12 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="cedula" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="rut" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="nombrePublico" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="dirPrincipal" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="razonSocial" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="nroEmpresa" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
- *         &lt;element name="responsable" type="{/empresa}responsable" minOccurs="0"/&gt;
+ *         &lt;element name="responsable" type="{/pdi}responsable" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -33,7 +33,7 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "empresa", propOrder = {
-    "cedula",
+    "rut",
     "nombrePublico",
     "dirPrincipal",
     "razonSocial",
@@ -43,7 +43,7 @@ import jakarta.xml.bind.annotation.XmlType;
 public class Empresa {
 
     @XmlElement(required = true)
-    protected String cedula;
+    protected String rut;
     @XmlElement(required = true)
     protected String nombrePublico;
     @XmlElement(required = true)
@@ -54,27 +54,27 @@ public class Empresa {
     protected Responsable responsable;
 
     /**
-     * Gets the value of the cedula property.
+     * Gets the value of the rut property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getCedula() {
-        return cedula;
+    public String getRut() {
+        return rut;
     }
 
     /**
-     * Sets the value of the cedula property.
+     * Sets the value of the rut property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setCedula(String value) {
-        this.cedula = value;
+    public void setRut(String value) {
+        this.rut = value;
     }
 
     /**

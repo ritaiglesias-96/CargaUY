@@ -17,7 +17,7 @@
     <properties>
         <java.version>17</java.version>
 
-        <service.package>empresa</service.package>
+        <service.package>pdi</service.package>
         <jakarta.xml.ws-api.version>4.0.0</jakarta.xml.ws-api.version>
         <jaxws-rt.version>4.0.0</jaxws-rt.version>
         <jaxws-ri.version>4.0.0</jaxws-ri.version>
@@ -93,7 +93,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>empresa</id>
+                        <id>pdi</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>wsimport</goal>

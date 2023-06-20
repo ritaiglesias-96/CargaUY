@@ -11,7 +11,6 @@ import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
-import javax.xml.namespace.QName;
 
 @EnableWs
 @Configuration
@@ -35,7 +34,7 @@ public class SoapWebServiceConfig extends WsConfigurerAdapter {
         definition.setSchema(schema);
         definition.setLocationUri("/ws");
         definition.setPortTypeName("EmpresaServicePort");
-        definition.setTargetNamespace("/empresa");
+        definition.setTargetNamespace("/pdi");
         // Set the request and response element names
         definition.setRequestSuffix("Request"); // Set the request element suffix
         definition.setResponseSuffix("Response"); // Set the response element suffix

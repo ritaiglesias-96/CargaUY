@@ -1,5 +1,5 @@
 
-package empresa;
+package pdi;
 
 import jakarta.xml.bind.annotation.XmlRegistry;
 
@@ -7,7 +7,7 @@ import jakarta.xml.bind.annotation.XmlRegistry;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the empresa package. 
+ * generated in the pdi package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -23,7 +23,7 @@ public class ObjectFactory {
 
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: empresa
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: pdi
      * 
      */
     public ObjectFactory() {
@@ -51,6 +51,30 @@ public class ObjectFactory {
      */
     public Empresa createEmpresa() {
         return new Empresa();
+    }
+
+    /**
+     * Create an instance of {@link GetCiudadanoRequest }
+     * 
+     */
+    public GetCiudadanoRequest createGetCiudadanoRequest() {
+        return new GetCiudadanoRequest();
+    }
+
+    /**
+     * Create an instance of {@link GetCiudadanoResponse }
+     * 
+     */
+    public GetCiudadanoResponse createGetCiudadanoResponse() {
+        return new GetCiudadanoResponse();
+    }
+
+    /**
+     * Create an instance of {@link Ciudadano }
+     * 
+     */
+    public Ciudadano createCiudadano() {
+        return new Ciudadano();
     }
 
     /**

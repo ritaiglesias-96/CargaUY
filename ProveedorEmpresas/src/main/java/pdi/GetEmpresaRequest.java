@@ -1,5 +1,5 @@
 
-package empresa;
+package pdi;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -18,7 +18,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="empresa" type="{/empresa}empresa"/&gt;
+ *         &lt;element name="rut" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -29,36 +29,36 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "empresa"
+    "rut"
 })
-@XmlRootElement(name = "getEmpresaResponse")
-public class GetEmpresaResponse {
+@XmlRootElement(name = "getEmpresaRequest")
+public class GetEmpresaRequest {
 
     @XmlElement(required = true)
-    protected Empresa empresa;
+    protected String rut;
 
     /**
-     * Gets the value of the empresa property.
+     * Gets the value of the rut property.
      * 
      * @return
      *     possible object is
-     *     {@link Empresa }
+     *     {@link String }
      *     
      */
-    public Empresa getEmpresa() {
-        return empresa;
+    public String getRut() {
+        return rut;
     }
 
     /**
-     * Sets the value of the empresa property.
+     * Sets the value of the rut property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Empresa }
+     *     {@link String }
      *     
      */
-    public void setEmpresa(Empresa value) {
-        this.empresa = value;
+    public void setRut(String value) {
+        this.rut = value;
     }
 
 }

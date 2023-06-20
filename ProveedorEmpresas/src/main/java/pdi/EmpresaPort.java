@@ -1,5 +1,5 @@
 
-package empresa;
+package pdi;
 
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
@@ -15,7 +15,7 @@ import jakarta.xml.bind.annotation.XmlSeeAlso;
  * Generated source version: 3.0
  * 
  */
-@WebService(name = "EmpresaPort", targetNamespace = "/empresa")
+@WebService(name = "EmpresaPort", targetNamespace = "/pdi")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
     ObjectFactory.class
@@ -30,9 +30,9 @@ public interface EmpresaPort {
      *     returns empresa.GetEmpresaResponse
      */
     @WebMethod
-    @WebResult(name = "getEmpresaResponse", targetNamespace = "/empresa", partName = "getEmpresaResponse")
+    @WebResult(name = "getEmpresaResponse", targetNamespace = "/pdi", partName = "getEmpresaResponse")
     public GetEmpresaResponse getEmpresa(
-        @WebParam(name = "getEmpresaRequest", targetNamespace = "/empresa", partName = "getEmpresaRequest")
+        @WebParam(name = "getEmpresaRequest", targetNamespace = "/pdi", partName = "getEmpresaRequest")
         GetEmpresaRequest getEmpresaRequest);
 
 }
