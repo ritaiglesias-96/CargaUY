@@ -54,3 +54,8 @@ INSERT INTO public."Ciudadano_Asignacion" values(6856,1002);
 INSERT INTO public."Vehiculo_Asignacion" values(1999,1000);
 INSERT INTO public."Vehiculo_Asignacion" values(1999,1001);
 INSERT INTO public."Vehiculo_Asignacion" values(2999,1002);
+
+-- Empresa-Asignacion
+INSERT INTO public."Empresa_Asignacion" values(1586,1000);
+INSERT INTO public."Empresa_Asignacion" values(1586,1001);
+INSERT INTO public."Empresa_Asignacion" values(1586,1002);
