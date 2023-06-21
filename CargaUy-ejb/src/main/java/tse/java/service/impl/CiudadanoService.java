@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Named;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -135,15 +136,23 @@ public class CiudadanoService implements ICiudadanosService {
         GuiaDeViaje gnew = guiaDAO.buscarGuiaDeViaje(g.getId());
         for(CiudadanoDTO c:ciudadanoDAO.listarCiudadanos()){
             if(c.getRol()==RolCiudadano.CHOFER){
-                if(contieneGuiaViajeChofer(c.getCedula(),numero_guia)){
-                    Chofer ch = (Chofer) ciudadanoDAO.buscarCiudadanoPorId(c.getIdCiudadano());
-                    List<Asignacion> asignaciones = ch.getAsignaciones();
-                    asignaciones.remove(buscarGuiaenChofer(ch,g));
-                    ch.setAsignaciones(asignaciones);
-                    choferDAO.modificarChofer(ch);
-                }
+                Chofer ch = (Chofer) ciudadanoDAO.buscarCiudadanoPorId(c.getIdCiudadano());
+                List<Asignacion> asignaciones = ch.getAsignaciones();
+                asignaciones.removeAll(listaAsignacionesConGuia(ch,numero_guia));
+                ch.setAsignaciones(asignaciones);
+                choferDAO.modificarChofer(ch);
             }
         }
+    }
+
+    // Auxiliar
+    private List<Asignacion> listaAsignacionesConGuia(Chofer c, int numeroGuia){
+        List<Asignacion> result = new ArrayList<Asignacion>();
+        for(Asignacion a:c.getAsignaciones()){
+            if(a.getGuia().getNumero()==numeroGuia)
+                result.add(a);
+        }
+        return result;
     }
 
     private Asignacion buscarGuiaenChofer(Chofer c, GuiaDeViajeDTO g) {

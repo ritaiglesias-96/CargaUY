@@ -132,23 +132,21 @@ public class EmpresasService implements IEmpresasService {
     public void borrarGuia(int numeroViaje) {
         List<EmpresaDTO> empresas = empresasDAO.obtenerEmpresas();
         for(EmpresaDTO e:empresas){
-            AsignacionDTO a = buscarAsignacionEnLista(e, numeroViaje);
-            if(a != null){
                 List<AsignacionDTO> asignaciones = e.getAsignaciones();
-                asignaciones.remove(a);
+                asignaciones.removeAll(listaAsignacionesConGuia(e,numeroViaje));
                 e.setAsignaciones(asignaciones);
                 empresasDAO.modificarEmpresa(e);
-            }
         }
     }
 
-    //Auxiliar
-    private AsignacionDTO buscarAsignacionEnLista(EmpresaDTO e, int numViaje){
-        for(AsignacionDTO a : e.getAsignaciones()){
-            if(a.getGuia().getNumero()==numViaje)
-                return a;
+    // Auxiliar
+    private List<AsignacionDTO> listaAsignacionesConGuia(EmpresaDTO e, int numeroGuia){
+        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
+        for(AsignacionDTO a:e.getAsignaciones()){
+            if(a.getGuia().getNumero()==numeroGuia)
+                result.add(a);
         }
-        return null;
+        return result;
     }
 
 }

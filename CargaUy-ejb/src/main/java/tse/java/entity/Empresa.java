@@ -31,7 +31,7 @@ public class Empresa implements Serializable {
     private List<Vehiculo> vehiculos = new ArrayList<>();
     /* private ArrayList<Choferes> choferes TODO */
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
 
     public Empresa(){
