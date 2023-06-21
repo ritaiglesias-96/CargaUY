@@ -48,7 +48,10 @@ public class estadoVehiculosEmpresaEndpoint {
     @GET
     public Response getTodosVehiculos(){
         try{
-            List<EmpresaDTO> empresas = es.obtenerEmpresas().getListaEmpresas();
+            List<EmpresaDTO> empresas = es.obtenerEmpresas();
+            for (EmpresaDTO e:empresas) {
+                System.out.println(e.getNroEmpresa());
+            }
             List<List<PermisosVehiculoDTO>> listaPermisosEmpresas = new ArrayList<>();
             for(EmpresaDTO e:empresas){
                 List<PermisosVehiculoDTO> permisos = new ArrayList<PermisosVehiculoDTO>();
