@@ -13,6 +13,7 @@ public class VehiculoAltaDTO {
     private Date fechaInicioPNC;
     private Date fechaFinPNC;
 
+
     public VehiculoAltaDTO() {
     }
 

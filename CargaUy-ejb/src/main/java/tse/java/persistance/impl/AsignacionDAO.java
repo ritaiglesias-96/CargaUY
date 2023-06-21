@@ -25,7 +25,7 @@ public class AsignacionDAO implements IAsignacionDAO {
     public Long altaAsignacion(AsignacionDTO a) {
         Asignacion anew = new Asignacion(a);
         em.persist(anew);
-        Query q = em.createQuery("select max(a.id) from Asignacion a");
+        Query q = em.createQuery("select max(a.id) from Asignacion a where a.id<1000");
         return Long.valueOf(q.getResultList().get(0).toString());
     }
 
