@@ -64,7 +64,7 @@ public class gestionVehiculosEndpoint {
         }
 
         VehiculoDTO v = new VehiculoDTO(null, dtAlta.getMatricula(), dtAlta.getPais(), dtAlta.getMarca(), dtAlta.getModelo(), dtAlta.getPeso(), dtAlta.getCapacidadCarga(),
-                dtAlta.getFechaFinITV(), dtAlta.getPnc(),  dtAlta.getFechaFinPNC(), dtAlta.getFechaInicioPNC(), null);
+                dtAlta.getFechaFinITV(), dtAlta.getPnc(),  dtAlta.getFechaFinPNC(), dtAlta.getFechaInicioPNC(), dtAlta.getIdEmpresa(), null);
         vs.agregarVehiculo(v);
         v = vs.obtenerVehiculoMatriculaPais(dtAlta.getMatricula(), dtAlta.getPais());
         es.agregarVehiculoAEmpresa(dtAlta.getIdEmpresa(), v);
