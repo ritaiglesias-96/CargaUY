@@ -45,7 +45,7 @@ public class EmpresasDAO implements IEmpresasDAO {
     @Override
     public ArrayList<EmpresaDTO> obtenerEmpresas() {
 
-        Query q  = em.createNativeQuery("select * from public.\"Empresa\"",Empresa.class);
+        Query q = em.createNativeQuery("select * from public.\"Empresa\"", Empresa.class);
 
         List<Empresa> retorno = q.getResultList();
 
@@ -57,34 +57,22 @@ public class EmpresasDAO implements IEmpresasDAO {
 
     @Override
     public void guardarEmpresa(String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal) {
-        Empresa e = new Empresa(nombrePublico,razonSocial,nroEmpresa,dirPrincipal);
+        Empresa e = new Empresa(nombrePublico, razonSocial, nroEmpresa, dirPrincipal);
         em.persist(e);
 
     }
 
     @Override
     public Empresa modificarEmpresa(EmpresaDTO empresaDTO) {
-        Empresa e = em.find(Empresa.class,empresaDTO.getId());
-        if (e.getVehiculos().size() != empresaDTO.getVehiculos().size()) {
-            List<VehiculoDTO> vehiculos = empresaDTO.getVehiculos();
-            List<Vehiculo> vehiculosADevolver = new ArrayList<Vehiculo>();
-            for(VehiculoDTO v:vehiculos){
-                Vehiculo insertar = new Vehiculo(v);
-                insertar.setId(v.getId());
-                vehiculosADevolver.add(insertar);
-            }
-            e.setVehiculos(vehiculosADevolver);
-        }
-        List<Asignacion> asignaciones = e.procesarListaAsignaciones(empresaDTO.getAsignaciones());
-        e.setAsignaciones(asignaciones);
+        Empresa e = new Empresa(empresaDTO);
         em.merge(e);
         return e;
     }
 
     @Override
     public void eliminarEmpresa(EmpresaDTO empresaDTO) {
-        Empresa e = em.find(Empresa.class,empresaDTO.getId());
-        if(e!=null) {
+        Empresa e = em.find(Empresa.class, empresaDTO.getId());
+        if (e != null) {
             em.remove(e);
         }
 
@@ -93,7 +81,7 @@ public class EmpresasDAO implements IEmpresasDAO {
     @Override
     public EmpresaDTO obtenerEmpresaPorNumero(int numero_empresa) {
         Query q = em.createQuery("select e from Empresa e where e.nroEmpresa=" + numero_empresa);
-        if(q.getResultList().isEmpty()) {
+        if (q.getResultList().isEmpty()) {
             return null;
         } else {
             Empresa e = (Empresa) q.getResultList().get(0);
