@@ -3,12 +3,17 @@ package tse.java.persistance.impl;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.VehiculoDTO;
+import tse.java.entity.Asignacion;
 import tse.java.entity.Empresa;
+import tse.java.entity.Pesaje;
+import tse.java.entity.Vehiculo;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -21,11 +26,19 @@ public class EmpresasDAO implements IEmpresasDAO {
 
     @Override
     public EmpresaDTO obtenerEmpresaPorId(int id) {
-        Empresa e = em.find(Empresa.class, id);
-        if(e != null){
-            return new EmpresaDTO(e);
-        }else {
-            return null;
+
+        //return em.find(Empresa.class, id);
+
+        Query q = em.createNativeQuery("select * from public.\"Empresa\" where id = " + id, Empresa.class);
+
+        try {
+
+            Empresa result = (Empresa) q.getSingleResult();
+            result.setId(id);
+            return new EmpresaDTO(result);
+
+        } catch (NoResultException e) {
+            throw e;
         }
     }
 

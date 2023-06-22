@@ -12,16 +12,10 @@ import java.util.ArrayList;
 public interface IVehiculosDAO {
 
     public ArrayList<VehiculoDTO> obtenerVehiculos();
-
     public Vehiculo obtenerVehiculoId(Long id);
-
     public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculo);
-
     public void eliminarVehiculo(Long id);
-
-    void agregarVehiculo(Vehiculo vehiculo);
-
+    public void agregarVehiculo(VehiculoDTO vehiculo);
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
-
     public Long getNextIdVehiculo();
 }

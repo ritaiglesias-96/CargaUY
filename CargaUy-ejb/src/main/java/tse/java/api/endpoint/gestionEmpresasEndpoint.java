@@ -69,7 +69,11 @@ public class gestionEmpresasEndpoint {
         try{
             EmpresaDTO empresaDTO = new EmpresaDTO(empresa);
             empresaDTO.setId(id);
-      empresasService.modificarEmpresa(empresaDTO);
+            System.out.println("ENDPOINT id EMPRESA: " + empresaDTO.getId());
+            System.out.println("ENDPOINT nro EMPRESA: " +empresaDTO.getNroEmpresa());
+            System.out.println("ENDPOINT nombre EMPRESA: " +empresaDTO.getNombrePublico());
+            System.out.println("ENDPOINT razonsocial EMPRESA: " +empresaDTO.getRazonSocial());
+            empresasService.modificarEmpresa(empresaDTO);
             return Response.status(Response.Status.OK).entity(empresa).build();
         } catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();

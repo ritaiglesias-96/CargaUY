@@ -1,8 +1,8 @@
 package tse.java.api.endpoint;
 
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.VehiculoAltaDTO;
 import tse.java.dto.VehiculoDTO;
-import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
 import tse.java.model.Vehiculos;
 import tse.java.persistance.IVehiculosDAO;
@@ -54,17 +54,18 @@ public class gestionVehiculosEndpoint {
     }
 
     @POST
-    public Response agregarVehiculo(VehiculoDTO vehiculo){
-        EmpresaDTO e = es.obtenerEmpresa(vehiculo.getEmpresaId());
+    public Response agregarVehiculo(VehiculoAltaDTO dtAlta){
+        EmpresaDTO e = es.obtenerEmpresa(dtAlta.getIdEmpresa());
         if(e == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con la id " + vehiculo.getEmpresaId()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con la id " + dtAlta.getIdEmpresa()).build();
         }
-        Empresa empresa = new Empresa(e);
-        Vehiculo nuevoVehiculo = new Vehiculo(vehiculo);
-        nuevoVehiculo.setEmpresas(empresa);
-        vs.agregarVehiculo(nuevoVehiculo);
-        vehiculo = new VehiculoDTO(nuevoVehiculo);
-        return Response.status(Response.Status.OK).entity(vehiculo).build();
+
+        VehiculoDTO v = new VehiculoDTO(null, dtAlta.getMatricula(), dtAlta.getPais(), dtAlta.getMarca(), dtAlta.getModelo(), dtAlta.getPeso(), dtAlta.getCapacidadCarga(),
+                dtAlta.getFechaFinITV(), dtAlta.getPnc(),  dtAlta.getFechaFinPNC(), dtAlta.getFechaInicioPNC(), dtAlta.getIdEmpresa(), null);
+        vs.agregarVehiculo(v);
+        v = vs.obtenerVehiculoMatriculaPais(dtAlta.getMatricula(), dtAlta.getPais());
+        es.agregarVehiculoAEmpresa(dtAlta.getIdEmpresa(), v);
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
