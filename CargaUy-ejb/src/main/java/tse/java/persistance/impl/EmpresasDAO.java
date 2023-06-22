@@ -10,6 +10,7 @@ import java.util.List;
 
 import tse.java.dto.EmpresaDTO;
 import tse.java.dto.VehiculoDTO;
+import tse.java.entity.Asignacion;
 import tse.java.entity.Empresa;
 import tse.java.entity.Pesaje;
 import tse.java.entity.Vehiculo;
@@ -74,6 +75,8 @@ public class EmpresasDAO implements IEmpresasDAO {
             }
             e.setVehiculos(vehiculosADevolver);
         }
+        List<Asignacion> asignaciones = e.procesarListaAsignaciones(empresaDTO.getAsignaciones());
+        e.setAsignaciones(asignaciones);
         em.merge(e);
         return e;
     }

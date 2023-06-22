@@ -112,14 +112,21 @@ public class VehiculosService implements IVehiculosService{
     public void borrarGuia(int numero_guia) {
         GuiaDeViajeDTO g = guiaDeViajeDAO.buscarGuiaViajePorNumero(numero_guia);
         for(VehiculoDTO v:vehiculosDAO.obtenerVehiculos()){
-            if(viajeContieneGuia(v,g)){
-                List<AsignacionDTO> asignaciones = v.getAsignaciones();
-                AsignacionDTO a = buscarGuiaenVehiculos(v,g);
-                asignaciones.remove(a);
-                v.setAsignaciones(asignaciones);
-                vehiculosDAO.modificarVehiculo(v);
-            }
+            List<AsignacionDTO> asignaciones = v.getAsignaciones();
+            asignaciones.removeAll(listaAsignacionesConGuia(v,numero_guia));
+            v.setAsignaciones(asignaciones);
+            vehiculosDAO.modificarVehiculo(v);
         }
+    }
+
+    // Auxiliar
+    private List<AsignacionDTO> listaAsignacionesConGuia(VehiculoDTO v, int numeroGuia){
+        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
+        for(AsignacionDTO a:v.getAsignaciones()){
+            if(a.getGuia().getNumero()==numeroGuia)
+                result.add(a);
+        }
+        return result;
     }
 
     @Override
