@@ -1,6 +1,7 @@
 package tse.java.service;
 
 import tse.java.dto.*;
+import tse.java.entity.Vehiculo;
 import tse.java.model.Empresas;
 import tse.java.model.Vehiculos;
 
@@ -14,7 +15,7 @@ public interface IVehiculosService {
 
     public Vehiculos obtenerVehiculos();
     public VehiculoDTO obtenerVehiculoPorId(Long id);
-    public void agregarVehiculo(VehiculoDTO nuevoVehiculo);
+    public void agregarVehiculo(Vehiculo nuevoVehiculo);
     public void modificarVehiculo(VehiculoDTO vehiculoModificado);
     public void eliminarVehiculo(Long id);
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);

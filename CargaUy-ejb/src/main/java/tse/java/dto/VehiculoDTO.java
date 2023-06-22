@@ -22,7 +22,6 @@ public class VehiculoDTO {
     private int empresaId;
     private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
 
-    
 
     public VehiculoDTO(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
                        LocalDate fechaFinITV, int pnc, LocalDate fechaInicioPNC, LocalDate fechaFinPNC, int empresaId, List<AsignacionDTO> asignaciones) {
@@ -54,7 +53,9 @@ public class VehiculoDTO {
         this.fechaInicioPNC = v.getFechaInicioPNC().toLocalDate();
         this.fechaFinPNC = v.getFechaFinPNC().toLocalDate();
         this.asignaciones = procesarLista(v.getAsignaciones());
-        this.empresaId = v.getEmpresa().getId();
+        if (v.getEmpresa() != null) {
+            this.empresaId = v.getEmpresa().getId();
+        }
     }
 
     public VehiculoDTO() {
@@ -147,10 +148,14 @@ public class VehiculoDTO {
     public void setAsignaciones(List<AsignacionDTO> asignaciones) {
         this.asignaciones = asignaciones;
     }
-    
-    public int getPnc() { return pnc; }
 
-    public void setPnc(int pnc) { this.pnc = pnc; }
+    public int getPnc() {
+        return pnc;
+    }
+
+    public void setPnc(int pnc) {
+        this.pnc = pnc;
+    }
 
     public int getEmpresaId() {
         return empresaId;
@@ -160,9 +165,9 @@ public class VehiculoDTO {
         this.empresaId = empresaId;
     }
 
-    public List<AsignacionDTO> procesarLista(List<Asignacion> asignaciones){
+    public List<AsignacionDTO> procesarLista(List<Asignacion> asignaciones) {
         List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
-        for(Asignacion a:asignaciones){
+        for (Asignacion a : asignaciones) {
             result.add(a.darDTO());
         }
         return result;
