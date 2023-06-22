@@ -1,12 +1,10 @@
 package tse.java.api.endpoint;
 
 import tse.java.dto.EmpresaDTO;
-import tse.java.dto.ResponsableDTO;
 import tse.java.dto.VehiculoAltaDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Vehiculo;
 import tse.java.model.Vehiculos;
-import tse.java.persistance.IResponsableDAO;
 import tse.java.persistance.IVehiculosDAO;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IVehiculosService;
@@ -17,7 +15,6 @@ import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.logging.Logger;
 
 @RequestScoped
 @Path("/vehiculos")
