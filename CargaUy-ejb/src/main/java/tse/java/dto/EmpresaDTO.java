@@ -17,21 +17,23 @@ public class EmpresaDTO {
 
     private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
 
-    public EmpresaDTO(){
+    public EmpresaDTO() {
     }
 
-    public EmpresaDTO(Empresa e){
+    public EmpresaDTO(Empresa e) {
         this.id = e.getId();
         this.nombrePublico = e.getNombrePublico();
         this.razonSocial = e.getRazonSocial();
         this.nroEmpresa = e.getNroEmpresa();
         this.dirPrincipal = e.getDirPrincipal();
-        this.vehiculos = procesarLista(e.getVehiculos());
+        if (e.getVehiculos() != null) {
+            this.vehiculos = procesarLista(e.getVehiculos());
+        }
         this.asignaciones = procesarListaAsignaciones(e.getAsignaciones());
     }
 
     public EmpresaDTO(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal,
-            List<VehiculoDTO> vehiculos) {
+                      List<VehiculoDTO> vehiculos) {
         this.id = id;
         this.nombrePublico = nombrePublico;
         this.razonSocial = razonSocial;
@@ -98,26 +100,27 @@ public class EmpresaDTO {
         this.asignaciones = asignaciones;
     }
 
-    public List<VehiculoDTO> procesarLista(List<Vehiculo> vehiculos){
+    public List<VehiculoDTO> procesarLista(List<Vehiculo> vehiculos) {
         List<VehiculoDTO> result = new ArrayList<VehiculoDTO>();
-        for(Vehiculo v:vehiculos){
-            result.add(v.darDto());
+        for (Vehiculo v : vehiculos) {
+            System.out.println(v.getId());
+            result.add(new VehiculoDTO(v));
         }
         return result;
     }
 
-    public List<AsignacionDTO> procesarListaAsignaciones(List<Asignacion> asignaciones){
+    public List<AsignacionDTO> procesarListaAsignaciones(List<Asignacion> asignaciones) {
         List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
-        for(Asignacion a:asignaciones){
+        for (Asignacion a : asignaciones) {
             result.add(a.darDTO());
         }
         return result;
     }
 
-    public boolean contieneVehiculo(VehiculoDTO v){
+    public boolean contieneVehiculo(VehiculoDTO v) {
         boolean encontrado = false;
-        for(VehiculoDTO v1:vehiculos){
-            if(v1.getId().equals(v.getId())) {
+        for (VehiculoDTO v1 : vehiculos) {
+            if (v1.getId().equals(v.getId())) {
                 encontrado = true;
                 break;
             }

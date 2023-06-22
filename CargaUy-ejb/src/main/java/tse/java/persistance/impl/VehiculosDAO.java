@@ -40,8 +40,8 @@ public class VehiculosDAO implements IVehiculosDAO {
     public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculo) {
         Vehiculo v = em.find(Vehiculo.class, vehiculo.getId());
         v.modificarVehiculo(vehiculo);
-        em.persist(v);
-        return v.darDto();
+        em.merge(v);
+        return new VehiculoDTO(v);
     }
 
     @Override

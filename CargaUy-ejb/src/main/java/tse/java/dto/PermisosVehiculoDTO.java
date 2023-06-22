@@ -28,7 +28,7 @@ public class PermisosVehiculoDTO {
 
     public PermisosVehiculoDTO(VehiculoDTO v) {
         this.idVehiculo = v.getId();
-        this.idEmpresa = v.getIdEmpresa();
+        this.idEmpresa = v.getEmpresaId();
         this.matricula = v.getMatricula();
         this.pais = v.getPais();
         this.fechaFinITV = v.getFechaFinITV();

@@ -1,9 +1,8 @@
 package tse.java.entity;
 
 import tse.java.dto.AsignacionDTO;
-import tse.java.dto.GuiaDeViajeDTO;
-import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,13 +10,13 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="\"Vehiculo\"")
-@NamedQuery(name="Vehiculo.findAll", query="SELECT v FROM Vehiculo v")
+@Table(name = "\"Vehiculo\"")
+@NamedQuery(name = "Vehiculo.findAll", query = "SELECT v FROM Vehiculo v")
 public class Vehiculo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
     private String matricula;
     private String pais;
@@ -35,8 +34,12 @@ public class Vehiculo implements Serializable {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
 
+    @ManyToOne
+    private Empresa empresa;
+
+
     public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, Integer idEmpresa, List<Asignacion> asignaciones) {
+                    Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, Empresa empresa, List<Asignacion> asignaciones) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -48,7 +51,7 @@ public class Vehiculo implements Serializable {
         this.pnc = pnc;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
-        this.idEmpresa = idEmpresa;
+        this.empresa = empresa;
         this.asignaciones = asignaciones;
     }
 
@@ -63,12 +66,10 @@ public class Vehiculo implements Serializable {
         this.pnc = vehiculo.getPnc();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
-        this.idEmpresa = vehiculo.getIdEmpresa();
-        if (vehiculo.getAsignaciones()!= null) {
+        if (vehiculo.getAsignaciones() != null) {
             this.asignaciones = procesarLista(vehiculo.getAsignaciones());
         }
     }
-
 
 
     public void modificarVehiculo(VehiculoDTO vehiculo) {
@@ -81,13 +82,13 @@ public class Vehiculo implements Serializable {
         this.fechaFinITV = vehiculo.getFechaFinITV();
         this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
         this.fechaFinPNC = vehiculo.getFechaFinPNC();
-        this.idEmpresa = vehiculo.getIdEmpresa();
         this.asignaciones = procesarLista(vehiculo.getAsignaciones());
     }
 
     public Vehiculo() {
 
     }
+
     public Long getId() {
         return id;
     }
@@ -184,26 +185,20 @@ public class Vehiculo implements Serializable {
         this.pnc = pnc;
     }
 
-    public Integer getIdEmpresa() {
-        return idEmpresa;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public void setIdEmpresa(Integer idEmpresa) {
-        this.idEmpresa = idEmpresa;
+    public void setEmpresas(Empresa empresa) {
+        this.empresa = empresa;
     }
 
-    public VehiculoDTO darDto(){
-        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, pnc, fechaInicioPNC, fechaFinPNC, idEmpresa, asignaciones);
-        return new VehiculoDTO(v);
-    }
-
-    public List<Asignacion> procesarLista(List<AsignacionDTO> asignaciones){
+    public List<Asignacion> procesarLista(List<AsignacionDTO> asignaciones) {
         List<Asignacion> result = new ArrayList<Asignacion>();
-        for(AsignacionDTO a : asignaciones){
+        for (AsignacionDTO a : asignaciones) {
             Asignacion gnew = new Asignacion(a);
             result.add(gnew);
         }
         return result;
     }
-
 }
