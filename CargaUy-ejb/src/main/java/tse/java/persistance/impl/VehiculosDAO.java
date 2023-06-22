@@ -1,6 +1,5 @@
 package tse.java.persistance.impl;
 
-import tse.java.dto.EmpresaDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Vehiculo;
 import tse.java.persistance.IVehiculosDAO;
@@ -51,10 +50,8 @@ public class VehiculosDAO implements IVehiculosDAO {
     }
 
     @Override
-    public void agregarVehiculo(VehiculoDTO vehiculo) {
-        Vehiculo nuevo = new Vehiculo(vehiculo);
-        nuevo.setId(vehiculo.getId());
-        em.persist(nuevo);
+    public void agregarVehiculo(Vehiculo vehiculo) {
+        em.persist(vehiculo);
     }
 
     @Override
