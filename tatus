@@ -1,0 +1,80 @@
+[1mdiff --git a/CargaUy-ejb/src/main/java/tse/java/dto/VehiculoDTO.java b/CargaUy-ejb/src/main/java/tse/java/dto/VehiculoDTO.java[m
+[1mindex b29b100..c6ef75e 100644[m
+[1m--- a/CargaUy-ejb/src/main/java/tse/java/dto/VehiculoDTO.java[m
+[1m+++ b/CargaUy-ejb/src/main/java/tse/java/dto/VehiculoDTO.java[m
+[36m@@ -80,9 +80,6 @@[m [mpublic class VehiculoDTO {[m
+         return marca;[m
+     }[m
+ [m
+[31m-    public void setMarca(String marca) {[m
+[31m-        this.marca = marca;[m
+[31m-    }[m
+ [m
+     public String getPais() {[m
+         return pais;[m
+[36m@@ -96,49 +93,31 @@[m [mpublic class VehiculoDTO {[m
+         return modelo;[m
+     }[m
+ [m
+[31m-    public void setModelo(String modelo) {[m
+[31m-        this.modelo = modelo;[m
+[31m-    }[m
+ [m
+     public Float getPeso() {[m
+         return peso;[m
+     }[m
+ [m
+[31m-    public void setPeso(Float peso) {[m
+[31m-        this.peso = peso;[m
+[31m-    }[m
+ [m
+     public Float getCapacidadCarga() {[m
+         return capacidadCarga;[m
+     }[m
+ [m
+[31m-    public void setCapacidadCarga(Float capacidadCarga) {[m
+[31m-        this.capacidadCarga = capacidadCarga;[m
+[31m-    }[m
+ [m
+     public LocalDate getFechaFinITV() {[m
+         return fechaFinITV;[m
+     }[m
+ [m
+[31m-    public void setFechaFinITV(LocalDate fechaFinITV) {[m
+[31m-        this.fechaFinITV = fechaFinITV;[m
+[31m-    }[m
+ [m
+     public LocalDate getFechaInicioPNC() {[m
+         return fechaInicioPNC;[m
+     }[m
+ [m
+[31m-    public void setFechaInicioPNC(LocalDate fechaInicioPNC) {[m
+[31m-        this.fechaInicioPNC = fechaInicioPNC;[m
+[31m-    }[m
+ [m
+     public LocalDate getFechaFinPNC() {[m
+         return fechaFinPNC;[m
+     }[m
+ [m
+[31m-    public void setFechaFinPNC(LocalDate fechaFinPNC) {[m
+[31m-        this.fechaFinPNC = fechaFinPNC;[m
+[31m-    }[m
+ [m
+     public List<AsignacionDTO> getAsignaciones() {[m
+         return asignaciones;[m
+[36m@@ -150,15 +129,11 @@[m [mpublic class VehiculoDTO {[m
+     [m
+     public int getPnc() { return pnc; }[m
+ [m
+[31m-    public void setPnc(int pnc) { this.pnc = pnc; }[m
+ [m
+     public int getEmpresaId() {[m
+         return empresaId;[m
+     }[m
+ [m
+[31m-    public void setEmpresaId(int empresaId) {[m
+[31m-        this.empresaId = empresaId;[m
+[31m-    }[m
+ [m
+     public List<AsignacionDTO> procesarLista(List<Asignacion> asignaciones){[m
+         List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();[m
