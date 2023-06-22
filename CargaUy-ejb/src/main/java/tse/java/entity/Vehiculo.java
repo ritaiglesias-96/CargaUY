@@ -6,7 +6,7 @@ import tse.java.dto.VehiculoDTO;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,8 +25,11 @@ public class Vehiculo implements Serializable {
     private Float peso;
     private Float capacidadCarga;
     private int pnc;
+    @Temporal(TemporalType.DATE)
     private Date fechaFinITV;
+    @Temporal(TemporalType.DATE)
     private Date fechaInicioPNC;
+    @Temporal(TemporalType.DATE)
     private Date fechaFinPNC;
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
@@ -59,10 +62,10 @@ public class Vehiculo implements Serializable {
         this.modelo = vehiculo.getModelo();
         this.peso = vehiculo.getPeso();
         this.capacidadCarga = vehiculo.getCapacidadCarga();
-        this.fechaFinITV = Date.valueOf(vehiculo.getFechaFinITV());
+        this.fechaFinITV = vehiculo.getFechaFinITV();
         this.pnc = vehiculo.getPnc();
-        this.fechaInicioPNC = Date.valueOf(vehiculo.getFechaInicioPNC());
-        this.fechaFinPNC = Date.valueOf(vehiculo.getFechaFinPNC());
+        this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
+        this.fechaFinPNC = vehiculo.getFechaFinPNC();
         if (vehiculo.getAsignaciones() != null) {
             this.asignaciones = procesarLista(vehiculo.getAsignaciones());
         }
@@ -76,9 +79,9 @@ public class Vehiculo implements Serializable {
         this.modelo = vehiculo.getModelo();
         this.peso = vehiculo.getPeso();
         this.capacidadCarga = vehiculo.getCapacidadCarga();
-        this.fechaFinITV = Date.valueOf(vehiculo.getFechaFinITV());
-        this.fechaInicioPNC = Date.valueOf(vehiculo.getFechaInicioPNC());
-        this.fechaFinPNC = Date.valueOf(vehiculo.getFechaFinPNC());
+        this.fechaFinITV = vehiculo.getFechaFinITV();
+        this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
+        this.fechaFinPNC = vehiculo.getFechaFinPNC();
         this.asignaciones = procesarLista(vehiculo.getAsignaciones());
     }
 
