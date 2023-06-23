@@ -1,0 +1,25 @@
+[
+  {
+    "rut": "56587008",
+    "nombrePublico": "Primer Empresa",
+    "dirPrincipal": "Av Italia 999",
+    "nroEmpresa": "25114578",
+    "responsable": {
+      "cedula": "56587008",
+      "nombre": "Maria Rita",
+      "apellido": "Iglesias",
+      "email": "algo@mail.com"
+    }
+  },
+  {
+    "rut": "54877214",
+    "nombrePublico": "Segunda Empresa",
+    "dirPrincipal": "Av Italia 999",
+    "nroEmpresa": "255558",
+    "responsable": {
+      "cedula": "54877214",
+      "nombre": "Maria",
+      "apellido": "Adrover",
+      "email": "algo@mail.com"
+    }
+  }]
