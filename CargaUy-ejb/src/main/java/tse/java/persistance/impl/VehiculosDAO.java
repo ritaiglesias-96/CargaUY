@@ -1,5 +1,6 @@
 package tse.java.persistance.impl;
 
+import tse.java.dto.EmpresaDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
