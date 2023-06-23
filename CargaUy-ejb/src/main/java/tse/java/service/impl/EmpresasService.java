@@ -3,10 +3,8 @@ package tse.java.service.impl;
 
 import tse.java.dto.*;
 import tse.java.entity.Vehiculo;
-import tse.java.model.Empresas;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.persistance.IVehiculosDAO;
-import tse.java.persistance.impl.EmpresasDAO;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IVehiculosService;
 
@@ -34,11 +32,8 @@ public class EmpresasService implements IEmpresasService {
     IVehiculosDAO vehiculosDAO;
 
     @Override
-    public Empresas obtenerEmpresas() {
-        Empresas e = new Empresas();
-        e.setListaEmpresas(empresasDAO.obtenerEmpresas());
-
-        return e;
+    public ArrayList<EmpresaDTO> obtenerEmpresas() {
+        return empresasDAO.obtenerEmpresas();
     }
 
     @Override
