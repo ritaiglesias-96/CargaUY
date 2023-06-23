@@ -31,6 +31,7 @@ public class Vehiculo implements Serializable {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
     @ManyToOne
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
 
@@ -75,6 +76,7 @@ public class Vehiculo implements Serializable {
         this.modelo = vehiculo.getModelo();
         this.peso = vehiculo.getPeso();
         this.capacidadCarga = vehiculo.getCapacidadCarga();
+        this.pnc = vehiculo.getPnc();
         this.fechaFinITV = Date.valueOf(vehiculo.getFechaFinITV());
         this.fechaInicioPNC = Date.valueOf(vehiculo.getFechaInicioPNC());
         this.fechaFinPNC = Date.valueOf(vehiculo.getFechaFinPNC());
