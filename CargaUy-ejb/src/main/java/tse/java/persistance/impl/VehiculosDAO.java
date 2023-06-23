@@ -1,6 +1,7 @@
 package tse.java.persistance.impl;
 
 import tse.java.dto.VehiculoDTO;
+import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
 import tse.java.persistance.IVehiculosDAO;
 import tse.java.util.qualifier.TSE2023DB;
@@ -36,16 +37,18 @@ public class VehiculosDAO implements IVehiculosDAO {
     }
 
     @Override
-    public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculo) {
-        Vehiculo v = em.find(Vehiculo.class, vehiculo.getId());
-        v.modificarVehiculo(vehiculo);
-        em.merge(v);
-        return new VehiculoDTO(v);
+    public Vehiculo modificarVehiculo(VehiculoDTO vehiculo) {
+        Vehiculo vehiculoMod = new Vehiculo(vehiculo);
+        em.merge(vehiculoMod);
+        return vehiculoMod;
     }
 
     @Override
     public void eliminarVehiculo(Long id) {
         Vehiculo v = em.find(Vehiculo.class, id);
+        Empresa e = em.find(Empresa.class, v.getEmpresa().getId());
+        e.getVehiculos().remove(v);
+        em.merge(e);
         em.remove(v);
     }
 

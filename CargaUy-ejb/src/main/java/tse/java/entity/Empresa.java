@@ -27,7 +27,7 @@ public class Empresa implements Serializable {
     @JoinColumn(name = "responsable_id", nullable = true)
     private Responsable responsable;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Vehiculo> vehiculos = new ArrayList<>();
     /* private ArrayList<Choferes> choferes TODO */
 

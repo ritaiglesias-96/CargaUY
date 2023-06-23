@@ -15,7 +15,7 @@ public interface IVehiculosDAO {
 
     public Vehiculo obtenerVehiculoId(Long id);
 
-    public VehiculoDTO modificarVehiculo(VehiculoDTO vehiculo);
+    public Vehiculo modificarVehiculo(VehiculoDTO vehiculo);
 
     public void eliminarVehiculo(Long id);
 
