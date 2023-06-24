@@ -80,3 +80,12 @@ i {
     /*noinspection CssInvalidPropertyValue*/
     width: -webkit-fill-available;
 }
+
+.ui-panel, div.ui-state-hover {
+    margin: 10px;
+    width: 200px;
+}
+
+.ui-dashboard-column {
+    width: 220px;
+}

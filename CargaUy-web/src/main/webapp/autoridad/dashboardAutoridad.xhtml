@@ -8,85 +8,95 @@
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Dashboard</title>
-    <style type="">
-        .ui-panel, div.ui-state-hover {
-            margin: 10px;
-            width: 200px;
-        }
+    <link href="./../styles/main.css" rel="stylesheet"/>
 
-        .ui-dashboard-column {
-            width: 220px;
-        }
-
-    </style>
 </h:head>
 
 <h:body>
+
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-3">
+            <h1>CargaUy Backoffice - #{UserManager.currentUser.username}</h1>
+        </div>
+        <div class="ui-g-12 ui-md-9 ui-g-nopad">
+            <div class="ui-g-12">
+                <div style="justify-content: flex-end;display: flex;" class="log">
+                    <p:commandButton action="#{UserManager.logout}" value="Salir" class="defaultButton" icon="pi pi-sign-out" />
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-3">
+            <p:menu style="width: 100%">
+                <p:submenu label="Opciones">
+                    <p:menuitem value="Dashboard" url="dashboardAutoridad.xhtml" icon="pi pi-chart-line"/>
+                </p:submenu>
+            </p:menu>
+        </div>
+
     <div class="card">
-    <h:form>
-        <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
+        <h:form>
+            <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
 
-        <p:dashboard id="board" model="#{dashboardBean.model}">
+            <p:dashboard model="#{dashboardBean.model}">
 
-            <p:panel id="empresas" header="Total de empresas">
-                <h:outputText value="#{dashboardBean.cant_empresas}"/>
-            </p:panel>
-            <p:panel id="guias" header="Total guias de viaje">
-                <h:outputText value="#{dashboardBean.cant_guias}"/>
-            </p:panel>
-            <p:panel id="vehiculos" header="Total de Vehiculos">
-                <h:outputText value="#{dashboardBean.cant_vehiculos}"/>
-            </p:panel>
-            <p:panel id="pietipo" header="Tipo de carga" style="width: 420px;">
-                <p:chart type="pie" model="#{dashboardBean.graficoTipoCarga}" style="width:400px;height:300px"/>
-            </p:panel>
-            <p:panel id="pierubro" header="Rubro" style="width: 420px;">
-                <p:chart type="pie" model="#{dashboardBean.graficoRubro}" style="width:400px;height:300px"/>
-            </p:panel>
-            <p:panel id="tablaguias" header="Tabla de guias" style="width: 1200px;">
-                <p:dataTable value="#{dashboardBean.getGuias()}" var="guia" editable="false" widgetVar="tablaGuias">
-                    <p:column headerText="Numero" sortBy="#{guia.numero}">
-                        <h:outputText value="#{guia.numero}" />
-                    </p:column>
-                    <p:column field="rubroCliente" headerText="Rubro" filterMatchMode="exact">
-                        <f:facet name="filter">
-                            <p:selectOneMenu onchange="PF('tablaGuias').filter()" styleClass="ui-custom-filter">
-                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{dashboardBean.rubros}" />
-                            </p:selectOneMenu>
-                        </f:facet>
-                        <h:outputText value="#{guia.rubroCliente}" />
-                    </p:column>
-                    <p:column field="tipoCarga" headerText="Tipo carga" filterMatchMode="exact">
-                        <f:facet name="filter">
-                            <p:selectOneMenu onchange="PF('tablaGuias').filter()" styleClass="ui-custom-filter">
-                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{dashboardBean.tiposCarga}" />
-                            </p:selectOneMenu>
-                        </f:facet>
-                        <h:outputText value="#{guia.tipoCarga}" />
-                    </p:column>
-                    <p:column field="fecha" headerText="Fecha" filterMatchMode="exact">
-                        <f:facet name="filter">
-                            <p:datePicker onchange="PF('tablaGuias').filter()" styleClass="ui-custom-filter"/>
-                        </f:facet>
-                        <h:outputText value="#{guia.fecha}" />
-                    </p:column>
-                    <p:column headerText="Origen">
-                        <h:outputText value="#{guia.origen}" />
-                    </p:column>
-                    <p:column headerText="Destino">
-                        <h:outputText value="#{guia.destino}" />
-                    </p:column>
-                    <p:column headerText="Estado">
-                        <h:outputText value="#{guia.inicio eq null ? 'PENDIENTE' : (guia.fin eq null ? 'INICIADO' : 'FINALIZADO')}" />
-                    </p:column>
-                </p:dataTable>
-            </p:panel>
-        </p:dashboard>
-
-        <div style="clear:both"/>
-    </h:form>
+                <p:panel id="empresas" header="Total de empresas">
+                    <h:outputText value="#{dashboardBean.cant_empresas}"/>
+                </p:panel>
+                <p:panel id="guias" header="Total guias de viaje">
+                    <h:outputText value="#{dashboardBean.cant_guias}"/>
+                </p:panel>
+                <p:panel id="vehiculos" header="Total de Vehiculos">
+                    <h:outputText value="#{dashboardBean.cant_vehiculos}"/>
+                </p:panel>
+                <p:panel id="pietipo" header="Tipo de carga" style="width: 420px;">
+                    <p:chart type="pie" model="#{dashboardBean.graficoTipoCarga}" style="width:400px;height:300px"/>
+                </p:panel>
+                <p:panel id="pierubro" header="Rubro" style="width: 420px;">
+                    <p:chart type="pie" model="#{dashboardBean.graficoRubro}" style="width:400px;height:300px"/>
+                </p:panel>
+                <p:panel id="tablaguias" header="Tabla de guias" style="width: 1200px;">
+                    <p:dataTable value="#{dashboardBean.getGuias()}" var="guia" editable="false" widgetVar="tablaGuias">
+                        <p:column headerText="Numero" sortBy="#{guia.numero}">
+                            <h:outputText value="#{guia.numero}" />
+                        </p:column>
+                        <p:column field="rubroCliente" headerText="Rubro" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('tablaGuias').filter()" styleClass="ui-custom-filter">
+                                    <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{dashboardBean.rubros}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{guia.rubroCliente}" />
+                        </p:column>
+                        <p:column field="tipoCarga" headerText="Tipo carga" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('tablaGuias').filter()" styleClass="ui-custom-filter">
+                                    <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{dashboardBean.tiposCarga}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{guia.tipoCarga}" />
+                        </p:column>
+                        <p:column field="fecha" headerText="Fecha" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:datePicker onchange="PF('tablaGuias').filter()" styleClass="ui-custom-filter"/>
+                            </f:facet>
+                            <h:outputText value="#{guia.fecha}" />
+                        </p:column>
+                        <p:column headerText="Origen">
+                            <h:outputText value="#{guia.origen}" />
+                        </p:column>
+                        <p:column headerText="Destino">
+                            <h:outputText value="#{guia.destino}" />
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{guia.inicio eq null ? 'PENDIENTE' : (guia.fin eq null ? 'INICIADO' : 'FINALIZADO')}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </p:dashboard>
+        </h:form>
+    </div>
     </div>
 </h:body>
 </html>

@@ -70,7 +70,7 @@ public class dashboardAutoridadBean implements Serializable {
         DashboardColumn column2 = new DefaultDashboardColumn();
         DashboardColumn column3 = new DefaultDashboardColumn();
         cant_vehiculos = vehiculosService.obtenerVehiculos().getListaVehiculos().size();
-        cant_empresas = empresasService.obtenerEmpresas().getListaEmpresas().size();
+        cant_empresas = empresasService.obtenerEmpresas().size();
         cant_guias = guiaDeViajesService.listarGuiasDeViajes().size();
         column1.addWidget("empresas");
         column2.addWidget("vehiculos");
