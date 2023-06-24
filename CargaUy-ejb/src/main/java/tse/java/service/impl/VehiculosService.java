@@ -19,9 +19,11 @@ import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
 import tse.java.model.Empresas;
 import tse.java.model.Vehiculos;
+import tse.java.persistance.IEmpresasDAO;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.persistance.IVehiculosDAO;
 import tse.java.service.IAsignacionesService;
+import tse.java.service.IEmpresasService;
 import tse.java.service.IGuiaDeViajesService;
 import tse.java.service.IVehiculosService;
 
@@ -35,6 +37,8 @@ public class VehiculosService implements IVehiculosService{
     IGuiaDeViajesService guiasDeViajeService;
 
     @EJB
+    IEmpresasDAO empresasDAO;
+    @EJB
     IGuiaDeViajeDAO guiaDeViajeDAO;
 
     @EJB
@@ -47,7 +51,7 @@ public class VehiculosService implements IVehiculosService{
         return vehiculos;
     }
 
-    public void agregarVehiculo(VehiculoDTO nuevoVehiculo){
+    public void agregarVehiculo(Vehiculo nuevoVehiculo){
         vehiculosDAO.agregarVehiculo(nuevoVehiculo);
     }
 
@@ -68,7 +72,7 @@ public class VehiculosService implements IVehiculosService{
         String msg = "Me pasaron por rest los parametros: idvehiculo=" + id + ", fechaViajes=" + fecha;
         Logger.getLogger(VehiculosService.class.getName()).log(Level.INFO, msg);
         Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(id);
-        VehiculoDTO v = vehiculo.darDto();
+        VehiculoDTO v = new VehiculoDTO(vehiculo);
         List<AsignacionDTO> asignaciones = v.getAsignaciones();
         List<GuiaDeViajeDTO> guias = new ArrayList<GuiaDeViajeDTO>();
         for(AsignacionDTO a:asignaciones)
@@ -96,12 +100,12 @@ public class VehiculosService implements IVehiculosService{
 
     public VehiculoDTO obtenerVehiculoPorId(Long id) {
         Vehiculo v = vehiculosDAO.obtenerVehiculoId(id);
-        return v.darDto();
+        return new VehiculoDTO(v);
     }
     @Override
     public void asignarGuia(Long vehiculo_id, AsignacionDTO a) {
         Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(vehiculo_id);
-        VehiculoDTO v = vehiculo.darDto();
+        VehiculoDTO v = new VehiculoDTO(vehiculo);
         List<AsignacionDTO> asignaciones = v.getAsignaciones();
         asignaciones.add(a);
         v.setAsignaciones(asignaciones);
@@ -112,14 +116,21 @@ public class VehiculosService implements IVehiculosService{
     public void borrarGuia(int numero_guia) {
         GuiaDeViajeDTO g = guiaDeViajeDAO.buscarGuiaViajePorNumero(numero_guia);
         for(VehiculoDTO v:vehiculosDAO.obtenerVehiculos()){
-            if(viajeContieneGuia(v,g)){
-                List<AsignacionDTO> asignaciones = v.getAsignaciones();
-                AsignacionDTO a = buscarGuiaenVehiculos(v,g);
-                asignaciones.remove(a);
-                v.setAsignaciones(asignaciones);
-                vehiculosDAO.modificarVehiculo(v);
-            }
+            List<AsignacionDTO> asignaciones = v.getAsignaciones();
+            asignaciones.removeAll(listaAsignacionesConGuia(v,numero_guia));
+            v.setAsignaciones(asignaciones);
+            vehiculosDAO.modificarVehiculo(v);
         }
+    }
+
+    // Auxiliar
+    private List<AsignacionDTO> listaAsignacionesConGuia(VehiculoDTO v, int numeroGuia){
+        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
+        for(AsignacionDTO a:v.getAsignaciones()){
+            if(a.getGuia().getNumero()==numeroGuia)
+                result.add(a);
+        }
+        return result;
     }
 
     @Override
@@ -139,6 +150,5 @@ public class VehiculosService implements IVehiculosService{
                 return a;
         return null;
     }
-
 
 }

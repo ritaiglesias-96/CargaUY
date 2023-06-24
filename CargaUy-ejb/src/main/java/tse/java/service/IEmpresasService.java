@@ -1,21 +1,18 @@
 package tse.java.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
 
-import tse.java.dto.EmpresaDTO;
-import tse.java.dto.GuiaDeViajeDTO;
-import tse.java.dto.PesajeDTO;
-import tse.java.dto.VehiculoDTO;
-import tse.java.model.Empresas;
+import tse.java.dto.*;
 
 
 @Local
 public interface IEmpresasService {
 
-    Empresas obtenerEmpresas();
+    ArrayList<EmpresaDTO> obtenerEmpresas();
 
     EmpresaDTO obtenerEmpresa(int id);
 
@@ -34,5 +31,10 @@ public interface IEmpresasService {
     public void borrarVehiculo(Long id);
 
     public List<VehiculoDTO> listarVehiculos(int id);
+
+    public void agregarAsignacionAEmpresa(int idEmpresa, AsignacionDTO a);
+
+    public void borrarGuia(int numeroViaje);
+
 
 }

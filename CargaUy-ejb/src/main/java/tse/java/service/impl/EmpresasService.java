@@ -1,15 +1,10 @@
 package tse.java.service.impl;
 
 
-import tse.java.dto.EmpresaDTO;
-import tse.java.dto.GuiaDeViajeDTO;
-import tse.java.dto.PesajeDTO;
-import tse.java.dto.VehiculoDTO;
+import tse.java.dto.*;
 import tse.java.entity.Vehiculo;
-import tse.java.model.Empresas;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.persistance.IVehiculosDAO;
-import tse.java.persistance.impl.EmpresasDAO;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IVehiculosService;
 
@@ -37,21 +32,18 @@ public class EmpresasService implements IEmpresasService {
     IVehiculosDAO vehiculosDAO;
 
     @Override
-    public Empresas obtenerEmpresas() {
-        Empresas e = new Empresas();
-        e.setListaEmpresas(empresasDAO.obtenerEmpresas());
-
-        return e;
+    public ArrayList<EmpresaDTO> obtenerEmpresas() {
+        return empresasDAO.obtenerEmpresas();
     }
 
     @Override
     public EmpresaDTO obtenerEmpresa(int id) {
-            return empresasDAO.obtenerEmpresaPorId(id);
+        return empresasDAO.obtenerEmpresaPorId(id);
     }
 
     @Override
     public void agregarEmpresa(String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal) {
-        empresasDAO.guardarEmpresa(nombrePublico,razonSocial,nroEmpresa,dirPrincipal);
+        empresasDAO.guardarEmpresa(nombrePublico, razonSocial, nroEmpresa, dirPrincipal);
     }
 
     @Override
@@ -70,7 +62,7 @@ public class EmpresasService implements IEmpresasService {
         Logger.getLogger(EmpresasService.class.getName()).log(Level.INFO, msg);
         EmpresaDTO e = empresasDAO.obtenerEmpresaPorNumero(numero_empresa);
         VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(matricula, pais);
-        if(e != null && v != null && e.contieneVehiculo(v)){
+        if (e != null && v != null && e.contieneVehiculo(v)) {
             Logger.getLogger(EmpresasService.class.getName()).log(Level.INFO, "Encontre el vehiculo y la empresa, busco las guias");
             return vehiculosService.listarGuiasDeVehiculo(v.getId(), fecha);
         } else {
@@ -78,35 +70,39 @@ public class EmpresasService implements IEmpresasService {
             return new ArrayList<PesajeDTO>();
         }
     }
+
     @Override
-    public void agregarVehiculoAEmpresa(int idEmpresa, VehiculoDTO vehiculo){
+    public void agregarVehiculoAEmpresa(int idEmpresa, VehiculoDTO vehiculo) {
         EmpresaDTO e = obtenerEmpresa(idEmpresa);
         List<VehiculoDTO> vehiculos = e.getVehiculos();
         vehiculos.add(vehiculo);
         e.setVehiculos(vehiculos);
-        empresasDAO.modificarEmpresa(e);}
+        empresasDAO.modificarEmpresa(e);
+    }
+
     @Override
     public boolean empresaContieneVehiculo(EmpresaDTO e, VehiculoDTO v) {
         List<VehiculoDTO> vehiculos = e.getVehiculos();
-        for(VehiculoDTO vehiculo:vehiculos)
-            if(vehiculo.getId() == v.getId())
+        for (VehiculoDTO vehiculo : vehiculos)
+            if (vehiculo.getId() == v.getId())
                 return true;
         return false;
     }
 
-    public VehiculoDTO encontrarVehiculo(EmpresaDTO e, Long idVehiculo){
+    public VehiculoDTO encontrarVehiculo(EmpresaDTO e, Long idVehiculo) {
         List<VehiculoDTO> vehiculos = e.getVehiculos();
-        for(VehiculoDTO vehiculo:vehiculos)
-            if(vehiculo.getId() == idVehiculo)
+        for (VehiculoDTO vehiculo : vehiculos)
+            if (vehiculo.getId() == idVehiculo)
                 return vehiculo;
         return null;
     }
+
     @Override
-    public void borrarVehiculo(Long id){
+    public void borrarVehiculo(Long id) {
         Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(id);
-        for(EmpresaDTO e:empresasDAO.obtenerEmpresas()){
+        for (EmpresaDTO e : empresasDAO.obtenerEmpresas()) {
             VehiculoDTO v = encontrarVehiculo(e, id);
-            if(empresaContieneVehiculo(e, v)){
+            if (empresaContieneVehiculo(e, v)) {
                 List<VehiculoDTO> vehiculos = e.getVehiculos();
                 vehiculos.remove(v);
                 e.setVehiculos(vehiculos);
@@ -116,10 +112,40 @@ public class EmpresasService implements IEmpresasService {
     }
 
 
-    public List<VehiculoDTO> listarVehiculos(int id){
+    public List<VehiculoDTO> listarVehiculos(int id) {
         EmpresaDTO empresa = obtenerEmpresa(id);
         List<VehiculoDTO> vehiculos = empresa.getVehiculos();
         return vehiculos;
+    }
+
+    @Override
+    public void agregarAsignacionAEmpresa(int idEmpresa, AsignacionDTO a) {
+        EmpresaDTO empresa = obtenerEmpresa(idEmpresa);
+        List<AsignacionDTO> asignaciones = empresa.getAsignaciones();
+        asignaciones.add(a);
+        empresa.setAsignaciones(asignaciones);
+        empresasDAO.modificarEmpresa(empresa);
+    }
+
+    @Override
+    public void borrarGuia(int numeroViaje) {
+        List<EmpresaDTO> empresas = empresasDAO.obtenerEmpresas();
+        for (EmpresaDTO e : empresas) {
+            List<AsignacionDTO> asignaciones = e.getAsignaciones();
+            asignaciones.removeAll(listaAsignacionesConGuia(e, numeroViaje));
+            e.setAsignaciones(asignaciones);
+            empresasDAO.modificarEmpresa(e);
+        }
+    }
+
+    // Auxiliar
+    private List<AsignacionDTO> listaAsignacionesConGuia(EmpresaDTO e, int numeroGuia) {
+        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
+        for (AsignacionDTO a : e.getAsignaciones()) {
+            if (a.getGuia().getNumero() == numeroGuia)
+                result.add(a);
+        }
+        return result;
     }
 
 }

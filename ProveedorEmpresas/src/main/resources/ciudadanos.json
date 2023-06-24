@@ -1,0 +1,50 @@
+[
+  {
+    "cedula": "4567895",
+    "nombre": "Maria",
+    "apellido": "Adrover",
+    "email": "algo@mail.com"
+  },
+  {
+    "cedula": "58745215",
+    "nombre": "Lucia",
+    "apellido": "Rodriguez",
+    "email": "algo@mail.com"
+  },
+  {
+    "cedula": "69855674",
+    "nombre": "Esteban",
+    "apellido": "Quito",
+    "email": "algo@mail.com"
+  },
+  {
+    "cedula": "21544879",
+    "nombre": "Juan",
+    "apellido": "Perez",
+    "email": "algo@mail.com"
+  },
+  {
+    "cedula": "58795217",
+    "nombre": "Cecilia",
+    "apellido": "Ferrer",
+    "email": "algo@mail.com"
+  },
+  {
+    "cedula": "15648793",
+    "nombre": "Diego",
+    "apellido": "Gomez",
+    "email": "algo@mail.com"
+  },
+  {
+    "cedula": "58764921",
+    "nombre": "Antonio",
+    "apellido": "Ruiz",
+    "email": "algo@mail.com"
+  },
+  {
+    "cedula": "35698758",
+    "nombre": "Victoria",
+    "apellido": "Gonzalez",
+    "email": "algo@mail.com"
+  }
+]

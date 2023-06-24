@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,7 +35,7 @@ public class gestionEmpresasEndpoint {
     @GET
     public Response getEmpresas(){
         try{
-            Empresas e = empresasService.obtenerEmpresas();
+            ArrayList<EmpresaDTO> e = empresasService.obtenerEmpresas();
             return Response.status(Response.Status.OK).entity(e).build();
         }catch (NoResultException e ){
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -68,7 +69,7 @@ public class gestionEmpresasEndpoint {
         try{
             EmpresaDTO empresaDTO = new EmpresaDTO(empresa);
             empresaDTO.setId(id);
-            empresasService.modificarEmpresa(empresaDTO);
+      empresasService.modificarEmpresa(empresaDTO);
             return Response.status(Response.Status.OK).entity(empresa).build();
         } catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();

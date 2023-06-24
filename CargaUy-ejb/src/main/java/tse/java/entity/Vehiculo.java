@@ -1,23 +1,22 @@
 package tse.java.entity;
 
 import tse.java.dto.AsignacionDTO;
-import tse.java.dto.GuiaDeViajeDTO;
-import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
-@Table(name="\"Vehiculo\"")
-@NamedQuery(name="Vehiculo.findAll", query="SELECT v FROM Vehiculo v")
+@Table(name = "\"Vehiculo\"")
+@NamedQuery(name = "Vehiculo.findAll", query = "SELECT v FROM Vehiculo v")
 public class Vehiculo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
     private String matricula;
     private String pais;
@@ -26,17 +25,18 @@ public class Vehiculo implements Serializable {
     private Float peso;
     private Float capacidadCarga;
     private int pnc;
-    @Temporal(TemporalType.DATE)
     private Date fechaFinITV;
-    @Temporal(TemporalType.DATE)
     private Date fechaInicioPNC;
-    @Temporal(TemporalType.DATE)
     private Date fechaFinPNC;
-    @OneToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
+
 
     public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, List<Asignacion> asignaciones) {
+                    Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, Empresa empresa, List<Asignacion> asignaciones) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -48,6 +48,7 @@ public class Vehiculo implements Serializable {
         this.pnc = pnc;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
+        this.empresa = empresa;
         this.asignaciones = asignaciones;
     }
 
@@ -58,15 +59,14 @@ public class Vehiculo implements Serializable {
         this.modelo = vehiculo.getModelo();
         this.peso = vehiculo.getPeso();
         this.capacidadCarga = vehiculo.getCapacidadCarga();
-        this.fechaFinITV = vehiculo.getFechaFinITV();
+        this.fechaFinITV = Date.valueOf(vehiculo.getFechaFinITV());
         this.pnc = vehiculo.getPnc();
-        this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
-        this.fechaFinPNC = vehiculo.getFechaFinPNC();
-        if (vehiculo.getAsignaciones()!= null) {
+        this.fechaInicioPNC = Date.valueOf(vehiculo.getFechaInicioPNC());
+        this.fechaFinPNC = Date.valueOf(vehiculo.getFechaFinPNC());
+        if (vehiculo.getAsignaciones() != null) {
             this.asignaciones = procesarLista(vehiculo.getAsignaciones());
         }
     }
-
 
 
     public void modificarVehiculo(VehiculoDTO vehiculo) {
@@ -76,15 +76,17 @@ public class Vehiculo implements Serializable {
         this.modelo = vehiculo.getModelo();
         this.peso = vehiculo.getPeso();
         this.capacidadCarga = vehiculo.getCapacidadCarga();
-        this.fechaFinITV = vehiculo.getFechaFinITV();
-        this.fechaInicioPNC = vehiculo.getFechaInicioPNC();
-        this.fechaFinPNC = vehiculo.getFechaFinPNC();
+        this.pnc = vehiculo.getPnc();
+        this.fechaFinITV = Date.valueOf(vehiculo.getFechaFinITV());
+        this.fechaInicioPNC = Date.valueOf(vehiculo.getFechaInicioPNC());
+        this.fechaFinPNC = Date.valueOf(vehiculo.getFechaFinPNC());
         this.asignaciones = procesarLista(vehiculo.getAsignaciones());
     }
 
     public Vehiculo() {
 
     }
+
     public Long getId() {
         return id;
     }
@@ -181,18 +183,20 @@ public class Vehiculo implements Serializable {
         this.pnc = pnc;
     }
 
-    public VehiculoDTO darDto(){
-        Vehiculo v = new Vehiculo(id, matricula, pais, marca, modelo, peso, capacidadCarga, fechaFinITV, pnc, fechaInicioPNC, fechaFinPNC, asignaciones);
-        return new VehiculoDTO(v);
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public List<Asignacion> procesarLista(List<AsignacionDTO> asignaciones){
+    public void setEmpresas(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public List<Asignacion> procesarLista(List<AsignacionDTO> asignaciones) {
         List<Asignacion> result = new ArrayList<Asignacion>();
-        for(AsignacionDTO a : asignaciones){
+        for (AsignacionDTO a : asignaciones) {
             Asignacion gnew = new Asignacion(a);
             result.add(gnew);
         }
         return result;
     }
-
 }

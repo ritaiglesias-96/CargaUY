@@ -1,11 +1,10 @@
 package tse.java.dto;
 
 import tse.java.entity.Asignacion;
-import tse.java.entity.GuiaDeViaje;
 import tse.java.entity.Vehiculo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class VehiculoDTO {
@@ -16,16 +15,16 @@ public class VehiculoDTO {
     private String modelo;
     private Float peso;
     private Float capacidadCarga;
-    private Date fechaFinITV;
+    private LocalDate fechaFinITV;
     private int pnc;
-    private Date fechaInicioPNC;
-    private Date fechaFinPNC;
+    private LocalDate fechaInicioPNC;
+    private LocalDate fechaFinPNC;
+    private int empresaId;
     private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
 
-    
 
     public VehiculoDTO(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-            Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, List<AsignacionDTO> asignaciones) {
+                       LocalDate fechaFinITV, int pnc, LocalDate fechaInicioPNC, LocalDate fechaFinPNC, int empresaId, List<AsignacionDTO> asignaciones) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -37,6 +36,7 @@ public class VehiculoDTO {
         this.pnc = pnc;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
+        this.empresaId = empresaId;
         this.asignaciones = asignaciones;
     }
 
@@ -48,11 +48,14 @@ public class VehiculoDTO {
         this.modelo = v.getModelo();
         this.peso = v.getPeso();
         this.capacidadCarga = v.getCapacidadCarga();
-        this.fechaFinITV = v.getFechaFinITV();
+        this.fechaFinITV = v.getFechaFinITV().toLocalDate();
         this.pnc = v.getPnc();
-        this.fechaInicioPNC = v.getFechaInicioPNC();
-        this.fechaFinPNC = v.getFechaFinPNC();
+        this.fechaInicioPNC = v.getFechaInicioPNC().toLocalDate();
+        this.fechaFinPNC = v.getFechaFinPNC().toLocalDate();
         this.asignaciones = procesarLista(v.getAsignaciones());
+        if (v.getEmpresa() != null) {
+            this.empresaId = v.getEmpresa().getId();
+        }
     }
 
     public VehiculoDTO() {
@@ -114,27 +117,27 @@ public class VehiculoDTO {
         this.capacidadCarga = capacidadCarga;
     }
 
-    public Date getFechaFinITV() {
+    public LocalDate getFechaFinITV() {
         return fechaFinITV;
     }
 
-    public void setFechaFinITV(Date fechaFinITV) {
+    public void setFechaFinITV(LocalDate fechaFinITV) {
         this.fechaFinITV = fechaFinITV;
     }
 
-    public Date getFechaInicioPNC() {
+    public LocalDate getFechaInicioPNC() {
         return fechaInicioPNC;
     }
 
-    public void setFechaInicioPNC(Date fechaInicioPNC) {
+    public void setFechaInicioPNC(LocalDate fechaInicioPNC) {
         this.fechaInicioPNC = fechaInicioPNC;
     }
 
-    public Date getFechaFinPNC() {
+    public LocalDate getFechaFinPNC() {
         return fechaFinPNC;
     }
 
-    public void setFechaFinPNC(Date fechaFinPNC) {
+    public void setFechaFinPNC(LocalDate fechaFinPNC) {
         this.fechaFinPNC = fechaFinPNC;
     }
 
@@ -145,14 +148,26 @@ public class VehiculoDTO {
     public void setAsignaciones(List<AsignacionDTO> asignaciones) {
         this.asignaciones = asignaciones;
     }
-    
-    public int getPnc() { return pnc; }
 
-    public void setPnc(int pnc) { this.pnc = pnc; }
+    public int getPnc() {
+        return pnc;
+    }
 
-    public List<AsignacionDTO> procesarLista(List<Asignacion> asignaciones){
+    public void setPnc(int pnc) {
+        this.pnc = pnc;
+    }
+
+    public int getEmpresaId() {
+        return empresaId;
+    }
+
+    public void setEmpresaId(int empresaId) {
+        this.empresaId = empresaId;
+    }
+
+    public List<AsignacionDTO> procesarLista(List<Asignacion> asignaciones) {
         List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
-        for(Asignacion a:asignaciones){
+        for (Asignacion a : asignaciones) {
             result.add(a.darDTO());
         }
         return result;
