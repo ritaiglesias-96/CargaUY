@@ -32,6 +32,8 @@ public class EmpresaDTO {
         if (!e.getVehiculos().isEmpty()) {
             System.out.println("no p v");
             this.vehiculos = procesarLista(e.getVehiculos());
+        }if (e.getChoferes() != null) {
+            this.choferes = procesarChoferes(e.getChoferes());
         }
         if (!e.getChoferes().isEmpty()) {
             System.out.println("no p c");
