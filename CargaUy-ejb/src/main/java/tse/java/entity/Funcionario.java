@@ -17,7 +17,7 @@ public class Funcionario extends Ciudadano implements Serializable{
         super();
     }
 
-    public Funcionario(String email, Integer cedula) {
+    public Funcionario(String email, String cedula) {
         super(email, cedula, RolCiudadano.FUNCIONARIO);
     }
 

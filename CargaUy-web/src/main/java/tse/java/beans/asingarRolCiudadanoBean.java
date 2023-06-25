@@ -51,8 +51,8 @@ public class asingarRolCiudadanoBean {
         listaCiudadanos.sort(Comparator.comparing(CiudadanoDTO::getCedula));
     }
 
-    public void onRowEdit(RowEditEvent<CiudadanoDTO> event) throws IOException {
-        CiudadanoDTO dtr = event.getObject();
+    public void onRowEdit(RowEditEvent<CiudadanoDTO> evegetCedulant) throws IOException {
+        CiudadanoDTO dtr = evegetCedulant.getObject();
         String msg = "Me pasaron para modificar el ciudadano con id " + dtr.getIdCiudadano() + " con el documento " + dtr.getCedula();
         Logger.getLogger(asingarRolCiudadanoBean.class.getName()).log(Level.INFO, msg);
         Ciudadano c = ciudadanoDAO.buscarCiudadanoPorId(dtr.getIdCiudadano());
@@ -61,7 +61,7 @@ public class asingarRolCiudadanoBean {
             if((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario))
                 ciudadanosService.eliminarHijoCiudadano(c.getIdCiudadano());
             else
-                ciudadanosService.eliminarCiudadano(c.getCedula());
+                ciudadanosService.eliminarCiudadano(c.getIdCiudadano());
             ciudadanosService.agregarHijoCiudadano(ch);
             recargarPagina();
         } else if(rol.equals("Responsable") && !(c instanceof Responsable)){

@@ -65,25 +65,25 @@ public class GubUyService implements IGubUyService {
         String token = tokens.getString("id_token");
         Map<String, Claim> tokenDecodeado = decodeToken(token);
         String cedulaSucia = tokenDecodeado.get("numero_documento").toString();
-        String cedulaLimpia =cedulaSucia.replace("\"", "");
-        Integer cedula = Integer.parseInt(cedulaLimpia);
+        String cedula = cedulaSucia.replace("\"", "");
+//        Integer cedula = Integer.parseInt(cedulaLimpia);
         System.out.println(cedula);
         Ciudadano ciudadano = ciudadanosService.obtenerCiudadanoPorCedula(cedula);
         System.out.println("LLEGA ACA A A A A");
-        if(ciudadano.getCedula()!=null){
+        if(ciudadano != null){
             System.out.println("LLEGA A LINEA 72 ciudadano existente: " + ciudadano.getCedula());
             return crearUsuarioJWT(ciudadano);
         }else{
             System.out.println("Linea 77");
             String email = tokenDecodeado.get("email").asString();
             System.out.println("Linea 79");
-            ciudadano= new Ciudadano(email,cedula,null);
+            Ciudadano ciudadanoNuevo = new Ciudadano(email,cedula,null);
             System.out.println("Linea 81");
-            ciudadanosService.agregarCiudadano(ciudadano);
+            ciudadanosService.agregarCiudadano(ciudadanoNuevo);
             System.out.println("Linea 83");
            // ciudadano  = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
-            System.out.println("cedula ciudadano: " + ciudadano.getCedula());
-            return crearUsuarioJWT(ciudadano);
+            System.out.println("cedula ciudadano: " + ciudadanoNuevo.getCedula());
+            return crearUsuarioJWT(ciudadanoNuevo);
         }
     }
 

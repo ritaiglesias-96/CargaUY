@@ -12,7 +12,6 @@ import java.util.List;
 @Entity
 @Table(name="\"Ciudadano\"")
 public class Ciudadano  implements Serializable {
-
     private static final long serialVersionUID = 3827070902901902553L;
 
     @Id
@@ -21,7 +20,7 @@ public class Ciudadano  implements Serializable {
     private int idCiudadano;
     private String email;
     @Column(unique = true)
-    private Integer cedula;
+    private String cedula;
 
 
     @Column (name = "rol" ,nullable = true)
@@ -32,7 +31,7 @@ public class Ciudadano  implements Serializable {
         super();
     }
 
-    public Ciudadano(String email, Integer cedula, RolCiudadano rol) {
+    public Ciudadano(String email, String cedula, RolCiudadano rol) {
         super();
         this.email = email;
         this.cedula = cedula;
@@ -58,11 +57,11 @@ public class Ciudadano  implements Serializable {
         this.email = email;
     }
 
-    public Integer getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
-    public void setCedula(Integer cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 

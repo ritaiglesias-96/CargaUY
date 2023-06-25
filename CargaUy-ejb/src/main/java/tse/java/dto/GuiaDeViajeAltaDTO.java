@@ -6,9 +6,9 @@ public class GuiaDeViajeAltaDTO{
     private float volumenCarga;
     private String origen, destino, paisVehiculo, matriculaVehiculo;
     private int numeroEmpresa;
-    private Integer cedulaChofer;
+    private String cedulaChofer;
 
-    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String paisVehiculo, String matriculaVehiculo, Integer cedulaChofer, int numeroEmpresa) {
+    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String paisVehiculo, String matriculaVehiculo, String cedulaChofer, int numeroEmpresa) {
         this.rubroCliente = rubroCliente;
         this.tipoCarga = tipoCarga;
         this.volumenCarga = volumenCarga;
@@ -39,11 +39,11 @@ public class GuiaDeViajeAltaDTO{
         this.matriculaVehiculo = matriculaVehiculo;
     }
 
-    public Integer getCedulaChofer() {
+    public String getCedulaChofer() {
         return cedulaChofer;
     }
 
-    public void setCedulaChofer(Integer cedulaChofer) {
+    public void setCedulaChofer(String cedulaChofer) {
         this.cedulaChofer = cedulaChofer;
     }
 

@@ -26,7 +26,7 @@ public class Responsable extends Ciudadano implements Serializable {
         this.empresa = empresa;
     }
 
-    public Responsable(String email, Integer cedula) {
+    public Responsable(String email, String cedula) {
         super(email, cedula, RolCiudadano.RESPONSABLE);
     }
 

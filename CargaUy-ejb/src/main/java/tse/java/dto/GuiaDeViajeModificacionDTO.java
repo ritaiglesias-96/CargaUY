@@ -6,7 +6,7 @@ public class GuiaDeViajeModificacionDTO extends GuiaDeViajeAltaDTO{
 
     public GuiaDeViajeModificacionDTO(){}
 
-    public GuiaDeViajeModificacionDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String paisVehiculo, String matriculaVehiculo, Integer cedulaChofer, int numeroEmpresa, int numeroViaje) {
+    public GuiaDeViajeModificacionDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String paisVehiculo, String matriculaVehiculo, String cedulaChofer, int numeroEmpresa, int numeroViaje) {
         super(rubroCliente, tipoCarga, volumenCarga, origen, destino, paisVehiculo, matriculaVehiculo, cedulaChofer, numeroEmpresa);
         this.numeroViaje = numeroViaje;
     }
