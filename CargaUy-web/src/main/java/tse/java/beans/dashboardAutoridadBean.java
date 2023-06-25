@@ -19,11 +19,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Named("dashboardBean")
@@ -82,6 +81,7 @@ public class dashboardAutoridadBean implements Serializable {
         model.addColumn(column2);
         model.addColumn(column3);
         guias = guiaDeViajesService.listarGuiasDeViajes();
+        guias.sort(Comparator.comparing(GuiaDeViajeDTO::getNumero));
         inicializarArrayFiltros();
         crearGraficoTipoCarga();
         crearGraficoRubros();
@@ -162,8 +162,6 @@ public class dashboardAutoridadBean implements Serializable {
             }
         }
     }
-
-
 
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);

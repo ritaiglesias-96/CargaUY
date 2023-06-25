@@ -55,11 +55,19 @@
                     <p:chart type="pie" model="#{dashboardBean.graficoRubro}" style="width:400px;height:300px"/>
                 </p:panel>
                 <p:panel id="tablaguias" header="Tabla de guias" style="width: 1200px;">
-                    <p:dataTable value="#{dashboardBean.getGuias()}" var="guia" editable="false" widgetVar="tablaGuias">
-                        <p:column headerText="Numero" sortBy="#{guia.numero}">
+                    <p:dataTable id="tablaDeGuias" value="#{dashboardBean.getGuias()}" var="guia" editable="false" widgetVar="tablaGuias"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginator="true" rows="5" styleClass="mt-2">
+                        <p:column sortBy="#{guia.numero}">
+                            <f:facet name="header">
+                                <h:outputText value="Numero" />
+                            </f:facet>
                             <h:outputText value="#{guia.numero}" />
                         </p:column>
-                        <p:column field="rubroCliente" headerText="Rubro" filterMatchMode="exact">
+                        <p:column field="rubroCliente" filterMatchMode="exact">
+                            <f:facet name="header">
+                                <h:outputText value="Rubro" />
+                            </f:facet>
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('tablaGuias').filter()" styleClass="ui-custom-filter">
                                     <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
@@ -68,7 +76,10 @@
                             </f:facet>
                             <h:outputText value="#{guia.rubroCliente}" />
                         </p:column>
-                        <p:column field="tipoCarga" headerText="Tipo carga" filterMatchMode="exact">
+                        <p:column field="tipoCarga" filterMatchMode="exact">
+                            <f:facet name="header">
+                                <h:outputText value="Tipo Carga" />
+                            </f:facet>
                             <f:facet name="filter">
                                 <p:selectOneMenu onchange="PF('tablaGuias').filter()" styleClass="ui-custom-filter">
                                     <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
@@ -77,22 +88,40 @@
                             </f:facet>
                             <h:outputText value="#{guia.tipoCarga}" />
                         </p:column>
-                        <p:column field="fecha" headerText="Fecha" filterMatchMode="exact">
+                        <p:column field="fecha" filterMatchMode="exact">
+                            <f:facet name="header">
+                                <h:outputText value="Fecha" />
+                            </f:facet>
                             <f:facet name="filter">
                                 <p:datePicker onchange="PF('tablaGuias').filter()" styleClass="ui-custom-filter"/>
                             </f:facet>
                             <h:outputText value="#{guia.fecha}" />
                         </p:column>
-                        <p:column headerText="Origen">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Origen" />
+                            </f:facet>
                             <h:outputText value="#{guia.origen}" />
                         </p:column>
-                        <p:column headerText="Destino">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Destino" />
+                            </f:facet>
                             <h:outputText value="#{guia.destino}" />
                         </p:column>
-                        <p:column headerText="Estado">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Estado" />
+                            </f:facet>
                             <h:outputText value="#{guia.inicio eq null ? 'PENDIENTE' : (guia.fin eq null ? 'INICIADO' : 'FINALIZADO')}" />
                         </p:column>
                     </p:dataTable>
+                    <p:commandButton value="XLS" styleClass="ui-button-success" ajax="false" style="margin-right: 10px">
+                        <p:dataExporter type="xls" target="tablaDeGuias" fileName="guias" pageOnly="true"/>
+                    </p:commandButton>
+                    <p:commandButton value="PDF" styleClass="ui-button-danger" ajax="false">
+                        <p:dataExporter type="pdf" target="tablaDeGuias" fileName="guias" pageOnly="true"/>
+                    </p:commandButton>
                 </p:panel>
             </p:dashboard>
         </h:form>
