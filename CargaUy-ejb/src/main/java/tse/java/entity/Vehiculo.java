@@ -31,7 +31,6 @@ public class Vehiculo implements Serializable {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
     @ManyToOne
-    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
 

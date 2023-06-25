@@ -14,10 +14,6 @@ import java.util.List;
 public class Chofer extends Ciudadano implements Serializable {
 
     private static final long serialVersionUID = 3827070902901902553L;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "empresa_id", nullable = true)
-    private List<Empresa> empresas;
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
 
@@ -33,6 +29,13 @@ public class Chofer extends Ciudadano implements Serializable {
     public Chofer(String email, String cedula, List<Asignacion> asignaciones) {
         super(email, cedula, RolCiudadano.CHOFER);
         this.asignaciones = asignaciones;
+    }
+
+    public Chofer(ChoferDTO c) {
+        super(c.getEmail(), c.getCedula(), c.getRol());
+        for(AsignacionDTO a:c.getAsignaciones()){
+            this.asignaciones.add(new Asignacion(a));
+        }
     }
 
     public List<Asignacion> getAsignaciones() {
@@ -52,11 +55,5 @@ public class Chofer extends Ciudadano implements Serializable {
     public ChoferDTO darDTO(){
         return new ChoferDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(), RolCiudadano.CHOFER, procesarListaAsignaciones(this.getAsignaciones()));
     }
-    public List<Empresa> getEmpresas() {
-        return empresas;
-    }
 
-    public void setEmpresas(List<Empresa> empresas) {
-        this.empresas = empresas;
-    }
 }

@@ -53,7 +53,8 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
             v.getAsignaciones().removeIf(a -> Objects.equals(a.getGuia(), gv));
             em.merge(v);
         }
-        for(Chofer c:e.getChoferes()){
+        for(Chofer cID:e.getChoferes()){
+            Chofer c = em.find(Chofer.class, cID);
             c.getAsignaciones().removeIf(a -> Objects.equals(a.getGuia(), gv));
             em.merge(c);
         }

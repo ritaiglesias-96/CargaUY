@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tse.java.entity.Asignacion;
+import tse.java.entity.Chofer;
 import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
 
@@ -17,6 +18,8 @@ public class EmpresaDTO {
 
     private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
 
+    private List<ChoferDTO> choferes = new ArrayList<>();
+
     public EmpresaDTO() {
     }
 
@@ -28,6 +31,8 @@ public class EmpresaDTO {
         this.dirPrincipal = e.getDirPrincipal();
         if (e.getVehiculos() != null) {
             this.vehiculos = procesarLista(e.getVehiculos());
+        }if (e.getChoferes() != null) {
+            this.choferes = procesarChoferes(e.getChoferes());
         }
         this.asignaciones = procesarListaAsignaciones(e.getAsignaciones());
     }
@@ -100,10 +105,27 @@ public class EmpresaDTO {
         this.asignaciones = asignaciones;
     }
 
+
+    public List<ChoferDTO> getChoferes() {
+        return choferes;
+    }
+
+    public void setChoferes(List<ChoferDTO> choferes) {
+        this.choferes = choferes;
+    }
+
     public List<VehiculoDTO> procesarLista(List<Vehiculo> vehiculos) {
         List<VehiculoDTO> result = new ArrayList<VehiculoDTO>();
         for (Vehiculo v : vehiculos) {
             result.add(new VehiculoDTO(v));
+        }
+        return result;
+    }
+
+    public List<ChoferDTO> procesarChoferes(List<Chofer> choferes) {
+        List<ChoferDTO> result = new ArrayList<>();
+        for (Chofer c:choferes){
+            result.add(c.darDTO());
         }
         return result;
     }

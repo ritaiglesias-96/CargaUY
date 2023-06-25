@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tse.java.dto.AsignacionDTO;
+import tse.java.dto.ChoferDTO;
 import tse.java.dto.EmpresaDTO;
 import tse.java.dto.VehiculoDTO;
 
@@ -16,7 +17,7 @@ public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nombrePublico;
     private String razonSocial;
@@ -31,13 +32,12 @@ public class Empresa implements Serializable {
     private List<Vehiculo> vehiculos = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "chofer_id", nullable = true)
-    private List<Chofer> choferes;
+    private List<Chofer> choferes= new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
 
-    public Empresa(){
+    public Empresa() {
 
     }
 
@@ -56,7 +56,7 @@ public class Empresa implements Serializable {
         this.dirPrincipal = dirPrincipal;
     }
 
-    public Empresa(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal, Responsable responsable, List<Vehiculo> vehiculos, List<Asignacion> asignaciones) {
+    public Empresa(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal, Responsable responsable, List<Vehiculo> vehiculos, List<Asignacion> asignaciones, List<Chofer> choferes) {
         this.id = id;
         this.nombrePublico = nombrePublico;
         this.razonSocial = razonSocial;
@@ -65,21 +65,27 @@ public class Empresa implements Serializable {
         this.responsable = responsable;
         this.vehiculos = vehiculos;
         this.asignaciones = asignaciones;
+        this.choferes = choferes;
     }
 
-    public Empresa(EmpresaDTO e){
+    public Empresa(EmpresaDTO e) {
         this.id = e.getId();
         this.nombrePublico = e.getNombrePublico();
         this.razonSocial = e.getRazonSocial();
         this.nroEmpresa = e.getNroEmpresa();
         this.dirPrincipal = e.getDirPrincipal();
 
-        if(!e.getAsignaciones().isEmpty()) {
+        if (!e.getAsignaciones().isEmpty()) {
             for (AsignacionDTO a : e.getAsignaciones()) {
                 this.asignaciones.add(new Asignacion(a));
             }
         }
-        if(!e.getVehiculos().isEmpty()) {
+        if (!e.getChoferes().isEmpty()) {
+            for (ChoferDTO c:e.getChoferes()) {
+                this.choferes.add(new Chofer(c));
+            }
+        }
+        if (!e.getVehiculos().isEmpty()) {
             for (VehiculoDTO v : e.getVehiculos()) {
                 this.vehiculos.add(new Vehiculo(v));
             }
@@ -134,6 +140,7 @@ public class Empresa implements Serializable {
     public void setVehiculos(List<Vehiculo> vehiculos) {
         this.vehiculos = vehiculos;
     }
+
     public Responsable getResponsable() {
         return responsable;
     }
@@ -158,12 +165,4 @@ public class Empresa implements Serializable {
         this.choferes = choferes;
     }
 
-    public List<Asignacion> procesarListaAsignaciones(List<AsignacionDTO> asignaciones){
-        List<Asignacion> result = new ArrayList<Asignacion>();
-        for(AsignacionDTO a : asignaciones){
-            Asignacion anew = new Asignacion(a);
-            result.add(anew);
-        }
-        return result;
-    }
 }
