@@ -23,7 +23,6 @@ public class Ciudadano  implements Serializable {
     @Column(unique = true)
     private String cedula;
 
-
     @Column (name = "rol" ,nullable = true)
     private RolCiudadano rol;
 

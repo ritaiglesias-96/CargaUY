@@ -78,12 +78,11 @@ public class gestionEmpresasEndpoint {
 
     @DELETE
     @Path("/{id}")
-    public Response eliminarEmpresa(Empresa empresa, @PathParam("id")int id){
+    public Response eliminarEmpresa(@PathParam("id")int id){
         try{
-            EmpresaDTO empresaDTO = new EmpresaDTO(empresa);
-            empresaDTO.setId(id);
+            EmpresaDTO empresaDTO = empresasService.obtenerEmpresa(id);
             empresasService.eliminarEmpresa(empresaDTO);
-            return Response.status(Response.Status.OK).entity(empresa).build();
+            return Response.status(Response.Status.OK).build();
         } catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }

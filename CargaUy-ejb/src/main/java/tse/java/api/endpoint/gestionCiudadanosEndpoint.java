@@ -5,6 +5,7 @@ import tse.java.entity.*;
 import tse.java.enumerated.RolCiudadano;
 import tse.java.model.Ciudadanos;
 import tse.java.service.ICiudadanosService;
+import tse.java.service.IEmpresasService;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -21,6 +22,9 @@ public class gestionCiudadanosEndpoint {
 
     @EJB
     ICiudadanosService ciudadanosService;
+
+    @EJB
+    IEmpresasService empresasService;
 
     @GET
     public Response getCiudadanos(){
@@ -206,9 +210,9 @@ public class gestionCiudadanosEndpoint {
     }
     @DELETE
     @Path("/chofer/empresa/{id}/{empresa_id}")
-    public Response eliminarEmpresaChofer(Empresa empresa, @PathParam("id")int id,@PathParam("empresa_id") int empresaId ){
+    public Response eliminarEmpresaChofer(@PathParam("id")int id,@PathParam("empresa_id") int empresaId ){
         try{
-            empresa.setId(empresaId);
+            Empresa empresa = new Empresa(empresasService.obtenerEmpresa(empresaId));
             ciudadanosService.eliminarEmpresaChofer(id, empresa);
             return Response.status(Response.Status.OK).entity(empresa).build();
         } catch (Exception e) {

@@ -12,7 +12,7 @@ import tse.java.dto.PesajeDTO;
 public interface IGuiaDeViajesService {
 
     public void crearGuiaDeViaje(GuiaDeViajeDTO g);
-    public void borrarGuiaDeViaje(Long id);
+    public void borrarGuiaDeViaje(Long id, int idEmpresa);
     public void modificarGuiaDeViaje(GuiaDeViajeDTO g);
     public List<GuiaDeViajeDTO> listarGuiasDeViajes();
     public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha);

@@ -3,18 +3,16 @@ package tse.java.persistance.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import tse.java.dto.EmpresaDTO;
 import tse.java.dto.GuiaDeViajeDTO;
-import tse.java.dto.PesajeDTO;
-import tse.java.entity.Asignacion;
-import tse.java.entity.GuiaDeViaje;
-import tse.java.entity.Pesaje;
-import tse.java.entity.Rubro;
+import tse.java.entity.*;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -48,8 +46,19 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
     }
 
     @Override
-    public void borrarGuiaDeViaje(Long id) {
+    public void borrarGuiaDeViaje(Long id, int idEmpresa) {
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, id);
+        Empresa e = em.find(Empresa.class, idEmpresa);
+        for (Vehiculo v: e.getVehiculos()){
+            v.getAsignaciones().removeIf(a -> Objects.equals(a.getGuia(), gv));
+            em.merge(v);
+        }
+        for(Chofer c:e.getChoferes()){
+            c.getAsignaciones().removeIf(a -> Objects.equals(a.getGuia(), gv));
+            em.merge(c);
+        }
+        e.getAsignaciones().removeIf(a -> Objects.equals(a.getGuia(), gv));
+        em.merge(e);
         em.remove(gv);
     }
 

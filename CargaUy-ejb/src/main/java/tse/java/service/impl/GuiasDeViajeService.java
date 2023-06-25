@@ -46,14 +46,9 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     }
 
     @Override
-    public void borrarGuiaDeViaje(Long id) {
+    public void borrarGuiaDeViaje(Long id, int idEmpresa) {
         GuiaDeViaje g = guiaviajeDao.buscarGuiaDeViaje(id);
-        List<Pesaje> pesajes = g.getPesajes();
-        g.setPesajes(new ArrayList<Pesaje>());
-        guiaviajeDao.modificarGuiaDeViaje(g.darDto());
-        for(Pesaje p:pesajes)
-            pesajesDAO.borrarPesaje(p.getId());
-        guiaviajeDao.borrarGuiaDeViaje(id);
+        guiaviajeDao.borrarGuiaDeViaje(id, idEmpresa);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class Asignacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private GuiaDeViaje guia;
 
     private LocalDateTime fechaCambio;

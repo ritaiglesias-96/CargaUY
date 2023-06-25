@@ -51,7 +51,6 @@ public class ResponsableDAO implements IResponsableDAO {
     @Override
     public void asignarEmpresa(int id, Empresa empresa) {
          Responsable responsable = em.find(Responsable.class, id);
-         System.out.println(empresa.getId());
          Empresa empresa1 = em.find(Empresa.class, empresa.getId());
          responsable.setEmpresa(empresa1);
          empresa1.setResponsable(responsable);

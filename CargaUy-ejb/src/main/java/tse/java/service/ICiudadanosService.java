@@ -24,10 +24,7 @@ public interface ICiudadanosService {
 
     public void asingarViajeChofer(int chofer_id, Asignacion a);
 
-   // public void asingarViajeResponsable(int responsable_id, Asignacion a);
-
     public boolean contieneGuiaViajeChofer(String cedula_chofer, int numero_viaje);
 
-  //  public boolean contieneGuiaViajeResponsable(String cedula_responsable, int numero_viaje);
-    public void borrarGuia(int numero_guia);
+    void borrarGuia(int numeroViaje, int idEmpresa);
 }

@@ -22,22 +22,18 @@ public class EmpresasDAO implements IEmpresasDAO {
     @Override
     public EmpresaDTO obtenerEmpresaPorId(int id) {
         Empresa e = em.find(Empresa.class, id);
-        if(e != null){
+        if (e != null) {
             return new EmpresaDTO(e);
-        }else {
+        } else {
             return null;
         }
     }
 
     @Override
     public ArrayList<EmpresaDTO> obtenerEmpresas() {
-
         Query q = em.createNativeQuery("select * from public.\"Empresa\"", Empresa.class);
-
         List<Empresa> retorno = q.getResultList();
-
         ArrayList<EmpresaDTO> ret = new ArrayList<>();
-
         retorno.forEach(e -> ret.add(new EmpresaDTO(e)));
         return ret;
     }
@@ -59,10 +55,7 @@ public class EmpresasDAO implements IEmpresasDAO {
     @Override
     public void eliminarEmpresa(EmpresaDTO empresaDTO) {
         Empresa e = em.find(Empresa.class, empresaDTO.getId());
-        if (e != null) {
-            em.remove(e);
-        }
-
+        em.remove(e);
     }
 
     @Override

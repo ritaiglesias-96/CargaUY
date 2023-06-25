@@ -37,7 +37,7 @@ public class GuiaDeViaje {
 
     private String destino;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
     private List<Pesaje> pesajes = new ArrayList<Pesaje>();
 
     public GuiaDeViaje(Long id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<Pesaje> pesajes) {

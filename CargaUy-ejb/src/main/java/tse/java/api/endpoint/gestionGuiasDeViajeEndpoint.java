@@ -48,9 +48,6 @@ public class gestionGuiasDeViajeEndpoint {
     IChoferDAO choferDAO;
 
     @EJB
-    IResponsableDAO responsableDAO;
-
-    @EJB
     ICiudadanosService ciudadanosService;
 
     @EJB
@@ -280,11 +277,11 @@ public class gestionGuiasDeViajeEndpoint {
         if(e == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + numeroEmpresa).build();
         }
-        vehiculosService.borrarGuia(numeroViaje);
-        ciudadanosService.borrarGuia(numeroViaje);
-        empresasService.borrarGuia(numeroViaje);
-        asignacionesService.borrarGuiaEnAsignacion(numeroViaje);
-        guiaDeViajesService.borrarGuiaDeViaje(g.getId());
+//        vehiculosService.borrarGuia(numeroViaje);
+//        ciudadanosService.borrarGuia(numeroViaje, numeroEmpresa);
+//        empresasService.borrarGuia(numeroViaje);
+//        asignacionesService.borrarGuiaEnAsignacion(numeroViaje);
+        guiaDeViajesService.borrarGuiaDeViaje(g.getId(), e.getId());
         return Response.status(Response.Status.OK).build();
     }
 }

@@ -29,7 +29,10 @@ public class Empresa implements Serializable {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Vehiculo> vehiculos = new ArrayList<>();
-    /* private ArrayList<Choferes> choferes TODO */
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "chofer_id", nullable = true)
+    private List<Chofer> choferes;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
@@ -145,6 +148,14 @@ public class Empresa implements Serializable {
 
     public void setAsignaciones(List<Asignacion> asignaciones) {
         this.asignaciones = asignaciones;
+    }
+
+    public List<Chofer> getChoferes() {
+        return choferes;
+    }
+
+    public void setChoferes(List<Chofer> choferes) {
+        this.choferes = choferes;
     }
 
     public List<Asignacion> procesarListaAsignaciones(List<AsignacionDTO> asignaciones){
