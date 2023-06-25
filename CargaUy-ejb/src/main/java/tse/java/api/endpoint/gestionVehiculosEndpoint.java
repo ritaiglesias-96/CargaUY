@@ -15,6 +15,7 @@ import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @RequestScoped
 @Path("/vehiculos")
@@ -46,7 +47,7 @@ public class gestionVehiculosEndpoint {
     @GET
     public Response getVehiculos(){
         try{
-            Vehiculos vehiculos = vs.obtenerVehiculos();
+            List<VehiculoDTO> vehiculos = vs.obtenerVehiculos();
             return Response.status(Response.Status.OK).entity(vehiculos).build();
         }catch (NoResultException e ){
             return Response.status(Response.Status.NOT_FOUND).build();
