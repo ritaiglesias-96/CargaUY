@@ -2,10 +2,15 @@ package tse.java.beans;
 
 import org.primefaces.model.*;
 import org.primefaces.model.chart.PieChartModel;
-import tse.java.dto.DashboardPieChartDTO;
-import tse.java.dto.GuiaDeViajeDTO;
-import tse.java.dto.RubroDTO;
-import tse.java.dto.TipoCargaDTO;
+import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.axes.cartesian.CartesianScales;
+import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
+import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearTicks;
+import org.primefaces.model.charts.line.LineChartDataSet;
+import org.primefaces.model.charts.line.LineChartModel;
+import org.primefaces.model.charts.line.LineChartOptions;
+import org.primefaces.model.charts.optionconfig.title.Title;
+import tse.java.dto.*;
 import tse.java.persistance.ITipoCargaDAO;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IGuiaDeViajesService;
@@ -35,6 +40,8 @@ public class dashboardAutoridadBean implements Serializable {
     private PieChartModel graficoTipoCarga;
 
     private PieChartModel graficoRubro;
+
+    private LineChartModel graficoGuiasDeViaje;
     private List<DashboardPieChartDTO> listadoCargasNew = new ArrayList<DashboardPieChartDTO>();
 
     private List<DashboardPieChartDTO> listadoRubros = new ArrayList<DashboardPieChartDTO>();
@@ -44,8 +51,6 @@ public class dashboardAutoridadBean implements Serializable {
     private List<String> rubros = new ArrayList<String>();
 
     private List<String> tiposCarga = new ArrayList<String>();
-    private List<FilterMeta> filterBy;
-
 
     @EJB
     IVehiculosService vehiculosService;
@@ -77,6 +82,7 @@ public class dashboardAutoridadBean implements Serializable {
         column1.addWidget("pietipo");
         column3.addWidget("pierubro");
         column1.addWidget("tablaguias");
+        column1.addWidget("lineguias");
         model.addColumn(column1);
         model.addColumn(column2);
         model.addColumn(column3);
@@ -85,11 +91,10 @@ public class dashboardAutoridadBean implements Serializable {
         inicializarArrayFiltros();
         crearGraficoTipoCarga();
         crearGraficoRubros();
+        crearGraficoGuias();
     }
 
-    public LocalDate convertirALocalDate(Date fecha){
-        return fecha.toLocalDate();
-    }
+
 
     private void inicializarArrayFiltros(){
         List<TipoCargaDTO> taux = tipoCargaDAO.listarTipoCarga();
@@ -98,6 +103,50 @@ public class dashboardAutoridadBean implements Serializable {
         List<RubroDTO> raux = rubrosService.listarRubros();
         for(RubroDTO r:raux)
             rubros.add(r.getNombre());
+    }
+
+    private void crearGraficoGuias(){
+        graficoGuiasDeViaje = new LineChartModel();
+        ChartData data = new ChartData();
+        Integer fin = LocalDate.now().getYear();
+        Integer inicio = LocalDate.now().getYear()-4;
+        List<String> categoriasRubros = new ArrayList<String>();
+        for(int i=inicio; i<=fin ; i++){
+            categoriasRubros.add(Integer.toString(i));
+        }
+        for(RubroDTO r : rubrosService.listarRubros()){
+            LineChartDataSet dataSet = new LineChartDataSet();
+            List<Object> values = new ArrayList<>();
+            for(int i=inicio; i<=fin ; i++){
+                values.add(guiaDeViajesService.cantidadViajesPorAnioRubro(i, r.getNombre()));
+            }
+            dataSet.setData(values);
+            dataSet.setFill(false);
+            dataSet.setLabel(r.getNombre());
+            dataSet.setBorderColor("rgb(75, 192, 192)");
+            dataSet.setTension(0.1);
+            data.addChartDataSet(dataSet);
+        }
+        data.setLabels(categoriasRubros);
+
+        //Options
+        LineChartOptions options = new LineChartOptions();
+        Title title = new Title();
+        title.setDisplay(true);
+        title.setText("Cantidad de guias por rubro y año - Últimos 5 años");
+        options.setTitle(title);
+        CartesianScales cScales = new CartesianScales();
+        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
+        linearAxes.setOffset(true);
+        linearAxes.setBeginAtZero(true);
+        linearAxes.setSuggestedMax(5);
+        CartesianLinearTicks ticks = new CartesianLinearTicks();
+        linearAxes.setTicks(ticks);
+        cScales.addYAxesData(linearAxes);
+        options.setScales(cScales);
+
+        graficoGuiasDeViaje.setOptions(options);
+        graficoGuiasDeViaje.setData(data);
     }
 
     private void crearGraficoTipoCarga(){
@@ -233,5 +282,13 @@ public class dashboardAutoridadBean implements Serializable {
 
     public void setTiposCarga(List<String> tiposCarga) {
         this.tiposCarga = tiposCarga;
+    }
+
+    public LineChartModel getGraficoGuiasDeViaje() {
+        return graficoGuiasDeViaje;
+    }
+
+    public void setGraficoGuiasDeViaje(LineChartModel graficoGuiasDeViaje) {
+        this.graficoGuiasDeViaje = graficoGuiasDeViaje;
     }
 }

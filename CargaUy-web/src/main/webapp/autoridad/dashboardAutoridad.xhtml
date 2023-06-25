@@ -116,13 +116,16 @@
                             <h:outputText value="#{guia.inicio eq null ? 'PENDIENTE' : (guia.fin eq null ? 'INICIADO' : 'FINALIZADO')}" />
                         </p:column>
                     </p:dataTable>
-                    <h:outputText value="Exportar listado de guias:" style="margin-right: 10px" />
-                    <p:commandButton value="XLS" styleClass="ui-button-success" ajax="false" style="margin-right: 10px">
+                    <h:outputText value="Exportar listado de guias:" style="margin-right: 10px;margin-top: 5px" />
+                    <p:commandButton value="XLS" styleClass="ui-button-success" ajax="false" style="margin-right: 10px;margin-top: 5px">
                         <p:dataExporter type="xls" target="tablaDeGuias" fileName="guias" pageOnly="true"/>
                     </p:commandButton>
-                    <p:commandButton value="PDF" styleClass="ui-button-danger" ajax="false">
+                    <p:commandButton value="PDF" styleClass="ui-button-danger" ajax="false" style="margin-top: 5px">
                         <p:dataExporter type="pdf" target="tablaDeGuias" fileName="guias" pageOnly="true"/>
                     </p:commandButton>
+                </p:panel>
+                <p:panel id="lineguias" header="Grafico guias" style="width: 1200px;">
+                    <p:lineChart model="#{dashboardBean.graficoGuiasDeViaje}" style="width: 100%; height: 500px;"/>
                 </p:panel>
             </p:dashboard>
         </h:form>
