@@ -17,7 +17,7 @@ public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
     private String nombrePublico;
     private String razonSocial;
@@ -163,6 +163,15 @@ public class Empresa implements Serializable {
 
     public void setChoferes(List<Chofer> choferes) {
         this.choferes = choferes;
+    }
+
+    public List<Asignacion> procesarListaAsignaciones(List<AsignacionDTO> asignaciones){
+        List<Asignacion> result = new ArrayList<Asignacion>();
+        for(AsignacionDTO a : asignaciones){
+            Asignacion anew = new Asignacion(a);
+            result.add(anew);
+        }
+        return result;
     }
 
 }
