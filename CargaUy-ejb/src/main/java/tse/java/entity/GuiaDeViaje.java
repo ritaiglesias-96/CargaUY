@@ -1,9 +1,11 @@
 package tse.java.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
+import javax.ejb.Local;
 import javax.persistence.*;
 
 import tse.java.dto.GuiaDeViajeDTO;
@@ -24,15 +26,12 @@ public class GuiaDeViaje {
 
     private float volumenCarga;
 
-    @Temporal(TemporalType.DATE)
     private Date fecha;
 
     private String origen;
 
-    @Temporal(TemporalType.DATE)
     private Date inicio;
 
-    @Temporal(TemporalType.DATE)
     private Date fin;
 
     private String destino;
@@ -60,10 +59,10 @@ public class GuiaDeViaje {
         this.id = guia.getId();
         this.numero = guia.getNumero();
         this.pesajes = procesarListaPesajes(guia.getPesajes());
-        this.fin = guia.getFin();
+        this.fin = Date.valueOf(guia.getFin());
         this.destino = guia.getDestino();
-        this.fecha = guia.getFecha();
-        this.inicio = guia.getInicio();
+        this.fecha = Date.valueOf(guia.getFecha());
+        this.inicio = Date.valueOf(guia.getInicio());
         this.origen = guia.getOrigen();
         this.rubroCliente = guia.getRubroCliente();
         this.volumenCarga = guia.getVolumenCarga();
@@ -167,7 +166,13 @@ public class GuiaDeViaje {
     }
 
     public GuiaDeViajeDTO darDto(){
-        return new GuiaDeViajeDTO(id, numero, rubroCliente, tipoCarga, volumenCarga, fecha, origen, inicio, fin, destino, procesarLista());
+        LocalDate fechaLD;
+        LocalDate inicioLD;
+        LocalDate finLD;
+        fechaLD = (fecha != null) ? fecha.toLocalDate() :  null;
+        inicioLD = (inicio != null) ? inicio.toLocalDate() :  null;
+        finLD = (fin != null) ? fin.toLocalDate() :  null;
+        return new GuiaDeViajeDTO(id, numero, rubroCliente, tipoCarga, volumenCarga, fechaLD, origen, inicioLD, finLD, destino, procesarLista());
     }
 
     public List<Pesaje> procesarListaPesajes(List<PesajeDTO> pesajes){

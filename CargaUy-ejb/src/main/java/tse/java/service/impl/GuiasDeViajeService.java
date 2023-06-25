@@ -1,6 +1,7 @@
 package tse.java.service.impl;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,8 +74,8 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
         for(GuiaDeViajeDTO g:guiasViaje){
             msg = "Busco la guiaid=" + g.getId();
             Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
-            Date fechaInicioGuia = g.getInicio();
-            if(fecha.after(fechaInicioGuia) && g.getFin()==null) {
+            LocalDate fechaInicioGuia = g.getInicio();
+            if(fecha.after(java.sql.Date.valueOf(fechaInicioGuia)) && g.getFin()==null) {
                 return pesajesService.listarPesajesDeGuia(g, fecha);
             }
         }

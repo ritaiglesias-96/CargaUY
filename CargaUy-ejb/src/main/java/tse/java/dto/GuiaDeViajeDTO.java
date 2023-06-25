@@ -2,6 +2,7 @@ package tse.java.dto;
 
 import tse.java.entity.Pesaje;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,19 +17,19 @@ public class GuiaDeViajeDTO {
 
     private float volumenCarga;
 
-    private Date fecha;
+    private LocalDate fecha;
 
     private String origen;
 
-    private Date inicio;
+    private LocalDate inicio;
 
-    private Date fin;
+    private LocalDate fin;
 
     private String destino;
 
     private List<PesajeDTO> pesajes = new ArrayList<PesajeDTO>();
 
-    public GuiaDeViajeDTO(Long id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<PesajeDTO> pesajes) {
+    public GuiaDeViajeDTO(Long id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, LocalDate fecha, String origen, LocalDate inicio, LocalDate fin, String destino, List<PesajeDTO> pesajes) {
         this.id = id;
         this.numero = numero;
         this.rubroCliente = rubroCliente;
@@ -68,11 +69,11 @@ public class GuiaDeViajeDTO {
         this.volumenCarga = volumenCarga;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -84,19 +85,19 @@ public class GuiaDeViajeDTO {
         this.origen = origen;
     }
 
-    public Date getInicio() {
+    public LocalDate getInicio() {
         return inicio;
     }
 
-    public void setInicio(Date inicio) {
+    public void setInicio(LocalDate inicio) {
         this.inicio = inicio;
     }
 
-    public Date getFin() {
+    public LocalDate getFin() {
         return fin;
     }
 
-    public void setFin(Date fin) {
+    public void setFin(LocalDate fin) {
         this.fin = fin;
     }
 

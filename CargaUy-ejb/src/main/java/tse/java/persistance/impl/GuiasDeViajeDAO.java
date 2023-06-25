@@ -1,6 +1,7 @@
 package tse.java.persistance.impl;
 
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
 
     @Override
     public void altaGuiaDeViaje(GuiaDeViajeDTO dtg) {
-        GuiaDeViaje g = new GuiaDeViaje(dtg.getId(), dtg.getNumero(), dtg.getRubroCliente(), dtg.getTipoCarga(),dtg.getVolumenCarga(), dtg.getFecha(), dtg.getOrigen(), dtg.getInicio(), dtg.getFin(), dtg.getDestino(), new ArrayList<Pesaje>());
+        GuiaDeViaje g = new GuiaDeViaje(dtg.getId(), dtg.getNumero(), dtg.getRubroCliente(), dtg.getTipoCarga(),dtg.getVolumenCarga(),Date.valueOf(dtg.getFecha()), dtg.getOrigen(), Date.valueOf(dtg.getInicio()),Date.valueOf(dtg.getFin()), dtg.getDestino(), new ArrayList<Pesaje>());
         em.persist(g);
     }
 
@@ -57,9 +58,9 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
     public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg) {
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, dtg.getId());
         gv.setDestino(dtg.getDestino());
-        gv.setFecha(dtg.getFecha());
-        gv.setFin(dtg.getFin());
-        gv.setInicio(dtg.getInicio());
+        gv.setFecha(Date.valueOf(dtg.getFecha()));
+        gv.setFin(Date.valueOf(dtg.getFin()));
+        gv.setInicio(Date.valueOf(dtg.getInicio()));
         gv.setOrigen(dtg.getOrigen());
         gv.setRubroCliente(dtg.getRubroCliente());
         gv.setVolumenCarga(dtg.getVolumenCarga());

@@ -127,7 +127,7 @@ public class gestionGuiasDeViajeEndpoint {
         }
 
         int nueva_guia = guiaDeViajeDAO.getNextNumeroViaje();
-        GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(null, nueva_guia, dtalta.getRubroCliente(), dtalta.getTipoCarga(), dtalta.getVolumenCarga(), new Date(), dtalta.getOrigen(), null, null, dtalta.getDestino(), new ArrayList<PesajeDTO>());
+        GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(null, nueva_guia, dtalta.getRubroCliente(), dtalta.getTipoCarga(), dtalta.getVolumenCarga(), LocalDate.now(), dtalta.getOrigen(), null, null, dtalta.getDestino(), new ArrayList<PesajeDTO>());
         guiaDeViajesService.crearGuiaDeViaje(dtguia);
         GuiaDeViajeDTO guiadto = guiaDeViajeDAO.buscarGuiaViajePorNumero(nueva_guia);
         GuiaDeViaje galta = new GuiaDeViaje(guiadto);
@@ -238,7 +238,7 @@ public class gestionGuiasDeViajeEndpoint {
         }
 
         g = guiaDeViajeDAO.buscarGuiaViajePorNumero(g.getNumero());
-        g.setFin(new Date());
+        g.setFin(LocalDate.now());
         guiaDeViajesService.modificarGuiaDeViaje(g);
         return Response.status(Response.Status.OK).build();
     }
@@ -264,7 +264,7 @@ public class gestionGuiasDeViajeEndpoint {
             return Response.status(Response.Status.CONFLICT).entity("El viaje con el identificador " + g.getNumero() + " ya esta inicializado").build();
         }
 
-        g.setInicio(new Date());
+        g.setInicio(LocalDate.now());
         guiaDeViajesService.modificarGuiaDeViaje(g);
         return Response.status(Response.Status.OK).build();
     }
