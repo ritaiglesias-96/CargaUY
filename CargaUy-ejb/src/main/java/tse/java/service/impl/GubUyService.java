@@ -51,7 +51,7 @@ public class GubUyService implements IGubUyService {
             url += "&client_id=" +"890192";
             url += "&state=" + randomState;
             url += "&redirect_uri=" + URLEncoder.encode("https://carga-uy-13.web.elasticloud.uy/CargaUy-web/api/gubuy/tokens", StandardCharsets.UTF_8.toString());
-
+            //url += "&redirect_uri=" + URLEncoder.encode("https://openidconnect.net/callback", StandardCharsets.UTF_8.toString());
             return url;
         } catch (UnsupportedEncodingException e) {
             System.out.println("hola");
@@ -69,19 +69,21 @@ public class GubUyService implements IGubUyService {
         Integer cedula = Integer.parseInt(cedulaLimpia);
         System.out.println(cedula);
         Ciudadano ciudadano = ciudadanosService.obtenerCiudadanoPorCedula(cedula);
-        System.out.println("LLEGA A LINEA 72");
-        if(ciudadano!=null){
+        System.out.println("LLEGA ACA A A A A");
+        if(ciudadano.getCedula()!=null){
+            System.out.println("LLEGA A LINEA 72 ciudadano existente: " + ciudadano.getCedula());
             return crearUsuarioJWT(ciudadano);
         }else{
+            System.out.println("Linea 77");
             String email = tokenDecodeado.get("email").asString();
-            Ciudadano ciudadanoaux = new Ciudadano(email,cedula,null);
-            System.out.println("LLEGA A LINEA 78 CIUDADANO : " + ciudadanoaux);
-            System.out.println("CEDULA  : " + ciudadanoaux.getCedula());
-            ciudadanosService.agregarCiudadano(ciudadanoaux);
-            System.out.println("HA LLEGADO?");
-            Ciudadano ciudadano2  = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
-            System.out.println("cedula ciudadano: " + ciudadano2.getCedula());
-            return crearUsuarioJWT(ciudadano2);
+            System.out.println("Linea 79");
+            ciudadano= new Ciudadano(email,cedula,null);
+            System.out.println("Linea 81");
+            ciudadanosService.agregarCiudadano(ciudadano);
+            System.out.println("Linea 83");
+           // ciudadano  = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
+            System.out.println("cedula ciudadano: " + ciudadano.getCedula());
+            return crearUsuarioJWT(ciudadano);
         }
     }
 
@@ -89,27 +91,6 @@ public class GubUyService implements IGubUyService {
     public String agarrarUrl(Response r) throws IOException {
         return r.body().string();
     }
-
-   /* private String getCodeState(String url){
-        OkHttpClient httpClient = new OkHttpClient();
-
-        RequestBody requestBody = new FormBody.Builder()
-                .add("grant_type", "authorization_code")
-                .add("code", accessCode)
-                .add("redirect_uri", "https://openidconnect.net/callback")
-                .build();
-
-        Request request = new Request.Builder()
-                .url("https://auth-testing.iduruguay.gub.uy/oidc/v1/token")//TODO VER COMO PONER ESTO EN OTRO LADO
-                .addHeader("Authorization", "Basic " + Base64.getUrlDecoder().decode(CLIENT_ID + ":" + CLIENT_SECRET))
-                .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                .addHeader("Accept", "application/json")
-                .post(requestBody)
-                .build();
-
-        Response response = httpClient.newCall(request).execute();
-        String responseData = response.body().string();
-    }*/
 
     private JSONObject getTokens(String accessCode){
         String credentials = CLIENT_ID + ":" + CLIENT_SECRET;
@@ -125,6 +106,7 @@ public class GubUyService implements IGubUyService {
                     .add("grant_type", "authorization_code")
                     .add("code", accessCode)
                     .add("redirect_uri", "https://carga-uy-13.web.elasticloud.uy/CargaUy-web/") //TODO cambiar redirect uri
+                  // .add("redirect_uri", "https://openidconnect.net/callback")
                     .build();
 
             Request request = new Request.Builder()
@@ -173,17 +155,16 @@ public class GubUyService implements IGubUyService {
     }
     private String crearUsuarioJWT(Ciudadano ciudadano) {
         int expireTimeMinutes = 30;
-        System.out.println("LLEGA A LINEA 171");
-        System.out.println("id: "+ ciudadano);
+        System.out.println("Entra al crear usuario JWT");
         try {
             Algorithm alg = Algorithm.HMAC256("key");
             JWTCreator.Builder jwt = JWT.create()
 //					.withIssuer("")
                     .withIssuedAt(new Date())//Se pasa la date actual para controlar la vigencia del usuario
+                    .withClaim("id", ciudadano.getIdCiudadano())
                     .withClaim("cedula", ciudadano.getCedula())
                     .withClaim("email", ciudadano.getEmail());
-            System.out.println(jwt);
-
+            System.out.println("Crea el jwt  ? ? ?  ?");
             if(ciudadano.getRol()!=null){
                 jwt.withClaim("rol", ciudadano.getRol().toString());
             }else{
@@ -193,7 +174,6 @@ public class GubUyService implements IGubUyService {
             long expireTime = (new Date().getTime()) + (60000 * expireTimeMinutes);
             Date expireDate = new Date(expireTime);
             jwt.withExpiresAt(expireDate);
-            System.out.println("Llega a linea 191 final JWT : " +jwt.sign(alg));
             return jwt.sign(alg);
         } catch (IllegalArgumentException e) {
             System.out.println(e);

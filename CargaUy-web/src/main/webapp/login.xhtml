@@ -18,7 +18,7 @@
             <div class="ui-g-12 log">
                 <h:form style="justify-content: flex-end;display: flex;">
                     <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login"
-                                  class="loginButton">
+                                  class="defaultButton">
                         <p>Ingresar</p>
                         <i class="pi pi-sign-in"/>
                     </h:outputLink>
@@ -35,7 +35,7 @@
 
                             <f:facet name="footer">
                                 <p:commandButton value="Ingresar" update="growl" action="#{UserManager.login}"
-                                                 class="loginButton"
+                                                 class="defaultButton"
                                                  oncomplete="handleLoginRequest(xhr, status, args)"/>
                             </f:facet>
                         </h:panelGrid>

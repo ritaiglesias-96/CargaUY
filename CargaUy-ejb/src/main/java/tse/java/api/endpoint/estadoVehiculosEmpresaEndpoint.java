@@ -3,6 +3,8 @@ package tse.java.api.endpoint;
 import tse.java.dto.EmpresaDTO;
 import tse.java.dto.PermisosVehiculoDTO;
 import tse.java.dto.VehiculoDTO;
+import tse.java.entity.Empresa;
+import tse.java.model.Empresas;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IVehiculosService;
 
@@ -38,6 +40,26 @@ public class estadoVehiculosEmpresaEndpoint {
                 permisos.add(p);
             }
             return Response.status(Response.Status.OK).entity(permisos).build();
+        }catch (NoResultException e ){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @GET
+    public Response getTodosVehiculos(){
+        try{
+            List<EmpresaDTO> empresas = es.obtenerEmpresas();
+            for (EmpresaDTO e:empresas) {
+                System.out.println(e.getNroEmpresa());
+            }
+            List<PermisosVehiculoDTO> listaPermisosEmpresas = new ArrayList<>();
+            for(EmpresaDTO e:empresas){
+                for (VehiculoDTO v:e.getVehiculos()){
+                    PermisosVehiculoDTO p = new PermisosVehiculoDTO(v);
+                    listaPermisosEmpresas.add(p);
+                }
+            }
+            return Response.status(Response.Status.OK).entity(listaPermisosEmpresas).build();
         }catch (NoResultException e ){
             return Response.status(Response.Status.NOT_FOUND).build();
         }

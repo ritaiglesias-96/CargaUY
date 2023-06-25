@@ -16,7 +16,7 @@
         <div class="ui-g-12 ui-md-9 ui-g-nopad">
             <div class="ui-g-12">
                 <div style="justify-content: flex-end;display: flex;" class="log">
-                    <p:commandButton action="#{UserManager.logout}" value="Salir" class="loginButton" icon="pi pi-sign-out" />
+                    <p:commandButton action="#{UserManager.logout}" value="Salir" class="defaultButton" icon="pi pi-sign-out" />
                 </div>
             </div>
         </div>
@@ -26,6 +26,7 @@
                     <p:menuitem value="Gestionar usuarios" url="gestionUsuarios.xhtml" icon="pi pi-users"/>
                     <p:menuitem value="Gestionar Rubros" url="gestionRubros.xhtml" icon="pi pi-star"/>
                     <p:menuitem value="Gestionar tipos de carga" url="gestionTipoCarga.xhtml" icon="pi pi-wrench"/>
+                    <p:menuitem value="Gestionar roles de ciudadanos" url="asignarRoles.xhtml" icon="pi pi-user-plus"/>
                 </p:submenu>
             </p:menu>
         </div>
@@ -72,7 +73,7 @@
                             <p:column style="width:6rem">
                                 <p:growl id="message" showDetail="true"/>
                                 <p:commandButton value="Borrar" action="#{gestionarRubrosBean.borrarRubro(rubro)}"
-                                                 update=":form:msgs" styleClass="ui-button-danger" icon="pi pi-times">
+                                                 update=":form:msgs" class="defaultButton"  styleClass="ui-button-danger" icon="pi pi-times">
                                     <p:confirm header="Confirmar" message="Esta seguro de eliminar este Rubro ?"
                                                icon="pi pi-info-circle"/>
                                 </p:commandButton>

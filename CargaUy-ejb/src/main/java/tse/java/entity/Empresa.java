@@ -5,7 +5,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import tse.java.dto.AsignacionDTO;
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.VehiculoDTO;
+
 @Entity
 @Table(name="\"Empresa\"")
 @NamedQuery(name="Empresa.findAll", query="SELECT e FROM Empresa e")
@@ -20,16 +23,17 @@ public class Empresa implements Serializable {
     private int nroEmpresa;
     private String dirPrincipal;
 
-
-
     @OneToOne
-   @JoinColumn(name = "responsable_id", nullable = true)
+    @JoinColumn(name = "responsable_id", nullable = true)
     private Responsable responsable;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Vehiculo> vehiculos = new ArrayList<>();
-    /*private ArrayList<Choferes> choferes
-TODO    */
+    /* private ArrayList<Choferes> choferes TODO */
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
+
     public Empresa(){
 
     }
@@ -49,14 +53,15 @@ TODO    */
         this.dirPrincipal = dirPrincipal;
     }
 
-    public Empresa(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal,
-            ArrayList<Vehiculo> vehiculos) {
+    public Empresa(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal, Responsable responsable, List<Vehiculo> vehiculos, List<Asignacion> asignaciones) {
         this.id = id;
         this.nombrePublico = nombrePublico;
         this.razonSocial = razonSocial;
         this.nroEmpresa = nroEmpresa;
         this.dirPrincipal = dirPrincipal;
+        this.responsable = responsable;
         this.vehiculos = vehiculos;
+        this.asignaciones = asignaciones;
     }
 
     public Empresa(EmpresaDTO e){
@@ -64,7 +69,18 @@ TODO    */
         this.nombrePublico = e.getNombrePublico();
         this.razonSocial = e.getRazonSocial();
         this.nroEmpresa = e.getNroEmpresa();
-        this.dirPrincipal = e.getDirPrincipal() ;
+        this.dirPrincipal = e.getDirPrincipal();
+
+        if(!e.getAsignaciones().isEmpty()) {
+            for (AsignacionDTO a : e.getAsignaciones()) {
+                this.asignaciones.add(new Asignacion(a));
+            }
+        }
+        if(!e.getVehiculos().isEmpty()) {
+            for (VehiculoDTO v : e.getVehiculos()) {
+                this.vehiculos.add(new Vehiculo(v));
+            }
+        }
     }
 
     // Getters y Setters
@@ -123,5 +139,20 @@ TODO    */
         this.responsable = responsable;
     }
 
+    public List<Asignacion> getAsignaciones() {
+        return asignaciones;
+    }
 
+    public void setAsignaciones(List<Asignacion> asignaciones) {
+        this.asignaciones = asignaciones;
+    }
+
+    public List<Asignacion> procesarListaAsignaciones(List<AsignacionDTO> asignaciones){
+        List<Asignacion> result = new ArrayList<Asignacion>();
+        for(AsignacionDTO a : asignaciones){
+            Asignacion anew = new Asignacion(a);
+            result.add(anew);
+        }
+        return result;
+    }
 }

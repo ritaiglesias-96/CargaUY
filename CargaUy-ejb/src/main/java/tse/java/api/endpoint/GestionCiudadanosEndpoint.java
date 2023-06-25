@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 @Path("/ciudadanos")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class gestionCiudadanosEndpoint {
+public class GestionCiudadanosEndpoint {
 
     @EJB
     ICiudadanosService ciudadanosService;
