@@ -116,6 +116,7 @@
                             <h:outputText value="#{guia.inicio eq null ? 'PENDIENTE' : (guia.fin eq null ? 'INICIADO' : 'FINALIZADO')}" />
                         </p:column>
                     </p:dataTable>
+                    <h:outputText value="Exportar listado de guias:" style="margin-right: 10px" />
                     <p:commandButton value="XLS" styleClass="ui-button-success" ajax="false" style="margin-right: 10px">
                         <p:dataExporter type="xls" target="tablaDeGuias" fileName="guias" pageOnly="true"/>
                     </p:commandButton>

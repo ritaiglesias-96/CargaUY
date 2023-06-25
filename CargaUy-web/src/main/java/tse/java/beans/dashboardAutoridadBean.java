@@ -2,7 +2,7 @@ package tse.java.beans;
 
 import org.primefaces.model.*;
 import org.primefaces.model.chart.PieChartModel;
-import tse.java.dto.DashboardDTO;
+import tse.java.dto.DashboardPieChartDTO;
 import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.RubroDTO;
 import tse.java.dto.TipoCargaDTO;
@@ -35,9 +35,9 @@ public class dashboardAutoridadBean implements Serializable {
     private PieChartModel graficoTipoCarga;
 
     private PieChartModel graficoRubro;
-    private List<DashboardDTO> listadoCargasNew = new ArrayList<DashboardDTO>();
+    private List<DashboardPieChartDTO> listadoCargasNew = new ArrayList<DashboardPieChartDTO>();
 
-    private List<DashboardDTO> listadoRubros = new ArrayList<DashboardDTO>();
+    private List<DashboardPieChartDTO> listadoRubros = new ArrayList<DashboardPieChartDTO>();
 
     private List<GuiaDeViajeDTO> guias = new ArrayList<GuiaDeViajeDTO>();
 
@@ -104,7 +104,7 @@ public class dashboardAutoridadBean implements Serializable {
         graficoTipoCarga = new PieChartModel();
 
         for(String t:tiposCarga){
-            DashboardDTO aux = new DashboardDTO(t, 0);
+            DashboardPieChartDTO aux = new DashboardPieChartDTO(t, 0);
             listadoCargasNew.add(aux);
         }
 
@@ -112,8 +112,8 @@ public class dashboardAutoridadBean implements Serializable {
             buscarEnListado(g.getTipoCarga());
         }
 
-        for(DashboardDTO lp:listadoCargasNew){
-            graficoTipoCarga.set(lp.getNombreTipoCarga(),lp.getCantidad());
+        for(DashboardPieChartDTO lp:listadoCargasNew){
+            graficoTipoCarga.set(lp.getNombreItem(),lp.getCantidad());
         }
 
         graficoTipoCarga.setTitle("Cantidad de guias por tipo de carga");
@@ -126,7 +126,7 @@ public class dashboardAutoridadBean implements Serializable {
         graficoRubro = new PieChartModel();
 
         for(String r:rubros){
-            DashboardDTO aux = new DashboardDTO(r, 0);
+            DashboardPieChartDTO aux = new DashboardPieChartDTO(r, 0);
             listadoRubros.add(aux);
         }
 
@@ -134,8 +134,8 @@ public class dashboardAutoridadBean implements Serializable {
             buscarEnListadoRubro(g.getRubroCliente());
         }
 
-        for(DashboardDTO lp:listadoRubros){
-            graficoRubro.set(lp.getNombreTipoCarga(),lp.getCantidad());
+        for(DashboardPieChartDTO lp:listadoRubros){
+            graficoRubro.set(lp.getNombreItem(),lp.getCantidad());
         }
 
         graficoRubro.setTitle("Cantidad de guias por rubro");
@@ -144,8 +144,8 @@ public class dashboardAutoridadBean implements Serializable {
     }
 
     private void buscarEnListado(String tipo){
-        for(DashboardDTO l:listadoCargasNew){
-            if(l.getNombreTipoCarga().equals(tipo)){
+        for(DashboardPieChartDTO l:listadoCargasNew){
+            if(l.getNombreItem().equals(tipo)){
                 int num = l.getCantidad();
                 num+=1;
                 l.setCantidad(num);
@@ -154,8 +154,8 @@ public class dashboardAutoridadBean implements Serializable {
     }
 
     private void buscarEnListadoRubro(String tipo){
-        for(DashboardDTO l:listadoRubros){
-            if(l.getNombreTipoCarga().equals(tipo)){
+        for(DashboardPieChartDTO l:listadoRubros){
+            if(l.getNombreItem().equals(tipo)){
                 int num = l.getCantidad();
                 num+=1;
                 l.setCantidad(num);
