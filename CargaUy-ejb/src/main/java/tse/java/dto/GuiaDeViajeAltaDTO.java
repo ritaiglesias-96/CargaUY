@@ -1,15 +1,13 @@
 package tse.java.dto;
 
-import java.util.Date;
-import java.util.List;
-
 public class GuiaDeViajeAltaDTO{
 
     private String rubroCliente, tipoCarga;
     private float volumenCarga;
-    private String origen, destino, pais_vehiculo, matricula_vehiculo, cedula_chofer, cedula_responsable;
+    private String origen, destino, pais_vehiculo, matricula_vehiculo, cedula_responsable;
+    private Integer cedula_chofer;
 
-    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String pais_vehiculo, String matricula_vehiculo, String cedula_chofer, String cedula_responsable) {
+    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String pais_vehiculo, String matricula_vehiculo, Integer cedula_chofer, String cedula_responsable) {
         this.rubroCliente = rubroCliente;
         this.tipoCarga = tipoCarga;
         this.volumenCarga = volumenCarga;
@@ -39,11 +37,11 @@ public class GuiaDeViajeAltaDTO{
         this.matricula_vehiculo = matricula_vehiculo;
     }
 
-    public String getCedula_chofer() {
+    public Integer getCedula_chofer() {
         return cedula_chofer;
     }
 
-    public void setCedula_chofer(String cedula_chofer) {
+    public void setCedula_chofer(Integer cedula_chofer) {
         this.cedula_chofer = cedula_chofer;
     }
 

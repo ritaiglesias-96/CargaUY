@@ -50,7 +50,7 @@ public class GubUyService implements IGubUyService {
             url += "&scope=openid%20personal_info%20document%20email";
             url += "&client_id=" +"890192";
             url += "&state=" + randomState;
-            url += "&redirect_uri=" + URLEncoder.encode("http://localhost:8080", StandardCharsets.UTF_8.toString());
+            url += "&redirect_uri=" + URLEncoder.encode("https://carga-uy-13.web.elasticloud.uy/CargaUy-web/api/gubuy/tokens", StandardCharsets.UTF_8.toString());
 
             return url;
         } catch (UnsupportedEncodingException e) {
@@ -64,13 +64,25 @@ public class GubUyService implements IGubUyService {
         JSONObject tokens = getTokens(accessCode);
         String token = tokens.getString("id_token");
         Map<String, Claim> tokenDecodeado = decodeToken(token);
-        String cedula = tokenDecodeado.get("numero_documento").asString();
+        String cedulaSucia = tokenDecodeado.get("numero_documento").toString();
+        String cedulaLimpia =cedulaSucia.replace("\"", "");
+        Integer cedula = Integer.parseInt(cedulaLimpia);
+        System.out.println(cedula);
         Ciudadano ciudadano = ciudadanosService.obtenerCiudadanoPorCedula(cedula);
+        System.out.println("LLEGA A LINEA 72");
         if(ciudadano!=null){
-
+            return crearUsuarioJWT(ciudadano);
+        }else{
+            String email = tokenDecodeado.get("email").asString();
+            Ciudadano ciudadanoaux = new Ciudadano(email,cedula,null);
+            System.out.println("LLEGA A LINEA 78 CIUDADANO : " + ciudadanoaux);
+            System.out.println("CEDULA  : " + ciudadanoaux.getCedula());
+            ciudadanosService.agregarCiudadano(ciudadanoaux);
+            System.out.println("HA LLEGADO?");
+            Ciudadano ciudadano2  = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
+            System.out.println("cedula ciudadano: " + ciudadano2.getCedula());
+            return crearUsuarioJWT(ciudadano2);
         }
-
-        return token;
     }
 
     @Override
@@ -112,7 +124,7 @@ public class GubUyService implements IGubUyService {
            RequestBody requestBody = new FormBody.Builder()
                     .add("grant_type", "authorization_code")
                     .add("code", accessCode)
-                    .add("redirect_uri", "https://openidconnect.net/callback")
+                    .add("redirect_uri", "https://carga-uy-13.web.elasticloud.uy/CargaUy-web/") //TODO cambiar redirect uri
                     .build();
 
             Request request = new Request.Builder()
@@ -159,23 +171,29 @@ public class GubUyService implements IGubUyService {
         }
         return null;
     }
-    private String createUserJWT(Ciudadano ciudadano) {
+    private String crearUsuarioJWT(Ciudadano ciudadano) {
         int expireTimeMinutes = 30;
+        System.out.println("LLEGA A LINEA 171");
+        System.out.println("id: "+ ciudadano);
         try {
-            Algorithm alg = Algorithm.HMAC256(/*Aca va la key*/"Key");
+            Algorithm alg = Algorithm.HMAC256("key");
             JWTCreator.Builder jwt = JWT.create()
 //					.withIssuer("")
                     .withIssuedAt(new Date())//Se pasa la date actual para controlar la vigencia del usuario
-                    .withClaim("id", ciudadano.getIdCiudadano())
                     .withClaim("cedula", ciudadano.getCedula())
                     .withClaim("email", ciudadano.getEmail());
+            System.out.println(jwt);
 
-            if (expireTimeMinutes < 5)
-                expireTimeMinutes = 5; // Aplicar mínimo de tiempo de expiración del token a 5 minutos.
+            if(ciudadano.getRol()!=null){
+                jwt.withClaim("rol", ciudadano.getRol().toString());
+            }else{
+                jwt.withClaim("rol", "ciudadano");
+            }
+
             long expireTime = (new Date().getTime()) + (60000 * expireTimeMinutes);
             Date expireDate = new Date(expireTime);
             jwt.withExpiresAt(expireDate);
-
+            System.out.println("Llega a linea 191 final JWT : " +jwt.sign(alg));
             return jwt.sign(alg);
         } catch (IllegalArgumentException e) {
             System.out.println(e);

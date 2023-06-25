@@ -30,7 +30,7 @@ public class LoginGubUyEndpoint {
 
     @EJB
     IGubUyService gubUyService;
-    private static final String FRONTOFFICE_URI = "" ; //TODO URI DE FRONT
+    private static final String FRONTOFFICE_URI = "https://carga-uy-13.web.elasticloud.uy/CargaUy-web/" ; //TODO URI DE FRONT
     @GET
     @Path("/auth")
     public Response gubUyAuth() throws URISyntaxException, IOException {

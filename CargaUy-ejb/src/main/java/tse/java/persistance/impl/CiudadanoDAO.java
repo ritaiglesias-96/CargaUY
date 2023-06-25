@@ -51,12 +51,11 @@ public class CiudadanoDAO implements ICiudadanoDAO {
 
     @Override
     public Ciudadano buscarCiudadanoPorId(int id) {
-        return
-                em.find(Ciudadano.class, id);
+        return em.find(Ciudadano.class, id);
     }
 
     @Override
-    public Ciudadano buscarCiudadanoPorCedula(String cedula) {
+    public Ciudadano buscarCiudadanoPorCedula(Integer cedula) {
         return em.find(Ciudadano.class, cedula);
     }
 }

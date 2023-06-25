@@ -14,7 +14,7 @@ public interface ICiudadanosService {
 
     Ciudadano obtenerCiudadano(int id);
 
-    Ciudadano obtenerCiudadanoPorCedula(String ci);
+    Ciudadano obtenerCiudadanoPorCedula(Integer ci);
     Ciudadanos obtenerCiudadanos();
     void agregarCiudadano(Ciudadano ciudadano);
     void modificarCiudadano(Ciudadano ciudadano);
@@ -31,7 +31,7 @@ public interface ICiudadanosService {
 
    // public void asingarViajeResponsable(int responsable_id, Asignacion a);
 
-    public boolean contieneGuiaViajeChofer(String cedula_chofer, int numero_viaje);
+    public boolean contieneGuiaViajeChofer(Integer cedula_chofer, int numero_viaje);
 
   //  public boolean contieneGuiaViajeResponsable(String cedula_responsable, int numero_viaje);
     public void borrarGuia(int numero_guia);

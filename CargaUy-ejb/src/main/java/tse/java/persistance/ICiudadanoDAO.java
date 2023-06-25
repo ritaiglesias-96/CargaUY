@@ -15,5 +15,5 @@ public interface ICiudadanoDAO {
     void eliminiarCiudadano(int id);
     Ciudadano buscarCiudadanoPorId(int id);
 
-    Ciudadano buscarCiudadanoPorCedula(String cedula);
+    Ciudadano buscarCiudadanoPorCedula(Integer cedula);
 }

@@ -64,7 +64,7 @@ public class gestionGuiasDeViajeEndpoint {
 
     @GET
     @Path("/listar")
-    public Response listarViajesAsignados(@QueryParam("cedula") String cedula_chofer, @QueryParam("pais") String pais_matricula, @QueryParam("matricula") String matricula){
+    public Response listarViajesAsignados(@QueryParam("cedula") Integer cedula_chofer, @QueryParam("pais") String pais_matricula, @QueryParam("matricula") String matricula){
         List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
         ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
         if(c == null){
@@ -87,7 +87,7 @@ public class gestionGuiasDeViajeEndpoint {
     }
     @GET
     @Path("/listar/chofer")
-    public Response listarViajesChofer(@QueryParam("cedula") String cedula_chofer){
+    public Response listarViajesChofer(@QueryParam("cedula") Integer cedula_chofer){
         List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
         ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
         if(c == null){
@@ -178,7 +178,7 @@ public class gestionGuiasDeViajeEndpoint {
 
     @PUT
     @Path("/finalizar/{cedula}/{numero}")
-    public Response finalizarViaje(@PathParam("cedula") String cedula_chofer,@PathParam("numero") int numero_viaje){
+    public Response finalizarViaje(@PathParam("cedula") Integer cedula_chofer,@PathParam("numero") int numero_viaje){
         ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
         if(c == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedula_chofer).build();
@@ -239,7 +239,7 @@ public class gestionGuiasDeViajeEndpoint {
 
     @PUT
     @Path("/iniciar/{cedula}/{numero}")
-    public Response iniciarViaje(@PathParam("cedula") String cedula_chofer,@PathParam("numero") int numero_viaje){
+    public Response iniciarViaje(@PathParam("cedula") Integer cedula_chofer,@PathParam("numero") int numero_viaje){
         ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
         if(c == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedula_chofer).build();

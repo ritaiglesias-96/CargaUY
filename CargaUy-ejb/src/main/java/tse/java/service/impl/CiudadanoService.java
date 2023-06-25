@@ -40,7 +40,7 @@ public class CiudadanoService implements ICiudadanosService {
     }
 
     @Override
-    public Ciudadano obtenerCiudadanoPorCedula(String cedula) {
+    public Ciudadano obtenerCiudadanoPorCedula(Integer cedula) {
         return ciudadanoDAO.buscarCiudadanoPorCedula(cedula);
     }
 
@@ -141,7 +141,7 @@ public class CiudadanoService implements ICiudadanosService {
     }*/
 
     @Override
-    public boolean contieneGuiaViajeChofer(String cedula_chofer, int numero_viaje) {
+    public boolean contieneGuiaViajeChofer(Integer cedula_chofer, int numero_viaje) {
         Long id = asignacionesService.ultimaAsignacionViaje(numero_viaje);
         ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
         for(AsignacionDTO a : c.getAsignaciones())
