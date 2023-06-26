@@ -1,6 +1,7 @@
 package tse.java.persistance.impl;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,10 +26,9 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
 
     @Override
     public void altaGuiaDeViaje(GuiaDeViajeDTO dtg) {
-        GuiaDeViaje g = new GuiaDeViaje(dtg.getId(), dtg.getNumero(), dtg.getRubroCliente(), dtg.getTipoCarga(),dtg.getVolumenCarga(), dtg.getFecha(), dtg.getOrigen(), dtg.getInicio(), dtg.getFin(), dtg.getDestino(), new ArrayList<Pesaje>());
+        GuiaDeViaje g = new GuiaDeViaje(dtg);
         em.persist(g);
     }
-
     @Override
     public GuiaDeViaje buscarGuiaDeViaje(Long id) {
         return em.find(GuiaDeViaje.class, id);
@@ -75,7 +75,7 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
         gv.setVolumenCarga(dtg.getVolumenCarga());
         gv.setTipoCarga(dtg.getTipoCarga());
         gv.setPesajes(gv.procesarListaPesajes(dtg.getPesajes()));
-        em.persist(gv);
+        em.merge(gv);
     }
 
     @Override
@@ -88,8 +88,8 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO{
     }
 
     @Override
-    public GuiaDeViajeDTO buscarGuiaViajePorNumero(int numero_guia) {
-        Query q = em.createQuery("select g from GuiaDeViaje g where g.numero=" + numero_guia);
+    public GuiaDeViajeDTO buscarGuiaViajePorNumero(int numeroGuia) {
+        Query q = em.createQuery("select g from GuiaDeViaje g where g.numero=" + numeroGuia);
         if(q.getResultList().isEmpty()) {
             return null;
         } else {

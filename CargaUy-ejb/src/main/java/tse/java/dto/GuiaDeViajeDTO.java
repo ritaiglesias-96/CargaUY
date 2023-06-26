@@ -42,6 +42,14 @@ public class GuiaDeViajeDTO {
         this.pesajes = pesajes;
     }
 
+    public GuiaDeViajeDTO(GuiaDeViajeAltaDTO guiaDeViajeAltaDTO) {
+        this.rubroCliente = guiaDeViajeAltaDTO.getRubroCliente();
+        this.tipoCarga = guiaDeViajeAltaDTO.getTipoCarga();
+        this.volumenCarga = guiaDeViajeAltaDTO.getVolumenCarga();
+        this.origen = guiaDeViajeAltaDTO.getOrigen();
+        this.destino = guiaDeViajeAltaDTO.getDestino();
+    }
+
     public GuiaDeViajeDTO(){}
 
     public Long getId() {

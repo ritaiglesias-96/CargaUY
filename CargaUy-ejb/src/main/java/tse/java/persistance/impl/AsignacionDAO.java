@@ -22,11 +22,9 @@ public class AsignacionDAO implements IAsignacionDAO {
     public EntityManager em;
 
     @Override
-    public Long altaAsignacion(AsignacionDTO a) {
+    public void altaAsignacion(AsignacionDTO a) {
         Asignacion anew = new Asignacion(a);
         em.persist(anew);
-        Query q = em.createQuery("select max(a.id) from Asignacion a where a.id<1000");
-        return Long.valueOf(q.getResultList().get(0).toString());
     }
 
     @Override
@@ -57,6 +55,13 @@ public class AsignacionDAO implements IAsignacionDAO {
     public void borrarAsignacion(Long id) {
         Asignacion a = em.find(Asignacion.class, id);
         em.remove(a);
+    }
+
+    @Override
+    public AsignacionDTO ultimaIngresada() {
+        Query qA = em.createQuery("select a from Asignacion a WHERE id=(SELECT max(id) FROM Asignacion )");
+        Asignacion a = (Asignacion) qA.getResultList().get(0);
+        return a.darDTO();
     }
 
 }

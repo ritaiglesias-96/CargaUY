@@ -28,7 +28,7 @@ public class Vehiculo implements Serializable {
     private Date fechaFinITV;
     private Date fechaInicioPNC;
     private Date fechaFinPNC;
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(cascade = CascadeType.REFRESH)
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
     @ManyToOne
     private Empresa empresa;

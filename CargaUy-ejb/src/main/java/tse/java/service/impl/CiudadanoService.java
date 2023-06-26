@@ -33,6 +33,15 @@ public class CiudadanoService implements ICiudadanosService {
         c.setListaCiudadanos(ciudadanoDAO.listarCiudadanos());
         return c;
     }
+    @Override
+    public ChoferDTO obtenerChofer(String cedulaChofer) {
+        Ciudadano c = ciudadanoDAO.buscarCiudadanoPorCedula(cedulaChofer);
+        if(c instanceof Chofer){
+            return ((Chofer) c).darDTO();
+        }else{
+            return null;
+        }
+    }
 
     @Override
     public void agregarCiudadano(Ciudadano ciudadano) {

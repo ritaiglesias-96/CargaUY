@@ -1,8 +1,11 @@
 package tse.java.persistance.impl;
 
+import tse.java.dto.ChoferDTO;
 import tse.java.dto.CiudadanoDTO;
+import tse.java.dto.EmpresaDTO;
 import tse.java.entity.Chofer;
 import tse.java.entity.Ciudadano;
+import tse.java.entity.Empresa;
 import tse.java.persistance.ICiudadanoDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -39,7 +42,6 @@ public class CiudadanoDAO implements ICiudadanoDAO {
 
     @Override
     public void modificarCiudadano(Ciudadano ciudadano) {
-        //if(ciudadano instanceof Chofer)
         em.merge(ciudadano);
     }
 
@@ -54,5 +56,18 @@ public class CiudadanoDAO implements ICiudadanoDAO {
     @Override
     public Ciudadano buscarCiudadanoPorId(int id) {
         return em.find(Ciudadano.class, id);
+    }
+
+    @Override
+    public Ciudadano buscarCiudadanoPorCedula(String cedula) {
+        Query q = em.createQuery("select c from Ciudadano c where c.cedula='" + cedula +"'");
+        if (q.getResultList().isEmpty()) {
+            System.out.println("Esta vacio");
+            return null;
+        } else {
+            Ciudadano c = (Ciudadano) q.getResultList().get(0);
+            System.out.println(c.getCedula());
+            return c;
+        }
     }
 }

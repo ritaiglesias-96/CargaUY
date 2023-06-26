@@ -14,7 +14,7 @@ import java.util.List;
 public class Chofer extends Ciudadano implements Serializable {
 
     private static final long serialVersionUID = 3827070902901902553L;
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(cascade =  CascadeType.REFRESH)
     private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
 
     public Chofer() {

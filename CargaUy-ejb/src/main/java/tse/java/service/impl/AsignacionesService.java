@@ -13,28 +13,36 @@ import java.util.List;
 public class AsignacionesService implements IAsignacionesService {
 
     @EJB
-    IAsignacionDAO ad;
+    IAsignacionDAO asignacionDAO;
 
     @Override
-    public void borrarGuiaEnAsignacion(int numero_viaje) {
-        List<Long> asignaciones_borrar = new ArrayList<Long>();
-        for(AsignacionDTO a : ad.listarAsignaciones()){
-            if(a.getGuia().getNumero() == numero_viaje){
+    public void borrarGuiaEnAsignacion(int numeroViaje) {
+        List<Long> asignacionesBorrar = new ArrayList<Long>();
+        for(AsignacionDTO a : asignacionDAO.listarAsignaciones()){
+            if(a.getGuia().getNumero() == numeroViaje){
                 a.setGuia(null);
-                ad.modificarAsignacion(a);
-                asignaciones_borrar.add(a.getId());
+                asignacionDAO.modificarAsignacion(a);
+                asignacionesBorrar.add(a.getId());
             }
         }
-
-        for(Long id:asignaciones_borrar)
-            ad.borrarAsignacion(id);
+        for(Long id:asignacionesBorrar)
+            asignacionDAO.borrarAsignacion(id);
     }
 
     @Override
-    public Long ultimaAsignacionViaje(int numero_viaje) {
+    public void agregarAsignacion(AsignacionDTO asignacionDTO){
+        asignacionDAO.altaAsignacion(asignacionDTO);    
+    }
+    @Override
+    public AsignacionDTO ultimaIngresada(){
+        return asignacionDAO.ultimaIngresada();
+    }
+
+    @Override
+    public Long ultimaAsignacionViaje(int numeroViaje) {
         Long ret = Long.MIN_VALUE;
-        for(AsignacionDTO a:ad.listarAsignaciones()){
-            if(a.getGuia().getNumero()==numero_viaje){
+        for(AsignacionDTO a:asignacionDAO.listarAsignaciones()){
+            if(a.getGuia().getNumero()==numeroViaje){
                 Long id = a.getId();
                 if(id > ret){
                     ret = id;

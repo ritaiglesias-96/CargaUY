@@ -47,7 +47,6 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
 
     @Override
     public void borrarGuiaDeViaje(Long id, int idEmpresa) {
-        GuiaDeViaje g = guiaviajeDao.buscarGuiaDeViaje(id);
         guiaviajeDao.borrarGuiaDeViaje(id, idEmpresa);
     }
 
@@ -90,6 +89,15 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
         guiaviajeDao.modificarGuiaDeViaje(g);
     }
 
+    @Override
+    public int getNextNumeroViaje() {
+        return guiaviajeDao.getNextNumeroViaje();
+    }
+
+    @Override
+    public GuiaDeViajeDTO buscarGuiaViajePorNumero(int numeroGuia) {
+        return guiaviajeDao.buscarGuiaViajePorNumero(numeroGuia);
+    }
 
 
 }
