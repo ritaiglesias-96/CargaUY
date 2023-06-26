@@ -15,6 +15,7 @@ public interface IGuiaDeViajesService {
     public void modificarGuiaDeViaje(GuiaDeViajeDTO g);
     public List<GuiaDeViajeDTO> listarGuiasDeViajes();
     public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha);
+    public int cantidadViajesPorAnioRubro(int anio, String rubro);
     public void asignarPesajes(int numeroViaje, List<PesajeDTO> pesajes);
     int getNextNumeroViaje();
     GuiaDeViajeDTO buscarGuiaViajePorNumero(int numeroGuia);

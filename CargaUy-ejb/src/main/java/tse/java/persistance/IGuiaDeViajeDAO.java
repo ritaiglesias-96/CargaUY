@@ -19,6 +19,7 @@ public interface IGuiaDeViajeDAO {
     public void borrarGuiaDeViaje(int id, int idEmpresa);
     public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg);
     public int getNextNumeroViaje();
+    public int cantidadViajesPorAnioRubro(int anio, String rubro);
     public GuiaDeViajeDTO buscarGuiaViajePorNumero(int numeroGuia);
     public GuiaDeViajeDTO buscarGuiaViajePorId(int idGuia);
 

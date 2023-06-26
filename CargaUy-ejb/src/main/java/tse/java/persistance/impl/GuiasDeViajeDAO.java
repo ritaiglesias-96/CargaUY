@@ -180,5 +180,11 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
         return gvDTO;
     }
 
+    @Override
+    public int cantidadViajesPorAnioRubro(int anio, String rubro) {
+        Query q = em.createQuery("select count(*) from GuiaDeViaje g where g.rubroCliente='" + rubro + "' and extract(year from g.fecha)=" + anio);
+        return Integer.parseInt(q.getResultList().get(0).toString());
+    }
+
 
 }

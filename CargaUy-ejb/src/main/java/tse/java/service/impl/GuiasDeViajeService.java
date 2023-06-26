@@ -88,6 +88,10 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     }
 
     @Override
+    public int cantidadViajesPorAnioRubro(int anio, String rubro) {
+        return guiaviajeDao.cantidadViajesPorAnioRubro(anio,rubro);
+    }
+    @Override
     public int getNextNumeroViaje() {
         return guiaviajeDao.getNextNumeroViaje();
     }
