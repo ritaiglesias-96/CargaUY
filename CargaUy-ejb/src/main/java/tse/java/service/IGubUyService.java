@@ -9,6 +9,5 @@ import java.io.IOException;
 public interface IGubUyService {
     String getAuthGubUy();
     String loginGubUy(String accessCode, String state);
-
     String agarrarUrl(Response r) throws IOException;
 }

@@ -65,8 +65,8 @@ public class GubUyService implements IGubUyService {
         String token = tokens.getString("id_token");
         Map<String, Claim> tokenDecodeado = decodeToken(token);
         String cedulaSucia = tokenDecodeado.get("numero_documento").toString();
-        String cedulaLimpia =cedulaSucia.replace("\"", "");
-        Integer cedula = Integer.parseInt(cedulaLimpia);
+        String cedula = cedulaSucia.replace("\"", "");
+//        Integer cedula = Integer.parseInt(cedulaLimpia);
         System.out.println(cedula);
         Ciudadano ciudadano = ciudadanosService.obtenerCiudadanoPorCedula(cedula);
         if(ciudadano!=null){
@@ -76,13 +76,13 @@ public class GubUyService implements IGubUyService {
             System.out.println("Linea 77");
             String email = tokenDecodeado.get("email").asString();
             System.out.println("Linea 79");
-            Ciudadano ciudadanoaux= new Ciudadano(email,cedula,null);
+            Ciudadano ciudadanoNuevo = new Ciudadano(email,cedula,null);
             System.out.println("Linea 81");
-            ciudadanosService.agregarCiudadano(ciudadanoaux);
+            ciudadanosService.agregarCiudadano(ciudadanoNuevo);
             System.out.println("Linea 83");
            // ciudadano  = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
-            System.out.println("cedula ciudadano: " + ciudadanoaux.getCedula());
-            return crearUsuarioJWT(ciudadanoaux);
+            System.out.println("cedula ciudadano: " + ciudadanoNuevo.getCedula());
+            return crearUsuarioJWT(ciudadanoNuevo);
         }
     }
 
@@ -173,7 +173,6 @@ public class GubUyService implements IGubUyService {
             long expireTime = (new Date().getTime()) + (60000 * expireTimeMinutes);
             Date expireDate = new Date(expireTime);
             jwt.withExpiresAt(expireDate);
-            System.out.println("Llega al casi return linea 176");
             return jwt.sign(alg);
         } catch (IllegalArgumentException e) {
             System.out.println(e);

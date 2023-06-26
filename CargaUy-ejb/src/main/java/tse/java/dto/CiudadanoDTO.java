@@ -7,7 +7,7 @@ import tse.java.enumerated.RolCiudadano;
 public class CiudadanoDTO {
     private int idCiudadano;
     private String email;
-    private Integer cedula;
+    private String cedula;
     private RolCiudadano rol;
 
 
@@ -15,7 +15,7 @@ public class CiudadanoDTO {
         super();
     }
 
-    public CiudadanoDTO(int idCiudadano, String email, Integer cedula, RolCiudadano rol) {
+    public CiudadanoDTO(int idCiudadano, String email, String cedula, RolCiudadano rol) {
         super();
         this.idCiudadano = idCiudadano;
         this.email = email;
@@ -38,7 +38,7 @@ public class CiudadanoDTO {
         return email;
     }
 
-    public Integer getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
@@ -50,7 +50,7 @@ public class CiudadanoDTO {
         this.email = email;
     }
 
-    public void setCedula(Integer cedula) {
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 

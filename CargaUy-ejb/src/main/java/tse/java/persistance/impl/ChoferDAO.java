@@ -62,7 +62,7 @@ public class ChoferDAO implements IChoferDAO {
         em.merge(c);
     }
 
-    public ChoferDTO buscarChoferPorCedula(Integer cedula){
+    public ChoferDTO buscarChoferPorCedula(String cedula){
         Query q = em.createQuery("select c from Ciudadano c where c.cedula='" + cedula + "'");
         if(q.getResultList().isEmpty()) {
             return null;
