@@ -208,6 +208,12 @@
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
                     <scope>test</scope>
                 </dependency>
+                <!--MONGO DB -->
+                    <dependency>
+                        <groupId>org.mongodb</groupId>
+                        <artifactId>mongodb-driver-sync</artifactId>
+                        <version>4.9.1</version>
+                    </dependency>
             </dependencies>
             <build>
                 <plugins>

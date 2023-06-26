@@ -12,6 +12,7 @@ public interface ICiudadanoDAO {
     ArrayList<CiudadanoDTO> listarCiudadanos();
     void agregarCiudadano(Ciudadano ciudadano);
     void modificarCiudadano(Ciudadano ciudadano);
-    void eliminiarCiudadano(Ciudadano ciudadano);
+    void eliminiarCiudadano(int id);
     Ciudadano buscarCiudadanoPorId(int id);
+    Ciudadano buscarCiudadanoPorCedula(String cedula);
 }

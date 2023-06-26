@@ -4,9 +4,9 @@ public class GuiaDeViajeAltaDTO{
 
     private String rubroCliente, tipoCarga;
     private float volumenCarga;
-    private String origen, destino, paisVehiculo, matriculaVehiculo, cedulaChofer;
-
+    private String origen, destino, paisVehiculo, matriculaVehiculo;
     private int numeroEmpresa;
+    private String cedulaChofer;
 
     public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String paisVehiculo, String matriculaVehiculo, String cedulaChofer, int numeroEmpresa) {
         this.rubroCliente = rubroCliente;
@@ -19,6 +19,7 @@ public class GuiaDeViajeAltaDTO{
         this.cedulaChofer = cedulaChofer;
         this.numeroEmpresa = numeroEmpresa;
     }
+
 
     public GuiaDeViajeAltaDTO(){}
 

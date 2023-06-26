@@ -15,8 +15,6 @@ public class Chofer extends Ciudadano implements Serializable {
 
     private static final long serialVersionUID = 3827070902901902553L;
 
-
-
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "empresa_id", nullable = true)
     private List<Empresa> empresas;
@@ -28,7 +26,7 @@ public class Chofer extends Ciudadano implements Serializable {
     }
 
     public Chofer(String email, String cedula){
-        super(email, cedula,RolCiudadano.CHOFER);
+        super(email, cedula, RolCiudadano.CHOFER);
 
     }
 

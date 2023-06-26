@@ -3,6 +3,7 @@ package tse.java.persistance.impl;
 import tse.java.dto.CiudadanoDTO;
 import tse.java.entity.Chofer;
 import tse.java.entity.Ciudadano;
+import tse.java.entity.Usuario;
 import tse.java.persistance.ICiudadanoDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -10,6 +11,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +46,8 @@ public class CiudadanoDAO implements ICiudadanoDAO {
     }
 
     @Override
-    public void eliminiarCiudadano(Ciudadano ciudadano) {
-        Ciudadano c = em.find(Ciudadano.class, ciudadano.getIdCiudadano());
+    public void eliminiarCiudadano(int id) {
+        Ciudadano c = em.find(Ciudadano.class,id);
         if(c!=null){
             em.remove(c);
         }
@@ -54,5 +56,14 @@ public class CiudadanoDAO implements ICiudadanoDAO {
     @Override
     public Ciudadano buscarCiudadanoPorId(int id) {
         return em.find(Ciudadano.class, id);
+    }
+
+    @Override
+    public Ciudadano buscarCiudadanoPorCedula(String cedula) {
+        try {
+            return (Ciudadano) em.createQuery("FROM Ciudadano WHERE cedula = :cedula").setParameter("cedula", cedula).getSingleResult();
+        }catch (NoResultException e) {
+            return null;
+        }
     }
 }
