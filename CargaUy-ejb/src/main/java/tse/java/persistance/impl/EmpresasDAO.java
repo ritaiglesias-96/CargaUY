@@ -54,7 +54,9 @@ public class EmpresasDAO implements IEmpresasDAO {
     @Override
     public Empresa modificarEmpresa(EmpresaDTO empresaDTO) {
         Empresa e = new Empresa(empresaDTO);
+        em.getTransaction().begin();
         em.merge(e);
+        em.getTransaction().commit();
         return e;
     }
 
