@@ -69,21 +69,20 @@ public class GubUyService implements IGubUyService {
         Integer cedula = Integer.parseInt(cedulaLimpia);
         System.out.println(cedula);
         Ciudadano ciudadano = ciudadanosService.obtenerCiudadanoPorCedula(cedula);
-        System.out.println("LLEGA ACA A A A A");
-        if(ciudadano.getCedula()!=null){
+        if(ciudadano!=null){
             System.out.println("LLEGA A LINEA 72 ciudadano existente: " + ciudadano.getCedula());
             return crearUsuarioJWT(ciudadano);
         }else{
             System.out.println("Linea 77");
             String email = tokenDecodeado.get("email").asString();
             System.out.println("Linea 79");
-            ciudadano= new Ciudadano(email,cedula,null);
+            Ciudadano ciudadanoaux= new Ciudadano(email,cedula,null);
             System.out.println("Linea 81");
-            ciudadanosService.agregarCiudadano(ciudadano);
+            ciudadanosService.agregarCiudadano(ciudadanoaux);
             System.out.println("Linea 83");
            // ciudadano  = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
-            System.out.println("cedula ciudadano: " + ciudadano.getCedula());
-            return crearUsuarioJWT(ciudadano);
+            System.out.println("cedula ciudadano: " + ciudadanoaux.getCedula());
+            return crearUsuarioJWT(ciudadanoaux);
         }
     }
 
@@ -174,6 +173,7 @@ public class GubUyService implements IGubUyService {
             long expireTime = (new Date().getTime()) + (60000 * expireTimeMinutes);
             Date expireDate = new Date(expireTime);
             jwt.withExpiresAt(expireDate);
+            System.out.println("Llega al casi return linea 176");
             return jwt.sign(alg);
         } catch (IllegalArgumentException e) {
             System.out.println(e);
