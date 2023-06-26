@@ -1,11 +1,9 @@
 package tse.java.persistance.impl;
 
-import tse.java.dto.ChoferDTO;
 import tse.java.dto.CiudadanoDTO;
-import tse.java.dto.EmpresaDTO;
 import tse.java.entity.Chofer;
 import tse.java.entity.Ciudadano;
-import tse.java.entity.Empresa;
+import tse.java.entity.Usuario;
 import tse.java.persistance.ICiudadanoDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -13,6 +11,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +41,13 @@ public class CiudadanoDAO implements ICiudadanoDAO {
 
     @Override
     public void modificarCiudadano(Ciudadano ciudadano) {
+        //if(ciudadano instanceof Chofer)
         em.merge(ciudadano);
     }
 
     @Override
-    public void eliminiarCiudadano(Ciudadano ciudadano) {
-        Ciudadano c = em.find(Ciudadano.class, ciudadano.getIdCiudadano());
+    public void eliminiarCiudadano(int id) {
+        Ciudadano c = em.find(Ciudadano.class,id);
         if(c!=null){
             em.remove(c);
         }
@@ -60,14 +60,10 @@ public class CiudadanoDAO implements ICiudadanoDAO {
 
     @Override
     public Ciudadano buscarCiudadanoPorCedula(String cedula) {
-        Query q = em.createQuery("select c from Ciudadano c where c.cedula='" + cedula +"'");
-        if (q.getResultList().isEmpty()) {
-            System.out.println("Esta vacio");
+        try {
+            return (Ciudadano) em.createQuery("FROM Ciudadano WHERE cedula = :cedula").setParameter("cedula", cedula).getSingleResult();
+        }catch (NoResultException e) {
             return null;
-        } else {
-            Ciudadano c = (Ciudadano) q.getResultList().get(0);
-            System.out.println(c.getCedula());
-            return c;
         }
     }
 }

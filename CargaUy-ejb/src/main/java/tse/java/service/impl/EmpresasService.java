@@ -54,8 +54,8 @@ public class EmpresasService implements IEmpresasService {
     }
 
     @Override
-    public void eliminarEmpresa(EmpresaDTO empresaDTO) {
-        empresasDAO.eliminarEmpresa(empresaDTO);
+    public void eliminarEmpresa(int id) {
+        empresasDAO.eliminarEmpresa(id);
     }
 
     @Override

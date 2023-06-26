@@ -11,14 +11,17 @@ import javax.ejb.Local;
 
 @Local
 public interface ICiudadanosService {
+
+    Ciudadano obtenerCiudadano(int id);
+    Ciudadano obtenerCiudadanoPorCedula(String ci);
     Ciudadanos obtenerCiudadanos();
     ChoferDTO obtenerChofer(String cedulaChofer);
     void agregarCiudadano(Ciudadano ciudadano);
     void modificarCiudadano(Ciudadano ciudadano);
-    void eliminarCiudadano(Ciudadano ciudadano);
+    void eliminarCiudadano(int id);
     void agregarHijoCiudadano(Ciudadano ciudadano);
     void modificarHijoCiudadano(Ciudadano ciudadano);
-    void eliminarHijoCiudadano(Ciudadano ciudadano);
+    void eliminarHijoCiudadano(int id);
     void asignarEmpresa(int responsableId, Empresa empresa);
     void eliminarEmpresa(int responsableId, Empresa empresa);
     void asignarEmpresaChofer(int choferId, Empresa empresa);

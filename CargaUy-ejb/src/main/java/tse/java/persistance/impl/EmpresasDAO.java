@@ -9,6 +9,8 @@ import java.util.List;
 
 import tse.java.dto.EmpresaDTO;
 import tse.java.entity.Empresa;
+import tse.java.entity.Pesaje;
+import tse.java.entity.Vehiculo;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -22,18 +24,22 @@ public class EmpresasDAO implements IEmpresasDAO {
     @Override
     public EmpresaDTO obtenerEmpresaPorId(int id) {
         Empresa e = em.find(Empresa.class, id);
-        if (e != null) {
+        if(e != null){
             return new EmpresaDTO(e);
-        } else {
+        }else {
             return null;
         }
     }
 
     @Override
     public ArrayList<EmpresaDTO> obtenerEmpresas() {
+
         Query q = em.createNativeQuery("select * from public.\"Empresa\"", Empresa.class);
+
         List<Empresa> retorno = q.getResultList();
+
         ArrayList<EmpresaDTO> ret = new ArrayList<>();
+
         retorno.forEach(e -> ret.add(new EmpresaDTO(e)));
         return ret;
     }
@@ -48,16 +54,17 @@ public class EmpresasDAO implements IEmpresasDAO {
     @Override
     public Empresa modificarEmpresa(EmpresaDTO empresaDTO) {
         Empresa e = new Empresa(empresaDTO);
-        em.getTransaction().begin();
         em.merge(e);
-        em.getTransaction().commit();
         return e;
     }
 
     @Override
-    public void eliminarEmpresa(EmpresaDTO empresaDTO) {
-        Empresa e = em.find(Empresa.class, empresaDTO.getId());
-        em.remove(e);
+    public void eliminarEmpresa(int id) {
+        Empresa e = em.find(Empresa.class,id);
+        if(e!=null) {
+            em.remove(e);
+        }
+
     }
 
     @Override
