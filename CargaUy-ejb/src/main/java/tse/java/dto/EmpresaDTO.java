@@ -103,7 +103,6 @@ public class EmpresaDTO {
     public List<VehiculoDTO> procesarLista(List<Vehiculo> vehiculos) {
         List<VehiculoDTO> result = new ArrayList<VehiculoDTO>();
         for (Vehiculo v : vehiculos) {
-            System.out.println(v.getId());
             result.add(new VehiculoDTO(v));
         }
         return result;

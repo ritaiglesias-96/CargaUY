@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 @Path("/guias")
 @Consumes({MediaType.APPLICATION_JSON})
 @Produces({MediaType.APPLICATION_JSON})
-public class gestionGuiasDeViajeEndpoint {
+public class GestionGuiasDeViajeEndpoint {
 
     @EJB
     IGuiaDeViajesService guiaDeViajesService;
@@ -88,7 +88,6 @@ public class gestionGuiasDeViajeEndpoint {
         else
             return Response.status(Response.Status.OK).entity("No tiene viajes asignados").build();
     }
-
     @GET
     @Path("/listar/chofer")
     public Response listarViajesChofer(@QueryParam("cedula") String cedula_chofer){
@@ -227,14 +226,14 @@ public class gestionGuiasDeViajeEndpoint {
                     PesajeDTO p = new PesajeDTO(null, latitud, longuitud, fecha, carga);
                     pesajes.add(p);
                     String msg = "Datos pesaje, fecha:" + hora + ", latitud: " + latitud + ", longuitud: " + longuitud + ", carga: " + carga;
-                    Logger.getLogger(gestionGuiasDeViajeEndpoint.class.getName()).log(Level.INFO, msg);
+                    Logger.getLogger(GestionGuiasDeViajeEndpoint.class.getName()).log(Level.INFO, msg);
                 }
                 guiaDeViajesService.asignarPesajes(g.getNumero(), pesajes);
             } else {
-                Logger.getLogger(gestionGuiasDeViajeEndpoint.class.getName()).log(Level.INFO, "No se encontraron pesajes con los parametros ingresados...");
+                Logger.getLogger(GestionGuiasDeViajeEndpoint.class.getName()).log(Level.INFO, "No se encontraron pesajes con los parametros ingresados...");
             }
         } catch (Exception e) {
-            Logger.getLogger(gestionGuiasDeViajeEndpoint.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(GestionGuiasDeViajeEndpoint.class.getName()).log(Level.SEVERE, null, e);
         }
 
         g = guiaDeViajeDAO.buscarGuiaViajePorNumero(g.getNumero());
