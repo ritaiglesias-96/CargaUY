@@ -12,6 +12,10 @@ import tse.java.dto.UsuarioDTO;
 import tse.java.entity.Ciudadano;
 import tse.java.service.ICiudadanosService;
 import tse.java.service.IGubUyService;
+import tse.java.soappdi.EmpresaServicePort;
+import tse.java.soappdi.EmpresaServicePortService;
+import tse.java.soappdi.GetCiudadanoRequest;
+import tse.java.soappdi.GetCiudadanoResponse;
 
 
 import javax.ejb.EJB;
@@ -25,10 +29,14 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @Stateless
 public class GubUyService implements IGubUyService {
+
+    private static final Logger LOGGER = Logger.getLogger(GubUyService.class.getName());
 
     private static final String AUTH_ENDPOINT = "https://id.uruguay.gub.uy/oidc/v1/authorize";
     private static final String TOKEN_ENDPOINT = "https://auth-testing.iduruguay.gub.uy/oidc/v1/token";
@@ -76,12 +84,14 @@ public class GubUyService implements IGubUyService {
             System.out.println("Linea 77");
             String email = tokenDecodeado.get("email").asString();
             System.out.println("Linea 79");
-            Ciudadano ciudadanoNuevo = new Ciudadano(email,cedula,null);
+            Ciudadano ciudadanoNuevo = crearCiudadanoPdi(cedula);
             System.out.println("Linea 81");
-            ciudadanosService.agregarCiudadano(ciudadanoNuevo);
+            if(ciudadanoNuevo != null)
+                ciudadanosService.agregarCiudadano(ciudadanoNuevo);
             System.out.println("Linea 83");
            // ciudadano  = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
-            System.out.println("cedula ciudadano: " + ciudadanoNuevo.getCedula());
+            if(ciudadanoNuevo != null)
+                System.out.println("cedula ciudadano: " + ciudadanoNuevo.getCedula());
             return crearUsuarioJWT(ciudadanoNuevo);
         }
     }
@@ -176,6 +186,27 @@ public class GubUyService implements IGubUyService {
             return jwt.sign(alg);
         } catch (IllegalArgumentException e) {
             System.out.println(e);
+            return null;
+        }
+    }
+
+    private Ciudadano crearCiudadanoPdi(String cedula){
+        try{
+            EmpresaServicePortService empresaService = new EmpresaServicePortService();
+            EmpresaServicePort empresaPort = empresaService.getEmpresaServicePortSoap11();
+            GetCiudadanoRequest ciudadanoRequest = new GetCiudadanoRequest();
+            ciudadanoRequest.setCedula(cedula);
+            GetCiudadanoResponse ciudadanoResponse = empresaPort.getCiudadano(ciudadanoRequest);
+            tse.java.soappdi.Ciudadano ciudadano = ciudadanoResponse.getCiudadano();
+            if(ciudadano == null){
+                LOGGER.warning("No existe un ciudadano con el documento " + cedula);
+                return null;
+            } else {
+                LOGGER.info("Datos adicionales del ciudadano " + ciudadano.getCedula() + ": Nombre -> " + ciudadano.getNombre() + ", Apellido -> " + ciudadano.getApellido());
+                return new Ciudadano(ciudadano.getEmail(), ciudadano.getCedula(), null);
+            }
+        } catch (Exception e){
+            LOGGER.log(Level.SEVERE, "Hubo un error al comunicarse con la plataforma", e);
             return null;
         }
     }

@@ -8,6 +8,10 @@ import tse.java.persistance.IEmpresasDAO;
 import tse.java.persistance.IVehiculosDAO;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IVehiculosService;
+import tse.java.soappdi.EmpresaServicePort;
+import tse.java.soappdi.EmpresaServicePortService;
+import tse.java.soappdi.GetEmpresaRequest;
+import tse.java.soappdi.GetEmpresaResponse;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +27,8 @@ import javax.inject.Named;
 @Stateless
 @Named("empresasService")
 public class EmpresasService implements IEmpresasService {
+
+    private static final Logger LOGGER = Logger.getLogger(EmpresasService.class.getName());
 
     @EJB
     IEmpresasDAO empresasDAO;
@@ -44,8 +50,8 @@ public class EmpresasService implements IEmpresasService {
     }
 
     @Override
-    public void agregarEmpresa(String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal) {
-        empresasDAO.guardarEmpresa(nombrePublico, razonSocial, nroEmpresa, dirPrincipal);
+    public int agregarEmpresa(String rut) {
+        return crearEmpresaPdi(rut);
     }
 
     @Override
@@ -103,6 +109,27 @@ public class EmpresasService implements IEmpresasService {
             }
         }
         return false;
+    }
+
+    private int crearEmpresaPdi(String rut){
+        // 0 - no existe la empresa, 1 - Creada ok, 2 - Error al comunicarse con la plataforma
+        try{
+            EmpresaServicePortService empresaService = new EmpresaServicePortService();
+            EmpresaServicePort empresaPort = empresaService.getEmpresaServicePortSoap11();
+            GetEmpresaRequest empresaRequest = new GetEmpresaRequest();
+            empresaRequest.setRut(rut);
+            GetEmpresaResponse empresaResponse = empresaPort.getEmpresa(empresaRequest);
+            tse.java.soappdi.Empresa empresa = empresaResponse.getEmpresa();
+            if(empresa == null){
+                return 0;
+            } else {
+                empresasDAO.guardarEmpresa(empresa.getNombrePublico(), empresa.getRazonSocial(), empresa.getNroEmpresa(), empresa.getDirPrincipal());
+                return 1;
+            }
+        } catch (Exception e){
+            LOGGER.log(Level.SEVERE, "Hubo un error al comunicarse con la plataforma", e);
+            return 2;
+        }
     }
 
 }
