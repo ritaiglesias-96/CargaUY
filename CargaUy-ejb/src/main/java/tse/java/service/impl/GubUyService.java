@@ -86,12 +86,10 @@ public class GubUyService implements IGubUyService {
             System.out.println("Linea 79");
             Ciudadano ciudadanoNuevo = crearCiudadanoPdi(cedula);
             System.out.println("Linea 81");
-            if(ciudadanoNuevo != null)
-                ciudadanosService.agregarCiudadano(ciudadanoNuevo);
+            ciudadanosService.agregarCiudadano(ciudadanoNuevo);
             System.out.println("Linea 83");
            // ciudadano  = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
-            if(ciudadanoNuevo != null)
-                System.out.println("cedula ciudadano: " + ciudadanoNuevo.getCedula());
+            System.out.println("cedula ciudadano: " + ciudadanoNuevo.getCedula());
             return crearUsuarioJWT(ciudadanoNuevo);
         }
     }

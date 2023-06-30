@@ -112,7 +112,7 @@ public class EmpresasService implements IEmpresasService {
     }
 
     private int crearEmpresaPdi(String rut){
-        // 0 - no existe la empresa, 1 - Creada ok, 2 - Error al comunicarse con la plataforma
+        // 0 - no existe la empresa, 1 - Creada ok, 2 - Error al comunicarse con la plataforma, 3 - La empresa ya existe
         try{
             EmpresaServicePortService empresaService = new EmpresaServicePortService();
             EmpresaServicePort empresaPort = empresaService.getEmpresaServicePortSoap11();
@@ -120,9 +120,12 @@ public class EmpresasService implements IEmpresasService {
             empresaRequest.setRut(rut);
             GetEmpresaResponse empresaResponse = empresaPort.getEmpresa(empresaRequest);
             tse.java.soappdi.Empresa empresa = empresaResponse.getEmpresa();
+
             if(empresa == null){
                 return 0;
-            } else {
+            } else if (empresasDAO.obtenerEmpresaPorNumero(empresa.getNroEmpresa()) != null) {
+                return 3;
+            }else {
                 empresasDAO.guardarEmpresa(empresa.getNombrePublico(), empresa.getRazonSocial(), empresa.getNroEmpresa(), empresa.getDirPrincipal());
                 return 1;
             }
