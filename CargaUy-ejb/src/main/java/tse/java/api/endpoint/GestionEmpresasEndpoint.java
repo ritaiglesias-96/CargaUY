@@ -48,12 +48,15 @@ public class GestionEmpresasEndpoint {
     }
 
     @POST
-    public Response agregarEmpresa(String rut){
+    @Path("/{rut}")
+    public Response agregarEmpresa(@PathParam("rut") String rut){
         int resultado = empresasService.agregarEmpresa(rut);
         if(resultado == 1){
             return Response.status(Response.Status.OK).entity("Empresa " + rut + " creada exitosamente.").build();
         } else if (resultado == 0){
             return Response.status(Response.Status.NOT_FOUND).entity("NO existe la empresa " + rut).build();
+        } else if (resultado == 3){
+            return Response.status(Response.Status.CONFLICT).entity("Ya existe la empresa con rut " + rut).build();
         } else {
             return Response.status(Response.Status.REQUEST_TIMEOUT).entity("Hubo un error al comunicarse con la plataforma").build();
         }
