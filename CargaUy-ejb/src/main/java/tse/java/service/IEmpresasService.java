@@ -16,7 +16,7 @@ public interface IEmpresasService {
 
     EmpresaDTO obtenerEmpresa(int id);
 
-    void agregarEmpresa(String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal);
+    int agregarEmpresa(String rut);
 
     void modificarEmpresa(EmpresaDTO empresaDTO);
 
