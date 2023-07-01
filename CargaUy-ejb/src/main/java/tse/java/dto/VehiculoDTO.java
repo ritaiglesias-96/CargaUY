@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehiculoDTO {
-    private Long id;
+    private Integer id;
     private String matricula;
     private String pais;
     private String marca;
@@ -23,7 +23,7 @@ public class VehiculoDTO {
     private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
 
 
-    public VehiculoDTO(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
+    public VehiculoDTO(int id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
                        LocalDate fechaFinITV, int pnc, LocalDate fechaInicioPNC, LocalDate fechaFinPNC, int empresaId, List<AsignacionDTO> asignaciones) {
         this.id = id;
         this.matricula = matricula;
@@ -61,11 +61,11 @@ public class VehiculoDTO {
     public VehiculoDTO() {
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

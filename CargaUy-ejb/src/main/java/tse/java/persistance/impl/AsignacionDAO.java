@@ -28,7 +28,7 @@ public class AsignacionDAO implements IAsignacionDAO {
     }
 
     @Override
-    public AsignacionDTO buscarAsignacion(Long id) {
+    public AsignacionDTO buscarAsignacion(int id) {
         return em.find(Asignacion.class, id).darDTO();
     }
 
@@ -52,7 +52,7 @@ public class AsignacionDAO implements IAsignacionDAO {
     }
 
     @Override
-    public void borrarAsignacion(Long id) {
+    public void borrarAsignacion(int id) {
         Asignacion a = em.find(Asignacion.class, id);
         em.remove(a);
     }

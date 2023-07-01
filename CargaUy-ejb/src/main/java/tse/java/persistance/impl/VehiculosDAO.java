@@ -31,7 +31,7 @@ public class VehiculosDAO implements IVehiculosDAO {
     }
 
     @Override
-    public Vehiculo obtenerVehiculoId(Long id) throws NoResultException {
+    public Vehiculo obtenerVehiculoId(int id) throws NoResultException {
         Vehiculo result = em.find(Vehiculo.class, id);
         return result;
     }
@@ -44,7 +44,7 @@ public class VehiculosDAO implements IVehiculosDAO {
     }
 
     @Override
-    public void eliminarVehiculo(Long id) {
+    public void eliminarVehiculo(int id) {
         Vehiculo v = em.find(Vehiculo.class, id);
         Empresa e = em.find(Empresa.class, v.getEmpresa().getId());
         e.getVehiculos().remove(v);
@@ -69,14 +69,6 @@ public class VehiculosDAO implements IVehiculosDAO {
             Vehiculo v = (Vehiculo) q.getResultList().get(0);
             return new VehiculoDTO(v);
         }
-    }
-
-    public Long getNextIdVehiculo(){
-        Query q = em.createQuery("select max(g.id) from GuiaDeViaje g");
-        if(q.getResultList().get(0)==null)
-            return (long) 1;
-        else
-            return Long.parseLong(q.getResultList().get(0).toString())+1;
     }
 
 }

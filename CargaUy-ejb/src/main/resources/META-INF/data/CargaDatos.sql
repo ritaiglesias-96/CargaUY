@@ -31,6 +31,11 @@ INSERT INTO public."Empresa_Vehiculo" ("Empresa_id", vehiculos_id) values(1586,1
 INSERT INTO public."Empresa_Vehiculo" ("Empresa_id", vehiculos_id) values(1586,2999);
 INSERT INTO public."Empresa_Vehiculo" ("Empresa_id", vehiculos_id) values(1586,3999);
 
+-- Empresa-Ciudadano
+
+INSERT INTO public."Empresa_Ciudadano" ("Empresa_id", "choferes_id") values (1586, 5856);
+INSERT INTO public."Empresa_Ciudadano" ("Empresa_id", "choferes_id") values (1587, 6856);
+
 -- Guia de viaje
 -- Viaje finalizado
 INSERT INTO public."GuiaDeViaje" values(1000,'Montevideo','2023-05-02','2023-05-15','2023-05-02',1,'Artigas','Carnes','Producto no quimico',75.0);

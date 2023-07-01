@@ -29,12 +29,18 @@ public class EmpresaDTO {
         this.razonSocial = e.getRazonSocial();
         this.nroEmpresa = e.getNroEmpresa();
         this.dirPrincipal = e.getDirPrincipal();
-        if (e.getVehiculos() != null) {
+        if (!e.getVehiculos().isEmpty()) {
+            System.out.println("no p v");
             this.vehiculos = procesarLista(e.getVehiculos());
-        }if (e.getChoferes() != null) {
+        }
+        if (!e.getChoferes().isEmpty()) {
+            System.out.println("no p c");
             this.choferes = procesarChoferes(e.getChoferes());
         }
-        this.asignaciones = procesarListaAsignaciones(e.getAsignaciones());
+        if (!e.getAsignaciones().isEmpty()) {
+            System.out.println("no p a");
+            this.asignaciones = procesarListaAsignaciones(e.getAsignaciones());
+        }
     }
 
     public EmpresaDTO(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal,
@@ -139,14 +145,12 @@ public class EmpresaDTO {
     }
 
     public boolean contieneVehiculo(VehiculoDTO v) {
-        boolean encontrado = false;
         for (VehiculoDTO v1 : vehiculos) {
-            if (v1.getId().equals(v.getId())) {
-                encontrado = true;
-                break;
+            if (v1.getId() == v.getId()) {
+                return true;
             }
         }
-        return encontrado;
+        return false;
     }
 
 }

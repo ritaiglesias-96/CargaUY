@@ -25,17 +25,17 @@ public class Empresa implements Serializable {
     private String dirPrincipal;
 
     @OneToOne
-    @JoinColumn(name = "responsable_id", nullable = true)
+    @JoinColumn(name = "responsable_id")
     private Responsable responsable;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(cascade =CascadeType.MERGE)
     private List<Vehiculo> vehiculos = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(cascade =  CascadeType.REFRESH)
     private List<Chofer> choferes= new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    private List<Asignacion> asignaciones = new ArrayList<Asignacion>();
+    private List<Asignacion> asignaciones = new ArrayList<>();
 
     public Empresa() {
 

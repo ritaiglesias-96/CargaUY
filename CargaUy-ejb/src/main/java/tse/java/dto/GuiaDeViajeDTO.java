@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class GuiaDeViajeDTO {
-    private Long id;
+    private Integer id;
 
     private int numero;
     private String rubroCliente;
@@ -28,7 +28,7 @@ public class GuiaDeViajeDTO {
 
     private List<PesajeDTO> pesajes = new ArrayList<PesajeDTO>();
 
-    public GuiaDeViajeDTO(Long id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<PesajeDTO> pesajes) {
+    public GuiaDeViajeDTO(Integer id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<PesajeDTO> pesajes) {
         this.id = id;
         this.numero = numero;
         this.rubroCliente = rubroCliente;
@@ -52,11 +52,11 @@ public class GuiaDeViajeDTO {
 
     public GuiaDeViajeDTO(){}
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

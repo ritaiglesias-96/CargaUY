@@ -15,10 +15,9 @@ public class GuiaDeViaje {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private int numero;
-
     private String rubroCliente;
     private String tipoCarga;
 
@@ -40,7 +39,7 @@ public class GuiaDeViaje {
     @OneToMany(orphanRemoval = true)
     private List<Pesaje> pesajes = new ArrayList<Pesaje>();
 
-    public GuiaDeViaje(Long id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<Pesaje> pesajes) {
+    public GuiaDeViaje(Integer id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<Pesaje> pesajes) {
         this.id = id;
         this.numero = numero;
         this.rubroCliente = rubroCliente;
@@ -70,11 +69,11 @@ public class GuiaDeViaje {
         this.tipoCarga = guia.getTipoCarga();
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

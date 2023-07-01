@@ -21,5 +21,7 @@ public interface IEmpresasService {
     List<VehiculoDTO> listarVehiculos(int id);
     void agregarAsignacionAEmpresa(int idEmpresa, AsignacionDTO a);
 
+    boolean contieneChofer(int choferId, EmpresaDTO empresaDTO);
+    boolean contieneVehiculo(int vehiculoId, EmpresaDTO empresaDTO);
 
 }

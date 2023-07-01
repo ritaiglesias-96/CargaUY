@@ -52,23 +52,23 @@ public class gestionGuiasDeViajeEndpoint {
 
     @GET
     @Path("/listar")
-    public Response listarViajesAsignados(@QueryParam("cedula") String cedulaChofer, @QueryParam("pais") String pais_matricula, @QueryParam("matricula") String matricula){
+    public Response listarViajesAsignados(@QueryParam("cedula") String cedulaChofer, @QueryParam("pais") String pais_matricula, @QueryParam("matricula") String matricula) {
         List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
         ChoferDTO c = ciudadanosService.obtenerChofer(cedulaChofer);
-        if(c == null){
+        if (c == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedulaChofer).build();
         }
-        VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(matricula,pais_matricula);
-        if(v == null){
+        VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(matricula, pais_matricula);
+        if (v == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + matricula + " y pais " + pais_matricula).build();
         }
         List<AsignacionDTO> asignaciones = c.getAsignaciones();
-        for(AsignacionDTO a:asignaciones){
-            Long id = asignacionesService.ultimaAsignacionViaje(a.getGuia().getNumero());
-            if(a.getGuia().getFin()==null && vehiculosService.viajeContieneGuia(v,a.getGuia()) && a.getId()==id)
+        for (AsignacionDTO a : asignaciones) {
+            int id = asignacionesService.ultimaAsignacionViaje(a.getGuia().getNumero());
+            if (a.getGuia().getFin() == null && vehiculosService.viajeContieneGuia(v, a.getGuia()) && a.getId() == id)
                 result.add(a.getGuia());
         }
-        if(result.size()>0)
+        if (result.size() > 0)
             return Response.status(Response.Status.OK).entity(result).build();
         else
             return Response.status(Response.Status.OK).entity("No tiene viajes asignados").build();
@@ -76,18 +76,18 @@ public class gestionGuiasDeViajeEndpoint {
 
     @GET
     @Path("/listar/chofer")
-    public Response listarViajesChofer(@QueryParam("cedula") String cedulaChofer){
+    public Response listarViajesChofer(@QueryParam("cedula") String cedulaChofer) {
         List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
         ChoferDTO c = ciudadanosService.obtenerChofer(cedulaChofer);
-        if(c == null){
+        if (c == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedulaChofer).build();
         }
 
         List<AsignacionDTO> asignaciones = c.getAsignaciones();
-        for(AsignacionDTO a:asignaciones){
+        for (AsignacionDTO a : asignaciones) {
             result.add(a.getGuia());
         }
-        if(result.size()>0)
+        if (result.size() > 0)
             return Response.status(Response.Status.OK).entity(result).build();
         else
             return Response.status(Response.Status.OK).entity("No tiene viajes asignados").build();
@@ -95,60 +95,49 @@ public class gestionGuiasDeViajeEndpoint {
 
     @POST
     @Path("/crear")
-    public Response crearGuiaDeViaje(GuiaDeViajeAltaDTO nuevaGuia){
-        VehiculoDTO vehiculoDTO = vehiculosService.obtenerVehiculoMatriculaPais(nuevaGuia.getMatriculaVehiculo(), nuevaGuia.getPaisVehiculo());
-        if(vehiculoDTO != null){
-            EmpresaDTO empresaDTO = empresasService.obtenerEmpresa(nuevaGuia.getIdEmpresa());
-            if(empresaDTO != null) {
-                ChoferDTO c = ciudadanosService.obtenerChofer(nuevaGuia.getCedulaChofer());
-                if(c != null) {
-                    GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(nuevaGuia);
-                    dtguia.setNumero(guiaDeViajesService.getNextNumeroViaje());
-                    guiaDeViajesService.crearGuiaDeViaje(dtguia);
-                    GuiaDeViajeDTO guiaNueva = guiaDeViajesService.buscarGuiaViajePorNumero(dtguia.getNumero());
-                    AsignacionDTO nuevaAsignacion = new AsignacionDTO(null, guiaNueva, LocalDateTime.now());
-                    asignacionesService.agregarAsignacion(nuevaAsignacion);
-                    AsignacionDTO asignacion = asignacionesService.ultimaIngresada();
-                    c.getAsignaciones().add(asignacion);
-                    Chofer chofer = new Chofer(c);
-                    ciudadanosService.modificarHijoCiudadano(chofer);
-                    empresaDTO.getAsignaciones().add(asignacion);
-                    empresasService.modificarEmpresa(empresaDTO);
-                    vehiculoDTO.getAsignaciones().add(asignacion);
-                    vehiculosService.modificarVehiculo(vehiculoDTO);
-
-                    return Response.status(Response.Status.CREATED).entity(guiaNueva).build();
-                } else {
-                    return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + nuevaGuia.getCedulaChofer()).build();
-                }
+    public Response crearGuiaDeViaje(GuiaDeViajeAltaDTO nuevaGuia) {
+        EmpresaDTO empresaDTO = empresasService.obtenerEmpresa(nuevaGuia.getIdEmpresa());
+        if (empresaDTO != null) {
+            VehiculoDTO vehiculoDTO = vehiculosService.obtenerVehiculoMatriculaPais(nuevaGuia.getMatriculaVehiculo(), nuevaGuia.getPaisVehiculo());
+            ChoferDTO choferDTO = ciudadanosService.obtenerChofer(nuevaGuia.getCedulaChofer());
+            if (vehiculoDTO == null) {
+                return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + nuevaGuia.getMatriculaVehiculo() + " y pais " + nuevaGuia.getPaisVehiculo()).build();
+            } else if (choferDTO == null) {
+                return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + nuevaGuia.getCedulaChofer()).build();
+            } else if (empresasService.contieneChofer(choferDTO.getIdCiudadano(), empresaDTO) && empresasService.contieneVehiculo(vehiculoDTO.getId(), empresaDTO)){
+                GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(nuevaGuia);
+                dtguia.setNumero(guiaDeViajesService.getNextNumeroViaje());
+                guiaDeViajesService.crearGuiaDeViaje(dtguia, choferDTO, empresaDTO, vehiculoDTO);
+                GuiaDeViajeDTO guiaNueva = guiaDeViajesService.buscarGuiaViajePorNumero(dtguia.getNumero());
+                return Response.status(Response.Status.CREATED).entity(guiaNueva).build();
             } else {
-                return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + nuevaGuia.getIdEmpresa()).build();
+                return Response.status(Response.Status.NOT_FOUND).entity("El chofer o el vehiculo ingresado no pertenece a la empresa seleccionada").build();
             }
         } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + nuevaGuia.getMatriculaVehiculo() + " y pais " + nuevaGuia.getPaisVehiculo()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + nuevaGuia.getIdEmpresa()).build();
         }
     }
 
     @POST
     @Path("/modificar")
-    public Response modificarGuiaDeViaje(GuiaDeViajeModificacionDTO dtmodificacion){
-        VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(dtmodificacion.getMatriculaVehiculo(),dtmodificacion.getPaisVehiculo());
-        if(v == null){
+    public Response modificarGuiaDeViaje(GuiaDeViajeModificacionDTO dtmodificacion) {
+        VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(dtmodificacion.getMatriculaVehiculo(), dtmodificacion.getPaisVehiculo());
+        if (v == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + dtmodificacion.getMatriculaVehiculo() + " y pais " + dtmodificacion.getPaisVehiculo()).build();
         }
 
         EmpresaDTO e = empresasService.obtenerEmpresa(dtmodificacion.getIdEmpresa());
-        if(e == null){
+        if (e == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + dtmodificacion.getIdEmpresa()).build();
         }
 
         ChoferDTO c = ciudadanosService.obtenerChofer(dtmodificacion.getCedulaChofer());
-        if(c == null){
+        if (c == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + dtmodificacion.getCedulaChofer()).build();
         }
 
         GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(dtmodificacion.getNumeroViaje());
-        if(g == null){
+        if (g == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe viaje con el identificador " + dtmodificacion.getNumeroViaje()).build();
         }
 
@@ -159,46 +148,47 @@ public class gestionGuiasDeViajeEndpoint {
         g.setVolumenCarga(dtmodificacion.getVolumenCarga());
 
         guiaDeViajesService.modificarGuiaDeViaje(g);
-        AsignacionDTO a = new AsignacionDTO(null, g, LocalDateTime.now());
+        int idAsignacion = asignacionesService.ultimaIngresada().getId() +1 ;
+        AsignacionDTO a = new AsignacionDTO(idAsignacion,g, LocalDateTime.now());
 //        Long id_asignacion = asignacionesService.(a);
 //        a = asignacionDAO.buscarAsignacion(id_asignacion);
         vehiculosService.asignarGuia(v.getId(), a);
         empresasService.agregarAsignacionAEmpresa(e.getId(), a);
         Asignacion anew = new Asignacion(a);
-    //    ciudadanosService.asingarViajeResponsable(r.getIdCiudadano(), anew);
+        //    ciudadanosService.asingarViajeResponsable(r.getIdCiudadano(), anew);
         ciudadanosService.asingarViajeChofer(c.getIdCiudadano(), anew);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
     @Path("/finalizar/{cedula}/{numero}")
-    public Response finalizarViaje(@PathParam("cedula") String cedulaChofer,@PathParam("numero") int numero_viaje){
+    public Response finalizarViaje(@PathParam("cedula") String cedulaChofer, @PathParam("numero") int numero_viaje) {
         ChoferDTO c = ciudadanosService.obtenerChofer(cedulaChofer);
-        if(c == null){
+        if (c == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedulaChofer).build();
         }
 
         GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(numero_viaje);
-        if(g == null){
+        if (g == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numero_viaje).build();
         }
 
-        if(!ciudadanosService.contieneGuiaViajeChofer(c.getCedula(),g.getNumero())){
+        if (!ciudadanosService.contieneGuiaViajeChofer(c.getCedula(), g.getNumero())) {
             return Response.status(Response.Status.NOT_FOUND).entity("El chofer " + c.getCedula() + " no tiene el viaje con el identificador " + numero_viaje).build();
         }
 
-        if(g.getFin()!=null){
+        if (g.getFin() != null) {
             return Response.status(Response.Status.CONFLICT).entity("El viaje con el identificador " + g.getNumero() + " ya esta finalizado").build();
         }
 
-        try{
+        try {
             CloseableHttpClient hc = HttpClientBuilder.create().build();
             VehiculoDTO v = vehiculosService.buscarVehiculoPorGuia(g.getNumero());
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             HttpGet hg = new HttpGet("http://localhost:9096/vehiculos/listarPesajesPorFecha?matricula=" + v.getMatricula() + "&pais=" + v.getPais() + "&fecha=" + simpleDateFormat.format(new Date()) + "&numeroviaje=" + g.getNumero());
             CloseableHttpResponse hr = hc.execute(hg);
-            if(hr.getStatusLine().getStatusCode()==200){
+            if (hr.getStatusLine().getStatusCode() == 200) {
                 HttpEntity entity = hr.getEntity();
                 String responseBody = EntityUtils.toString(entity);
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -233,22 +223,22 @@ public class gestionGuiasDeViajeEndpoint {
 
     @PUT
     @Path("/iniciar/{cedula}/{numero}")
-    public Response iniciarViaje(@PathParam("cedula") String cedulaChofer,@PathParam("numero") int numero_viaje){
+    public Response iniciarViaje(@PathParam("cedula") String cedulaChofer, @PathParam("numero") int numero_viaje) {
         ChoferDTO c = ciudadanosService.obtenerChofer(cedulaChofer);
-        if(c == null){
+        if (c == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedulaChofer).build();
         }
 
         GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(numero_viaje);
-        if(g == null){
+        if (g == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numero_viaje).build();
         }
 
-        if(!ciudadanosService.contieneGuiaViajeChofer(c.getCedula(),g.getNumero())){
+        if (!ciudadanosService.contieneGuiaViajeChofer(c.getCedula(), g.getNumero())) {
             return Response.status(Response.Status.NOT_FOUND).entity("El chofer " + c.getCedula() + " no tiene el viaje con el identificador " + numero_viaje).build();
         }
 
-        if(g.getInicio()!=null){
+        if (g.getInicio() != null) {
             return Response.status(Response.Status.CONFLICT).entity("El viaje con el identificador " + g.getNumero() + " ya esta inicializado").build();
         }
 
@@ -258,22 +248,27 @@ public class gestionGuiasDeViajeEndpoint {
     }
 
     @DELETE
-    @Path("/borrar/{numempresa}/{numviaje}")
-    public Response borrarGuia(@PathParam("numviaje") int numeroViaje, @PathParam("numempresa") int numeroEmpresa){
-        GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje);
-        if(g == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numeroViaje).build();
+    @Path("/borrar/{idEmpresa}/{idGuia}")
+    public Response borrarGuia(@PathParam("idGuia") int idGuia, @PathParam("idEmpresa") int idEmpresa) {
+        try {
+            GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorId(idGuia);
+            if (g != null) {
+                System.out.println("Guia id: " + g.getId());
+                EmpresaDTO e = empresasService.obtenerEmpresa(idEmpresa);
+                if (e != null) {
+                    System.out.println("Empresa id: " + e.getId());
+                    guiaDeViajesService.borrarGuiaDeViaje(g.getId(), e.getId());
+                    return Response.status(Response.Status.OK).build();
+                } else {
+                    return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + idEmpresa).build();
+                }
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el id " + idGuia).build();
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Vaya uno a saber que mierda le pinto").build();
         }
-        EmpresaDTO e = empresasService.obtenerEmpresa(numeroEmpresa);
-        if(e == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + numeroEmpresa).build();
-        }
-//        vehiculosService.borrarGuia(numeroViaje);
-//        ciudadanosService.borrarGuia(numeroViaje, numeroEmpresa);
-//        empresasService.borrarGuia(numeroViaje);
-//        asignacionesService.borrarGuiaEnAsignacion(numeroViaje);
-        guiaDeViajesService.borrarGuiaDeViaje(g.getId(), e.getId());
-        return Response.status(Response.Status.OK).build();
+
     }
 
 }

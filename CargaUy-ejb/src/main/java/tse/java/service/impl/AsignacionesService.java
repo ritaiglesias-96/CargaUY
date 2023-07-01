@@ -17,7 +17,7 @@ public class AsignacionesService implements IAsignacionesService {
 
     @Override
     public void borrarGuiaEnAsignacion(int numeroViaje) {
-        List<Long> asignacionesBorrar = new ArrayList<Long>();
+        List<Integer> asignacionesBorrar = new ArrayList<>();
         for(AsignacionDTO a : asignacionDAO.listarAsignaciones()){
             if(a.getGuia().getNumero() == numeroViaje){
                 a.setGuia(null);
@@ -25,7 +25,7 @@ public class AsignacionesService implements IAsignacionesService {
                 asignacionesBorrar.add(a.getId());
             }
         }
-        for(Long id:asignacionesBorrar)
+        for(int id:asignacionesBorrar)
             asignacionDAO.borrarAsignacion(id);
     }
 
@@ -39,11 +39,11 @@ public class AsignacionesService implements IAsignacionesService {
     }
 
     @Override
-    public Long ultimaAsignacionViaje(int numeroViaje) {
-        Long ret = Long.MIN_VALUE;
+    public int ultimaAsignacionViaje(int numeroViaje) {
+        int ret = 0;
         for(AsignacionDTO a:asignacionDAO.listarAsignaciones()){
-            if(a.getGuia().getNumero()==numeroViaje){
-                Long id = a.getId();
+            if(a.getGuia().getNumero() == numeroViaje){
+                int id = a.getId();
                 if(id > ret){
                     ret = id;
                 }

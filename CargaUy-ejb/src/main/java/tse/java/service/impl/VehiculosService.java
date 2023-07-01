@@ -48,7 +48,7 @@ public class VehiculosService implements IVehiculosService{
         vehiculosDAO.modificarVehiculo(vehiculoModificado);
     }
 
-    public void eliminarVehiculo(Long id){
+    public void eliminarVehiculo(int id){
         vehiculosDAO.eliminarVehiculo(id);
     }
     @Override
@@ -57,7 +57,7 @@ public class VehiculosService implements IVehiculosService{
     }
 
     @Override
-    public List<PesajeDTO> listarGuiasDeVehiculo(Long id, Date fecha) {
+    public List<PesajeDTO> listarGuiasDeVehiculo(int id, Date fecha) {
         String msg = "Me pasaron por rest los parametros: idvehiculo=" + id + ", fechaViajes=" + fecha;
         Logger.getLogger(VehiculosService.class.getName()).log(Level.INFO, msg);
         Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(id);
@@ -74,7 +74,7 @@ public class VehiculosService implements IVehiculosService{
         List<AsignacionDTO> asignaciones = v.getAsignaciones();
         for(AsignacionDTO a:asignaciones){
             if(a.getGuia().getNumero() == g.getNumero()){
-                Long id = asignacionService.ultimaAsignacionViaje(g.getNumero());
+                int id = asignacionService.ultimaAsignacionViaje(g.getNumero());
                 if(a.getId()==id){
                     return true;
                 } else {
@@ -87,12 +87,12 @@ public class VehiculosService implements IVehiculosService{
         return false;
     }
 
-    public VehiculoDTO obtenerVehiculoPorId(Long id) {
+    public VehiculoDTO obtenerVehiculoPorId(int id) {
         Vehiculo v = vehiculosDAO.obtenerVehiculoId(id);
         return new VehiculoDTO(v);
     }
     @Override
-    public void asignarGuia(Long vehiculo_id, AsignacionDTO a) {
+    public void asignarGuia(int vehiculo_id, AsignacionDTO a) {
         Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(vehiculo_id);
         VehiculoDTO v = new VehiculoDTO(vehiculo);
         List<AsignacionDTO> asignaciones = v.getAsignaciones();
@@ -126,7 +126,7 @@ public class VehiculosService implements IVehiculosService{
     public VehiculoDTO buscarVehiculoPorGuia(int numero) {
         for(VehiculoDTO v:vehiculosDAO.obtenerVehiculos()){
             for(AsignacionDTO a:v.getAsignaciones()){
-                if(a.getId().intValue()==asignacionService.ultimaAsignacionViaje(numero).intValue())
+                if(a.getId() == asignacionService.ultimaAsignacionViaje(numero))
                     return v;
             }
         }

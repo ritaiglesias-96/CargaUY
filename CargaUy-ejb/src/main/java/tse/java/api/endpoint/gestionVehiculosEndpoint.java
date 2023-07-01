@@ -35,7 +35,7 @@ public class gestionVehiculosEndpoint {
 
     @GET
     @Path("/{id}")
-    public Response getVehiculoById(@PathParam("id") Long id){
+    public Response getVehiculoById(@PathParam("id") int id){
         try{
             VehiculoDTO vehiculo = vs.obtenerVehiculoPorId(id);
             return Response.status(Response.Status.OK).entity(vehiculo).build();
@@ -81,7 +81,7 @@ public class gestionVehiculosEndpoint {
 
     @DELETE
     @Path("/eliminar/{idVehiculo}")
-    public Response eliminarVehiculo(@PathParam("idVehiculo") Long idVehiculo){
+    public Response eliminarVehiculo(@PathParam("idVehiculo") int idVehiculo){
         VehiculoDTO v = vs.obtenerVehiculoPorId(idVehiculo);
         if(v == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo").build();

@@ -10,9 +10,9 @@ import java.util.List;
 public interface IAsignacionDAO {
 
     public void altaAsignacion(AsignacionDTO a);
-    public AsignacionDTO buscarAsignacion(Long id);
+    public AsignacionDTO buscarAsignacion(int id);
     public void modificarAsignacion(AsignacionDTO a);
     public List<AsignacionDTO> listarAsignaciones();
-    public void borrarAsignacion(Long id);
+    public void borrarAsignacion(int id);
     AsignacionDTO ultimaIngresada();
 }

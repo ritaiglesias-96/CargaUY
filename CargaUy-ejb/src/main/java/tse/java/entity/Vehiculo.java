@@ -17,7 +17,7 @@ public class Vehiculo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     private String matricula;
     private String pais;
     private String marca;
@@ -34,7 +34,7 @@ public class Vehiculo implements Serializable {
     private Empresa empresa;
 
 
-    public Vehiculo(Long id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
+    public Vehiculo(int id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
                     Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC, Empresa empresa, List<Asignacion> asignaciones) {
         this.id = id;
         this.matricula = matricula;
@@ -86,11 +86,11 @@ public class Vehiculo implements Serializable {
 
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

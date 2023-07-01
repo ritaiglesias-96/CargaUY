@@ -85,4 +85,24 @@ public class EmpresasService implements IEmpresasService {
         empresasDAO.modificarEmpresa(empresa);
     }
 
+    @Override
+    public boolean contieneChofer(int choferId, EmpresaDTO empresaDTO) {
+        for (ChoferDTO c: empresaDTO.getChoferes()){
+            if(c.getIdCiudadano() == choferId){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean contieneVehiculo(int vehiculoId, EmpresaDTO empresaDTO) {
+        for (VehiculoDTO v: empresaDTO.getVehiculos()){
+            if(v.getId() == vehiculoId){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

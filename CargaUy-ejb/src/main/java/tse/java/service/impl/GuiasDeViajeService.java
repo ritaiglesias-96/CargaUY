@@ -10,9 +10,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import tse.java.dto.AsignacionDTO;
-import tse.java.dto.GuiaDeViajeDTO;
-import tse.java.dto.PesajeDTO;
+import tse.java.dto.*;
 import tse.java.entity.GuiaDeViaje;
 import tse.java.entity.Pesaje;
 import tse.java.persistance.IAsignacionDAO;
@@ -41,12 +39,12 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     IAsignacionDAO asignacionDAO;
 
     @Override
-    public void crearGuiaDeViaje(GuiaDeViajeDTO g) {
-        guiaviajeDao.altaGuiaDeViaje(g);
+    public void crearGuiaDeViaje(GuiaDeViajeDTO g, ChoferDTO c, EmpresaDTO e, VehiculoDTO v) {
+        guiaviajeDao.altaGuiaDeViaje(g, c, e, v);
     }
 
     @Override
-    public void borrarGuiaDeViaje(Long id, int idEmpresa) {
+    public void borrarGuiaDeViaje(int id, int idEmpresa) {
         guiaviajeDao.borrarGuiaDeViaje(id, idEmpresa);
     }
 
@@ -99,5 +97,9 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
         return guiaviajeDao.buscarGuiaViajePorNumero(numeroGuia);
     }
 
-
+    @Override
+    public GuiaDeViajeDTO buscarGuiaViajePorId(int numeroGuia) {
+        System.out.println("llega service");
+        return guiaviajeDao.buscarGuiaViajePorId(numeroGuia);
+    }
 }

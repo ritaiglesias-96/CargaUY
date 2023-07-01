@@ -8,7 +8,7 @@ import javax.ejb.Local;
 public interface IAsignacionesService {
 
     public void borrarGuiaEnAsignacion(int numeroViaje);
-    public Long ultimaAsignacionViaje(int numeroViaje);
+    public int ultimaAsignacionViaje(int numeroViaje);
     void agregarAsignacion(AsignacionDTO asignacionDTO);
     AsignacionDTO ultimaIngresada();
 }
