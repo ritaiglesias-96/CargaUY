@@ -186,5 +186,15 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
         return Integer.parseInt(q.getResultList().get(0).toString());
     }
 
+    @Override
+    public GuiaDeViajeDTO buscarGuiaViajePorId(int idGuia) {
+        System.out.println("llega dao");
+        GuiaDeViaje gv = em.find(GuiaDeViaje.class, idGuia);
+        System.out.println("obtiene gv:" + gv.getId());
+        GuiaDeViajeDTO gvDTO = gv.darDto();
+        System.out.println("devuelve el dt:" + gvDTO.getId());
+        return gvDTO;
+    }
+
 
 }
