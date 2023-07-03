@@ -185,7 +185,7 @@ public class GestionGuiasDeViajeEndpoint {
             VehiculoDTO v = vehiculosService.buscarVehiculoPorGuia(g.getNumero());
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-            HttpGet hg = new HttpGet("http://localhost:9096/vehiculos/listarPesajesPorFecha?matricula=" + v.getMatricula() + "&pais=" + v.getPais() + "&fecha=" + simpleDateFormat.format(new Date()) + "&numeroviaje=" + g.getNumero());
+            HttpGet hg = new HttpGet("https://nodo-balanzas-mbravo95-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/nodobalanzas/vehiculos/listarPesajesPorFecha?matricula=" + v.getMatricula() + "&pais=" + v.getPais() + "&fecha=" + simpleDateFormat.format(new Date()) + "&numeroviaje=" + g.getNumero());
             CloseableHttpResponse hr = hc.execute(hg);
             if (hr.getStatusLine().getStatusCode() == 200) {
                 HttpEntity entity = hr.getEntity();
