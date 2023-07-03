@@ -1,0 +1,66 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="/pdi"
+           xmlns:tns="/pdi"
+           elementFormDefault="qualified">
+
+    <xs:element name="getEmpresaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="rut" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getEmpresaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="empresa" type="tns:empresa" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCiudadanoRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cedula" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCiudadanoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ciudadano" type="tns:ciudadano" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="empresa">
+        <xs:sequence>
+            <xs:element name="rut" type="xs:string" />
+            <xs:element name="nombrePublico" type="xs:string"/>
+            <xs:element name="dirPrincipal" type="xs:string"/>
+            <xs:element name="razonSocial" type="xs:string"/>
+            <xs:element name="nroEmpresa" type="xs:int"/>
+            <xs:element name="responsable" type="tns:responsable" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="responsable">
+        <xs:sequence>
+            <xs:element name="cedula" type="xs:string" />
+            <xs:element name="nombre" type="xs:string" />
+            <xs:element name="apellido" type="xs:string" />
+            <xs:element name="email" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ciudadano">
+        <xs:sequence>
+            <xs:element name="cedula" type="xs:string" />
+            <xs:element name="nombre" type="xs:string"/>
+            <xs:element name="apellido" type="xs:string"/>
+            <xs:element name="email" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

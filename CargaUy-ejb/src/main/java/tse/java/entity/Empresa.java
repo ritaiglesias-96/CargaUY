@@ -7,6 +7,8 @@ import java.util.List;
 
 import tse.java.dto.AsignacionDTO;
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.VehiculoDTO;
+
 @Entity
 @Table(name="\"Empresa\"")
 @NamedQuery(name="Empresa.findAll", query="SELECT e FROM Empresa e")
@@ -21,13 +23,11 @@ public class Empresa implements Serializable {
     private int nroEmpresa;
     private String dirPrincipal;
 
-
-
     @OneToOne
     @JoinColumn(name = "responsable_id", nullable = true)
     private Responsable responsable;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Vehiculo> vehiculos = new ArrayList<>();
     /* private ArrayList<Choferes> choferes TODO */
 
@@ -69,7 +69,18 @@ public class Empresa implements Serializable {
         this.nombrePublico = e.getNombrePublico();
         this.razonSocial = e.getRazonSocial();
         this.nroEmpresa = e.getNroEmpresa();
-        this.dirPrincipal = e.getDirPrincipal() ;
+        this.dirPrincipal = e.getDirPrincipal();
+
+        if(!e.getAsignaciones().isEmpty()) {
+            for (AsignacionDTO a : e.getAsignaciones()) {
+                this.asignaciones.add(new Asignacion(a));
+            }
+        }
+        if(!e.getVehiculos().isEmpty()) {
+            for (VehiculoDTO v : e.getVehiculos()) {
+                this.vehiculos.add(new Vehiculo(v));
+            }
+        }
     }
 
     // Getters y Setters

@@ -1,6 +1,6 @@
 package tse.java.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class PermisosVehiculoDTO {
     private Long idVehiculo;
@@ -28,13 +28,13 @@ public class PermisosVehiculoDTO {
 
     public PermisosVehiculoDTO(VehiculoDTO v) {
         this.idVehiculo = v.getId();
-        this.idEmpresa = v.getIdEmpresa();
+        this.idEmpresa = v.getEmpresaId();
         this.matricula = v.getMatricula();
         this.pais = v.getPais();
-        this.fechaFinITV = v.getFechaFinITV();
+        this.fechaFinITV = Date.valueOf(v.getFechaFinITV());
         this.pnc = v.getPnc();
-        this.fechaInicioPNC = v.getFechaInicioPNC();
-        this.fechaFinPNC = v.getFechaFinPNC();
+        this.fechaInicioPNC = Date.valueOf(v.getFechaInicioPNC());
+        this.fechaFinPNC = Date.valueOf(v.getFechaFinPNC());
     }
 
     public Long getIdVehiculo() {

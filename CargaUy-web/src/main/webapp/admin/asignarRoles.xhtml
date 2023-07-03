@@ -18,8 +18,7 @@
         <div class="ui-g-12 ui-md-9 ui-g-nopad">
             <div class="ui-g-12">
                 <div style="justify-content: flex-end;display: flex;" class="log">
-                    <p:commandButton action="#{UserManager.logout}" value="Salir" class="loginButton"
-                                     icon="pi pi-sign-out"/>
+                    <p:commandButton action="#{UserManager.logout}" value="Salir" class="defaultButton" icon="pi pi-sign-out" />
                 </div>
             </div>
         </div>
@@ -41,7 +40,7 @@
 
                         <h:outputText>Listado de ciudadanos</h:outputText>
 
-                        <p:dataTable value="#{asignarRoles.getListaCiudadanos()}" var="ciudadano" editable="true">
+                        <p:dataTable value="#{asignarRoles.getListaCiudadanos()}" var="ciudadano" editable="true"  style="margin-bottom: 100px">
 
                             <p:ajax event="rowEdit" listener="#{asignarRoles.onRowEdit}" update=":form:msgs"/>
                             <p:ajax event="rowEditCancel" listener="#{asignarRoles.onRowCancel}"
@@ -105,10 +104,8 @@
                 </div>
             </div>
         </div>
-        <div class="ui-g-12 footer">
-            <div class="ui-g-2"><p>Cerrar Sesion</p></div>
-            <div class="ui-g-2"><p>Otras opciones?</p></div>
-            <div class="ui-g-2"><p>No se me ocurre</p></div>
+        <div class="footer">
+            <p>Todos los derechos reservados &copy; CargaUY</p>
         </div>
     </div>
 </h:body>

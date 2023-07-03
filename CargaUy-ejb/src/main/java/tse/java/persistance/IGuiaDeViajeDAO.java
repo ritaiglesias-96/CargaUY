@@ -18,4 +18,5 @@ public interface IGuiaDeViajeDAO {
     public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg);
     public int getNextNumeroViaje();
     public GuiaDeViajeDTO buscarGuiaViajePorNumero(int numero_guia);
+    public int cantidadViajesPorAnioRubro(int anio, String rubro);
 }
