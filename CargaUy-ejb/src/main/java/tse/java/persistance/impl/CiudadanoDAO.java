@@ -3,6 +3,7 @@ package tse.java.persistance.impl;
 import tse.java.dto.CiudadanoDTO;
 import tse.java.entity.Chofer;
 import tse.java.entity.Ciudadano;
+import tse.java.entity.Usuario;
 import tse.java.persistance.ICiudadanoDAO;
 import tse.java.util.qualifier.TSE2023DB;
 

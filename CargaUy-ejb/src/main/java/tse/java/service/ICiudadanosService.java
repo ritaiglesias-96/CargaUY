@@ -1,7 +1,6 @@
 package tse.java.service;
 
 import tse.java.dto.ChoferDTO;
-import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.entity.Asignacion;
 import tse.java.entity.Ciudadano;
 import tse.java.entity.Empresa;
