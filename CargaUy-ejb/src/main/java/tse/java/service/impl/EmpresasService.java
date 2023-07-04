@@ -6,6 +6,7 @@ import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.persistance.IVehiculosDAO;
+import tse.java.service.IAsignacionesService;
 import tse.java.service.IEmpresasService;
 import tse.java.service.IVehiculosService;
 import tse.java.soappdi.EmpresaServicePort;
@@ -39,9 +40,24 @@ public class EmpresasService implements IEmpresasService {
     @EJB
     IVehiculosDAO vehiculosDAO;
 
+    @EJB
+    IAsignacionesService asignacionService;
+
+
     @Override
     public ArrayList<EmpresaDTO> obtenerEmpresas() {
         return empresasDAO.obtenerEmpresas();
+    }
+
+    @Override
+    public EmpresaDTO obtenerEmpresaPorGuia(int numeroGuia) {
+        for(EmpresaDTO e:empresasDAO.obtenerEmpresas()){
+            for(AsignacionDTO a:e.getAsignaciones()){
+                if(a.getId() == asignacionService.ultimaAsignacionViaje(numeroGuia))
+                    return e;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -77,6 +93,16 @@ public class EmpresasService implements IEmpresasService {
             Logger.getLogger(EmpresasService.class.getName()).log(Level.INFO, "No se encontro el vehiculo y/o la empresa con los parametros ingresados");
             return new ArrayList<PesajeDTO>();
         }
+    }
+
+    @Override
+    public void agregarVehiculoAEmpresa(int idEmpresa, VehiculoDTO vehiculo) {
+        empresasDAO.agregarVehiculo(idEmpresa, vehiculo);
+    }
+
+    @Override
+    public void borrarVehiculo(int idEmpresa, int idVehiculo) {
+        empresasDAO.eliminarVehiculo(idEmpresa, idVehiculo);
     }
 
     public List<VehiculoDTO> listarVehiculos(int id) {

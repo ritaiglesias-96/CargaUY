@@ -13,6 +13,7 @@ import tse.java.dto.*;
 public interface IEmpresasService {
 
     ArrayList<EmpresaDTO> obtenerEmpresas();
+    EmpresaDTO obtenerEmpresaPorGuia(int numeroGuia);
     EmpresaDTO obtenerEmpresa(int id);
     int agregarEmpresa(String rut);
     void modificarEmpresa(EmpresaDTO empresaDTO);
@@ -20,6 +21,8 @@ public interface IEmpresasService {
     List<PesajeDTO> listarGuias(int numero_empresa, String matricula, String pais, Date fecha);
     List<VehiculoDTO> listarVehiculos(int id);
     void agregarAsignacionAEmpresa(int idEmpresa, AsignacionDTO a);
+    public void agregarVehiculoAEmpresa(int idEmpresa, VehiculoDTO vehiculo);
+    public void borrarVehiculo(int idEmpresa, int idVehiculo);
     boolean contieneChofer(int choferId, EmpresaDTO empresaDTO);
     boolean contieneVehiculo(int vehiculoId, EmpresaDTO empresaDTO);
 

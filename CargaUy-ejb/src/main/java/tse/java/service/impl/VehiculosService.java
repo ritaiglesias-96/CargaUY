@@ -28,11 +28,6 @@ public class VehiculosService implements IVehiculosService{
     IGuiaDeViajesService guiasDeViajeService;
 
     @EJB
-    IEmpresasDAO empresasDAO;
-    @EJB
-    IGuiaDeViajeDAO guiaDeViajeDAO;
-
-    @EJB
     IAsignacionesService asignacionService;
 
     @Override
@@ -92,37 +87,6 @@ public class VehiculosService implements IVehiculosService{
         return new VehiculoDTO(v);
     }
     @Override
-    public void asignarGuia(int vehiculo_id, AsignacionDTO a) {
-        Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(vehiculo_id);
-        VehiculoDTO v = new VehiculoDTO(vehiculo);
-        List<AsignacionDTO> asignaciones = v.getAsignaciones();
-        asignaciones.add(a);
-        v.setAsignaciones(asignaciones);
-        vehiculosDAO.modificarVehiculo(v);
-    }
-
-    @Override
-    public void borrarGuia(int numero_guia) {
-        GuiaDeViajeDTO g = guiaDeViajeDAO.buscarGuiaViajePorNumero(numero_guia);
-        for(VehiculoDTO v:vehiculosDAO.obtenerVehiculos()){
-            List<AsignacionDTO> asignaciones = v.getAsignaciones();
-            asignaciones.removeAll(listaAsignacionesConGuia(v,numero_guia));
-            v.setAsignaciones(asignaciones);
-            vehiculosDAO.modificarVehiculo(v);
-        }
-    }
-
-    // Auxiliar
-    private List<AsignacionDTO> listaAsignacionesConGuia(VehiculoDTO v, int numeroGuia){
-        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
-        for(AsignacionDTO a:v.getAsignaciones()){
-            if(a.getGuia().getNumero()==numeroGuia)
-                result.add(a);
-        }
-        return result;
-    }
-
-    @Override
     public VehiculoDTO buscarVehiculoPorGuia(int numero) {
         for(VehiculoDTO v:vehiculosDAO.obtenerVehiculos()){
             for(AsignacionDTO a:v.getAsignaciones()){
@@ -130,13 +94,6 @@ public class VehiculosService implements IVehiculosService{
                     return v;
             }
         }
-        return null;
-    }
-
-    private AsignacionDTO buscarGuiaenVehiculos(VehiculoDTO v, GuiaDeViajeDTO g) {
-        for(AsignacionDTO a:v.getAsignaciones())
-            if(a.getGuia().getNumero()==g.getNumero())
-                return a;
         return null;
     }
 

@@ -73,6 +73,7 @@ public class GestionGuiasDeViajeEndpoint {
         else
             return Response.status(Response.Status.OK).entity("No tiene viajes asignados").build();
     }
+
     @GET
     @Path("/listar/chofer")
     public Response listarViajesChofer(@QueryParam("cedula") String cedulaChofer) {
@@ -103,7 +104,7 @@ public class GestionGuiasDeViajeEndpoint {
                 return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + nuevaGuia.getMatriculaVehiculo() + " y pais " + nuevaGuia.getPaisVehiculo()).build();
             } else if (choferDTO == null) {
                 return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + nuevaGuia.getCedulaChofer()).build();
-            } else if (empresasService.contieneChofer(choferDTO.getIdCiudadano(), empresaDTO) && empresasService.contieneVehiculo(vehiculoDTO.getId(), empresaDTO)){
+            } else if (empresasService.contieneChofer(choferDTO.getIdCiudadano(), empresaDTO) && empresasService.contieneVehiculo(vehiculoDTO.getId(), empresaDTO)) {
                 GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(nuevaGuia);
                 dtguia.setNumero(guiaDeViajesService.getNextNumeroViaje());
                 guiaDeViajesService.crearGuiaDeViaje(dtguia, choferDTO, empresaDTO, vehiculoDTO);
@@ -120,43 +121,33 @@ public class GestionGuiasDeViajeEndpoint {
     @POST
     @Path("/modificar")
     public Response modificarGuiaDeViaje(GuiaDeViajeModificacionDTO dtmodificacion) {
-        VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(dtmodificacion.getMatriculaVehiculo(), dtmodificacion.getPaisVehiculo());
-        if (v == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + dtmodificacion.getMatriculaVehiculo() + " y pais " + dtmodificacion.getPaisVehiculo()).build();
-        }
-
-        EmpresaDTO e = empresasService.obtenerEmpresa(dtmodificacion.getIdEmpresa());
-        if (e == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + dtmodificacion.getIdEmpresa()).build();
-        }
-
-        ChoferDTO c = ciudadanosService.obtenerChofer(dtmodificacion.getCedulaChofer());
-        if (c == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + dtmodificacion.getCedulaChofer()).build();
-        }
-
         GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(dtmodificacion.getNumeroViaje());
         if (g == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe viaje con el identificador " + dtmodificacion.getNumeroViaje()).build();
+        } else {
+            VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(dtmodificacion.getMatriculaVehiculo(), dtmodificacion.getPaisVehiculo());
+            if (v == null) {
+                return Response.status(Response.Status.NOT_FOUND).entity("No existe vehiculo con la matricula " + dtmodificacion.getMatriculaVehiculo() + " y pais " + dtmodificacion.getPaisVehiculo()).build();
+            } else {
+                EmpresaDTO e = empresasService.obtenerEmpresa(dtmodificacion.getIdEmpresa());
+                if (e == null) {
+                    return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con el numero " + dtmodificacion.getIdEmpresa()).build();
+                } else {
+                    ChoferDTO c = ciudadanosService.obtenerChofer(dtmodificacion.getCedulaChofer());
+                    if (c == null) {
+                        return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + dtmodificacion.getCedulaChofer()).build();
+                    } else {
+                        g.setOrigen(dtmodificacion.getOrigen());
+                        g.setDestino(dtmodificacion.getDestino());
+                        g.setRubroCliente(dtmodificacion.getRubroCliente());
+                        g.setTipoCarga(dtmodificacion.getTipoCarga());
+                        g.setVolumenCarga(dtmodificacion.getVolumenCarga());
+                        guiaDeViajesService.modificarGuiaDeViaje(g, c, e, v);
+                        return Response.status(Response.Status.CREATED).build();
+                    }
+                }
+            }
         }
-
-        g.setOrigen(dtmodificacion.getOrigen());
-        g.setDestino(dtmodificacion.getDestino());
-        g.setRubroCliente(dtmodificacion.getRubroCliente());
-        g.setTipoCarga(dtmodificacion.getTipoCarga());
-        g.setVolumenCarga(dtmodificacion.getVolumenCarga());
-
-        guiaDeViajesService.modificarGuiaDeViaje(g);
-        int idAsignacion = asignacionesService.ultimaIngresada().getId() +1 ;
-        AsignacionDTO a = new AsignacionDTO(idAsignacion,g, LocalDateTime.now());
-//        Long id_asignacion = asignacionesService.(a);
-//        a = asignacionDAO.buscarAsignacion(id_asignacion);
-        vehiculosService.asignarGuia(v.getId(), a);
-        empresasService.agregarAsignacionAEmpresa(e.getId(), a);
-        Asignacion anew = new Asignacion(a);
-        //    ciudadanosService.asingarViajeResponsable(r.getIdCiudadano(), anew);
-        ciudadanosService.asingarViajeChofer(c.getIdCiudadano(), anew);
-        return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
@@ -180,9 +171,9 @@ public class GestionGuiasDeViajeEndpoint {
             return Response.status(Response.Status.CONFLICT).entity("El viaje con el identificador " + g.getNumero() + " ya esta finalizado").build();
         }
 
+        VehiculoDTO v = vehiculosService.buscarVehiculoPorGuia(g.getNumero());
         try {
             CloseableHttpClient hc = HttpClientBuilder.create().build();
-            VehiculoDTO v = vehiculosService.buscarVehiculoPorGuia(g.getNumero());
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             HttpGet hg = new HttpGet("https://nodo-balanzas-mbravo95-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/nodobalanzas/vehiculos/listarPesajesPorFecha?matricula=" + v.getMatricula() + "&pais=" + v.getPais() + "&fecha=" + simpleDateFormat.format(new Date()) + "&numeroviaje=" + g.getNumero());
@@ -216,7 +207,7 @@ public class GestionGuiasDeViajeEndpoint {
 
         g = guiaDeViajesService.buscarGuiaViajePorNumero(g.getNumero());
         g.setFin(new Date());
-        guiaDeViajesService.modificarGuiaDeViaje(g);
+        guiaDeViajesService.modificarGuiaDeViajeSinAsignacion(g);
         return Response.status(Response.Status.OK).build();
     }
 
@@ -242,7 +233,7 @@ public class GestionGuiasDeViajeEndpoint {
         }
 
         g.setInicio(new Date());
-        guiaDeViajesService.modificarGuiaDeViaje(g);
+        guiaDeViajesService.modificarGuiaDeViajeSinAsignacion(g);
         return Response.status(Response.Status.OK).build();
     }
 

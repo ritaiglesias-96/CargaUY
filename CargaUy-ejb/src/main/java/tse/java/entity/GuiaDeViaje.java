@@ -12,11 +12,11 @@ import tse.java.dto.PesajeDTO;
 @Entity
 @Table(name = "\"GuiaDeViaje\"")
 public class GuiaDeViaje {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column(unique = true)
     private int numero;
     private String rubroCliente;
     private String tipoCarga;
@@ -53,9 +53,10 @@ public class GuiaDeViaje {
         this.pesajes = pesajes;
     }
 
-    public GuiaDeViaje(){}
+    public GuiaDeViaje() {
+    }
 
-    public GuiaDeViaje(GuiaDeViajeDTO guia){
+    public GuiaDeViaje(GuiaDeViajeDTO guia) {
         this.id = guia.getId();
         this.numero = guia.getNumero();
         this.pesajes = procesarListaPesajes(guia.getPesajes());
@@ -157,26 +158,26 @@ public class GuiaDeViaje {
         this.tipoCarga = tipoCarga;
     }
 
-    public List<PesajeDTO> procesarLista(){
+    public List<PesajeDTO> procesarLista() {
         List<PesajeDTO> result = new ArrayList<PesajeDTO>();
-        for(Pesaje p:pesajes){
+        for (Pesaje p : pesajes) {
             result.add(p.darDTO());
         }
         return result;
     }
 
-    public GuiaDeViajeDTO darDto(){
+    public GuiaDeViajeDTO darDto() {
         return new GuiaDeViajeDTO(id, numero, rubroCliente, tipoCarga, volumenCarga, fecha, origen, inicio, fin, destino, procesarLista());
     }
 
-    public List<Pesaje> procesarListaPesajes(List<PesajeDTO> pesajes){
+    public List<Pesaje> procesarListaPesajes(List<PesajeDTO> pesajes) {
         List<Pesaje> result = new ArrayList<Pesaje>();
-        for(PesajeDTO p:pesajes){
+        for (PesajeDTO p : pesajes) {
             Pesaje pnew = new Pesaje(p);
             result.add(pnew);
         }
         return result;
     }
 
-    
+
 }

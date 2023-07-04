@@ -12,7 +12,8 @@ public interface IGuiaDeViajesService {
 
     public void crearGuiaDeViaje(GuiaDeViajeDTO g, ChoferDTO c, EmpresaDTO e, VehiculoDTO v);
     public void borrarGuiaDeViaje(int id, int idEmpresa);
-    public void modificarGuiaDeViaje(GuiaDeViajeDTO g);
+    public void modificarGuiaDeViaje(GuiaDeViajeDTO g, ChoferDTO c, EmpresaDTO e, VehiculoDTO v);
+    void modificarGuiaDeViajeSinAsignacion(GuiaDeViajeDTO guia);
     public List<GuiaDeViajeDTO> listarGuiasDeViajes();
     public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha);
     public int cantidadViajesPorAnioRubro(int anio, String rubro);

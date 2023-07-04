@@ -19,7 +19,5 @@ public interface IVehiculosService {
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
     public List<PesajeDTO> listarGuiasDeVehiculo(int id, Date fecha);
     public boolean viajeContieneGuia(VehiculoDTO v, GuiaDeViajeDTO g);
-    public void asignarGuia(int vehiculo_id, AsignacionDTO a);
-    public void borrarGuia(int numero_guia);
     public VehiculoDTO buscarVehiculoPorGuia(int numero);
 }

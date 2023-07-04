@@ -136,7 +136,7 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
     }
 
     @Override
-    public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg) {
+    public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg, ChoferDTO c, EmpresaDTO e, VehiculoDTO v) {
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, dtg.getId());
         gv.setDestino(dtg.getDestino());
         gv.setFecha(dtg.getFecha());
@@ -148,7 +148,25 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
         gv.setTipoCarga(dtg.getTipoCarga());
         gv.setPesajes(gv.procesarListaPesajes(dtg.getPesajes()));
         em.merge(gv);
+
+        Asignacion a = new Asignacion(gv, LocalDateTime.now());
+        em.persist(a);
+        Chofer chofer = em.find(Chofer.class, c.getIdCiudadano());
+        chofer.getAsignaciones().add(a);
+        em.merge(chofer);
+        Empresa empresa = em.find(Empresa.class, e.getId());
+        empresa.getAsignaciones().add(a);
+        em.merge(empresa);
+        Vehiculo vehiculo = em.find(Vehiculo.class, v.getId());
+        vehiculo.getAsignaciones().add(a);
+        em.merge(vehiculo);
     }
+
+    @Override
+    public void modificarGuiaDeViajeSinAsignacion(GuiaDeViajeDTO guia){
+        GuiaDeViaje gv = em.find(GuiaDeViaje.class, guia.getId());
+        em.merge(gv);
+    };
 
     @Override
     public int getNextNumeroViaje() {
@@ -170,15 +188,6 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
         }
     }
 
-    @Override
-    public GuiaDeViajeDTO buscarGuiaViajePorId(int idGuia) {
-        System.out.println("llega dao");
-        GuiaDeViaje gv = em.find(GuiaDeViaje.class, idGuia);
-        System.out.println("obtiene gv:" + gv.getId());
-        GuiaDeViajeDTO gvDTO = gv.darDto();
-        System.out.println("devuelve el dt:" + gvDTO.getId());
-        return gvDTO;
-    }
 
     @Override
     public int cantidadViajesPorAnioRubro(int anio, String rubro) {

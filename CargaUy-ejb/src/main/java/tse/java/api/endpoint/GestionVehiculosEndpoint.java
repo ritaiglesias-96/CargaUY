@@ -56,6 +56,7 @@ public class GestionVehiculosEndpoint {
 
     @POST
     public Response agregarVehiculo(VehiculoDTO vehiculo){
+        System.out.println(vehiculo);
         EmpresaDTO e = es.obtenerEmpresa(vehiculo.getEmpresaId());
         if(e == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con la id " + vehiculo.getEmpresaId()).build();
@@ -80,7 +81,7 @@ public class GestionVehiculosEndpoint {
     }
 
     @DELETE
-    @Path("/eliminar/{idVehiculo}")
+    @Path("/{idVehiculo}")
     public Response eliminarVehiculo(@PathParam("idVehiculo") int idVehiculo){
         VehiculoDTO v = vs.obtenerVehiculoPorId(idVehiculo);
         if(v == null){

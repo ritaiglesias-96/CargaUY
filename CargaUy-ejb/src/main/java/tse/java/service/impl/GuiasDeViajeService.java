@@ -11,8 +11,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import tse.java.dto.*;
-import tse.java.entity.GuiaDeViaje;
-import tse.java.entity.Pesaje;
 import tse.java.persistance.IAsignacionDAO;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.persistance.IPesajesDAO;
@@ -49,8 +47,13 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     }
 
     @Override
-    public void modificarGuiaDeViaje(GuiaDeViajeDTO g) {
-        guiaviajeDao.modificarGuiaDeViaje(g);
+    public void modificarGuiaDeViaje(GuiaDeViajeDTO g, ChoferDTO c, EmpresaDTO e, VehiculoDTO v) {
+        guiaviajeDao.modificarGuiaDeViaje(g, c, e, v);
+    }
+
+    @Override
+    public void modificarGuiaDeViajeSinAsignacion(GuiaDeViajeDTO guia){
+        guiaviajeDao.modificarGuiaDeViajeSinAsignacion(guia);
     }
 
     @Override
@@ -84,7 +87,7 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
             result.add(paux);
         }
         g.setPesajes(result);
-        guiaviajeDao.modificarGuiaDeViaje(g);
+        guiaviajeDao.modificarGuiaDeViajeSinAsignacion(g);
     }
 
     @Override

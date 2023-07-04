@@ -17,7 +17,8 @@ public interface IGuiaDeViajeDAO {
     public GuiaDeViaje buscarGuiaDeViaje(int id);
     public List<GuiaDeViajeDTO> listarGuiasDeViaje();
     public void borrarGuiaDeViaje(int id, int idEmpresa);
-    public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg);
+    public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg, ChoferDTO c, EmpresaDTO e, VehiculoDTO v);
+    void modificarGuiaDeViajeSinAsignacion(GuiaDeViajeDTO guia);
     public int getNextNumeroViaje();
     public int cantidadViajesPorAnioRubro(int anio, String rubro);
     public GuiaDeViajeDTO buscarGuiaViajePorNumero(int numeroGuia);
