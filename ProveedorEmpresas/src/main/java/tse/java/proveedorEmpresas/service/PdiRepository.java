@@ -23,8 +23,17 @@ public class PdiRepository {
 
     @PostConstruct
     public void initData() throws IOException {
-        File empresasData = new ClassPathResource("empresas.json").getFile();
-        File ciudadanosData = new ClassPathResource("ciudadanos.json").getFile();
+        
+        File empresasData = new File("/usr/local/tomcat/json/empresas.json");
+        if(!empresasData.exists()){
+            empresasData = new ClassPathResource("empresas.json").getFile();
+        }
+
+        File ciudadanosData = new File("/usr/local/tomcat/json/ciudadanos.json");
+        if(!ciudadanosData.exists()){
+            ciudadanosData = new ClassPathResource("ciudadanos.json").getFile();
+        }
+         
         empresaList = objectMapper.readValue(empresasData, Empresa[].class);
         ciudadanoList = objectMapper.readValue(ciudadanosData, Ciudadano[].class);
         for (Empresa e:empresaList
