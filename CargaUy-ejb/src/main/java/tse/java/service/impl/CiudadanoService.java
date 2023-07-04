@@ -38,27 +38,18 @@ public class CiudadanoService implements ICiudadanosService {
     }
 
     @Override
-    public Ciudadano obtenerCiudadano(int id) {
-        return ciudadanoDAO.buscarCiudadanoPorId(id);
-    }
-
-    @Override
-    public Ciudadano obtenerCiudadanoPorCedula(String cedula) {
-        return ciudadanoDAO.buscarCiudadanoPorCedula(cedula);
-    }
-
-    @Override
     public Ciudadanos obtenerCiudadanos() {
         Ciudadanos c = new Ciudadanos();
         c.setListaCiudadanos(ciudadanoDAO.listarCiudadanos());
         return c;
     }
+
     @Override
     public ChoferDTO obtenerChofer(String cedulaChofer) {
         Ciudadano c = ciudadanoDAO.buscarCiudadanoPorCedula(cedulaChofer);
-        if(c instanceof Chofer){
+        if (c instanceof Chofer) {
             return ((Chofer) c).darDTO();
-        }else{
+        } else {
             return null;
         }
     }
@@ -104,7 +95,7 @@ public class CiudadanoService implements ICiudadanosService {
 
     @Override
     public void eliminarHijoCiudadano(int id) {
-       Ciudadano ciudadano = ciudadanoDAO.buscarCiudadanoPorId(id);
+        Ciudadano ciudadano = ciudadanoDAO.buscarCiudadanoPorId(id);
         if (ciudadano instanceof Funcionario) {
             funcionarioDAO.eliminiarFuncionario((Funcionario) ciudadano);
         } else if (ciudadano instanceof Responsable) {
@@ -144,14 +135,15 @@ public class CiudadanoService implements ICiudadanosService {
     @Override
     public boolean contieneGuiaViajeChofer(String cedula_chofer, int numero_viaje) {
         ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
-        for(AsignacionDTO a : c.getAsignaciones()) {
+        for (AsignacionDTO a : c.getAsignaciones()) {
             if (a.getGuia().getNumero() == numero_viaje)
                 return true;
         }
         return false;
     }
+
     @Override
-    public void borrarGuia(int numeroViaje, int idEmpresa){
+    public void borrarGuia(int numeroViaje, int idEmpresa) {
         EmpresaDTO e = empresasDAO.obtenerEmpresaPorNumero(idEmpresa);
     }
 

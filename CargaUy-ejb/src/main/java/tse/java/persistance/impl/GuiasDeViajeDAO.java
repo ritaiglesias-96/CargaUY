@@ -163,10 +163,12 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
     }
 
     @Override
-    public void modificarGuiaDeViajeSinAsignacion(GuiaDeViajeDTO guia){
+    public void modificarGuiaDeViajeSinAsignacion(GuiaDeViajeDTO guia) {
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, guia.getId());
         em.merge(gv);
-    };
+    }
+
+    ;
 
     @Override
     public int getNextNumeroViaje() {
@@ -187,13 +189,6 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
             return g.darDto();
         }
     }
-
-    @Override
-    public int cantidadViajesPorAnioRubro(int anio, String rubro) {
-        Query q = em.createQuery("select count(*) from GuiaDeViaje g where g.rubroCliente='" + rubro + "' and extract(year from g.fecha)=" + anio);
-        return Integer.parseInt(q.getResultList().get(0).toString());
-    }
-
 
     @Override
     public int cantidadViajesPorAnioRubro(int anio, String rubro) {
