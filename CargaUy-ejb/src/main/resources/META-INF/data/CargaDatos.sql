@@ -81,6 +81,11 @@ INSERT INTO public."Vehiculo_Asignacion" ("Vehiculo_id", asignaciones_id) values
 INSERT INTO public."Vehiculo_Asignacion" ("Vehiculo_id", asignaciones_id) values(1999,1001);
 INSERT INTO public."Vehiculo_Asignacion" ("Vehiculo_id", asignaciones_id) values(2999,1002);
 
+-- Empresa-Asignacion
+INSERT INTO public."Empresa_Asignacion" ("Empresa_id", asignaciones_id) values(1586,1000);
+INSERT INTO public."Empresa_Asignacion" ("Empresa_id", asignaciones_id) values(1586,1001);
+INSERT INTO public."Empresa_Asignacion" ("Empresa_id", asignaciones_id) values(1586,1002);
+
 -- Tipo de carga
 insert into public."TipoCarga" values (1000,'Producto quimico');
 insert into public."TipoCarga" values (1001,'Producto no quimico');
