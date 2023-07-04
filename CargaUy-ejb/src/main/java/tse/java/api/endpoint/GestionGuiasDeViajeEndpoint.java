@@ -75,6 +75,25 @@ public class GestionGuiasDeViajeEndpoint {
     }
 
     @GET
+    @Path("/listar/{idEmpresa}")
+    public Response listarGuiasDeEmpresa(@PathParam("idEmpresa") int idEmpresa) {
+        List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
+        EmpresaDTO e = empresasService.obtenerEmpresa(idEmpresa);
+        List<AsignacionDTO> asignaciones = e.getAsignaciones();
+        for (AsignacionDTO a : asignaciones) {
+            if(!result.contains(a.getGuia())) {
+                result.add(a.getGuia());
+            }
+        }
+        if (result.size() > 0)
+            return Response.status(Response.Status.OK).entity(result).build();
+        else
+            return Response.status(Response.Status.OK).entity("No tiene guias de viaje en su empresa!").build();
+    }
+
+
+
+    @GET
     @Path("/listar/chofer")
     public Response listarViajesChofer(@QueryParam("cedula") String cedulaChofer) {
         List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
