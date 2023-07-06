@@ -32,13 +32,13 @@ public class VehiculosDAO implements IVehiculosDAO {
 
     @Override
     public Vehiculo obtenerVehiculoId(int id) throws NoResultException {
-        Vehiculo result = em.find(Vehiculo.class, id);
-        return result;
+        return em.find(Vehiculo.class, id);
     }
 
     @Override
     public Vehiculo modificarVehiculo(VehiculoDTO vehiculo) {
-        Vehiculo vehiculoMod = new Vehiculo(vehiculo);
+        Vehiculo vehiculoMod = em.find(Vehiculo.class, vehiculo.getId());
+        vehiculoMod.modificarVehiculo(vehiculo);
         em.merge(vehiculoMod);
         return vehiculoMod;
     }
@@ -46,6 +46,8 @@ public class VehiculosDAO implements IVehiculosDAO {
     @Override
     public void eliminarVehiculo(int id) {
         Vehiculo v = em.find(Vehiculo.class, id);
+        v.setAsignaciones(null);
+        em.merge(v);
         Empresa e = em.find(Empresa.class, v.getEmpresa().getId());
         e.getVehiculos().remove(v);
         em.merge(e);

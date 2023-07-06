@@ -14,6 +14,7 @@ import tse.java.soappdi.EmpresaServicePortService;
 import tse.java.soappdi.GetEmpresaRequest;
 import tse.java.soappdi.GetEmpresaResponse;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,7 +82,7 @@ public class EmpresasService implements IEmpresasService {
     }
 
     @Override
-    public List<PesajeDTO> listarGuias(int numero_empresa, String matricula, String pais, Date fecha) {
+    public List<PesajeDTO> listarGuias(int numero_empresa, String matricula, String pais, LocalDate fecha) {
         String msg = "Me pasaron por rest los parametros: numemp=" + numero_empresa + ", pais=" + pais + ", matricula=" + matricula + ", fecha=" + fecha.toString();
         Logger.getLogger(EmpresasService.class.getName()).log(Level.INFO, msg);
         EmpresaDTO e = empresasDAO.obtenerEmpresaPorNumero(numero_empresa);

@@ -1,5 +1,6 @@
 package tse.java.service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface IGuiaDeViajesService {
     public void modificarGuiaDeViaje(GuiaDeViajeDTO g, ChoferDTO c, EmpresaDTO e, VehiculoDTO v);
     void modificarGuiaDeViajeSinAsignacion(GuiaDeViajeDTO guia);
     public List<GuiaDeViajeDTO> listarGuiasDeViajes();
-    public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha);
+    public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, LocalDate fecha);
     public int cantidadViajesPorAnioRubro(int anio, String rubro);
     public void asignarPesajes(int numeroViaje, List<PesajeDTO> pesajes);
     int getNextNumeroViaje();

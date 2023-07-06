@@ -3,10 +3,7 @@ package tse.java.api.endpoint;
 import tse.java.dto.EmpresaDTO;
 import tse.java.dto.PermisosVehiculoDTO;
 import tse.java.dto.VehiculoDTO;
-import tse.java.entity.Empresa;
-import tse.java.model.Empresas;
 import tse.java.service.IEmpresasService;
-import tse.java.service.IVehiculosService;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -23,8 +20,6 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 
 public class estadoVehiculosEmpresaEndpoint {
-    @EJB
-    IVehiculosService vs;
 
     @EJB
     IEmpresasService es;

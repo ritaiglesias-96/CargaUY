@@ -2,6 +2,7 @@ package tse.java.persistance.impl;
 
 
 import java.time.LocalDateTime;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,9 +28,6 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
     @TSE2023DB
     @Inject
     public EntityManager em;
-
-    @EJB
-    IAsignacionesService asignacionesService;
 
     @Override
     public void altaGuiaDeViaje(GuiaDeViajeDTO dtg, ChoferDTO c, EmpresaDTO e, VehiculoDTO v) {
@@ -67,17 +65,12 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
     @Override
     public void borrarGuiaDeViaje(int id, int idEmpresa) {
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, id);
-        System.out.println("gv en eliminar:" + gv.getId());
         Empresa e = em.find(Empresa.class, idEmpresa);
-        System.out.println("e en eliminar:" + e.getId());
         List<Asignacion> aRemover = new ArrayList<>();
         List<Asignacion> nueva = new ArrayList<>();
 
-        System.out.println("hay asignaciones e: " + !e.getAsignaciones().isEmpty());
         if (!e.getAsignaciones().isEmpty()) {
             for (Asignacion a : e.getAsignaciones()) {
-                System.out.println("Hay asignaciones");
-                System.out.println("Hay asignaciones con esa guia: " + Objects.equals(a.getGuia().getId(), gv.getId()));
                 if (Objects.equals(a.getGuia().getId(), gv.getId())) {
                     aRemover.add(a);
                 } else {
@@ -86,14 +79,11 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
             }
             e.setAsignaciones(nueva);
             em.merge(e);
-            System.out.println("hay asignaciones e: " + !e.getAsignaciones().isEmpty());
         }
         nueva.clear();
         if (!e.getVehiculos().isEmpty()) {
-            System.out.println("Hay vehiculos");
             for (Vehiculo v : e.getVehiculos()) {
                 if (!v.getAsignaciones().isEmpty()) {
-                    System.out.println("Hay asignaciones v");
                     for (Asignacion a : v.getAsignaciones()) {
                         if (Objects.equals(a.getGuia().getId(), gv.getId())) {
                             aRemover.add(a);
@@ -108,13 +98,10 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
         }
         nueva.clear();
         if (!e.getChoferes().isEmpty()) {
-            System.out.println("Hay choferes");
             for (Chofer c : e.getChoferes()) {
                 if (!c.getAsignaciones().isEmpty()) {
-                    System.out.println("Hay choferes cn asig");
                     for (Asignacion a : c.getAsignaciones()) {
                         if (Objects.equals(a.getGuia().getId(), gv.getId())) {
-                            System.out.println("Hay choferes cn asig con gv");
                             aRemover.add(a);
                         } else {
                             nueva.add(a);
@@ -132,6 +119,10 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
             }
         }
 
+        for (Pesaje p:gv.getPesajes()){
+            em.remove(p);
+        }
+
         em.remove(gv);
     }
 
@@ -139,14 +130,17 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
     public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg, ChoferDTO c, EmpresaDTO e, VehiculoDTO v) {
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, dtg.getId());
         gv.setDestino(dtg.getDestino());
-        gv.setFecha(dtg.getFecha());
-        gv.setFin(dtg.getFin());
-        gv.setInicio(dtg.getInicio());
+        gv.setFecha(Date.valueOf(dtg.getFecha()));
+        gv.setFin(Date.valueOf(dtg.getFin()));
+        gv.setInicio(Date.valueOf(dtg.getInicio()));
         gv.setOrigen(dtg.getOrigen());
         gv.setRubroCliente(dtg.getRubroCliente());
         gv.setVolumenCarga(dtg.getVolumenCarga());
         gv.setTipoCarga(dtg.getTipoCarga());
         gv.setPesajes(gv.procesarListaPesajes(dtg.getPesajes()));
+        for (Pesaje p : gv.getPesajes()) {
+            em.merge(p);
+        }
         em.merge(gv);
 
         Asignacion a = new Asignacion(gv, LocalDateTime.now());
@@ -165,10 +159,12 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
     @Override
     public void modificarGuiaDeViajeSinAsignacion(GuiaDeViajeDTO guia) {
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, guia.getId());
+        gv.modificarGuia(guia);
+        for (Pesaje p : gv.getPesajes()) {
+            em.merge(p);
+        }
         em.merge(gv);
     }
-
-    ;
 
     @Override
     public int getNextNumeroViaje() {
@@ -186,7 +182,7 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
             return null;
         } else {
             GuiaDeViaje g = (GuiaDeViaje) q.getResultList().get(0);
-            return g.darDto();
+            return new GuiaDeViajeDTO(g);
         }
     }
 
@@ -198,12 +194,8 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
 
     @Override
     public GuiaDeViajeDTO buscarGuiaViajePorId(int idGuia) {
-        System.out.println("llega dao");
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, idGuia);
-        System.out.println("obtiene gv:" + gv.getId());
-        GuiaDeViajeDTO gvDTO = gv.darDto();
-        System.out.println("devuelve el dt:" + gvDTO.getId());
-        return gvDTO;
+        return new GuiaDeViajeDTO(gv);
     }
 
 

@@ -61,7 +61,7 @@ public class Asignacion {
     }
 
     public AsignacionDTO darDTO(){
-        return new AsignacionDTO(id, guia.darDto(), fechaCambio);
+        return new AsignacionDTO(id, new GuiaDeViajeDTO(guia), fechaCambio);
     }
 
     public GuiaDeViaje convertirGuia(GuiaDeViajeDTO g){

@@ -1,9 +1,9 @@
 package tse.java.dto;
 
-import tse.java.entity.Pesaje;
+import tse.java.entity.GuiaDeViaje;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class GuiaDeViajeDTO {
@@ -16,19 +16,19 @@ public class GuiaDeViajeDTO {
 
     private float volumenCarga;
 
-    private Date fecha;
+    private LocalDate fecha;
 
     private String origen;
 
-    private Date inicio;
+    private LocalDate inicio;
 
-    private Date fin;
+    private LocalDate fin;
 
     private String destino;
 
     private List<PesajeDTO> pesajes = new ArrayList<PesajeDTO>();
 
-    public GuiaDeViajeDTO(Integer id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<PesajeDTO> pesajes) {
+    public GuiaDeViajeDTO(Integer id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, LocalDate fecha, String origen, LocalDate inicio, LocalDate fin, String destino, List<PesajeDTO> pesajes) {
         this.id = id;
         this.numero = numero;
         this.rubroCliente = rubroCliente;
@@ -40,6 +40,22 @@ public class GuiaDeViajeDTO {
         this.fin = fin;
         this.destino = destino;
         this.pesajes = pesajes;
+    }
+
+    public GuiaDeViajeDTO(GuiaDeViaje guia) {
+        this.id = guia.getId();
+        this.numero = guia.getNumero();
+        this.rubroCliente = guia.getRubroCliente();
+        this.tipoCarga = guia.getTipoCarga();
+        this.volumenCarga = guia.getVolumenCarga();
+        this.fecha = guia.getFecha().toLocalDate();
+        this.origen = guia.getOrigen();
+        this.destino = guia.getDestino();
+        this.pesajes = guia.procesarLista();
+        if(guia.getInicio() != null)
+            this.inicio = guia.getInicio().toLocalDate();
+        if(guia.getFin() != null)
+            this.fin = guia.getFin().toLocalDate();
     }
 
     public GuiaDeViajeDTO(GuiaDeViajeAltaDTO guiaDeViajeAltaDTO) {
@@ -76,11 +92,11 @@ public class GuiaDeViajeDTO {
         this.volumenCarga = volumenCarga;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -92,19 +108,19 @@ public class GuiaDeViajeDTO {
         this.origen = origen;
     }
 
-    public Date getInicio() {
+    public LocalDate getInicio() {
         return inicio;
     }
 
-    public void setInicio(Date inicio) {
+    public void setInicio(LocalDate inicio) {
         this.inicio = inicio;
     }
 
-    public Date getFin() {
+    public LocalDate getFin() {
         return fin;
     }
 
-    public void setFin(Date fin) {
+    public void setFin(LocalDate fin) {
         this.fin = fin;
     }
 

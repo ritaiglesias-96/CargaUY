@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -126,6 +127,9 @@ public class GestionGuiasDeViajeEndpoint {
             } else if (empresasService.contieneChofer(choferDTO.getIdCiudadano(), empresaDTO) && empresasService.contieneVehiculo(vehiculoDTO.getId(), empresaDTO)) {
                 GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(nuevaGuia);
                 dtguia.setNumero(guiaDeViajesService.getNextNumeroViaje());
+                LocalDate today = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                System.out.println(today);
+                dtguia.setFecha(today);
                 guiaDeViajesService.crearGuiaDeViaje(dtguia, choferDTO, empresaDTO, vehiculoDTO);
                 GuiaDeViajeDTO guiaNueva = guiaDeViajesService.buscarGuiaViajePorNumero(dtguia.getNumero());
                 return Response.status(Response.Status.CREATED).entity(guiaNueva).build();
@@ -171,19 +175,19 @@ public class GestionGuiasDeViajeEndpoint {
 
     @PUT
     @Path("/finalizar/{cedula}/{numero}")
-    public Response finalizarViaje(@PathParam("cedula") String cedulaChofer, @PathParam("numero") int numero_viaje) {
+    public Response finalizarViaje(@PathParam("cedula") String cedulaChofer, @PathParam("numero") int numeroViaje) {
         ChoferDTO c = ciudadanosService.obtenerChofer(cedulaChofer);
         if (c == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedulaChofer).build();
         }
 
-        GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(numero_viaje);
+        GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje);
         if (g == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numero_viaje).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numeroViaje).build();
         }
 
         if (!ciudadanosService.contieneGuiaViajeChofer(c.getCedula(), g.getNumero())) {
-            return Response.status(Response.Status.NOT_FOUND).entity("El chofer " + c.getCedula() + " no tiene el viaje con el identificador " + numero_viaje).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("El chofer " + c.getCedula() + " no tiene el viaje con el identificador " + numeroViaje).build();
         }
 
         if (g.getFin() != null) {
@@ -225,35 +229,37 @@ public class GestionGuiasDeViajeEndpoint {
         }
 
         g = guiaDeViajesService.buscarGuiaViajePorNumero(g.getNumero());
-        g.setFin(new Date());
+        LocalDate today = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        System.out.println(today);
+        g.setFin(today);
         guiaDeViajesService.modificarGuiaDeViajeSinAsignacion(g);
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.OK).entity(g).build();
     }
 
     @PUT
     @Path("/iniciar/{cedula}/{numero}")
-    public Response iniciarViaje(@PathParam("cedula") String cedulaChofer, @PathParam("numero") int numero_viaje) {
+    public Response iniciarViaje(@PathParam("cedula") String cedulaChofer, @PathParam("numero") int numeroViaje) {
         ChoferDTO c = ciudadanosService.obtenerChofer(cedulaChofer);
         if (c == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedulaChofer).build();
         }
 
-        GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(numero_viaje);
+        GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje);
         if (g == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numero_viaje).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numeroViaje).build();
         }
 
         if (!ciudadanosService.contieneGuiaViajeChofer(c.getCedula(), g.getNumero())) {
-            return Response.status(Response.Status.NOT_FOUND).entity("El chofer " + c.getCedula() + " no tiene el viaje con el identificador " + numero_viaje).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("El chofer " + c.getCedula() + " no tiene el viaje con el identificador " + numeroViaje).build();
         }
 
         if (g.getInicio() != null) {
             return Response.status(Response.Status.CONFLICT).entity("El viaje con el identificador " + g.getNumero() + " ya esta inicializado").build();
         }
-
-        g.setInicio(new Date());
+        LocalDate today = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        g.setInicio(today);
         guiaDeViajesService.modificarGuiaDeViajeSinAsignacion(g);
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.OK).entity(g).build();
     }
 
     @DELETE

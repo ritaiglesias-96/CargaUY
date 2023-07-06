@@ -30,15 +30,12 @@ public class EmpresaDTO {
         this.nroEmpresa = e.getNroEmpresa();
         this.dirPrincipal = e.getDirPrincipal();
         if (!e.getVehiculos().isEmpty()) {
-            System.out.println("no p v");
             this.vehiculos = procesarLista(e.getVehiculos());
         }
         if (!e.getChoferes().isEmpty()) {
-            System.out.println("no p c");
             this.choferes = procesarChoferes(e.getChoferes());
         }
         if (!e.getAsignaciones().isEmpty()) {
-            System.out.println("no p a");
             this.asignaciones = procesarListaAsignaciones(e.getAsignaciones());
         }
     }

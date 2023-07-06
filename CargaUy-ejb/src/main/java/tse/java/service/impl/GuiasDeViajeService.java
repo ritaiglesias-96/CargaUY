@@ -1,6 +1,7 @@
 package tse.java.service.impl;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -62,14 +63,14 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     }
 
     @Override
-    public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha) {
+    public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, LocalDate fecha) {
         String msg = "Me pasaron por rest " + guiasViaje.size() + " guias de viaje y fecha=" + fecha;
         Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
         for(GuiaDeViajeDTO g:guiasViaje){
             msg = "Busco la guiaid=" + g.getId();
             Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
-            Date fechaInicioGuia = g.getInicio();
-            if(fecha.after(fechaInicioGuia) && g.getFin()==null) {
+            LocalDate fechaInicioGuia = g.getInicio();
+            if(fecha.isAfter(fechaInicioGuia) && g.getFin()==null) {
                 return pesajesService.listarPesajesDeGuia(g, fecha);
             }
         }
@@ -77,8 +78,8 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     }
 
     @Override
-    public void asignarPesajes(int numero_viaje, List<PesajeDTO> pesajes) {
-        AsignacionDTO a = asignacionDAO.buscarAsignacion(asignacionesService.ultimaAsignacionViaje(numero_viaje));
+    public void asignarPesajes(int numeroViaje, List<PesajeDTO> pesajes) {
+        AsignacionDTO a = asignacionDAO.buscarAsignacion(asignacionesService.ultimaAsignacionViaje(numeroViaje));
         GuiaDeViajeDTO g = a.getGuia();
         List<PesajeDTO> result = new ArrayList<PesajeDTO>();
         for(PesajeDTO p:pesajes){
@@ -106,7 +107,6 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
 
     @Override
     public GuiaDeViajeDTO buscarGuiaViajePorId(int numeroGuia) {
-        System.out.println("llega service");
         return guiaviajeDao.buscarGuiaViajePorId(numeroGuia);
     }
 }

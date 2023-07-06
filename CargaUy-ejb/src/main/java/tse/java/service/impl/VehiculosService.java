@@ -1,5 +1,6 @@
 package tse.java.service.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.ejb.Stateless;
 
 import tse.java.dto.*;
 import tse.java.entity.Vehiculo;
+import tse.java.exception.VehiuloException;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.persistance.IVehiculosDAO;
@@ -52,7 +54,7 @@ public class VehiculosService implements IVehiculosService{
     }
 
     @Override
-    public List<PesajeDTO> listarGuiasDeVehiculo(int id, Date fecha) {
+    public List<PesajeDTO> listarGuiasDeVehiculo(int id, LocalDate fecha) {
         String msg = "Me pasaron por rest los parametros: idvehiculo=" + id + ", fechaViajes=" + fecha;
         Logger.getLogger(VehiculosService.class.getName()).log(Level.INFO, msg);
         Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(id);
@@ -82,8 +84,10 @@ public class VehiculosService implements IVehiculosService{
         return false;
     }
 
-    public VehiculoDTO obtenerVehiculoPorId(int id) {
+    public VehiculoDTO obtenerVehiculoPorId(int id) throws VehiuloException {
         Vehiculo v = vehiculosDAO.obtenerVehiculoId(id);
+        if (v == null)
+            throw new VehiuloException("El vehiculo no existe");
         return new VehiculoDTO(v);
     }
     @Override
