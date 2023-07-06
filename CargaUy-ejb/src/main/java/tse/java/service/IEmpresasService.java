@@ -36,5 +36,7 @@ public interface IEmpresasService {
 
     public void borrarGuia(int numeroViaje);
 
+    public List<EmpresaDTO> listarViajesFinalizados();
+
 
 }
