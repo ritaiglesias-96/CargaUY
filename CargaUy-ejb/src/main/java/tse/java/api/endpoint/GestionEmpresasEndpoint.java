@@ -97,4 +97,10 @@ public class GestionEmpresasEndpoint {
         }
     }
 
+    @GET
+    @Path("/obtenerViajesFinalizados")
+    public Response getViajesFinalizados(){
+        return Response.status(Response.Status.OK).entity(empresasService.listarViajesFinalizados()).build();
+    }
+
 }
