@@ -105,7 +105,7 @@ are created, so those JAR/WAR files would have to be built in the "@Deployment" 
 
 ## Acknowledgements
 
-Adrian Gioda, Diego Bronc, Marcelo 
+Adrian Gioda, Diego Bronc, Marcelo Bravo, Maria Rita Iglesias
 
 ## Contacts
 
