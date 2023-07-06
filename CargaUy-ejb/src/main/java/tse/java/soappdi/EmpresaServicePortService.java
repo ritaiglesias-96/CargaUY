@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "EmpresaServicePortService", targetNamespace = "/pdi", wsdlLocation = "http://localhost:8082/ws/empresas.wsdl")
+@WebServiceClient(name = "EmpresaServicePortService", targetNamespace = "/pdi", wsdlLocation = "https://pdi-mbravo95-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/pdi/ws/empresas.wsdl")
 public class EmpresaServicePortService
     extends Service
 {
@@ -30,7 +30,7 @@ public class EmpresaServicePortService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:8082/ws/empresas.wsdl");
+            url = new URL("https://pdi-mbravo95-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/pdi/ws/empresas.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
