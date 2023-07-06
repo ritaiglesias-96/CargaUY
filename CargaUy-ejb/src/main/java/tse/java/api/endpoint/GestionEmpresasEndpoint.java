@@ -1,11 +1,10 @@
 package tse.java.api.endpoint;
 
 import tse.java.dto.EmpresaDTO;
-import tse.java.dto.PesajeDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Empresa;
-import tse.java.model.Empresas;
 import tse.java.service.IEmpresasService;
+import tse.java.soappdi.*;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -13,13 +12,8 @@ import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 @RequestScoped
@@ -27,7 +21,7 @@ import java.util.logging.Logger;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 
-public class gestionEmpresasEndpoint {
+public class GestionEmpresasEndpoint {
 
     @EJB
     IEmpresasService empresasService;
@@ -54,12 +48,17 @@ public class gestionEmpresasEndpoint {
     }
 
     @POST
-    public Response agregarEmpresa(Empresa empresa){
-        try{
-            empresasService.agregarEmpresa(empresa.getNombrePublico(), empresa.getRazonSocial(), empresa.getNroEmpresa(), empresa.getDirPrincipal());
-            return Response.status(Response.Status.OK).entity(empresa).build();
-        } catch (NoResultException e){
-            return Response.status(Response.Status.NOT_FOUND).build();
+    @Path("/{rut}")
+    public Response agregarEmpresa(@PathParam("rut") String rut){
+        int resultado = empresasService.agregarEmpresa(rut);
+        if(resultado == 1){
+            return Response.status(Response.Status.OK).entity("Empresa " + rut + " creada exitosamente.").build();
+        } else if (resultado == 0){
+            return Response.status(Response.Status.NOT_FOUND).entity("NO existe la empresa " + rut).build();
+        } else if (resultado == 3){
+            return Response.status(Response.Status.CONFLICT).entity("Ya existe la empresa con rut " + rut).build();
+        } else {
+            return Response.status(Response.Status.REQUEST_TIMEOUT).entity("Hubo un error al comunicarse con la plataforma").build();
         }
     }
 
@@ -78,12 +77,10 @@ public class gestionEmpresasEndpoint {
 
     @DELETE
     @Path("/{id}")
-    public Response eliminarEmpresa(Empresa empresa, @PathParam("id")int id){
+    public Response eliminarEmpresa (@PathParam("id")int id){
         try{
-            EmpresaDTO empresaDTO = new EmpresaDTO(empresa);
-            empresaDTO.setId(id);
-            empresasService.eliminarEmpresa(empresaDTO);
-            return Response.status(Response.Status.OK).entity(empresa).build();
+            empresasService.eliminarEmpresa(id);
+            return Response.status(Response.Status.OK).entity(id).build();
         } catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }

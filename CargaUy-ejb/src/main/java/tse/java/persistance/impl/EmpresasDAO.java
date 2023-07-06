@@ -9,6 +9,8 @@ import java.util.List;
 
 import tse.java.dto.EmpresaDTO;
 import tse.java.entity.Empresa;
+import tse.java.entity.Pesaje;
+import tse.java.entity.Vehiculo;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.util.qualifier.TSE2023DB;
 
@@ -57,9 +59,9 @@ public class EmpresasDAO implements IEmpresasDAO {
     }
 
     @Override
-    public void eliminarEmpresa(EmpresaDTO empresaDTO) {
-        Empresa e = em.find(Empresa.class, empresaDTO.getId());
-        if (e != null) {
+    public void eliminarEmpresa(int id) {
+        Empresa e = em.find(Empresa.class,id);
+        if(e!=null) {
             em.remove(e);
         }
 

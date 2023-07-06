@@ -54,7 +54,9 @@
         <version.war.plugin>3.3.1</version.war.plugin>
 
         <!-- maven-compiler-plugin -->
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <!-- the JBoss community and Red Hat GA Maven repositories -->
@@ -208,6 +210,12 @@
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
                     <scope>test</scope>
                 </dependency>
+                <!--MONGO DB -->
+                    <dependency>
+                        <groupId>org.mongodb</groupId>
+                        <artifactId>mongodb-driver-sync</artifactId>
+                        <version>4.9.1</version>
+                    </dependency>
             </dependencies>
             <build>
                 <plugins>

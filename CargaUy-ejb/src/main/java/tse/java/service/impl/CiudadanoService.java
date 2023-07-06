@@ -36,6 +36,16 @@ public class CiudadanoService implements ICiudadanosService {
     IAsignacionesService asignacionesService;
 
     @Override
+    public Ciudadano obtenerCiudadano(int id) {
+        return ciudadanoDAO.buscarCiudadanoPorId(id);
+    }
+
+    @Override
+    public Ciudadano obtenerCiudadanoPorCedula(String cedula) {
+        return ciudadanoDAO.buscarCiudadanoPorCedula(cedula);
+    }
+
+    @Override
     public Ciudadanos obtenerCiudadanos() {
         Ciudadanos c = new Ciudadanos();
         c.setListaCiudadanos(ciudadanoDAO.listarCiudadanos());
@@ -53,8 +63,8 @@ public class CiudadanoService implements ICiudadanosService {
     }
 
     @Override
-    public void eliminarCiudadano(Ciudadano ciudadano) {
-        ciudadanoDAO.eliminiarCiudadano(ciudadano);
+    public void eliminarCiudadano(int id) {
+        ciudadanoDAO.eliminiarCiudadano(id);
     }
 
     @Override
@@ -82,7 +92,8 @@ public class CiudadanoService implements ICiudadanosService {
     }
 
     @Override
-    public void eliminarHijoCiudadano(Ciudadano ciudadano) {
+    public void eliminarHijoCiudadano(int id) {
+       Ciudadano ciudadano = ciudadanoDAO.buscarCiudadanoPorId(id);
         if (ciudadano instanceof Funcionario) {
             funcionarioDAO.eliminiarFuncionario((Funcionario) ciudadano);
         } else if (ciudadano instanceof Responsable) {
@@ -129,7 +140,6 @@ public class CiudadanoService implements ICiudadanosService {
                 return true;
         return false;
     }
-
     @Override
     public void borrarGuia(int numero_guia) {
         GuiaDeViajeDTO g = guiaDAO.buscarGuiaViajePorNumero(numero_guia);

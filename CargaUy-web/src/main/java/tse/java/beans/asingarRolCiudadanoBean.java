@@ -51,17 +51,17 @@ public class asingarRolCiudadanoBean {
         listaCiudadanos.sort(Comparator.comparing(CiudadanoDTO::getCedula));
     }
 
-    public void onRowEdit(RowEditEvent<CiudadanoDTO> event) throws IOException {
-        CiudadanoDTO dtr = event.getObject();
+    public void onRowEdit(RowEditEvent<CiudadanoDTO> evegetCedulant) throws IOException {
+        CiudadanoDTO dtr = evegetCedulant.getObject();
         String msg = "Me pasaron para modificar el ciudadano con id " + dtr.getIdCiudadano() + " con el documento " + dtr.getCedula();
         Logger.getLogger(asingarRolCiudadanoBean.class.getName()).log(Level.INFO, msg);
         Ciudadano c = ciudadanoDAO.buscarCiudadanoPorId(dtr.getIdCiudadano());
         if(rol.equals("Chofer") && !(c instanceof Chofer)) {
             Chofer ch = new Chofer(c.getEmail(),c.getCedula(),new ArrayList<Asignacion>());
             if((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario))
-                ciudadanosService.eliminarHijoCiudadano(c);
+                ciudadanosService.eliminarHijoCiudadano(c.getIdCiudadano());
             else
-                ciudadanosService.eliminarCiudadano(c);
+                ciudadanosService.eliminarCiudadano(c.getIdCiudadano());
             ciudadanosService.agregarHijoCiudadano(ch);
             recargarPagina();
         } else if(rol.equals("Responsable") && !(c instanceof Responsable)){
@@ -72,9 +72,9 @@ public class asingarRolCiudadanoBean {
                     ch.setAsignaciones(new ArrayList<Asignacion>());
                     ciudadanosService.modificarHijoCiudadano(ch);
                 }
-                ciudadanosService.eliminarHijoCiudadano(c);
+                ciudadanosService.eliminarHijoCiudadano(c.getIdCiudadano());
             } else {
-                ciudadanosService.eliminarCiudadano(c);
+                ciudadanosService.eliminarCiudadano(c.getIdCiudadano());
             }
             ciudadanosService.agregarHijoCiudadano(r);
             recargarPagina();
@@ -86,9 +86,9 @@ public class asingarRolCiudadanoBean {
                     ch.setAsignaciones(new ArrayList<Asignacion>());
                     ciudadanosService.modificarHijoCiudadano(ch);
                 }
-                ciudadanosService.eliminarHijoCiudadano(c);
+                ciudadanosService.eliminarHijoCiudadano(c.getIdCiudadano());
             } else {
-                ciudadanosService.eliminarCiudadano(c);
+                ciudadanosService.eliminarCiudadano(c.getIdCiudadano());
             }
             ciudadanosService.agregarHijoCiudadano(f);
             recargarPagina();
@@ -100,9 +100,9 @@ public class asingarRolCiudadanoBean {
                     ch.setAsignaciones(new ArrayList<Asignacion>());
                     ciudadanosService.modificarHijoCiudadano(ch);
                 }
-                ciudadanosService.eliminarHijoCiudadano(c);
+                ciudadanosService.eliminarHijoCiudadano(c.getIdCiudadano());
             } else {
-                ciudadanosService.eliminarCiudadano(c);
+                ciudadanosService.eliminarCiudadano(c.getIdCiudadano());
             }
             ciudadanosService.agregarCiudadano(cnew);
             recargarPagina();

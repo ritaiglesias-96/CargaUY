@@ -12,13 +12,14 @@ public interface IEmpresasDAO {
 
     EmpresaDTO obtenerEmpresaPorId(int id);
 
+    void eliminarEmpresa(int id);
+
     EmpresaDTO obtenerEmpresaPorNumero(int numero_empresa);
 
     ArrayList<EmpresaDTO> obtenerEmpresas();
 
     void guardarEmpresa(String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal);
 
-    Empresa modificarEmpresa(EmpresaDTO empresaDTO);
+    Empresa  modificarEmpresa(EmpresaDTO empresaDTO);
 
-    void eliminarEmpresa(EmpresaDTO empresaDTO);
 }
