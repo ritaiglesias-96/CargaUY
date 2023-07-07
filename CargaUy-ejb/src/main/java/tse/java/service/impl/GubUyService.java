@@ -2,8 +2,10 @@ package tse.java.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import okhttp3.*;
 import org.primefaces.shaded.json.JSONObject;
@@ -16,8 +18,11 @@ import tse.java.soappdi.EmpresaServicePort;
 import tse.java.soappdi.EmpresaServicePortService;
 import tse.java.soappdi.GetCiudadanoRequest;
 import tse.java.soappdi.GetCiudadanoResponse;
+import tse.java.dto.CiudadanoJwtDTO;
 
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.io.IOException;
@@ -45,6 +50,7 @@ public class GubUyService implements IGubUyService {
     private static final String CLIENT_ID = "890192" ;
     private static final String CLIENT_SECRET = "457d52f181bf11804a3365b49ae4d29a2e03bbabe74997a2f510b179";
     private static final String REDIRECT_URI = "https://openidconnect.net/callback";
+    private static final String key = "xbmbLFSsxidkGlcKEQPTBhsIvoOOACgROSKMhCcQLILuNamzTZtFjXgShyqs";
 
     @EJB
     ICiudadanosService ciudadanosService;
@@ -59,7 +65,7 @@ public class GubUyService implements IGubUyService {
             url += "&client_id=" +"890192";
             url += "&state=" + randomState;
             url += "&redirect_uri=" + URLEncoder.encode("https://carga-uy-13.web.elasticloud.uy/CargaUy-web/api/gubuy/tokens", StandardCharsets.UTF_8.toString());
-            //url += "&redirect_uri=" + URLEncoder.encode("https://openidconnect.net/callback", StandardCharsets.UTF_8.toString());
+
             return url;
         } catch (UnsupportedEncodingException e) {
             System.out.println("hola");
@@ -68,35 +74,49 @@ public class GubUyService implements IGubUyService {
     }
 
     @Override
-    public String loginGubUy(String accessCode, String state) {
+    public CiudadanoJwtDTO loginGubUy(String accessCode, String state) {
         JSONObject tokens = getTokens(accessCode);
         String token = tokens.getString("id_token");
         Map<String, Claim> tokenDecodeado = decodeToken(token);
         String cedulaSucia = tokenDecodeado.get("numero_documento").toString();
         String cedula = cedulaSucia.replace("\"", "");
-//        Integer cedula = Integer.parseInt(cedulaLimpia);
-        System.out.println(cedula);
         Ciudadano ciudadano = ciudadanosService.obtenerCiudadanoPorCedula(cedula);
         if(ciudadano!=null){
-            System.out.println("LLEGA A LINEA 72 ciudadano existente: " + ciudadano.getCedula());
-            return crearUsuarioJWT(ciudadano);
+            return crearUsuarioJWT(ciudadano,token);
         }else{
             System.out.println("Linea 77");
             String email = tokenDecodeado.get("email").asString();
             System.out.println("Linea 79");
-            Ciudadano ciudadanoNuevo = crearCiudadanoPdi(cedula);
+            //Ciudadano ciudadanoNuevo = crearCiudadanoPdi(cedula);
+            Ciudadano ciudadanoNuevo = new Ciudadano(email,cedula,null);
             System.out.println("Linea 81");
             ciudadanosService.agregarCiudadano(ciudadanoNuevo);
             System.out.println("Linea 83");
-           // ciudadano  = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
+           //ciudadano  = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
             System.out.println("cedula ciudadano: " + ciudadanoNuevo.getCedula());
-            return crearUsuarioJWT(ciudadanoNuevo);
+            return crearUsuarioJWT(ciudadanoNuevo,token);
         }
     }
 
     @Override
     public String agarrarUrl(Response r) throws IOException {
         return r.body().string();
+    }
+
+    @Override
+    public void verificarJwt(String jwt) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(key);
+            JWTVerifier jwtVerifier = JWT.require(algorithm)
+//					.withIssuer("")
+                    .acceptExpiresAt(60) // Permite 60 segundos de gracia
+                    .build();
+
+            jwtVerifier.verify(jwt);
+        } catch (JWTVerificationException e) {
+            throw new RuntimeException("La verificación falló");
+        }
+
     }
 
     private JSONObject getTokens(String accessCode){
@@ -160,11 +180,14 @@ public class GubUyService implements IGubUyService {
         }
         return null;
     }
-    private String crearUsuarioJWT(Ciudadano ciudadano) {
+    private CiudadanoJwtDTO crearUsuarioJWT(Ciudadano ciudadano, String token) {
         int expireTimeMinutes = 30;
         System.out.println("Entra al crear usuario JWT");
         try {
-            Algorithm alg = Algorithm.HMAC256("key");
+            //SecretKey key = getKey();
+            System.out.println("Key: " + key);
+            Algorithm alg = Algorithm.HMAC256(key);
+            System.out.println("Algoritmo: " + alg);
             JWTCreator.Builder jwt = JWT.create()
 //					.withIssuer("")
                     .withIssuedAt(new Date())//Se pasa la date actual para controlar la vigencia del usuario
@@ -181,11 +204,19 @@ public class GubUyService implements IGubUyService {
             long expireTime = (new Date().getTime()) + (60000 * expireTimeMinutes);
             Date expireDate = new Date(expireTime);
             jwt.withExpiresAt(expireDate);
-            return jwt.sign(alg);
+            CiudadanoJwtDTO ciudadanoJwtDTO = new CiudadanoJwtDTO(jwt.sign(alg), ciudadano.getCedula(),token);
+            return ciudadanoJwtDTO;
         } catch (IllegalArgumentException e) {
             System.out.println(e);
             return null;
         }
+    }
+    private SecretKey getKey(){
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] keyBytes = new byte[32];
+        secureRandom.nextBytes(keyBytes);
+        SecretKey signingKey = new SecretKeySpec(keyBytes, "HMACSHA256");
+        return signingKey;
     }
 
     private Ciudadano crearCiudadanoPdi(String cedula){
