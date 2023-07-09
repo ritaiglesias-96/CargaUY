@@ -1,53 +1,48 @@
 package tse.java.persistance.impl;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 import tse.java.entity.Administrador;
+import tse.java.util.EntityManagerProducer;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@RunWith(MockitoJUnitRunner.class)
 public class AdministradorDAOTest {
-    @Mock
-    private AdministradorDAO dao;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+    @InjectMocks
+    AdministradorDAO administradorDAO;
+    @Spy
+    private EntityManager entityManagerMock;
+
 
     @Test
     public void testPersist() {
+
+
+        // Datos de prueba
         Administrador administrador = new Administrador();
-        dao.persist(administrador);
-        Mockito.verify(dao).persist(administrador);
-    }
+        administrador.setNombre("John");
+        administrador.setApellido("Doe");
+        administrador.setId(1);
 
-    @Test
-    public void testMerge() {
-        Administrador administrador = new Administrador();
-        dao.merge(administrador);
-        Mockito.verify(dao).merge(administrador);
-    }
+        // Llamar al método bajo prueba
+        entityManagerMock.persist(administrador);
 
-    @Test
-    public void testDelete(){
-        Administrador administrador = new Administrador();
-        dao.delete(administrador);
-        Mockito.verify(dao).delete(administrador);
+        // Verificar el resultado
+        // Realiza aserciones o consultas a la base de datos para verificar la persistencia
+        Administrador administradorPersistido = entityManagerMock.find(Administrador.class, 1);
+        assertNotNull(administradorPersistido);
+        assertEquals("John", administradorPersistido.getNombre());
+        assertEquals("Doe", administradorPersistido.getApellido());
     }
-
-    @Test
-    public void testFindById(){
-        dao.findById(100);
-        Mockito.verify(dao).findById(100);
-    }
-
-    @Test
-    public void testFindAll(){
-        dao.findAll();
-        Mockito.verify(dao).findAll();
-    }
-
 
 }

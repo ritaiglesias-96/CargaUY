@@ -25,4 +25,5 @@ public class Administrador extends Usuario implements Serializable {
     public Administrador() {
         super();
     }
+
 }

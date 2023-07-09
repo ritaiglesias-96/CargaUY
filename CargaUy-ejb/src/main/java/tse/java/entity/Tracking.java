@@ -97,7 +97,7 @@ public class Tracking {
     public TrackingDTO getDto() {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String strDate = this.getTimeStamp().format(dateTimeFormatter);
-        return new TrackingDTO(this.getId(), this.getMatricula(), this.getPais(), this.getLatitude(), this.getLongitude(), strDate);
+        return new TrackingDTO(this.getId(), this.getMatricula(), this.getPais(), this.getLongitude(),this.getLatitude(),  strDate);
     }
 
 

@@ -49,7 +49,7 @@ public class GubUyService implements IGubUyService {
     private static final String USERINFO_ENDPOINT = "https://auth-testing.iduruguay.gub.uy/oidc/v1/userinfo";
     private static final String CLIENT_ID = "890192" ;
     private static final String CLIENT_SECRET = "457d52f181bf11804a3365b49ae4d29a2e03bbabe74997a2f510b179";
-    private static final String REDIRECT_URI = "https://openidconnect.net/callback";
+    private static final String POST_LOGOUT_REDIRECT_URI = "https://carga-uy-13.web.elasticloud.uy/CargaUy-web/api/gubuy/logout";
     private static final String key = "xbmbLFSsxidkGlcKEQPTBhsIvoOOACgROSKMhCcQLILuNamzTZtFjXgShyqs";
 
     @EJB
@@ -170,6 +170,24 @@ public class GubUyService implements IGubUyService {
         }
 
         return sb.toString();
+    }
+    @Override
+    public void logout(String token) {
+        try{
+            OkHttpClient httpClient = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(END_SESSION_ENDPOINT)
+                    .addHeader("id_token_hint", token)
+                    .addHeader("post_logout_redirect_uri", POST_LOGOUT_REDIRECT_URI)
+                    .get()
+                    .build();
+            Response response = httpClient.newCall(request).execute();
+            if (!response.isSuccessful()) {
+                throw new Exception("Algo salió mal intentando cerrar tu sesión");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Map<String, Claim> decodeToken(String token) {

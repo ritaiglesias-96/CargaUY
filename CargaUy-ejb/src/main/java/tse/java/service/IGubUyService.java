@@ -11,6 +11,7 @@ public interface IGubUyService {
     String getAuthGubUy();
     CiudadanoJwtDTO loginGubUy(String accessCode, String state);
     String agarrarUrl(Response r) throws IOException;
-
     void verificarJwt(String jwt);
+    void logout(String token);
+    String generateRandomString(int length) ;
 }

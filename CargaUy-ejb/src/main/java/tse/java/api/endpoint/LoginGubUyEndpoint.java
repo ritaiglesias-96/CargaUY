@@ -84,11 +84,11 @@ public class LoginGubUyEndpoint {
     public Response gubUyAuth(@QueryParam("mobile") String mobile) throws URISyntaxException, IOException {
         if(mobile!=null){
             System.out.println("Linea 45 else para true de mobile");
-            setMobile(Boolean.parseBoolean(mobile));
+             isMobile=true;
             System.out.println("mobile linea 48 : " + isMobile);
         }else{
             System.out.println("linea 47 para false de mobile");
-            setMobile(false);
+            isMobile=false;
             System.out.println("mobile linea 52:" + isMobile);
         }
         System.out.println("mobile? " + isMobile);
@@ -118,7 +118,7 @@ public class LoginGubUyEndpoint {
             return Response.status(Response.Status.OK).build();
         }else{
             System.out.println("Entra en el else linea 84 ");
-            return Response.status(Response.Status.SEE_OTHER).location(new URI(FRONTOFFICE_URI + "?code=" + ciudadanoJwtDTO.getJwt())).build();
+            return Response.status(Response.Status.SEE_OTHER).location(new URI(FRONTOFFICE_URI + "?code=" + ciudadanoJwtDTO)).build();
         }
 
     }
@@ -144,6 +144,13 @@ public class LoginGubUyEndpoint {
     @Path("/jwt-control")
     public Response tokenControl(@QueryParam("jwt") String jwt){
         gubUyService.verificarJwt(jwt);
+        return Response.status(Response.Status.OK).build();
+    }
+
+    @GET
+    @Path("/logout")
+    public Response logout(@QueryParam("token") String token) {
+        gubUyService.logout(token);
         return Response.status(Response.Status.OK).build();
     }
 }

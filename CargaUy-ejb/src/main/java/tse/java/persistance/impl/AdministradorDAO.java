@@ -8,6 +8,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 import java.sql.Date;
@@ -19,6 +20,8 @@ public class AdministradorDAO implements IAdministradorDAO {
     @TSE2023DB
     @Inject
     public EntityManager em;
+
+
 
     @Override
     public void persist(Administrador administrador) {

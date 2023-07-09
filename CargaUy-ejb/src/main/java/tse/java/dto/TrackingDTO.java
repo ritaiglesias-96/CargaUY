@@ -33,6 +33,14 @@ public class TrackingDTO implements Serializable {
         this.timestamp = timestamp;
     }
 
+    public TrackingDTO( String matricula, String pais, String longitude, String latitude, String timestamp) {
+        this.matricula = matricula;
+        this.pais = pais;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.timestamp = timestamp;
+    }
+
     public TrackingDTO() {
 
     }
