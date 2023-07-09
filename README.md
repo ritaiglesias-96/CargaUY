@@ -1,3 +1,45 @@
+# CargaUY
+
+## Table of Contents
+
+- [Description](#description)
+- [Screenshots](#screenshots)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+- [Contacts](#contacts)
+
+## Description
+
+Todas las actividades económicas dependen de cadenas de distribución: tanto en la llegada de materias primas a centros industriales como en la distribución
+de todo tipo de productos para llegar a los consumidores finales. En Uruguay
+a nivel interno la mayoría del transporte de dichas cadenas de distribución se
+realiza a través del transporte carretero. 
+
+CargaUY es una aplicación que brinda información sobre la actividad del transporte de carga para objetivos de recaudación, la fiscalización de la actividad y la planificación de la infraestructura necesaria a futuro. 
+
+## Screenshots
+
+<img src="" />## Built With
+
+<a href="https://docs.oracle.com/javase/tutorial/index.html"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" height="40px" width="40px" /></a><a href="https://www.postgresql.org/"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" height="40px" width="40px" /></a>
+
+## Getting Started
+
+
+
+### Prerequisites
+
+Intellij 
+PostgreSQL
+WIldfly 24
+
+### Installation
+
 This project was created from the archetype "wildfly-jakartaee-ear-archetype".
 
 To deploy it:
@@ -6,7 +48,7 @@ Run the maven goals "install wildfly:deploy"
 To undeploy it:
 Run the maven goals "wildfly:undeploy"
 
-==========================
+## Usage
 
 DataSource:
 This sample includes a "persistence.xml" file in the EJB project. This file defines
@@ -16,12 +58,10 @@ In production environment, you should define a database in WildFly config and po
 in "persistence.xml".
 
 If you don't use entity beans, you can delete "persistence.xml".
-==========================
 
 JSF:
 The web application is prepared for JSF 2.3 by bundling an empty "faces-config.xml" in "src/main/webapp/WEB-INF".
 In case you don't want to use JSF, simply delete this file and "src/main/webapp/beans.xml" and "src/main/java/tse/java/Jsf23Activator.java"
-==========================
 
 Testing:
 This sample is prepared for running unit tests with the Arquillian framework.
@@ -57,3 +97,16 @@ The goal "verify" (which triggers the maven-surefire-plugin) is executed later i
 artifacts ("CargaUy-ejb.jar" and "CargaUy-web.war") are already built. You can build
 the final EAR by including those files. The "maven-surefire-plugin" is executed before the JAR/WAR files
 are created, so those JAR/WAR files would have to be built in the "@Deployment" method, too. 
+
+
+## License
+
+<a href="https://choosealicense.com/licenses/apache-2.0/"><img src="https://raw.githubusercontent.com/johnturner4004/readme-generator/master/src/components/assets/images/apache.svg" height=40 />Apache License 2.0</a>
+
+## Acknowledgements
+
+Adrian Gioda, Diego Bronc, Marcelo Bravo, Maria Rita Iglesias
+
+## Contacts
+
+<a href="https://www.linkedin.com/in/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>  <a href="mailto:"><img src=https://raw.githubusercontent.com/johnturner4004/readme-generator/master/src/components/assets/images/email_me_button_icon_151852.svg /></a>
