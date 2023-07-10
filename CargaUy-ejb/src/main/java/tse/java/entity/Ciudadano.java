@@ -35,8 +35,10 @@ public class Ciudadano  implements Serializable {
         super();
         this.email = email;
         this.cedula = cedula;
-        if(rol!=null){
+        if (rol!=null){
             this.rol=rol;
+        }else {
+            this.rol = RolCiudadano.CIUDADANO;
         }
     }
 

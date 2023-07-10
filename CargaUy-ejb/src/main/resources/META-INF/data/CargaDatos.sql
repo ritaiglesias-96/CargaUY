@@ -12,10 +12,11 @@ INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUE
 --- Responsable
 INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Responsable', 7856, '3456789', 'responsable@com', 1, null);
 INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Responsable', 8856, '4567891', 'responsable2@com', 1, null);
+INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Responsable', 4567, '56587008', 'rita@gmail.com', 1, null);
 
 ---Empresas
 INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1586, 'Rivera 1234', 'TATA', 1254,'tatasa',7856);
-INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1587, 'Rivera 4321', 'ATAT', 4521,'atatsa',8856);
+INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1587, 'Rivera 4321', 'ATAT', 4521,'atatsa',4567);
 
 --- Choferes
 INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Chofer', 5856, '2365896', 'chofer@com', 2, 1586);

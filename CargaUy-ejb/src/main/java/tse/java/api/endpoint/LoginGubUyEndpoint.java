@@ -7,18 +7,10 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
-import org.apache.http.Header;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.core.io.ClassPathResource;
+import tse.java.dto.CiudadanoFrontDTO;
 import tse.java.dto.CiudadanoJwtDTO;
-import tse.java.dto.RubroDTO;
 import tse.java.service.IGubUyService;
-import tse.java.service.impl.GubUyService;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -29,9 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 @RequestScoped
 @Path("/gubuy")
@@ -83,15 +72,10 @@ public class LoginGubUyEndpoint {
     @Path("/auth")
     public Response gubUyAuth(@QueryParam("mobile") String mobile) throws URISyntaxException, IOException {
         if(mobile!=null){
-            System.out.println("Linea 45 else para true de mobile");
             setMobile(Boolean.parseBoolean(mobile));
-            System.out.println("mobile linea 48 : " + isMobile);
         }else{
-            System.out.println("linea 47 para false de mobile");
             setMobile(false);
-            System.out.println("mobile linea 52:" + isMobile);
         }
-        System.out.println("mobile? " + isMobile);
         String url =  gubUyService.getAuthGubUy();
         URI uri=new URI(url);
         return Response.temporaryRedirect(uri).build();
@@ -99,14 +83,11 @@ public class LoginGubUyEndpoint {
 
     @GET
     @Path("/tokens")
-    public Response getToken(@QueryParam("code") String accessCode, @QueryParam("state") String state) throws URISyntaxException, FirebaseMessagingException, IOException {
+    public Response getToken(@QueryParam("code") String accessCode, @QueryParam("state") String state) throws Exception {
         CiudadanoJwtDTO ciudadanoJwtDTO = gubUyService.loginGubUy(accessCode, state);
         boolean mobile = getisMobile();
-        System.out.println("mobile linea 70 :" + mobile);
         if(mobile){
-            System.out.println("entro aca");
             FirebaseConfig();
-            System.out.println("Entra al message builder");
             Message message = Message.builder()
                     .putData("title", "Redirect Notification")
                     .putData("body", "Click para volver a la aplicación")
@@ -117,7 +98,6 @@ public class LoginGubUyEndpoint {
             FirebaseMessaging.getInstance().send(message);
             return Response.status(Response.Status.OK).build();
         }else{
-            System.out.println("Entra en el else linea 84 ");
             return Response.status(Response.Status.SEE_OTHER).location(new URI(FRONTOFFICE_URI + "?code=" + ciudadanoJwtDTO.getJwt())).build();
         }
 
@@ -126,8 +106,6 @@ public class LoginGubUyEndpoint {
     @GET
     @Path("/test-push")
     public Response getPush() throws FirebaseMessagingException, IOException {
-        // This registration token comes from the client FCM SDKs.
-// See documentation on defining a message payload.
         FirebaseConfig();
         Message message = Message.builder()
                 .setNotification(
@@ -139,6 +117,15 @@ public class LoginGubUyEndpoint {
                 .build();
         FirebaseMessaging.getInstance().send(message);
         return Response.status(Response.Status.OK).build();
+    }
+
+    @POST
+    @Path("/user-info")
+    public Response userInfo(@QueryParam("jwtToken") String jwt){
+        System.out.println("endpoint:" + jwt);
+        gubUyService.verificarJwt(jwt);
+        CiudadanoFrontDTO ciudadano = gubUyService.getCurrentUser(jwt);
+        return Response.status(Response.Status.OK).entity(ciudadano).build();
     }
     @GET
     @Path("/jwt-control")

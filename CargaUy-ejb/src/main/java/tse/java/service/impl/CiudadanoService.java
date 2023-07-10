@@ -32,9 +32,6 @@ public class CiudadanoService implements ICiudadanosService {
     @EJB
     IGuiaDeViajeDAO guiaDAO;
 
-    @EJB
-    IAsignacionesService asignacionesService;
-
     @Override
     public Ciudadano obtenerCiudadano(int id) {
         return ciudadanoDAO.buscarCiudadanoPorId(id);
@@ -153,6 +150,11 @@ public class CiudadanoService implements ICiudadanosService {
                 choferDAO.modificarChofer(ch);
             }
         }
+    }
+
+    @Override
+    public EmpresaDTO obtenerEmpresaPorResponsable(String cedula){
+        return ciudadanoDAO.obtenerEmpresaPorResponsable(cedula);
     }
 
     // Auxiliar
