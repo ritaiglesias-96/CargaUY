@@ -5,6 +5,7 @@ import javax.ejb.Local;
 import java.util.ArrayList;
 
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Empresa;
 
 @Local
@@ -22,4 +23,7 @@ public interface IEmpresasDAO {
 
     Empresa  modificarEmpresa(EmpresaDTO empresaDTO);
 
+    void eliminarVehiculo(int idEmpresa, int idVehiculo);
+
+    void agregarVehiculo(int idEmpresa, VehiculoDTO vehiculoDTO);
 }

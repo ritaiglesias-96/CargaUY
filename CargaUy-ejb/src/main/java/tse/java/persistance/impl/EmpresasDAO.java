@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Empresa;
 import tse.java.entity.Pesaje;
 import tse.java.entity.Vehiculo;
@@ -54,7 +55,9 @@ public class EmpresasDAO implements IEmpresasDAO {
     @Override
     public Empresa modificarEmpresa(EmpresaDTO empresaDTO) {
         Empresa e = new Empresa(empresaDTO);
+        em.getTransaction().begin();
         em.merge(e);
+        em.getTransaction().commit();
         return e;
     }
 
@@ -77,4 +80,34 @@ public class EmpresasDAO implements IEmpresasDAO {
             return new EmpresaDTO(e);
         }
     }
+
+    @Override
+    public void eliminarVehiculo(int idEmpresa, int idVehiculo) {
+        Empresa e = em.find(Empresa.class, idEmpresa);
+        if(!e.getVehiculos().isEmpty()){
+            Vehiculo v = em.find(Vehiculo.class, idVehiculo);
+            if (v != null) {
+                e.getVehiculos().remove(v);
+                em.merge(e);
+            }
+
+        }
+    }
+
+    @Override
+    public void agregarVehiculo(int idEmpresa, VehiculoDTO vehiculoDTO) {
+        Empresa e = em.find(Empresa.class, idEmpresa);
+        Vehiculo v = em.find(Vehiculo.class, vehiculoDTO.getId());
+        if(v != null) {
+            e.getVehiculos().add(v);
+            em.merge(e);
+        } else {
+            Vehiculo vnuevo = new Vehiculo(vehiculoDTO);
+            em.persist(vnuevo);
+            e.getVehiculos().add(vnuevo);
+            em.merge(e);
+        }
+
+    }
+
 }

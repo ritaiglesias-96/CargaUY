@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tse.java.entity.Asignacion;
+import tse.java.entity.Chofer;
 import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
 
@@ -17,6 +18,8 @@ public class EmpresaDTO {
 
     private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
 
+    private List<ChoferDTO> choferes = new ArrayList<>();
+
     public EmpresaDTO() {
     }
 
@@ -26,10 +29,15 @@ public class EmpresaDTO {
         this.razonSocial = e.getRazonSocial();
         this.nroEmpresa = e.getNroEmpresa();
         this.dirPrincipal = e.getDirPrincipal();
-        if (e.getVehiculos() != null) {
+        if (!e.getVehiculos().isEmpty()) {
             this.vehiculos = procesarLista(e.getVehiculos());
         }
-        this.asignaciones = procesarListaAsignaciones(e.getAsignaciones());
+        if (!e.getChoferes().isEmpty()) {
+            this.choferes = procesarChoferes(e.getChoferes());
+        }
+        if (!e.getAsignaciones().isEmpty()) {
+            this.asignaciones = procesarListaAsignaciones(e.getAsignaciones());
+        }
     }
 
     public EmpresaDTO(Integer id, String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal,
@@ -100,10 +108,27 @@ public class EmpresaDTO {
         this.asignaciones = asignaciones;
     }
 
+
+    public List<ChoferDTO> getChoferes() {
+        return choferes;
+    }
+
+    public void setChoferes(List<ChoferDTO> choferes) {
+        this.choferes = choferes;
+    }
+
     public List<VehiculoDTO> procesarLista(List<Vehiculo> vehiculos) {
         List<VehiculoDTO> result = new ArrayList<VehiculoDTO>();
         for (Vehiculo v : vehiculos) {
             result.add(new VehiculoDTO(v));
+        }
+        return result;
+    }
+
+    public List<ChoferDTO> procesarChoferes(List<Chofer> choferes) {
+        List<ChoferDTO> result = new ArrayList<>();
+        for (Chofer c:choferes){
+            result.add(c.darDTO());
         }
         return result;
     }
@@ -117,14 +142,12 @@ public class EmpresaDTO {
     }
 
     public boolean contieneVehiculo(VehiculoDTO v) {
-        boolean encontrado = false;
         for (VehiculoDTO v1 : vehiculos) {
-            if (v1.getId().equals(v.getId())) {
-                encontrado = true;
-                break;
+            if (v1.getId() == v.getId()) {
+                return true;
             }
         }
-        return encontrado;
+        return false;
     }
 
 }

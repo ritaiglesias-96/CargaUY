@@ -13,15 +13,14 @@ public interface IVehiculosDAO {
 
     public ArrayList<VehiculoDTO> obtenerVehiculos();
 
-    public Vehiculo obtenerVehiculoId(Long id);
+    public Vehiculo obtenerVehiculoId(int id);
 
     public Vehiculo modificarVehiculo(VehiculoDTO vehiculo);
   
-    public void eliminarVehiculo(Long id);
+    public void eliminarVehiculo(int id);
 
     void agregarVehiculo(Vehiculo vehiculo);
 
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
 
-    public Long getNextIdVehiculo();
 }

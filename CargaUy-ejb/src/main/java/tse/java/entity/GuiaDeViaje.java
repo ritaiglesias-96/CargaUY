@@ -1,7 +1,7 @@
 package tse.java.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -12,27 +12,23 @@ import tse.java.dto.PesajeDTO;
 @Entity
 @Table(name = "\"GuiaDeViaje\"")
 public class GuiaDeViaje {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private Integer id;
+    @Column(unique = true)
     private int numero;
-
     private String rubroCliente;
     private String tipoCarga;
 
     private float volumenCarga;
 
-    @Temporal(TemporalType.DATE)
     private Date fecha;
 
     private String origen;
 
-    @Temporal(TemporalType.DATE)
     private Date inicio;
 
-    @Temporal(TemporalType.DATE)
     private Date fin;
 
     private String destino;
@@ -40,7 +36,7 @@ public class GuiaDeViaje {
     @OneToMany
     private List<Pesaje> pesajes = new ArrayList<Pesaje>();
 
-    public GuiaDeViaje(Long id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<Pesaje> pesajes) {
+    public GuiaDeViaje(Integer id, int numero, String rubroCliente, String tipoCarga, float volumenCarga, Date fecha, String origen, Date inicio, Date fin, String destino, List<Pesaje> pesajes) {
         this.id = id;
         this.numero = numero;
         this.rubroCliente = rubroCliente;
@@ -54,27 +50,42 @@ public class GuiaDeViaje {
         this.pesajes = pesajes;
     }
 
-    public GuiaDeViaje(){}
+    public GuiaDeViaje() {
+    }
 
-    public GuiaDeViaje(GuiaDeViajeDTO guia){
+    public GuiaDeViaje(GuiaDeViajeDTO guia) {
         this.id = guia.getId();
         this.numero = guia.getNumero();
         this.pesajes = procesarListaPesajes(guia.getPesajes());
-        this.fin = guia.getFin();
+        if(guia.getFin()!=null)this.fin = Date.valueOf(guia.getFin());
         this.destino = guia.getDestino();
-        this.fecha = guia.getFecha();
-        this.inicio = guia.getInicio();
+        this.fecha = Date.valueOf(guia.getFecha());
+        if(guia.getInicio()!=null)this.inicio = Date.valueOf(guia.getInicio());
         this.origen = guia.getOrigen();
         this.rubroCliente = guia.getRubroCliente();
         this.volumenCarga = guia.getVolumenCarga();
         this.tipoCarga = guia.getTipoCarga();
     }
 
-    public Long getId() {
+    public void modificarGuia(GuiaDeViajeDTO mod) {
+        this.id = mod.getId();
+        this.numero = mod.getNumero();
+        if (mod.getFin() != null) this.fin = Date.valueOf(mod.getFin());
+        this.destino = mod.getDestino();
+        this.fecha = Date.valueOf(mod.getFecha());
+        if (mod.getInicio() != null) this.inicio = Date.valueOf(mod.getInicio());
+        this.origen = mod.getOrigen();
+        this.rubroCliente = mod.getRubroCliente();
+        this.volumenCarga = mod.getVolumenCarga();
+        this.tipoCarga = mod.getTipoCarga();
+        this.pesajes = procesarListaPesajes(mod.getPesajes());
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -158,26 +169,26 @@ public class GuiaDeViaje {
         this.tipoCarga = tipoCarga;
     }
 
-    public List<PesajeDTO> procesarLista(){
+    public List<PesajeDTO> procesarLista() {
         List<PesajeDTO> result = new ArrayList<PesajeDTO>();
-        for(Pesaje p:pesajes){
+        for (Pesaje p : pesajes) {
             result.add(p.darDTO());
         }
         return result;
     }
 
-    public GuiaDeViajeDTO darDto(){
-        return new GuiaDeViajeDTO(id, numero, rubroCliente, tipoCarga, volumenCarga, fecha, origen, inicio, fin, destino, procesarLista());
+    public GuiaDeViajeDTO darDto() {
+        return new GuiaDeViajeDTO(id, numero, rubroCliente, tipoCarga, volumenCarga, fecha.toLocalDate(), origen, inicio.toLocalDate(), fin.toLocalDate(), destino, procesarLista());
     }
 
-    public List<Pesaje> procesarListaPesajes(List<PesajeDTO> pesajes){
+    public List<Pesaje> procesarListaPesajes(List<PesajeDTO> pesajes) {
         List<Pesaje> result = new ArrayList<Pesaje>();
-        for(PesajeDTO p:pesajes){
+        for (PesajeDTO p : pesajes) {
             Pesaje pnew = new Pesaje(p);
             result.add(pnew);
         }
         return result;
     }
 
-    
+
 }

@@ -11,19 +11,23 @@ import java.time.LocalDateTime;
 public class Asignacion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     @ManyToOne
     private GuiaDeViaje guia;
 
     private LocalDateTime fechaCambio;
 
-    public Asignacion(Long id, GuiaDeViaje guia, LocalDateTime fechaCambio) {
+    public Asignacion(int id, GuiaDeViaje guia, LocalDateTime fechaCambio) {
         this.id = id;
         this.guia = guia;
         this.fechaCambio = fechaCambio;
     }
 
+    public Asignacion(GuiaDeViaje guia, LocalDateTime fechaCambio) {
+        this.guia = guia;
+        this.fechaCambio = fechaCambio;
+    }
     public Asignacion(){}
 
     public Asignacion(AsignacionDTO a){
@@ -32,11 +36,11 @@ public class Asignacion {
         this.fechaCambio = a.getFechaCambio();
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -57,7 +61,7 @@ public class Asignacion {
     }
 
     public AsignacionDTO darDTO(){
-        return new AsignacionDTO(id, guia.darDto(), fechaCambio);
+        return new AsignacionDTO(id, new GuiaDeViajeDTO(guia), fechaCambio);
     }
 
     public GuiaDeViaje convertirGuia(GuiaDeViajeDTO g){
