@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "387023903978",
+    "project_id": "test-c1703",
+    "storage_bucket": "test-c1703.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387023903978:android:5d9f4f026d7f7d47ff0b93",
+        "android_client_info": {
+          "package_name": "tse.java.cargauy_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387023903978-hp1hat2rjujn33c3b54857tgg3hjviie.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCclGBEwF5ws95hHWXGfDZNOEP0_fVzvI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387023903978-hp1hat2rjujn33c3b54857tgg3hjviie.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -94,3 +94,13 @@ insert into public."TipoCarga" values (1001,'Producto no quimico');
 insert into public."Rubro" values (1000,'Carnes');
 insert into public."Rubro" values (1001,'Farmacos');
 insert into public."Rubro" values (1002,'Informatica');
+
+-- Pesajes
+insert into public."Pesaje" values(1000,75,'2023-05-02 12:30:00',-15.2135,-89.4568);
+insert into public."Pesaje" values(1001,75,'2023-05-10 12:30:00',-14.2135,-93.4568);
+insert into public."Pesaje" values(1002,75,'2023-05-15 12:35:00',-19.2135,-84.4568);
+
+-- GuiaDeViaje/Pesaje
+insert into public."GuiaDeViaje_Pesaje" values(1000,1000);
+insert into public."GuiaDeViaje_Pesaje" values(1000,1001);
+insert into public."GuiaDeViaje_Pesaje" values(1000,1002);

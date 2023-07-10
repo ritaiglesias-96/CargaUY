@@ -134,10 +134,34 @@ public class EmpresasService implements IEmpresasService {
             if(v.getId() == vehiculoId){
                 return true;
             }
+      return false;
+    }
+
+    @Override
+    public List<EmpresaDTO> listarViajesFinalizados() {
+        List<EmpresaDTO> empresas = empresasDAO.obtenerEmpresas();
+        for(EmpresaDTO e:empresas){
+            List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
+            for(AsignacionDTO a:e.getAsignaciones()){
+               if(a.getGuia().getFin()!=null)
+                   result.add(a);
+           }
+           e.setAsignaciones(result);
+        }
+        return empresas;
+    }
+
+    // Auxiliar
+    private List<AsignacionDTO> listaAsignacionesConGuia(EmpresaDTO e, int numeroGuia) {
+        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
+        for (AsignacionDTO a : e.getAsignaciones()) {
+            if (a.getGuia().getNumero() == numeroGuia)
+                result.add(a);
         }
         return false;
     }
 
+    @Override
     private int crearEmpresaPdi(String rut){
         // 0 - no existe la empresa, 1 - Creada ok, 2 - Error al comunicarse con la plataforma, 3 - La empresa ya existe
         try{
