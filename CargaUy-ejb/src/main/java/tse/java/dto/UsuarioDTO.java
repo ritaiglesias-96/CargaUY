@@ -4,8 +4,6 @@ import tse.java.enumerated.TipoUsuario;
 import tse.java.entity.Usuario;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class UsuarioDTO {
     private int idUsuario;

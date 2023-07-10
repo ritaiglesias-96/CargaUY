@@ -4,11 +4,11 @@ public class GuiaDeViajeAltaDTO{
 
     private String rubroCliente, tipoCarga;
     private float volumenCarga;
-    private String origen, destino, paisVehiculo, matriculaVehiculo;
-    private int numeroEmpresa;
-    private String cedulaChofer;
+    private String origen, destino, paisVehiculo, matriculaVehiculo, cedulaChofer;
 
-    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String paisVehiculo, String matriculaVehiculo, String cedulaChofer, int numeroEmpresa) {
+    private Integer idEmpresa;
+
+    public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String paisVehiculo, String matriculaVehiculo, String cedulaChofer, int idEmpresa) {
         this.rubroCliente = rubroCliente;
         this.tipoCarga = tipoCarga;
         this.volumenCarga = volumenCarga;
@@ -17,9 +17,8 @@ public class GuiaDeViajeAltaDTO{
         this.paisVehiculo = paisVehiculo;
         this.matriculaVehiculo = matriculaVehiculo;
         this.cedulaChofer = cedulaChofer;
-        this.numeroEmpresa = numeroEmpresa;
+        this.idEmpresa = idEmpresa;
     }
-
 
     public GuiaDeViajeAltaDTO(){}
 
@@ -87,11 +86,11 @@ public class GuiaDeViajeAltaDTO{
         this.tipoCarga = tipoCarga;
     }
 
-    public int getNumeroEmpresa() {
-        return numeroEmpresa;
+    public int getIdEmpresa() {
+        return idEmpresa;
     }
 
-    public void setNumeroEmpresa(int numeroEmpresa) {
-        this.numeroEmpresa = numeroEmpresa;
+    public void setIdEmpresa(Integer idEmpresa) {
+        this.idEmpresa = idEmpresa;
     }
 }

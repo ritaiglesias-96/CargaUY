@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 
 public class AsignacionDTO {
 
-    private Long id;
+    private int id;
 
     private GuiaDeViajeDTO guia;
 
     private LocalDateTime fechaCambio;
 
-    public AsignacionDTO(Long id, GuiaDeViajeDTO guia, LocalDateTime fechaCambio) {
+    public AsignacionDTO(int id, GuiaDeViajeDTO guia, LocalDateTime fechaCambio) {
         this.id = id;
         this.guia = guia;
         this.fechaCambio = fechaCambio;
@@ -21,11 +21,11 @@ public class AsignacionDTO {
 
     public AsignacionDTO(){}
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

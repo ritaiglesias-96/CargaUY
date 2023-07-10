@@ -38,7 +38,7 @@ public class ChoferDAO implements IChoferDAO {
 
     @Override
     public void eliminiarChofer(Chofer chofer) {
-        Chofer c = em.find(Chofer.class,chofer.getIdCiudadano());
+        Chofer c = em.find(Chofer.class, chofer.getIdCiudadano());
         if(c!=null){
             em.remove(c);
         }
@@ -47,19 +47,15 @@ public class ChoferDAO implements IChoferDAO {
     @Override
     public void asignarEmpresaChofer(int id, Empresa empresa) {
         Chofer c = em.find(Chofer.class,id);
-        List<Empresa> empresas = c.getEmpresas();
-        empresas.add(empresa);
-        c.setEmpresas(empresas);
-        em.merge(c);
+        empresa.getChoferes().add(c);
+        em.merge(empresa);
     }
 
     @Override
     public void eliminarEmpresaChofer(int id, Empresa empresa) {
         Chofer c = em.find(Chofer.class,id);
-        List<Empresa> empresas = c.getEmpresas();
-        empresas.remove(empresa);
-        c.setEmpresas(empresas);
-        em.merge(c);
+        empresa.getChoferes().remove(c);
+        em.merge(empresa);
     }
 
     public ChoferDTO buscarChoferPorCedula(String cedula){

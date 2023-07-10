@@ -1,6 +1,7 @@
 package tse.java.service.impl;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,11 +11,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import tse.java.dto.AsignacionDTO;
-import tse.java.dto.GuiaDeViajeDTO;
-import tse.java.dto.PesajeDTO;
-import tse.java.entity.GuiaDeViaje;
-import tse.java.entity.Pesaje;
+import tse.java.dto.*;
 import tse.java.persistance.IAsignacionDAO;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.persistance.IPesajesDAO;
@@ -41,24 +38,23 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     IAsignacionDAO asignacionDAO;
 
     @Override
-    public void crearGuiaDeViaje(GuiaDeViajeDTO g) {
-        guiaviajeDao.altaGuiaDeViaje(g);
+    public void crearGuiaDeViaje(GuiaDeViajeDTO g, ChoferDTO c, EmpresaDTO e, VehiculoDTO v) {
+        guiaviajeDao.altaGuiaDeViaje(g, c, e, v);
     }
 
     @Override
-    public void borrarGuiaDeViaje(Long id) {
-        GuiaDeViaje g = guiaviajeDao.buscarGuiaDeViaje(id);
-        List<Pesaje> pesajes = g.getPesajes();
-        g.setPesajes(new ArrayList<Pesaje>());
-        guiaviajeDao.modificarGuiaDeViaje(g.darDto());
-        for(Pesaje p:pesajes)
-            pesajesDAO.borrarPesaje(p.getId());
-        guiaviajeDao.borrarGuiaDeViaje(id);
+    public void borrarGuiaDeViaje(int id, int idEmpresa) {
+        guiaviajeDao.borrarGuiaDeViaje(id, idEmpresa);
     }
 
     @Override
-    public void modificarGuiaDeViaje(GuiaDeViajeDTO g) {
-        guiaviajeDao.modificarGuiaDeViaje(g);
+    public void modificarGuiaDeViaje(GuiaDeViajeDTO g, ChoferDTO c, EmpresaDTO e, VehiculoDTO v) {
+        guiaviajeDao.modificarGuiaDeViaje(g, c, e, v);
+    }
+
+    @Override
+    public void modificarGuiaDeViajeSinAsignacion(GuiaDeViajeDTO guia){
+        guiaviajeDao.modificarGuiaDeViajeSinAsignacion(guia);
     }
 
     @Override
@@ -67,14 +63,14 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     }
 
     @Override
-    public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, Date fecha) {
+    public List<PesajeDTO> listarGuiasDeViajesPorFecha(List<GuiaDeViajeDTO> guiasViaje, LocalDate fecha) {
         String msg = "Me pasaron por rest " + guiasViaje.size() + " guias de viaje y fecha=" + fecha;
         Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
         for(GuiaDeViajeDTO g:guiasViaje){
             msg = "Busco la guiaid=" + g.getId();
             Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
-            Date fechaInicioGuia = g.getInicio();
-            if(fecha.after(fechaInicioGuia) && g.getFin()==null) {
+            LocalDate fechaInicioGuia = g.getInicio();
+            if(fecha.isAfter(fechaInicioGuia) && g.getFin()==null) {
                 return pesajesService.listarPesajesDeGuia(g, fecha);
             }
         }
@@ -82,8 +78,8 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
     }
 
     @Override
-    public void asignarPesajes(int numero_viaje, List<PesajeDTO> pesajes) {
-        AsignacionDTO a = asignacionDAO.buscarAsignacion(asignacionesService.ultimaAsignacionViaje(numero_viaje));
+    public void asignarPesajes(int numeroViaje, List<PesajeDTO> pesajes) {
+        AsignacionDTO a = asignacionDAO.buscarAsignacion(asignacionesService.ultimaAsignacionViaje(numeroViaje));
         GuiaDeViajeDTO g = a.getGuia();
         List<PesajeDTO> result = new ArrayList<PesajeDTO>();
         for(PesajeDTO p:pesajes){
@@ -92,13 +88,25 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
             result.add(paux);
         }
         g.setPesajes(result);
-        guiaviajeDao.modificarGuiaDeViaje(g);
+        guiaviajeDao.modificarGuiaDeViajeSinAsignacion(g);
     }
 
     @Override
     public int cantidadViajesPorAnioRubro(int anio, String rubro) {
         return guiaviajeDao.cantidadViajesPorAnioRubro(anio,rubro);
     }
+    @Override
+    public int getNextNumeroViaje() {
+        return guiaviajeDao.getNextNumeroViaje();
+    }
 
+    @Override
+    public GuiaDeViajeDTO buscarGuiaViajePorNumero(int numeroGuia) {
+        return guiaviajeDao.buscarGuiaViajePorNumero(numeroGuia);
+    }
 
+    @Override
+    public GuiaDeViajeDTO buscarGuiaViajePorId(int numeroGuia) {
+        return guiaviajeDao.buscarGuiaViajePorId(numeroGuia);
+    }
 }
