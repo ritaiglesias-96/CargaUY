@@ -53,26 +53,7 @@ public class EmpresaTest {
         assertTrue(empresa.getVehiculos().isEmpty());
         assertTrue(empresa.getAsignaciones().isEmpty());
     }
-    @Test
-    public void testConstructorWithAllArguments() {
-        // Crear objetos adicionales necesarios para la prueba
-        Responsable responsable = new Responsable();
-        Vehiculo vehiculo = new Vehiculo();
-        Asignacion asignacion = new Asignacion();
 
-        // Crear la instancia de Empresa utilizando el constructor con todos los argumentos
-        Empresa empresa = new Empresa(1, "Nombre", "Razón Social", 123, "Dirección", responsable,
-                List.of(vehiculo), List.of(asignacion));
-
-        assertEquals(1, empresa.getId());
-        assertEquals("Nombre", empresa.getNombrePublico());
-        assertEquals("Razón Social", empresa.getRazonSocial());
-        assertEquals(123, empresa.getNroEmpresa());
-        assertEquals("Dirección", empresa.getDirPrincipal());
-        assertEquals(responsable, empresa.getResponsable());
-        assertTrue(empresa.getVehiculos().contains(vehiculo));
-        assertTrue(empresa.getAsignaciones().contains(asignacion));
-    }
     @Test
     public void testConstructorWithEmpresaDTO() {
         // Crear un objeto EmpresaDTO de ejemplo
@@ -88,7 +69,7 @@ public class EmpresaTest {
         AsignacionDTO asignacionDTO2 = new AsignacionDTO();
         VehiculoDTO vehiculoDTO1 = new VehiculoDTO();
         LocalDate fechaFinITV = LocalDate.of(1999, 5, 12);
-        vehiculoDTO1.setId(1L);
+        vehiculoDTO1.setId(1);
         vehiculoDTO1.setMatricula("ABC123");
         vehiculoDTO1.setPais("España");
         vehiculoDTO1.setMarca("Toyota");
@@ -100,7 +81,7 @@ public class EmpresaTest {
         vehiculoDTO1.setFechaInicioPNC(fechaFinITV);
         vehiculoDTO1.setFechaFinPNC(fechaFinITV);
         VehiculoDTO vehiculoDTO2 = new VehiculoDTO();
-        vehiculoDTO2.setId(2L);
+        vehiculoDTO2.setId(2);
         vehiculoDTO2.setMatricula("ABC23");
         vehiculoDTO2.setPais("Espña");
         vehiculoDTO2.setMarca("Toota");

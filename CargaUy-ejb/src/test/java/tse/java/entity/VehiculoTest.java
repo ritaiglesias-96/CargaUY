@@ -17,7 +17,7 @@ public class VehiculoTest {
     @Test
     public void testConstructor() {
         // Valores de ejemplo para el constructor
-        Long id = 1L;
+        int id = 1;
         String matricula = "ABC123";
         String pais = "URU";
         String marca = "Volskwagen";
@@ -127,7 +127,7 @@ public class VehiculoTest {
         Vehiculo vehiculo = new Vehiculo();
 
         // Valores de ejemplo para los setters
-        Long id = 1L;
+        int id = 1;
         String matricula = "ABC123";
         String pais = "Argentina";
         String marca = "Ford";

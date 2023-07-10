@@ -12,7 +12,7 @@ public class AsignacionDTOTest {
     public void testSetters() {
         AsignacionDTO asignacionDTO = new AsignacionDTO();
 
-        Long id = 1L;
+        int id = 1;
         GuiaDeViajeDTO guia = new GuiaDeViajeDTO();
         LocalDateTime fechaCambio = LocalDateTime.now();
 

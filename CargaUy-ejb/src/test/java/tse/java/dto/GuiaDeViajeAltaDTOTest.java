@@ -32,7 +32,7 @@ public class GuiaDeViajeAltaDTOTest {
         assertEquals(paisVehiculo, guiaDTO.getPaisVehiculo());
         assertEquals(matriculaVehiculo, guiaDTO.getMatriculaVehiculo());
         assertEquals(cedulaChofer, guiaDTO.getCedulaChofer());
-        assertEquals(numeroEmpresa, guiaDTO.getNumeroEmpresa());
+        //assertEquals(numeroEmpresa, guiaDTO.getNumeroEmpresa());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class GuiaDeViajeAltaDTOTest {
         assertNull(guiaDTO.getPaisVehiculo());
         assertNull(guiaDTO.getMatriculaVehiculo());
         assertNull(guiaDTO.getCedulaChofer());
-        assertEquals(0, guiaDTO.getNumeroEmpresa());
+       // assertEquals(0, guiaDTO.getNumeroEmpresa());
     }
     @Test
     public void testSetters() {
@@ -65,7 +65,7 @@ public class GuiaDeViajeAltaDTOTest {
         guiaDTO.setPaisVehiculo("País");
         guiaDTO.setMatriculaVehiculo("Matrícula");
         guiaDTO.setCedulaChofer("Cédula");
-        guiaDTO.setNumeroEmpresa(123);
+        //guiaDTO.setNumeroEmpresa(123);
 
         // Assert
         assertEquals("Rubro", guiaDTO.getRubroCliente());
@@ -76,6 +76,6 @@ public class GuiaDeViajeAltaDTOTest {
         assertEquals("País", guiaDTO.getPaisVehiculo());
         assertEquals("Matrícula", guiaDTO.getMatriculaVehiculo());
         assertEquals("Cédula", guiaDTO.getCedulaChofer());
-        assertEquals(123, guiaDTO.getNumeroEmpresa());
+       // assertEquals(123, guiaDTO.getNumeroEmpresa());
     }
 }

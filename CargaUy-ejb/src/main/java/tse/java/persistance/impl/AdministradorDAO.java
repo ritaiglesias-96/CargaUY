@@ -24,8 +24,9 @@ public class AdministradorDAO implements IAdministradorDAO {
 
 
     @Override
-    public void persist(Administrador administrador) {
-        em.persist(administrador);
+    public void persist(Administrador administrador){
+        System.out.println("test");
+       em.persist(administrador);
     }
 
     @Override
@@ -35,6 +36,8 @@ public class AdministradorDAO implements IAdministradorDAO {
 
     @Override
     public List<Administrador> findAll() {
+        System.out.println("TESTSSTTSTSTSTS 222");
+
         Query q = em.createQuery("SELECT r FROM Administrador r", Administrador.class);
         return q.getResultList();
     }
@@ -46,6 +49,7 @@ public class AdministradorDAO implements IAdministradorDAO {
 
     @Override
     public Administrador findById(Integer id) {
+        System.out.println("TESTSSTTSTSTSTS");
         return em.find(Administrador.class, id);
     }
 }

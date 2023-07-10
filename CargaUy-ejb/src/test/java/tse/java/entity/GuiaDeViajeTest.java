@@ -7,7 +7,7 @@ import tse.java.dto.PesajeDTO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,8 +42,8 @@ public class GuiaDeViajeTest {
 
         // Crear un objeto GuiaDeViajeDTO de ejemplo
         GuiaDeViajeDTO guiaDeViajeDTO = new GuiaDeViajeDTO();
-        Date date = new Date(1999, 5, 12);
-        guiaDeViajeDTO.setId(1L);
+        LocalDate date = LocalDate.of(1999, 5, 12);
+        guiaDeViajeDTO.setId(1);
         guiaDeViajeDTO.setNumero(123);
         guiaDeViajeDTO.setRubroCliente("Rubro");
         guiaDeViajeDTO.setTipoCarga("Tipo");
@@ -64,10 +64,10 @@ public class GuiaDeViajeTest {
         assertEquals(guiaDeViajeDTO.getRubroCliente(), guiaDeViaje.getRubroCliente());
         assertEquals(guiaDeViajeDTO.getTipoCarga(), guiaDeViaje.getTipoCarga());
         assertEquals(guiaDeViajeDTO.getVolumenCarga(), guiaDeViaje.getVolumenCarga());
-        assertEquals(guiaDeViajeDTO.getFecha(), guiaDeViaje.getFecha());
+        assertEquals(guiaDeViajeDTO.getFecha(), guiaDeViaje.getFecha().toLocalDate());
         assertEquals(guiaDeViajeDTO.getOrigen(), guiaDeViaje.getOrigen());
-        assertEquals(guiaDeViajeDTO.getInicio(), guiaDeViaje.getInicio());
-        assertEquals(guiaDeViajeDTO.getFin(), guiaDeViaje.getFin());
+        assertEquals(guiaDeViajeDTO.getInicio(), guiaDeViaje.getInicio().toLocalDate());
+        assertEquals(guiaDeViajeDTO.getFin(), guiaDeViaje.getFin().toLocalDate());
         assertEquals(guiaDeViajeDTO.getDestino(), guiaDeViaje.getDestino());
         assertEquals(pesajes.getClass(), guiaDeViaje.getPesajes().getClass());
     }
@@ -75,15 +75,15 @@ public class GuiaDeViajeTest {
     @Test
     public void testConstructorWithParameters() {
         // Crear objetos de ejemplo
-        Long id = 1L;
+        int id = 1;
         int numero = 123;
         String rubroCliente = "Rubro";
         String tipoCarga = "Tipo";
         float volumenCarga = 10.5f;
-        Date fecha = new Date();
+        Date fecha = new Date(2000,1,1);
         String origen = "Origen";
-        Date inicio = new Date();
-        Date fin = new Date();
+        Date inicio = new Date(2000,1,1);
+        Date fin = new Date(2000,1,1);
         String destino = "Destino";
         List<Pesaje> pesajes = new ArrayList<>();
 
@@ -138,15 +138,15 @@ public class GuiaDeViajeTest {
     @Test
     public void testDarDto() {
         // Crear objetos de ejemplo
-        Long id = 1L;
+        int id = 1;
         int numero = 123;
         String rubroCliente = "Rubro";
         String tipoCarga = "Tipo";
         float volumenCarga = 10.5f;
-        Date fecha = new Date();
+        Date fecha = new Date(2000,1,1);
         String origen = "Origen";
-        Date inicio = new Date();
-        Date fin = new Date();
+        Date inicio = new Date(2000,1,1);
+        Date fin = new Date(2000,1,1);
         String destino = "Destino";
 
         // Crear una lista de pesajes de ejemplo
@@ -168,10 +168,10 @@ public class GuiaDeViajeTest {
         assertEquals(rubroCliente, result.getRubroCliente());
         assertEquals(tipoCarga, result.getTipoCarga());
         assertEquals(volumenCarga, result.getVolumenCarga());
-        assertEquals(fecha, result.getFecha());
+        assertEquals(fecha.toLocalDate(), result.getFecha());
         assertEquals(origen, result.getOrigen());
-        assertEquals(inicio, result.getInicio());
-        assertEquals(fin, result.getFin());
+        assertEquals(inicio.toLocalDate(), result.getInicio());
+        assertEquals(fin.toLocalDate(), result.getFin());
         assertEquals(destino, result.getDestino());
 
         // Verificar que la lista de pesajes en el objeto GuiaDeViajeDTO tenga el tamaño esperado
@@ -196,15 +196,15 @@ public class GuiaDeViajeTest {
         GuiaDeViaje guiaDeViaje = new GuiaDeViaje();
 
         // Valores de ejemplo para los setters
-        Long id = 1L;
+        int id = 1;
         int numero = 123;
         String rubroCliente = "Rubro";
         String tipoCarga = "Tipo";
         float volumenCarga = 10.5f;
-        Date fecha = new Date();
+        Date fecha = new Date(2000,1,1);
         String origen = "Origen";
-        Date inicio = new Date();
-        Date fin = new Date();
+        Date inicio = new Date(2000,1,1);
+        Date fin = new Date(2000,1,1);
         String destino = "Destino";
 
         // Establecer los valores utilizando los setters correspondientes

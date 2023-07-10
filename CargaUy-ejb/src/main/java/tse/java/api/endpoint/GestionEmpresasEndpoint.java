@@ -41,6 +41,7 @@ public class GestionEmpresasEndpoint {
     public Response getEmpresaById(@PathParam("id") int id){
         try{
             EmpresaDTO empresa = empresasService.obtenerEmpresa(id);
+            System.out.println("HOLA");
             return Response.status(Response.Status.OK).entity(empresa).build();
         }catch (NoResultException e ){
             return Response.status(Response.Status.NOT_FOUND).build();

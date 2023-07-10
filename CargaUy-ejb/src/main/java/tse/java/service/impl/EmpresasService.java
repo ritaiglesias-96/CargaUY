@@ -130,11 +130,12 @@ public class EmpresasService implements IEmpresasService {
 
     @Override
     public boolean contieneVehiculo(int vehiculoId, EmpresaDTO empresaDTO) {
-        for (VehiculoDTO v: empresaDTO.getVehiculos()){
-            if(v.getId() == vehiculoId){
+        for (VehiculoDTO v : empresaDTO.getVehiculos()) {
+            if (v.getId() == vehiculoId) {
                 return true;
             }
-      return false;
+        }
+        return false;
     }
 
     @Override
@@ -158,10 +159,10 @@ public class EmpresasService implements IEmpresasService {
             if (a.getGuia().getNumero() == numeroGuia)
                 result.add(a);
         }
-        return false;
+        return result;
     }
 
-    @Override
+
     private int crearEmpresaPdi(String rut){
         // 0 - no existe la empresa, 1 - Creada ok, 2 - Error al comunicarse con la plataforma, 3 - La empresa ya existe
         try{
