@@ -1,5 +1,7 @@
 package tse.java.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class GuiaDeViajeAltaDTO{
 
     private String rubroCliente, tipoCarga;
@@ -46,46 +48,6 @@ public class GuiaDeViajeAltaDTO{
         this.cedulaChofer = cedulaChofer;
     }
 
-    public String getRubroCliente() {
-        return rubroCliente;
-    }
-
-    public void setRubroCliente(String rubroCliente) {
-        this.rubroCliente = rubroCliente;
-    }
-
-    public float getVolumenCarga() {
-        return volumenCarga;
-    }
-
-    public void setVolumenCarga(float volumenCarga) {
-        this.volumenCarga = volumenCarga;
-    }
-
-    public String getOrigen() {
-        return origen;
-    }
-
-    public void setOrigen(String origen) {
-        this.origen = origen;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
-    }
-
-    public String getTipoCarga() {
-        return tipoCarga;
-    }
-
-    public void setTipoCarga(String tipoCarga) {
-        this.tipoCarga = tipoCarga;
-    }
-
     public int getIdEmpresa() {
         return idEmpresa;
     }
@@ -93,4 +55,29 @@ public class GuiaDeViajeAltaDTO{
     public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
+
+
+    @JsonProperty("destino")
+    public String getDestino() { return destino; }
+    @JsonProperty("destino")
+    public void setDestino(String value) { this.destino = value; }
+    @JsonProperty("origen")
+    public String getOrigen() { return origen; }
+    @JsonProperty("origen")
+    public void setOrigen(String value) { this.origen = value; }
+
+    @JsonProperty("rubroCliente")
+    public String getRubroCliente() { return rubroCliente; }
+    @JsonProperty("rubroCliente")
+    public void setRubroCliente(String value) { this.rubroCliente = value; }
+
+    @JsonProperty("tipoCarga")
+    public String getTipoCarga() { return tipoCarga; }
+    @JsonProperty("tipoCarga")
+    public void setTipoCarga(String value) { this.tipoCarga = value; }
+
+    @JsonProperty("volumenCarga")
+    public float getVolumenCarga() { return volumenCarga; }
+    @JsonProperty("volumenCarga")
+    public void setVolumenCarga(float value) { this.volumenCarga = value; }
 }

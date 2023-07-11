@@ -143,8 +143,8 @@ public class CiudadanoService implements ICiudadanosService {
     }
 
     @Override
-    public void borrarGuia(int numeroViaje, int idEmpresa) {
-        EmpresaDTO e = empresasDAO.obtenerEmpresaPorNumero(idEmpresa);
+    public EmpresaDTO obtenerEmpresaPorResponsable(String cedulaResponsable){
+        return ciudadanoDAO.obtenerEmpresaPorResponsable(cedulaResponsable);
     }
 
 }

@@ -1,8 +1,10 @@
 package tse.java.persistance.impl;
 
 import tse.java.dto.CiudadanoDTO;
+import tse.java.dto.EmpresaDTO;
 import tse.java.entity.Chofer;
 import tse.java.entity.Ciudadano;
+import tse.java.entity.Empresa;
 import tse.java.entity.Usuario;
 import tse.java.persistance.ICiudadanoDAO;
 import tse.java.util.qualifier.TSE2023DB;
@@ -63,6 +65,16 @@ public class CiudadanoDAO implements ICiudadanoDAO {
         try {
             return (Ciudadano) em.createQuery("FROM Ciudadano WHERE cedula = :cedula").setParameter("cedula", cedula).getSingleResult();
         }catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public EmpresaDTO obtenerEmpresaPorResponsable(String cedula) {
+        try {
+            Empresa e = (Empresa) em.createQuery("FROM Empresa WHERE responsable.cedula = :cedula").setParameter("cedula", cedula).getSingleResult();
+            return new EmpresaDTO(e);
+        }catch (Exception e) {
             return null;
         }
     }

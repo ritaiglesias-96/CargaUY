@@ -55,10 +55,14 @@ public class VehiculosDAO implements IVehiculosDAO {
     }
 
     @Override
-    public void agregarVehiculo(Vehiculo vehiculo) {
-        Empresa e = em.find(Empresa.class, vehiculo.getEmpresa().getId());
-        e.getVehiculos().add(vehiculo);
-        em.persist(vehiculo);
+    public void agregarVehiculo(VehiculoDTO vehiculo) {
+        System.out.println("desde el dao " + vehiculo.getIdEmpresa() );
+        Empresa e = em.find(Empresa.class, vehiculo.getIdEmpresa());
+        System.out.println("desde el dao empresa " + e.getId() );
+        Vehiculo nuevo = new Vehiculo(vehiculo);
+        nuevo.setEmpresas(e);
+        em.persist(nuevo);
+        e.getVehiculos().add(nuevo);
         em.merge(e);
     }
 

@@ -80,16 +80,17 @@ public class GestionGuiasDeViajeEndpoint {
     public Response listarGuiasDeEmpresa(@PathParam("idEmpresa") int idEmpresa) {
         List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
         EmpresaDTO e = empresasService.obtenerEmpresa(idEmpresa);
-        List<AsignacionDTO> asignaciones = e.getAsignaciones();
-        for (AsignacionDTO a : asignaciones) {
-            if(!result.contains(a.getGuia())) {
-                result.add(a.getGuia());
+        if (e.getAsignaciones() != null) {
+            List<AsignacionDTO> asignaciones = e.getAsignaciones();
+            for (AsignacionDTO a : asignaciones) {
+                if (!result.contains(a.getGuia())) {
+                    result.add(a.getGuia());
+                }
             }
+            if (result.size() > 0)
+                return Response.status(Response.Status.OK).entity(result).build();
         }
-        if (result.size() > 0)
-            return Response.status(Response.Status.OK).entity(result).build();
-        else
-            return Response.status(Response.Status.OK).entity("No tiene guias de viaje en su empresa!").build();
+        return Response.status(Response.Status.OK).entity("No tiene guias de viaje en su empresa!").build();
     }
 
 
@@ -141,7 +142,7 @@ public class GestionGuiasDeViajeEndpoint {
         }
     }
 
-    @POST
+    @PUT
     @Path("/modificar")
     public Response modificarGuiaDeViaje(GuiaDeViajeModificacionDTO dtmodificacion) {
         GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(dtmodificacion.getNumeroViaje());
@@ -180,7 +181,6 @@ public class GestionGuiasDeViajeEndpoint {
         if (c == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedulaChofer).build();
         }
-
         GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje);
         if (g == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numeroViaje).build();

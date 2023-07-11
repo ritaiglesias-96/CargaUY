@@ -134,7 +134,8 @@ public class EmpresasService implements IEmpresasService {
             if(v.getId() == vehiculoId){
                 return true;
             }
-      return false;
+        }
+        return false;
     }
 
     @Override
@@ -158,13 +159,12 @@ public class EmpresasService implements IEmpresasService {
             if (a.getGuia().getNumero() == numeroGuia)
                 result.add(a);
         }
-        return false;
+        return result;
     }
 
-    @Override
-    private int crearEmpresaPdi(String rut){
+    private int crearEmpresaPdi(String rut) {
         // 0 - no existe la empresa, 1 - Creada ok, 2 - Error al comunicarse con la plataforma, 3 - La empresa ya existe
-        try{
+        try {
             EmpresaServicePortService empresaService = new EmpresaServicePortService();
             EmpresaServicePort empresaPort = empresaService.getEmpresaServicePortSoap11();
             GetEmpresaRequest empresaRequest = new GetEmpresaRequest();
@@ -172,18 +172,18 @@ public class EmpresasService implements IEmpresasService {
             GetEmpresaResponse empresaResponse = empresaPort.getEmpresa(empresaRequest);
             tse.java.soappdi.Empresa empresa = empresaResponse.getEmpresa();
 
-            if(empresa == null){
+            if (empresa == null) {
                 return 0;
             } else if (empresasDAO.obtenerEmpresaPorNumero(empresa.getNroEmpresa()) != null) {
                 return 3;
-            }else {
+            } else {
                 empresasDAO.guardarEmpresa(empresa.getNombrePublico(), empresa.getRazonSocial(), empresa.getNroEmpresa(), empresa.getDirPrincipal());
                 return 1;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Hubo un error al comunicarse con la plataforma", e);
             return 2;
         }
     }
-
 }
+
