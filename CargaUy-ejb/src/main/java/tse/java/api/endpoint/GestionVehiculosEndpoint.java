@@ -1,6 +1,8 @@
 package tse.java.api.endpoint;
 
+import org.primefaces.shaded.json.JSONObject;
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.VehiculoAltaDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
@@ -52,17 +54,16 @@ public class GestionVehiculosEndpoint {
     }
 
     @POST
-    public Response agregarVehiculo(VehiculoDTO vehiculo){
-        System.out.println(vehiculo);
-        EmpresaDTO e = es.obtenerEmpresa(vehiculo.getEmpresaId());
+    public Response agregarVehiculo(VehiculoAltaDTO vehiculo){
+        System.out.println(vehiculo.getIdEmpresa());
+        System.out.println(vehiculo.getMatricula());
+        JSONObject v = new JSONObject(vehiculo);
+        System.out.println(v);
+        EmpresaDTO e = es.obtenerEmpresa(vehiculo.getIdEmpresa());
         if(e == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con la id " + vehiculo.getEmpresaId()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con la id " + vehiculo.getIdEmpresa()).build();
         }
-        Empresa empresa = new Empresa(e);
-        Vehiculo nuevoVehiculo = new Vehiculo(vehiculo);
-        nuevoVehiculo.setEmpresas(empresa);
-        vs.agregarVehiculo(nuevoVehiculo);
-        vehiculo = new VehiculoDTO(nuevoVehiculo);
+        vs.agregarVehiculo(new VehiculoDTO(vehiculo));
         return Response.status(Response.Status.OK).entity(vehiculo).build();
     }
 

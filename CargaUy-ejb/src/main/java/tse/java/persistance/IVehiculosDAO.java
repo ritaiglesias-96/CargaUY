@@ -19,7 +19,7 @@ public interface IVehiculosDAO {
   
     public void eliminarVehiculo(int id);
 
-    void agregarVehiculo(Vehiculo vehiculo);
+    void agregarVehiculo(VehiculoDTO vehiculo);
 
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
 

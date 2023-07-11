@@ -1,5 +1,7 @@
 package tse.java.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class GuiaDeViajeModificacionDTO extends GuiaDeViajeAltaDTO{
 
     private int numeroViaje;
@@ -11,11 +13,8 @@ public class GuiaDeViajeModificacionDTO extends GuiaDeViajeAltaDTO{
         this.numeroViaje = numeroViaje;
     }
 
-    public int getNumeroViaje() {
-        return numeroViaje;
-    }
-
-    public void setNumeroViaje(int numeroViaje) {
-        this.numeroViaje = numeroViaje;
-    }
+    @JsonProperty("numero")
+    public int getNumeroViaje() { return numeroViaje; }
+    @JsonProperty("numero")
+    public void setNumeroViaje(int value) { this.numeroViaje = value; }
 }

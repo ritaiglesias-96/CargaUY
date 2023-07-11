@@ -74,11 +74,7 @@ public class LoginGubUyEndpoint {
     @GET
     @Path("/auth")
     public Response gubUyAuth(@QueryParam("mobile") String mobile) throws URISyntaxException, IOException {
-        if(mobile!=null){
-            setMobile(Boolean.parseBoolean(mobile));
-        }else{
-            setMobile(false);
-        }
+        isMobile = mobile != null;
         String url =  gubUyService.getAuthGubUy();
         URI uri = new URI(url);
         System.out.println(uri);

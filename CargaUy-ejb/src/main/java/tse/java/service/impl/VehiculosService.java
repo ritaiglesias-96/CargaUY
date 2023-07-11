@@ -30,11 +30,6 @@ public class VehiculosService implements IVehiculosService{
     IGuiaDeViajesService guiasDeViajeService;
 
     @EJB
-    IEmpresasDAO empresasDAO;
-    @EJB
-    IGuiaDeViajeDAO guiaDeViajeDAO;
-
-    @EJB
     IAsignacionesService asignacionService;
 
     @Override
@@ -42,7 +37,7 @@ public class VehiculosService implements IVehiculosService{
         return vehiculosDAO.obtenerVehiculos();
     }
 
-    public void agregarVehiculo(Vehiculo nuevoVehiculo){
+    public void agregarVehiculo(VehiculoDTO nuevoVehiculo){
         vehiculosDAO.agregarVehiculo(nuevoVehiculo);
     }
 

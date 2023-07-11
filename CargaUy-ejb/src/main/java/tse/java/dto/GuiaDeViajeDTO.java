@@ -1,5 +1,6 @@
 package tse.java.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import tse.java.entity.GuiaDeViaje;
 
 import java.util.ArrayList;
@@ -68,91 +69,51 @@ public class GuiaDeViajeDTO {
 
     public GuiaDeViajeDTO(){}
 
-    public Integer getId() {
-        return id;
-    }
+    @JsonProperty("destino")
+    public String getDestino() { return destino; }
+    @JsonProperty("destino")
+    public void setDestino(String value) { this.destino = value; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @JsonProperty("fecha")
+    public LocalDate getFecha() { return fecha; }
+    @JsonProperty("fecha")
+    public void setFecha(LocalDate value) { this.fecha = value; }
 
-    public String getRubroCliente() {
-        return rubroCliente;
-    }
+    @JsonProperty("fin")
+    public LocalDate getFin() { return fin; }
+    @JsonProperty("fin")
+    public void setFin(LocalDate value) { this.fin = value; }
+    @JsonProperty("id")
+    public Integer getId() { return id; }
+    @JsonProperty("id")
+    public void setId(Integer value) { this.id = value; }
+    @JsonProperty("inicio")
+    public LocalDate getInicio() { return inicio; }
+    @JsonProperty("inicio")
+    public void setInicio(LocalDate value) { this.inicio = value; }
+    @JsonProperty("numero")
+    public int getNumero() { return numero; }
+    @JsonProperty("numero")
+    public void setNumero(int value) { this.numero = value; }
+    @JsonProperty("origen")
+    public String getOrigen() { return origen; }
+    @JsonProperty("origen")
+    public void setOrigen(String value) { this.origen = value; }
+    @JsonProperty("pesajes")
+    public List<PesajeDTO> getPesajes() { return pesajes; }
+    @JsonProperty("pesajes")
+    public void setPesajes(List<PesajeDTO> value) { this.pesajes = value; }
+    @JsonProperty("rubroCliente")
+    public String getRubroCliente() { return rubroCliente; }
+    @JsonProperty("rubroCliente")
+    public void setRubroCliente(String value) { this.rubroCliente = value; }
+    @JsonProperty("tipoCarga")
+    public String getTipoCarga() { return tipoCarga; }
+    @JsonProperty("tipoCarga")
+    public void setTipoCarga(String value) { this.tipoCarga = value; }
 
-    public void setRubroCliente(String rubroCliente) {
-        this.rubroCliente = rubroCliente;
-    }
-
-    public float getVolumenCarga() {
-        return volumenCarga;
-    }
-
-    public void setVolumenCarga(float volumenCarga) {
-        this.volumenCarga = volumenCarga;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getOrigen() {
-        return origen;
-    }
-
-    public void setOrigen(String origen) {
-        this.origen = origen;
-    }
-
-    public LocalDate getInicio() {
-        return inicio;
-    }
-
-    public void setInicio(LocalDate inicio) {
-        this.inicio = inicio;
-    }
-
-    public LocalDate getFin() {
-        return fin;
-    }
-
-    public void setFin(LocalDate fin) {
-        this.fin = fin;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
-    }
-
-    public List<PesajeDTO> getPesajes() {
-        return pesajes;
-    }
-
-    public void setPesajes(List<PesajeDTO> pesajes) {
-        this.pesajes = pesajes;
-    }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
-    public String getTipoCarga() {
-        return tipoCarga;
-    }
-
-    public void setTipoCarga(String tipoCarga) {
-        this.tipoCarga = tipoCarga;
-    }
+    @JsonProperty("volumenCarga")
+    public float getVolumenCarga() { return volumenCarga; }
+    @JsonProperty("volumenCarga")
+    public void setVolumenCarga(float value) { this.volumenCarga = value; }
 }

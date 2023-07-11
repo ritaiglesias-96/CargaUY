@@ -41,8 +41,8 @@ public class AsignacionDAOTest {
 
     @Test
     public void testBuscarAsignacion() {
-        dao.buscarAsignacion(100L);
-        Mockito.verify(dao).buscarAsignacion(100L);
+        dao.buscarAsignacion(100);
+        Mockito.verify(dao).buscarAsignacion(100);
     }
 
     @Test

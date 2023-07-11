@@ -78,7 +78,6 @@ public class Vehiculo implements Serializable {
         this.fechaFinITV = Date.valueOf(vehiculo.getFechaFinITV());
         this.fechaInicioPNC = Date.valueOf(vehiculo.getFechaInicioPNC());
         this.fechaFinPNC = Date.valueOf(vehiculo.getFechaFinPNC());
-        this.asignaciones = procesarLista(vehiculo.getAsignaciones());
     }
 
     public Vehiculo() {
@@ -89,7 +88,7 @@ public class Vehiculo implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

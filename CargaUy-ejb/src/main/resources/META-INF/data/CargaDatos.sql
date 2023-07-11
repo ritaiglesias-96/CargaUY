@@ -15,11 +15,11 @@ INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUE
 INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Responsable', 4567, '56587008', 'rita@gmail.com', 1, null);
 
 ---Empresas
-INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1586, 'Rivera 1234', 'TATA', 1254,'tatasa',7856);
-INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1587, 'Rivera 4321', 'ATAT', 4521,'atatsa',4567);
+INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1586, 'Rivera 1234', 'TATA', 1254,'tatasa',4567);
+INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1587, 'Rivera 4321', 'ATAT', 4521,'atatsa',7856);
 
 
-UPDATE public."Ciudadano" SET empresa_id = 1587  WHERE id = 4567;
+UPDATE public."Ciudadano" SET empresa_id = 1586  WHERE id = 4567;
 --- Choferes
 INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Chofer', 5856, '51002930', 'chofer@com', 2, 1586);
 INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Chofer', 6856, '2547856', 'chofer2@com', 2, 1587);

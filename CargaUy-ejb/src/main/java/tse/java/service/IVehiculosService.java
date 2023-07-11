@@ -15,7 +15,7 @@ public interface IVehiculosService {
 
     public List<VehiculoDTO> obtenerVehiculos();
     public VehiculoDTO obtenerVehiculoPorId(int id) throws VehiuloException;
-    public void agregarVehiculo(Vehiculo nuevoVehiculo);
+    public void agregarVehiculo(VehiculoDTO nuevoVehiculo);
     public void modificarVehiculo(VehiculoDTO vehiculoModificado);
     public void eliminarVehiculo(int id);
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);

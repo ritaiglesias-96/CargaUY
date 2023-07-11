@@ -54,10 +54,11 @@ public class EmpresasDAO implements IEmpresasDAO {
 
     @Override
     public Empresa modificarEmpresa(EmpresaDTO empresaDTO) {
-        Empresa e = new Empresa(empresaDTO);
-        em.getTransaction().begin();
+        Empresa e = em.find(Empresa.class, empresaDTO.getId());
+        e.setDirPrincipal(empresaDTO.getDirPrincipal());
+        e.setRazonSocial(empresaDTO.getRazonSocial());
+        e.setNombrePublico(empresaDTO.getNombrePublico());
         em.merge(e);
-        em.getTransaction().commit();
         return e;
     }
 
