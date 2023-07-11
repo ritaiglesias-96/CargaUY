@@ -1,10 +1,12 @@
 package tse.java.api.endpoint;
 
 
+import tse.java.dto.CiudadanoDTO;
 import tse.java.entity.*;
 import tse.java.enumerated.RolCiudadano;
 import tse.java.model.Ciudadanos;
 import tse.java.service.ICiudadanosService;
+import tse.java.service.IEmpresasService;
 import tse.java.soappdi.EmpresaServicePort;
 import tse.java.soappdi.EmpresaServicePortService;
 import tse.java.soappdi.GetCiudadanoRequest;
@@ -28,6 +30,9 @@ public class GestionCiudadanosEndpoint {
     @EJB
     ICiudadanosService ciudadanosService;
 
+    @EJB
+    IEmpresasService empresasService;
+
     @GET
     public Response getCiudadanos(){
         try{
@@ -41,8 +46,13 @@ public class GestionCiudadanosEndpoint {
     @POST
     public Response agregarCiudadano(Ciudadano ciudadano){
         try{
-            ciudadanosService.agregarCiudadano(ciudadano);
-            return Response.status(Response.Status.OK).entity(ciudadano).build();
+            Ciudadano c = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
+            if (c != null) {
+                ciudadanosService.agregarCiudadano(ciudadano);
+                return Response.status(Response.Status.OK).entity(ciudadano).build();
+            } else {
+                return Response.status(Response.Status.CONFLICT).entity("El ciudadano que quiere agregar ya existe en la base de datos").build();
+            }
         }catch (Exception e){
             throw new RuntimeException(e);
         }
@@ -52,9 +62,14 @@ public class GestionCiudadanosEndpoint {
     @Path("/{id}")
     public Response modificarCiudadano(Ciudadano ciudadano,@PathParam("id")int id){
         try{
-            ciudadano.setIdCiudadano(id);
-            ciudadanosService.modificarCiudadano(ciudadano);
-            return Response.status(Response.Status.OK).entity(ciudadano).build();
+            Ciudadano c = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
+            if (c != null) {
+                ciudadano.setIdCiudadano(id);
+                ciudadanosService.modificarCiudadano(ciudadano);
+                return Response.status(Response.Status.OK).entity(ciudadano).build();
+            }else {
+                return Response.status(Response.Status.NOT_FOUND).entity("El ciudadano ingresado no existe").build();
+            }
         } catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }

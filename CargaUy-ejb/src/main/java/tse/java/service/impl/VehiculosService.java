@@ -1,5 +1,6 @@
 package tse.java.service.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.ejb.Stateless;
 
 import tse.java.dto.*;
 import tse.java.entity.Vehiculo;
+import tse.java.exception.VehiuloException;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.persistance.IVehiculosDAO;
@@ -37,7 +39,7 @@ public class VehiculosService implements IVehiculosService{
 
     @Override
     public List<VehiculoDTO> obtenerVehiculos() {
-        return (List<VehiculoDTO>) vehiculosDAO.obtenerVehiculos();
+        return vehiculosDAO.obtenerVehiculos();
     }
 
     public void agregarVehiculo(Vehiculo nuevoVehiculo){
@@ -48,7 +50,7 @@ public class VehiculosService implements IVehiculosService{
         vehiculosDAO.modificarVehiculo(vehiculoModificado);
     }
 
-    public void eliminarVehiculo(Long id){
+    public void eliminarVehiculo(int id){
         vehiculosDAO.eliminarVehiculo(id);
     }
     @Override
@@ -57,7 +59,7 @@ public class VehiculosService implements IVehiculosService{
     }
 
     @Override
-    public List<PesajeDTO> listarGuiasDeVehiculo(Long id, Date fecha) {
+    public List<PesajeDTO> listarGuiasDeVehiculo(int id, LocalDate fecha) {
         String msg = "Me pasaron por rest los parametros: idvehiculo=" + id + ", fechaViajes=" + fecha;
         Logger.getLogger(VehiculosService.class.getName()).log(Level.INFO, msg);
         Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(id);
@@ -74,7 +76,7 @@ public class VehiculosService implements IVehiculosService{
         List<AsignacionDTO> asignaciones = v.getAsignaciones();
         for(AsignacionDTO a:asignaciones){
             if(a.getGuia().getNumero() == g.getNumero()){
-                Long id = asignacionService.ultimaAsignacionViaje(g.getNumero());
+                int id = asignacionService.ultimaAsignacionViaje(g.getNumero());
                 if(a.getId()==id){
                     return true;
                 } else {
@@ -87,56 +89,20 @@ public class VehiculosService implements IVehiculosService{
         return false;
     }
 
-    public VehiculoDTO obtenerVehiculoPorId(Long id) {
+    public VehiculoDTO obtenerVehiculoPorId(int id) throws VehiuloException {
         Vehiculo v = vehiculosDAO.obtenerVehiculoId(id);
+        if (v == null)
+            throw new VehiuloException("El vehiculo no existe");
         return new VehiculoDTO(v);
     }
-    @Override
-    public void asignarGuia(Long vehiculo_id, AsignacionDTO a) {
-        Vehiculo vehiculo = vehiculosDAO.obtenerVehiculoId(vehiculo_id);
-        VehiculoDTO v = new VehiculoDTO(vehiculo);
-        List<AsignacionDTO> asignaciones = v.getAsignaciones();
-        asignaciones.add(a);
-        v.setAsignaciones(asignaciones);
-        vehiculosDAO.modificarVehiculo(v);
-    }
-
-    @Override
-    public void borrarGuia(int numero_guia) {
-        GuiaDeViajeDTO g = guiaDeViajeDAO.buscarGuiaViajePorNumero(numero_guia);
-        for(VehiculoDTO v:vehiculosDAO.obtenerVehiculos()){
-            List<AsignacionDTO> asignaciones = v.getAsignaciones();
-            asignaciones.removeAll(listaAsignacionesConGuia(v,numero_guia));
-            v.setAsignaciones(asignaciones);
-            vehiculosDAO.modificarVehiculo(v);
-        }
-    }
-
-    // Auxiliar
-    private List<AsignacionDTO> listaAsignacionesConGuia(VehiculoDTO v, int numeroGuia){
-        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
-        for(AsignacionDTO a:v.getAsignaciones()){
-            if(a.getGuia().getNumero()==numeroGuia)
-                result.add(a);
-        }
-        return result;
-    }
-
     @Override
     public VehiculoDTO buscarVehiculoPorGuia(int numero) {
         for(VehiculoDTO v:vehiculosDAO.obtenerVehiculos()){
             for(AsignacionDTO a:v.getAsignaciones()){
-                if(a.getId().intValue()==asignacionService.ultimaAsignacionViaje(numero).intValue())
+                if(a.getId() == asignacionService.ultimaAsignacionViaje(numero))
                     return v;
             }
         }
-        return null;
-    }
-
-    private AsignacionDTO buscarGuiaenVehiculos(VehiculoDTO v, GuiaDeViajeDTO g) {
-        for(AsignacionDTO a:v.getAsignaciones())
-            if(a.getGuia().getNumero()==g.getNumero())
-                return a;
         return null;
     }
 

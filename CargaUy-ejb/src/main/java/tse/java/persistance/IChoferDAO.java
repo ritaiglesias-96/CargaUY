@@ -16,7 +16,6 @@ public interface IChoferDAO {
     void eliminiarChofer(Chofer chofer);
     void asignarEmpresaChofer(int id, Empresa empresa);
     void eliminarEmpresaChofer(int id, Empresa empresa);
-
     ChoferDTO buscarChoferPorCedula(String cedula);
 
 

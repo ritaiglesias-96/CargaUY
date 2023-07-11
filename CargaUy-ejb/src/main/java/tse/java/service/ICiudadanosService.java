@@ -1,8 +1,6 @@
 package tse.java.service;
 
-import tse.java.dto.CiudadanoDTO;
-import tse.java.dto.EmpresaDTO;
-import tse.java.dto.GuiaDeViajeDTO;
+import tse.java.dto.ChoferDTO;
 import tse.java.entity.Asignacion;
 import tse.java.entity.Ciudadano;
 import tse.java.entity.Empresa;
@@ -16,6 +14,7 @@ public interface ICiudadanosService {
     Ciudadano obtenerCiudadano(int id);
     Ciudadano obtenerCiudadanoPorCedula(String ci);
     Ciudadanos obtenerCiudadanos();
+    ChoferDTO obtenerChofer(String cedulaChofer);
     void agregarCiudadano(Ciudadano ciudadano);
     void modificarCiudadano(Ciudadano ciudadano);
     void eliminarCiudadano(int id);
@@ -29,6 +28,4 @@ public interface ICiudadanosService {
     public void asingarViajeChofer(int choferId, Asignacion a);
     public boolean contieneGuiaViajeChofer(String cedulaChofer, int numeroViaje);
     public void borrarGuia(int numeroGuia);
-
-    EmpresaDTO obtenerEmpresaPorResponsable(String cedula);
 }

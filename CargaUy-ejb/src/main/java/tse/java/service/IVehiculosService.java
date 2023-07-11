@@ -2,7 +2,9 @@ package tse.java.service;
 
 import tse.java.dto.*;
 import tse.java.entity.Vehiculo;
+import tse.java.exception.VehiuloException;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -12,14 +14,12 @@ import javax.ejb.Local;
 public interface IVehiculosService {
 
     public List<VehiculoDTO> obtenerVehiculos();
-    public VehiculoDTO obtenerVehiculoPorId(Long id);
+    public VehiculoDTO obtenerVehiculoPorId(int id) throws VehiuloException;
     public void agregarVehiculo(Vehiculo nuevoVehiculo);
     public void modificarVehiculo(VehiculoDTO vehiculoModificado);
-    public void eliminarVehiculo(Long id);
+    public void eliminarVehiculo(int id);
     public VehiculoDTO obtenerVehiculoMatriculaPais(String matricula, String pais);
-    public List<PesajeDTO> listarGuiasDeVehiculo(Long id, Date fecha);
+    public List<PesajeDTO> listarGuiasDeVehiculo(int id, LocalDate fecha);
     public boolean viajeContieneGuia(VehiculoDTO v, GuiaDeViajeDTO g);
-    public void asignarGuia(Long vehiculo_id, AsignacionDTO a);
-    public void borrarGuia(int numero_guia);
     public VehiculoDTO buscarVehiculoPorGuia(int numero);
 }

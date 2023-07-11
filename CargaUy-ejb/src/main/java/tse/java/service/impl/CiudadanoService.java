@@ -5,17 +5,11 @@ import tse.java.entity.*;
 import tse.java.enumerated.RolCiudadano;
 import tse.java.model.Ciudadanos;
 import tse.java.persistance.*;
-import tse.java.persistance.impl.CiudadanoDAO;
-import tse.java.persistance.impl.FuncionarioDAO;
-import tse.java.persistance.impl.ResponsableDAO;
-import tse.java.service.IAsignacionesService;
 import tse.java.service.ICiudadanosService;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Named;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -29,8 +23,9 @@ public class CiudadanoService implements ICiudadanosService {
     IChoferDAO choferDAO;
     @EJB
     IResponsableDAO responsableDAO;
+
     @EJB
-    IGuiaDeViajeDAO guiaDAO;
+    IEmpresasDAO empresasDAO;
 
     @Override
     public Ciudadano obtenerCiudadano(int id) {
@@ -47,6 +42,16 @@ public class CiudadanoService implements ICiudadanosService {
         Ciudadanos c = new Ciudadanos();
         c.setListaCiudadanos(ciudadanoDAO.listarCiudadanos());
         return c;
+    }
+
+    @Override
+    public ChoferDTO obtenerChofer(String cedulaChofer) {
+        Ciudadano c = ciudadanoDAO.buscarCiudadanoPorCedula(cedulaChofer);
+        if (c instanceof Chofer) {
+            return ((Chofer) c).darDTO();
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -90,7 +95,7 @@ public class CiudadanoService implements ICiudadanosService {
 
     @Override
     public void eliminarHijoCiudadano(int id) {
-       Ciudadano ciudadano = ciudadanoDAO.buscarCiudadanoPorId(id);
+        Ciudadano ciudadano = ciudadanoDAO.buscarCiudadanoPorId(id);
         if (ciudadano instanceof Funcionario) {
             funcionarioDAO.eliminiarFuncionario((Funcionario) ciudadano);
         } else if (ciudadano instanceof Responsable) {
@@ -123,55 +128,23 @@ public class CiudadanoService implements ICiudadanosService {
     @Override
     public void asingarViajeChofer(int chofer_id, Asignacion a) {
         Chofer chofer = (Chofer) ciudadanoDAO.buscarCiudadanoPorId(chofer_id);
-        List<Asignacion> asignaciones = chofer.getAsignaciones();
-        asignaciones.add(a);
-        chofer.setAsignaciones(asignaciones);
+        chofer.getAsignaciones().add(a);
         choferDAO.modificarChofer(chofer);
     }
 
     @Override
     public boolean contieneGuiaViajeChofer(String cedula_chofer, int numero_viaje) {
         ChoferDTO c = choferDAO.buscarChoferPorCedula(cedula_chofer);
-        for(AsignacionDTO a : c.getAsignaciones())
-            if(a.getGuia().getNumero() == numero_viaje)
+        for (AsignacionDTO a : c.getAsignaciones()) {
+            if (a.getGuia().getNumero() == numero_viaje)
                 return true;
+        }
         return false;
     }
-    @Override
-    public void borrarGuia(int numero_guia) {
-        GuiaDeViajeDTO g = guiaDAO.buscarGuiaViajePorNumero(numero_guia);
-        GuiaDeViaje gnew = guiaDAO.buscarGuiaDeViaje(g.getId());
-        for(CiudadanoDTO c:ciudadanoDAO.listarCiudadanos()){
-            if(c.getRol()==RolCiudadano.CHOFER){
-                Chofer ch = (Chofer) ciudadanoDAO.buscarCiudadanoPorId(c.getIdCiudadano());
-                List<Asignacion> asignaciones = ch.getAsignaciones();
-                asignaciones.removeAll(listaAsignacionesConGuia(ch,numero_guia));
-                ch.setAsignaciones(asignaciones);
-                choferDAO.modificarChofer(ch);
-            }
-        }
-    }
 
     @Override
-    public EmpresaDTO obtenerEmpresaPorResponsable(String cedula){
-        return ciudadanoDAO.obtenerEmpresaPorResponsable(cedula);
-    }
-
-    // Auxiliar
-    private List<Asignacion> listaAsignacionesConGuia(Chofer c, int numeroGuia){
-        List<Asignacion> result = new ArrayList<Asignacion>();
-        for(Asignacion a:c.getAsignaciones()){
-            if(a.getGuia().getNumero()==numeroGuia)
-                result.add(a);
-        }
-        return result;
-    }
-
-    private Asignacion buscarGuiaenChofer(Chofer c, GuiaDeViajeDTO g) {
-        for(Asignacion a:c.getAsignaciones())
-            if(a.getGuia().getNumero()==g.getNumero())
-                return a;
-        return null;
+    public void borrarGuia(int numeroViaje, int idEmpresa) {
+        EmpresaDTO e = empresasDAO.obtenerEmpresaPorNumero(idEmpresa);
     }
 
 }

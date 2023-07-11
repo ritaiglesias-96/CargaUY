@@ -3,7 +3,7 @@ package tse.java.dto;
 import java.sql.Date;
 
 public class PermisosVehiculoDTO {
-    private Long idVehiculo;
+    private Integer idVehiculo;
     private Integer idEmpresa;
     private String matricula;
     private String pais;
@@ -15,7 +15,7 @@ public class PermisosVehiculoDTO {
     public PermisosVehiculoDTO() {
     }
 
-    public PermisosVehiculoDTO(Long idVehiculo, Integer idEmpresa, String matricula, String pais, Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC) {
+    public PermisosVehiculoDTO(int idVehiculo, Integer idEmpresa, String matricula, String pais, Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC) {
         this.idVehiculo = idVehiculo;
         this.idEmpresa = idEmpresa;
         this.matricula = matricula;
@@ -37,7 +37,7 @@ public class PermisosVehiculoDTO {
         this.fechaFinPNC = Date.valueOf(v.getFechaFinPNC());
     }
 
-    public Long getIdVehiculo() {
+    public int getIdVehiculo() {
         return idVehiculo;
     }
 
