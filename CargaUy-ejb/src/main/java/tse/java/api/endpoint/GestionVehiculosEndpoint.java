@@ -67,6 +67,8 @@ public class GestionVehiculosEndpoint {
         nuevoVehiculo.setEmpresas(empresa);
         vs.agregarVehiculo(nuevoVehiculo);
         vehiculo = new VehiculoDTO(nuevoVehiculo);
+
+        System.out.println("2: "+vehiculo);
         return Response.status(Response.Status.OK).entity(vehiculo).build();
     }
 

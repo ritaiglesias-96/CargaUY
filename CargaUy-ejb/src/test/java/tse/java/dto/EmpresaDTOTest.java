@@ -1,10 +1,7 @@
 package tse.java.dto;
 
 import org.junit.Test;
-import tse.java.entity.Asignacion;
-import tse.java.entity.Empresa;
-import tse.java.entity.GuiaDeViaje;
-import tse.java.entity.Vehiculo;
+import tse.java.entity.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -25,10 +22,36 @@ public class EmpresaDTOTest {
         empresa.setRazonSocial("Empresa A S.A.");
         empresa.setNroEmpresa(12345);
         empresa.setDirPrincipal("Calle Principal 123");
-
+        GuiaDeViaje guiaDeViaje = new GuiaDeViaje();
+        guiaDeViaje.setFecha(new Date(1200));
+        Asignacion asignacion = new Asignacion();
+        asignacion.setId(1);
+        Chofer chofer = new Chofer();
+        chofer.setIdCiudadano(1);
+        Vehiculo vehiculo = new Vehiculo();
+        Date fechaFinITV = new Date(1200);
+        vehiculo.setId(1);
+        vehiculo.setMatricula("ABC123");
+        vehiculo.setPais("España");
+        vehiculo.setMarca("Toyota");
+        vehiculo.setModelo("Corolla");
+        vehiculo.setPeso(1500.0f);
+        vehiculo.setCapacidadCarga(1000.0f);
+        vehiculo.setFechaFinITV(fechaFinITV);
+        vehiculo.setPnc(123);
+        vehiculo.setFechaInicioPNC(fechaFinITV);
+        vehiculo.setFechaFinPNC(fechaFinITV);
+        empresa.getAsignaciones().add(asignacion);
+        empresa.getVehiculos().add(vehiculo);
+        empresa.setChoferes(List.of(chofer));
+        asignacion.setId(1);
+        asignacion.setGuia(guiaDeViaje);
 
         // Act
         EmpresaDTO empresaDTO = new EmpresaDTO(empresa);
+
+        ChoferDTO choferDTO = new ChoferDTO();
+        empresaDTO.setChoferes(List.of(choferDTO));
 
         // Assert
         assertEquals(empresa.getId(), empresaDTO.getId());
@@ -84,47 +107,6 @@ public class EmpresaDTOTest {
         assertEquals(vehiculos, empresaDTO.getVehiculos());
     }
 
-    //TODO: FIXME
-//    @Test
-//    public void testProcesarListaAsignaciones() {
-//
-//        GuiaDeViaje guia1 = new GuiaDeViaje();
-//        guia1.setId(1);
-//
-//        GuiaDeViaje guia2 = new GuiaDeViaje();
-//        guia2.setId(2);
-//
-//        Asignacion asignacion1 = new Asignacion();
-//        asignacion1.setId(1);
-//        asignacion1.setFechaCambio(LocalDateTime.now());
-//        asignacion1.setGuia(guia1);
-//
-//
-//        Asignacion asignacion2 = new Asignacion();
-//        asignacion2.setId(2);
-//        asignacion2.setFechaCambio(LocalDateTime.now().plusDays(1));
-//        asignacion2.setGuia(guia2);
-//
-//        List<Asignacion> asignaciones = new ArrayList<>();
-//        asignaciones.add(asignacion1);
-//        asignaciones.add(asignacion2);
-//
-//        EmpresaDTO empresaDTO = new EmpresaDTO();
-//
-//        // Act
-//        List<AsignacionDTO> asignacionesDTO = empresaDTO.procesarListaAsignaciones(asignaciones);
-//
-//        // Assert
-//        assertEquals(asignaciones.size(), asignacionesDTO.size());
-//
-//        for (int i = 0; i < asignaciones.size(); i++) {
-//            Asignacion asignacion = asignaciones.get(i);
-//            AsignacionDTO asignacionDTO = asignacionesDTO.get(i);
-//
-//            assertEquals(asignacion.getId(), asignacionDTO.getId());
-//            assertEquals(asignacion.getFechaCambio(), asignacionDTO.getFechaCambio());
-//        }
-//    }
 
     @Test
     public void testContieneVehiculo() {
@@ -134,6 +116,8 @@ public class EmpresaDTOTest {
 
         VehiculoDTO vehiculo2 = new VehiculoDTO();
         vehiculo2.setId(2);
+        VehiculoDTO vehiculo3 = new VehiculoDTO();
+        vehiculo3.setId(3);
 
         List<VehiculoDTO> vehiculos = new ArrayList<>();
         vehiculos.add(vehiculo1);
@@ -151,12 +135,12 @@ public class EmpresaDTOTest {
         // Act
         boolean contieneVehiculo1 = empresaDTO.contieneVehiculo(vehiculo1);
         boolean contieneVehiculo2 = empresaDTO.contieneVehiculo(vehiculo2);
-//        boolean contieneVehiculo3 = empresaDTO.contieneVehiculo(new VehiculoDTO());
+        boolean contieneVehiculo3 = empresaDTO.contieneVehiculo(vehiculo3);
 
         // Assert
         assertTrue(contieneVehiculo1);
         assertTrue(contieneVehiculo2);
-//        assertFalse(contieneVehiculo3);
+        assertFalse(contieneVehiculo3);
         assertEquals(asignaciones, empresaDTO.getAsignaciones());
     }
 }

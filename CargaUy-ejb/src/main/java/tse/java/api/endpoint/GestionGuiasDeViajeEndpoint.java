@@ -66,8 +66,11 @@ public class GestionGuiasDeViajeEndpoint {
         List<AsignacionDTO> asignaciones = c.getAsignaciones();
         for (AsignacionDTO a : asignaciones) {
             int id = asignacionesService.ultimaAsignacionViaje(a.getGuia().getNumero());
+            System.out.println("Vehiculos bool " + vehiculosService.viajeContieneGuia(v, a.getGuia()) );
             if (a.getGuia().getFin() == null && vehiculosService.viajeContieneGuia(v, a.getGuia()) && a.getId() == id)
                 result.add(a.getGuia());
+
+
         }
         if (result.size() > 0)
             return Response.status(Response.Status.OK).entity(result).build();
@@ -227,8 +230,9 @@ public class GestionGuiasDeViajeEndpoint {
         } catch (Exception e) {
             Logger.getLogger(GestionGuiasDeViajeEndpoint.class.getName()).log(Level.SEVERE, null, e);
         }
-
+        System.out.println(g);
         g = guiaDeViajesService.buscarGuiaViajePorNumero(g.getNumero());
+        System.out.println(g);
         LocalDate today = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         System.out.println(today);
         g.setFin(today);
@@ -280,7 +284,7 @@ public class GestionGuiasDeViajeEndpoint {
             } else {
                 return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el id " + idGuia).build();
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Vaya uno a saber que mierda le pinto").build();
         }
 

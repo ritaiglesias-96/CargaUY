@@ -232,6 +232,38 @@ public class GuiaDeViajeTest {
         assertEquals(destino, guiaDeViaje.getDestino());
     }
 
+    @Test
+    public void testModificarGuia() {
+        // Arrange
+        GuiaDeViaje guia = new GuiaDeViaje();
+        GuiaDeViajeDTO mod = new GuiaDeViajeDTO();
+        mod.setId(1);
+        mod.setNumero(123);
+        mod.setRubroCliente("Rubro Cliente");
+        mod.setTipoCarga("Tipo de Carga");
+        mod.setVolumenCarga(10.5f);
+        mod.setFecha(Date.valueOf("2022-01-01").toLocalDate());
+        mod.setOrigen("Origen");
+        mod.setInicio(Date.valueOf("2022-01-02").toLocalDate());
+        mod.setFin(Date.valueOf("2022-01-03").toLocalDate());
+        mod.setDestino("Destino");
+        mod.setPesajes(new ArrayList<>());
+
+        // Act
+        guia.modificarGuia(mod);
+
+        // Assert
+        assertEquals(mod.getId(), guia.getId());
+        assertEquals(mod.getNumero(), guia.getNumero());
+        assertEquals(mod.getRubroCliente(), guia.getRubroCliente());
+        assertEquals(mod.getTipoCarga(), guia.getTipoCarga());
+        assertEquals(mod.getVolumenCarga(), guia.getVolumenCarga());
+        assertEquals(mod.getFecha(), guia.getFecha().toLocalDate());
+        assertEquals(mod.getOrigen(), guia.getOrigen());
+        assertEquals(mod.getInicio(), guia.getInicio().toLocalDate());
+        assertEquals(mod.getFin(), guia.getFin().toLocalDate());
+        assertEquals(mod.getDestino(), guia.getDestino());
+    }
 
 
 

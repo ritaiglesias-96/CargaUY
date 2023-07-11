@@ -3,6 +3,7 @@ package tse.java.entity;
 import org.junit.Test;
 import org.mockito.Mockito;
 import tse.java.dto.AsignacionDTO;
+import tse.java.dto.ChoferDTO;
 import tse.java.dto.EmpresaDTO;
 import tse.java.dto.VehiculoDTO;
 
@@ -41,6 +42,36 @@ public class EmpresaTest {
     }
 
     @Test
+    public void testConstructorAllParams(){
+        Integer id = 1;
+        String nombrePublico = "Nombre";
+        String razonSocial = "Razón Social";
+        int nroEmpresa = 123;
+        String dirPrincipal = "Dirección";
+        Responsable responsable = new Responsable();
+        List<Vehiculo> vehiculos = new ArrayList<>();
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculos.add(vehiculo);
+        List<Asignacion> asignaciones = new ArrayList<>();
+        Asignacion asignacion = new Asignacion();
+        asignaciones.add(asignacion);
+        List<Chofer> choferes = new ArrayList<>();
+        Chofer chofer = new Chofer();
+        choferes.add(chofer);
+        Empresa empresa = new Empresa(id, nombrePublico, razonSocial, nroEmpresa, dirPrincipal, responsable, vehiculos, asignaciones, choferes);
+
+        assertEquals(id, empresa.getId());
+        assertEquals(nombrePublico, empresa.getNombrePublico());
+        assertEquals(razonSocial, empresa.getRazonSocial());
+        assertEquals(nroEmpresa, empresa.getNroEmpresa());
+        assertEquals(dirPrincipal, empresa.getDirPrincipal());
+        assertEquals(responsable, empresa.getResponsable());
+        assertEquals(vehiculos, empresa.getVehiculos());
+        assertEquals(asignaciones, empresa.getAsignaciones());
+        assertEquals(choferes, empresa.getChoferes());
+
+    }
+    @Test
     public void testConstructorWithoutArguments() {
         Empresa empresa = new Empresa();
 
@@ -67,6 +98,7 @@ public class EmpresaTest {
         // Crear algunos objetos AsignacionDTO y VehiculoDTO de ejemplo
         AsignacionDTO asignacionDTO1 = new AsignacionDTO();
         AsignacionDTO asignacionDTO2 = new AsignacionDTO();
+        ChoferDTO choferDTO = new ChoferDTO();
         VehiculoDTO vehiculoDTO1 = new VehiculoDTO();
         LocalDate fechaFinITV = LocalDate.of(1999, 5, 12);
         vehiculoDTO1.setId(1);
@@ -98,7 +130,7 @@ public class EmpresaTest {
         empresaDTO.getAsignaciones().add(asignacionDTO2);
         empresaDTO.getVehiculos().add(vehiculoDTO1);
         empresaDTO.getVehiculos().add(vehiculoDTO2);
-
+        empresaDTO.getChoferes().add(choferDTO);
         // Crear mocks de Asignacion y Vehiculo
         Asignacion asignacionMock1 = Mockito.mock(Asignacion.class);
         Asignacion asignacionMock2 = Mockito.mock(Asignacion.class);
@@ -136,6 +168,7 @@ public class EmpresaTest {
         assertNull(empresa.getResponsable());
         assertTrue(empresa.getVehiculos().isEmpty());
         assertTrue(empresa.getAsignaciones().isEmpty());
+        assertTrue(empresa.getChoferes().isEmpty());
     }
 
     @Test
@@ -161,18 +194,21 @@ public class EmpresaTest {
     }
 
     @Test
-    public void testSetVehiculos() {
+    public void testSetVehiculosChoferes() {
         Empresa empresa = new Empresa();
 
         // Crear algunos objetos de vehículo de ejemplo
         Vehiculo vehiculo1 = new Vehiculo();
         Vehiculo vehiculo2 = new Vehiculo();
+        Chofer chofer = new Chofer();
 
         // Crear una lista de vehículos y establecerla en la empresa
         empresa.setVehiculos(List.of(vehiculo1, vehiculo2));
+        empresa.setChoferes(List.of(chofer));
 
         // Verificar que la lista de vehículos de la empresa sea igual a la lista establecida
         assertEquals(List.of(vehiculo1, vehiculo2), empresa.getVehiculos());
+        assertEquals(List.of(chofer), empresa.getChoferes());
     }
 
     @Test

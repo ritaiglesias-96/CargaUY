@@ -46,22 +46,16 @@ public class LoginGubUyEndpoint {
     private static final String registrationToken = "e9Pqtl7GRJaiRPuL22Uw_m:APA91bFKZPhVcnkRAcMCXTaWTc7lwXl9U9TXrZyu-M-WzlJ7B8A-EdfuJRC9F1ncQIJLctgBBmVSou_Y0m4RBLLgdO0LapLF_VYwN4iPoKd4mfv2XEgOGQlh4M3nW1P9PsDJ7vqyXBiz";
 
 
+
+
     private static boolean isMobile;
-
-    public LoginGubUyEndpoint() {
-    }
-
-    public LoginGubUyEndpoint(IGubUyService gubUyService) {
-        this.gubUyService = gubUyService;
-    }
-
 
     public boolean getisMobile() {
         return isMobile;
     }
 
-    public void setMobile(boolean mobile) {
-        isMobile = mobile;
+    public void setIsMobile(boolean isMobile) {
+        LoginGubUyEndpoint.isMobile = isMobile;
     }
 
     public void FirebaseConfig() throws IOException {
@@ -101,9 +95,8 @@ public class LoginGubUyEndpoint {
     @Path("/tokens")
     public Response getToken(@QueryParam("code") String accessCode, @QueryParam("state") String state) throws URISyntaxException, FirebaseMessagingException, IOException {
         CiudadanoJwtDTO ciudadanoJwtDTO = gubUyService.loginGubUy(accessCode, state);
-        boolean mobile = getisMobile();
-        System.out.println("mobile linea 70 :" + mobile);
-        if(mobile){
+        System.out.println("mobile linea 70 :" + isMobile);
+        if(isMobile){
             System.out.println("entro aca");
             FirebaseConfig();
             System.out.println("Entra al message builder");
@@ -123,7 +116,7 @@ public class LoginGubUyEndpoint {
 
     }
 
-    @GET
+   /* @GET
     @Path("/test-push")
     public Response getPush() throws FirebaseMessagingException, IOException {
         // This registration token comes from the client FCM SDKs.
@@ -139,7 +132,7 @@ public class LoginGubUyEndpoint {
                 .build();
         FirebaseMessaging.getInstance().send(message);
         return Response.status(Response.Status.OK).build();
-    }
+    }*/
     @GET
     @Path("/jwt-control")
     public Response tokenControl(@QueryParam("jwt") String jwt){
