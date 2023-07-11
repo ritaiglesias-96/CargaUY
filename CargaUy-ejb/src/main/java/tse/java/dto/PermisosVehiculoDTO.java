@@ -1,21 +1,20 @@
 package tse.java.dto;
 
-import java.sql.Date;
-
+import java.time.LocalDate;
 public class PermisosVehiculoDTO {
     private Integer idVehiculo;
     private Integer idEmpresa;
     private String matricula;
     private String pais;
-    private Date fechaFinITV;
+    private LocalDate fechaFinITV;
     private int pnc;
-    private Date fechaInicioPNC;
-    private Date fechaFinPNC;
+    private LocalDate fechaInicioPNC;
+    private LocalDate fechaFinPNC;
 
     public PermisosVehiculoDTO() {
     }
 
-    public PermisosVehiculoDTO(int idVehiculo, Integer idEmpresa, String matricula, String pais, Date fechaFinITV, int pnc, Date fechaInicioPNC, Date fechaFinPNC) {
+    public PermisosVehiculoDTO(int idVehiculo, Integer idEmpresa, String matricula, String pais, LocalDate fechaFinITV, int pnc, LocalDate fechaInicioPNC, LocalDate fechaFinPNC) {
         this.idVehiculo = idVehiculo;
         this.idEmpresa = idEmpresa;
         this.matricula = matricula;
@@ -28,13 +27,13 @@ public class PermisosVehiculoDTO {
 
     public PermisosVehiculoDTO(VehiculoDTO v) {
         this.idVehiculo = v.getId();
-        this.idEmpresa = v.getEmpresaId();
+        this.idEmpresa = v.getIdEmpresa();
         this.matricula = v.getMatricula();
         this.pais = v.getPais();
-        this.fechaFinITV = Date.valueOf(v.getFechaFinITV());
+        this.fechaFinITV = v.getFechaFinITV();
         this.pnc = v.getPnc();
-        this.fechaInicioPNC = Date.valueOf(v.getFechaInicioPNC());
-        this.fechaFinPNC = Date.valueOf(v.getFechaFinPNC());
+        this.fechaInicioPNC = v.getFechaInicioPNC();
+        this.fechaFinPNC = v.getFechaFinPNC();
     }
 
     public int getIdVehiculo() {
@@ -49,7 +48,7 @@ public class PermisosVehiculoDTO {
         return pais;
     }
 
-    public Date getFechaFinITV() {
+    public LocalDate getFechaFinITV() {
         return fechaFinITV;
     }
 
@@ -57,11 +56,11 @@ public class PermisosVehiculoDTO {
         return pnc;
     }
 
-    public Date getFechaInicioPNC() {
+    public LocalDate getFechaInicioPNC() {
         return fechaInicioPNC;
     }
 
-    public Date getFechaFinPNC() {
+    public LocalDate getFechaFinPNC() {
         return fechaFinPNC;
     }
 

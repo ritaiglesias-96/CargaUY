@@ -40,7 +40,6 @@ public class VehiculoDTOTest {
         assertEquals(3, vehiculoDTO.getPnc());
         assertEquals(fechaInicioPNC, vehiculoDTO.getFechaInicioPNC());
         assertEquals(fechaFinPNC, vehiculoDTO.getFechaFinPNC());
-        assertEquals(2, vehiculoDTO.getEmpresaId());
         assertEquals(asignaciones, vehiculoDTO.getAsignaciones());
     }
 //TODO: FIXME

@@ -37,7 +37,7 @@ public class VehiculosService implements IVehiculosService{
         return vehiculosDAO.obtenerVehiculos();
     }
 
-    public void agregarVehiculo(Vehiculo nuevoVehiculo){
+    public void agregarVehiculo(VehiculoDTO nuevoVehiculo){
         vehiculosDAO.agregarVehiculo(nuevoVehiculo);
     }
 

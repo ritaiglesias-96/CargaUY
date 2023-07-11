@@ -145,8 +145,6 @@ public class UserManager implements Serializable {
             return "autoridad/";
 
         return "error";
-
-
     }
 
 }

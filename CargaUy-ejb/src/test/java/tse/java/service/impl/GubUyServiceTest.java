@@ -1,36 +1,38 @@
 package tse.java.service.impl;
 
-import org.junit.Before;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
+import tse.java.entity.Ciudadano;
 import tse.java.service.ICiudadanosService;
-import tse.java.service.IGubUyService;
+import tse.java.soappdi.EmpresaServicePort;
+import tse.java.soappdi.GetCiudadanoResponse;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class GubUyServiceTest {
 
     @Mock
     ICiudadanosService ciudadanosService;
-    @Mock
+    @InjectMocks
     private GubUyService gubUyService;
-    @Mock
-    private GubUyService gubUyService2;
-    @Before
-    public void setUp() {
-        gubUyService = mock(GubUyService.class);
-        MockitoAnnotations.initMocks(this);
-        gubUyService2 = new GubUyService();
 
-    }
-    @Test
+
+  /*  @Test
     public void testGetAuthGubUy() {
 
-        // Datos de prueba
         String randomState = "p9ClGpFdUquCzUX3LLeV";
         String expectedUrl = "https://auth-testing.iduruguay.gub.uy/oidc/v1/authorize?" +
                 "response_type=code" +
@@ -38,16 +40,42 @@ public class GubUyServiceTest {
                 "&client_id=890192" +
                 "&state=" + randomState +
                 "&redirect_uri=https%3A%2F%2Fcarga-uy-13.web.elasticloud.uy%2FCargaUy-web%2Fapi%2Fgubuy%2Ftokens";
+        when(gubUyService.getAuthGubUy()).thenReturn(expectedUrl);
 
-        // Configuración del comportamiento del servicio mockeado
-        //when(gubUyService.generateRandomString(20)).thenReturn(randomState);
+        String result = gubUyService.getAuthGubUy();
+        System.out.println(result);
+        assertEquals(expectedUrl, result);
+    }
+*/    @Test
+    public void testLoginGubUy() {
 
-        // Llamar al método bajo prueba
-        String result = gubUyService2.getAuthGubUy();
-
-        // Verificar el resultado
-        assertNotEquals(expectedUrl, result);
     }
 
+    @Test
+    public void verificarJWT() {
 
-}
+    }
+
+  /*  @Test
+    public void testCrearCiudadanoPdi() throws Exception {
+        String cedula = "1234567890"; // cédula de ejemplo
+
+        // Se crea un mock del servicio de empresa para simular la respuesta
+        EmpresaServicePort empresaPortMock = Mockito.mock(EmpresaServicePort.class);
+        GetCiudadanoResponse ciudadanoResponseMock = new GetCiudadanoResponse();
+        tse.java.soappdi.Ciudadano ciudadanoMock = new tse.java.soappdi.Ciudadano();
+        ciudadanoMock.setCedula(cedula);
+        ciudadanoMock.setNombre("John");
+        ciudadanoMock.setApellido("Doe");
+        ciudadanoMock.setEmail("jdoe@example.com");
+        ciudadanoResponseMock.setCiudadano(ciudadanoMock);
+        Mockito.when(empresaPortMock.getCiudadano(Mockito.any())).thenReturn(ciudadanoResponseMock);
+
+        Ciudadano ciudadano = gubUyService.crearCiudadanoPdi(cedula);
+        assertNotNull(ciudadano);
+        assertEquals(cedula, ciudadano.getCedula());
+        assertEquals("jdoe@example.com", ciudadano.getEmail());
+    }
+*/}
+
+

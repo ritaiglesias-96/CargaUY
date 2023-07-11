@@ -7,6 +7,10 @@ import tse.java.enumerated.RolCiudadano;
 import tse.java.model.Ciudadanos;
 import tse.java.service.ICiudadanosService;
 import tse.java.service.IEmpresasService;
+import tse.java.soappdi.EmpresaServicePort;
+import tse.java.soappdi.EmpresaServicePortService;
+import tse.java.soappdi.GetCiudadanoRequest;
+import tse.java.soappdi.GetCiudadanoResponse;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -14,6 +18,8 @@ import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RequestScoped
 @Path("/ciudadanos")
@@ -48,7 +54,6 @@ public class GestionCiudadanosEndpoint {
                 //return Response.status(Response.Status.CONFLICT).entity("El ciudadano que quiere agregar ya existe en la base de datos").build(); //TODO NOT ENTITY
             //}
         }catch (NoResultException e){
-            //return Response.status(Response.Status.NOT_FOUND).build();
             return Response.status(Response.Status.CONFLICT).entity("El ciudadano que quiere agregar ya existe en la base de datos").build();
         }
     }
@@ -225,6 +230,27 @@ public class GestionCiudadanosEndpoint {
             return Response.status(Response.Status.OK).entity(empresa).build();
         } catch (NoResultException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @POST
+    @Path("/test/{cedula}")
+    public Response buscarCiudadanoPdi(@PathParam("cedula") String cedula) {
+        try {
+            EmpresaServicePortService empresaService = new EmpresaServicePortService();
+            EmpresaServicePort empresaPort = empresaService.getEmpresaServicePortSoap11();
+            GetCiudadanoRequest ciudadanoRequest = new GetCiudadanoRequest();
+            ciudadanoRequest.setCedula(cedula);
+            GetCiudadanoResponse ciudadanoResponse = empresaPort.getCiudadano(ciudadanoRequest);
+            tse.java.soappdi.Ciudadano ciudadano = ciudadanoResponse.getCiudadano();
+            if (ciudadano == null) {
+
+                return Response.status(Response.Status.NOT_FOUND).build();
+            } else {
+                return Response.status(Response.Status.OK).build();
+            }
+        } catch (Exception var7) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 

@@ -1,5 +1,6 @@
 package tse.java.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import tse.java.entity.Asignacion;
 import tse.java.entity.Vehiculo;
 
@@ -19,12 +20,12 @@ public class VehiculoDTO {
     private int pnc;
     private LocalDate fechaInicioPNC;
     private LocalDate fechaFinPNC;
-    private int empresaId;
+    private int idEmpresa;
     private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
 
 
     public VehiculoDTO(int id, String matricula, String pais, String marca, String modelo, Float peso, Float capacidadCarga,
-                       LocalDate fechaFinITV, int pnc, LocalDate fechaInicioPNC, LocalDate fechaFinPNC, int empresaId, List<AsignacionDTO> asignaciones) {
+                       LocalDate fechaFinITV, int pnc, LocalDate fechaInicioPNC, LocalDate fechaFinPNC, int idEmpresa, List<AsignacionDTO> asignaciones) {
         this.id = id;
         this.matricula = matricula;
         this.pais = pais;
@@ -36,7 +37,7 @@ public class VehiculoDTO {
         this.pnc = pnc;
         this.fechaInicioPNC = fechaInicioPNC;
         this.fechaFinPNC = fechaFinPNC;
-        this.empresaId = empresaId;
+        this.idEmpresa = idEmpresa;
         this.asignaciones = asignaciones;
     }
 
@@ -54,8 +55,22 @@ public class VehiculoDTO {
         this.fechaFinPNC = v.getFechaFinPNC().toLocalDate();
         this.asignaciones = procesarLista(v.getAsignaciones());
         if (v.getEmpresa() != null) {
-            this.empresaId = v.getEmpresa().getId();
+            this.idEmpresa = v.getEmpresa().getId();
         }
+    }
+
+    public VehiculoDTO(VehiculoAltaDTO v) {
+        this.matricula = v.getMatricula();
+        this.pais = v.getPais();
+        this.marca = v.getMarca();
+        this.modelo = v.getModelo();
+        this.peso = v.getPeso();
+        this.capacidadCarga = (float) v.getCapacidadCarga();
+        this.pnc = v.getPnc();
+        this.idEmpresa = v.getIdEmpresa();
+        this.fechaFinITV = v.getFechaFinITV();
+        this.fechaInicioPNC = v.getFechaInicioPNC();
+        this.fechaFinPNC = v.getFechaFinPNC();
     }
 
     public VehiculoDTO() {
@@ -69,101 +84,66 @@ public class VehiculoDTO {
         this.id = id;
     }
 
-    public String getMatricula() {
-        return matricula;
-    }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
+    @JsonProperty("idEmpresa")
+    public int getIdEmpresa() { return idEmpresa; }
+    @JsonProperty("idEmpresa")
+    public void setIdEmpresa(int value) { this.idEmpresa = value; }
 
-    public String getMarca() {
-        return marca;
-    }
+    @JsonProperty("matricula")
+    public String getMatricula() { return matricula; }
+    @JsonProperty("matricula")
+    public void setMatricula(String value) { this.matricula = value; }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
+    @JsonProperty("pais")
+    public String getPais() { return pais; }
+    @JsonProperty("pais")
+    public void setPais(String value) { this.pais = value; }
 
-    public String getPais() {
-        return pais;
-    }
+    @JsonProperty("marca")
+    public String getMarca() { return marca; }
+    @JsonProperty("marca")
+    public void setMarca(String value) { this.marca = value; }
 
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
+    @JsonProperty("modelo")
+    public String getModelo() { return modelo; }
+    @JsonProperty("modelo")
+    public void setModelo(String value) { this.modelo = value; }
 
-    public String getModelo() {
-        return modelo;
-    }
+    @JsonProperty("peso")
+    public float getPeso() { return peso; }
+    @JsonProperty("peso")
+    public void setPeso(double value) { this.peso = (float) value; }
 
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
+    @JsonProperty("capacidadCarga")
+    public float getCapacidadCarga() { return capacidadCarga; }
+    @JsonProperty("capacidadCarga")
+    public void setCapacidadCarga(double value) { this.capacidadCarga = (float) value; }
 
-    public Float getPeso() {
-        return peso;
-    }
+    @JsonProperty("pnc")
+    public int getPnc() { return pnc; }
+    @JsonProperty("pnc")
+    public void setPnc(int value) { this.pnc = value; }
 
-    public void setPeso(Float peso) {
-        this.peso = peso;
-    }
+    @JsonProperty("fechaFinITV")
+    public LocalDate getFechaFinITV() { return fechaFinITV; }
+    @JsonProperty("fechaFinITV")
+    public void setFechaFinITV(LocalDate value) { this.fechaFinITV = value; }
 
-    public Float getCapacidadCarga() {
-        return capacidadCarga;
-    }
+    @JsonProperty("fechaInicioPNC")
+    public LocalDate getFechaInicioPNC() { return fechaInicioPNC; }
+    @JsonProperty("fechaInicioPNC")
+    public void setFechaInicioPNC(LocalDate value) { this.fechaInicioPNC = value; }
 
-    public void setCapacidadCarga(Float capacidadCarga) {
-        this.capacidadCarga = capacidadCarga;
-    }
+    @JsonProperty("fechaFinPNC")
+    public LocalDate getFechaFinPNC() { return fechaFinPNC; }
+    @JsonProperty("fechaFinPNC")
+    public void setFechaFinPNC(LocalDate value) { this.fechaFinPNC = value; }
 
-    public LocalDate getFechaFinITV() {
-        return fechaFinITV;
-    }
-
-    public void setFechaFinITV(LocalDate fechaFinITV) {
-        this.fechaFinITV = fechaFinITV;
-    }
-
-    public LocalDate getFechaInicioPNC() {
-        return fechaInicioPNC;
-    }
-
-    public void setFechaInicioPNC(LocalDate fechaInicioPNC) {
-        this.fechaInicioPNC = fechaInicioPNC;
-    }
-
-    public LocalDate getFechaFinPNC() {
-        return fechaFinPNC;
-    }
-
-    public void setFechaFinPNC(LocalDate fechaFinPNC) {
-        this.fechaFinPNC = fechaFinPNC;
-    }
-
-    public List<AsignacionDTO> getAsignaciones() {
-        return asignaciones;
-    }
-
-    public void setAsignaciones(List<AsignacionDTO> asignaciones) {
-        this.asignaciones = asignaciones;
-    }
-
-    public int getPnc() {
-        return pnc;
-    }
-
-    public void setPnc(int pnc) {
-        this.pnc = pnc;
-    }
-
-    public int getEmpresaId() {
-        return empresaId;
-    }
-
-    public void setEmpresaId(int empresaId) {
-        this.empresaId = empresaId;
-    }
+    @JsonProperty("asignaciones")
+    public List<AsignacionDTO> getAsignaciones() { return asignaciones; }
+    @JsonProperty("asignaciones")
+    public void setAsignaciones(List<AsignacionDTO> value) { this.asignaciones = value; }
 
     public List<AsignacionDTO> procesarLista(List<Asignacion> asignaciones) {
         List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();

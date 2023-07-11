@@ -12,13 +12,16 @@ INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUE
 --- Responsable
 INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Responsable', 7856, '3456789', 'responsable@com', 1, null);
 INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Responsable', 8856, '4567891', 'responsable2@com', 1, null);
+INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Responsable', 4567, '56587008', 'rita@gmail.com', 1, null);
 
 ---Empresas
-INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1586, 'Rivera 1234', 'TATA', 1254,'tatasa',7856);
-INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1587, 'Rivera 4321', 'ATAT', 4521,'atatsa',8856);
+INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1586, 'Rivera 1234', 'TATA', 1254,'tatasa',4567);
+INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1587, 'Rivera 4321', 'ATAT', 4521,'atatsa',7856);
 
+
+UPDATE public."Ciudadano" SET empresa_id = 1586  WHERE id = 4567;
 --- Choferes
-INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Chofer', 5856, '2365896', 'chofer@com', 2, 1586);
+INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Chofer', 5856, '51002930', 'chofer@com', 2, 1586);
 INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Chofer', 6856, '2547856', 'chofer2@com', 2, 1587);
 
 
@@ -67,14 +70,14 @@ INSERT INTO public."GuiaDeViaje" values(1001,'Montevideo','2023-06-15',null,'202
 INSERT INTO public."GuiaDeViaje" values(1002,'Montevideo',current_date,null,null,36546,'Colonia','Carnes','Producto no quimico',50.0);
 
 -- Asignacion
-INSERT INTO public."Asignacion" values(1000,'2023-05-02 11:23:00',1000);
-INSERT INTO public."Asignacion" values(1001,'2023-05-15 12:23:53',1001);
-INSERT INTO public."Asignacion" values(1002,current_timestamp,1002);
+INSERT INTO public."Asignacion" values(1000,'2023-05-02',1000);
+INSERT INTO public."Asignacion" values(1001,'2023-05-15',1001);
+INSERT INTO public."Asignacion" values(1002,'2023-07-10',1002);
 
 -- Chofer-Asignacion
 INSERT INTO public."Ciudadano_Asignacion" values(5856,1000);
-INSERT INTO public."Ciudadano_Asignacion" values(6856,1001);
-INSERT INTO public."Ciudadano_Asignacion" values(6856,1002);
+INSERT INTO public."Ciudadano_Asignacion" values(5856,1001);
+INSERT INTO public."Ciudadano_Asignacion" values(5856,1002);
 
 -- Vehiculo-Asignacion
 INSERT INTO public."Vehiculo_Asignacion" ("Vehiculo_id", asignaciones_id) values(1999,1000);

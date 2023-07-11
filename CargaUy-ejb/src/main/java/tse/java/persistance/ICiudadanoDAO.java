@@ -1,6 +1,7 @@
 package tse.java.persistance;
 
 import tse.java.dto.CiudadanoDTO;
+import tse.java.dto.EmpresaDTO;
 import tse.java.entity.Chofer;
 import tse.java.entity.Ciudadano;
 
@@ -15,4 +16,5 @@ public interface ICiudadanoDAO {
     void eliminiarCiudadano(int id);
     Ciudadano buscarCiudadanoPorId(int id);
     Ciudadano buscarCiudadanoPorCedula(String cedula);
+    EmpresaDTO obtenerEmpresaPorResponsable(String cedula);
 }

@@ -10,6 +10,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import tse.java.dto.EmpresaDTO;
+import tse.java.dto.VehiculoAltaDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.Administrador;
 import tse.java.entity.Vehiculo;
@@ -101,21 +102,22 @@ public class GestionVehiculosEndpointTest {
 
     @Test
     public void testAgregarVehiculo() {
-        VehiculoDTO vehiculo = new VehiculoDTO();
-        vehiculo.setEmpresaId(1);
+        VehiculoAltaDTO vehiculo = new VehiculoAltaDTO();
         LocalDate date = LocalDate.of(2000, 1, 1);
         vehiculo.setFechaFinITV(date);
         vehiculo.setFechaFinPNC(date);
         vehiculo.setFechaInicioPNC(date);
-
+        vehiculo.setPeso(200);
+        vehiculo.setCapacidadCarga(5000);
         EmpresaDTO empresaExistente = new EmpresaDTO();
         empresaExistente.setId(1);
-        when(empresasService.obtenerEmpresa(1)).thenReturn(empresaExistente);
+        vehiculo.setIdEmpresa(empresaExistente.getId());
+        when(empresasService.obtenerEmpresa(vehiculo.getIdEmpresa())).thenReturn(empresaExistente);
         doAnswer((Answer<Object>) invocation -> {
-            Vehiculo vehiculo2 = (Vehiculo) invocation.getArguments()[0];
+            VehiculoDTO vehiculo2 = (VehiculoDTO) invocation.getArguments()[0];
             vehiculo2.setId(1);
             return null;
-        }).when(vehiculosService).agregarVehiculo(any(Vehiculo.class));
+        }).when(vehiculosService).agregarVehiculo(any(VehiculoDTO.class));
 
         Response response = gestionVehiculosEndpoint.agregarVehiculo(vehiculo);
 
@@ -124,15 +126,13 @@ public class GestionVehiculosEndpointTest {
     }
     @Test
     public void testAgregarVehiculoThrowError() {
-        VehiculoDTO vehiculo = new VehiculoDTO();
-        vehiculo.setEmpresaId(1);
+        VehiculoAltaDTO vehiculo = new VehiculoAltaDTO();
         LocalDate date = LocalDate.of(2000, 1, 1);
         vehiculo.setFechaFinITV(date);
         vehiculo.setFechaFinPNC(date);
         vehiculo.setFechaInicioPNC(date);
 
         EmpresaDTO empresaExistente = null;
-        when(empresasService.obtenerEmpresa(1)).thenReturn(null);
 
         Response response = gestionVehiculosEndpoint.agregarVehiculo(vehiculo);
 

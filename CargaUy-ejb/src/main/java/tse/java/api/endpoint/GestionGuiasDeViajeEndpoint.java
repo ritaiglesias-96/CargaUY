@@ -66,7 +66,6 @@ public class GestionGuiasDeViajeEndpoint {
         List<AsignacionDTO> asignaciones = c.getAsignaciones();
         for (AsignacionDTO a : asignaciones) {
             int id = asignacionesService.ultimaAsignacionViaje(a.getGuia().getNumero());
-            System.out.println("Vehiculos bool " + vehiculosService.viajeContieneGuia(v, a.getGuia()) );
             if (a.getGuia().getFin() == null && vehiculosService.viajeContieneGuia(v, a.getGuia()) && a.getId() == id)
                 result.add(a.getGuia());
 
@@ -83,16 +82,17 @@ public class GestionGuiasDeViajeEndpoint {
     public Response listarGuiasDeEmpresa(@PathParam("idEmpresa") int idEmpresa) {
         List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
         EmpresaDTO e = empresasService.obtenerEmpresa(idEmpresa);
-        List<AsignacionDTO> asignaciones = e.getAsignaciones();
-        for (AsignacionDTO a : asignaciones) {
-            if(!result.contains(a.getGuia())) {
-                result.add(a.getGuia());
+        if (e.getAsignaciones() != null) {
+            List<AsignacionDTO> asignaciones = e.getAsignaciones();
+            for (AsignacionDTO a : asignaciones) {
+                if (!result.contains(a.getGuia())) {
+                    result.add(a.getGuia());
+                }
             }
+            if (result.size() > 0)
+                return Response.status(Response.Status.OK).entity(result).build();
         }
-        if (result.size() > 0)
-            return Response.status(Response.Status.OK).entity(result).build();
-        else
-            return Response.status(Response.Status.OK).entity("No tiene guias de viaje en su empresa!").build();
+        return Response.status(Response.Status.OK).entity("No tiene guias de viaje en su empresa!").build();
     }
 
 
@@ -131,7 +131,6 @@ public class GestionGuiasDeViajeEndpoint {
                 GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(nuevaGuia);
                 dtguia.setNumero(guiaDeViajesService.getNextNumeroViaje());
                 LocalDate today = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                System.out.println(today);
                 dtguia.setFecha(today);
                 guiaDeViajesService.crearGuiaDeViaje(dtguia, choferDTO, empresaDTO, vehiculoDTO);
                 GuiaDeViajeDTO guiaNueva = guiaDeViajesService.buscarGuiaViajePorNumero(dtguia.getNumero());
@@ -144,7 +143,7 @@ public class GestionGuiasDeViajeEndpoint {
         }
     }
 
-    @POST
+    @PUT
     @Path("/modificar")
     public Response modificarGuiaDeViaje(GuiaDeViajeModificacionDTO dtmodificacion) {
         GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(dtmodificacion.getNumeroViaje());
@@ -183,7 +182,6 @@ public class GestionGuiasDeViajeEndpoint {
         if (c == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + cedulaChofer).build();
         }
-
         GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje);
         if (g == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el numero " + numeroViaje).build();
@@ -230,11 +228,8 @@ public class GestionGuiasDeViajeEndpoint {
         } catch (Exception e) {
             Logger.getLogger(GestionGuiasDeViajeEndpoint.class.getName()).log(Level.SEVERE, null, e);
         }
-        System.out.println(g);
         g = guiaDeViajesService.buscarGuiaViajePorNumero(g.getNumero());
-        System.out.println(g);
         LocalDate today = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        System.out.println(today);
         g.setFin(today);
         guiaDeViajesService.modificarGuiaDeViajeSinAsignacion(g);
         return Response.status(Response.Status.OK).entity(g).build();
@@ -272,10 +267,8 @@ public class GestionGuiasDeViajeEndpoint {
         try {
             GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorId(idGuia);
             if (g != null) {
-                System.out.println("Guia id: " + g.getId());
                 EmpresaDTO e = empresasService.obtenerEmpresa(idEmpresa);
                 if (e != null) {
-                    System.out.println("Empresa id: " + e.getId());
                     guiaDeViajesService.borrarGuiaDeViaje(g.getId(), e.getId());
                     return Response.status(Response.Status.OK).build();
                 } else {

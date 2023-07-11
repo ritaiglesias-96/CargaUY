@@ -123,7 +123,7 @@ public class CiudadanoDAOTest {
         when(entityManager.find(Ciudadano.class,id)).thenReturn(ciudadano);
 
         Ciudadano ciudadanoResult = ciudadanoDAO.buscarCiudadanoPorId(id);
-        assertTrue(ciudadanoResult != null);
+        assertNotNull(ciudadanoResult);
         assertEquals(ciudadano.getCedula(), ciudadanoResult.getCedula());
     }
     @Test

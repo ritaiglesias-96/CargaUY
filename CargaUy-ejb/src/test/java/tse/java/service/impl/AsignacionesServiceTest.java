@@ -47,7 +47,7 @@ public class AsignacionesServiceTest {
 
         int result = service.ultimaAsignacionViaje(1);
 
-        assertEquals(result, 1);
+        assertEquals(1, result);
 
     }
 

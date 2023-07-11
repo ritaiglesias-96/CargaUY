@@ -1,16 +1,22 @@
 package tse.java.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Date;
 import java.time.LocalDate;
 
 public class VehiculoAltaDTO {
-    private int idEmpresa, pnc ;
-    private String matricula, pais, marca, modelo;
+    private int idEmpresa ;
     private Float peso;
     private Float capacidadCarga;
     private LocalDate fechaFinITV;
     private LocalDate fechaInicioPNC;
     private LocalDate fechaFinPNC;
+    private String matricula;
+    private String pais;
+    private String marca;
+    private String modelo;
+    private int pnc;
 
 
     public VehiculoAltaDTO() {
@@ -31,54 +37,60 @@ public class VehiculoAltaDTO {
         this.fechaFinPNC = fechaFinPNC.toLocalDate();
     }
 
-    public int getIdEmpresa() {
-        return idEmpresa;
-    }
 
-    public String getMatricula() {
-        return matricula;
-    }
+    @JsonProperty("idEmpresa")
+    public int getIdEmpresa() { return idEmpresa; }
+    @JsonProperty("idEmpresa")
+    public void setIdEmpresa(int value) { this.idEmpresa = value; }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
+    @JsonProperty("matricula")
+    public String getMatricula() { return matricula; }
+    @JsonProperty("matricula")
+    public void setMatricula(String value) { this.matricula = value; }
 
-    public String getPais() {
-        return pais;
-    }
+    @JsonProperty("pais")
+    public String getPais() { return pais; }
+    @JsonProperty("pais")
+    public void setPais(String value) { this.pais = value; }
 
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
+    @JsonProperty("marca")
+    public String getMarca() { return marca; }
+    @JsonProperty("marca")
+    public void setMarca(String value) { this.marca = value; }
 
-    public String getMarca() {
-        return marca;
-    }
+    @JsonProperty("modelo")
+    public String getModelo() { return modelo; }
+    @JsonProperty("modelo")
+    public void setModelo(String value) { this.modelo = value; }
 
-    public String getModelo() {
-        return modelo;
-    }
+    @JsonProperty("peso")
+    public float getPeso() { return peso; }
+    @JsonProperty("peso")
+    public void setPeso(double value) { this.peso = (float) value; }
 
-    public Float getPeso() {
-        return peso;
-    }
+    @JsonProperty("capacidadCarga")
+    public double getCapacidadCarga() { return capacidadCarga; }
+    @JsonProperty("capacidadCarga")
+    public void setCapacidadCarga(double value) { this.capacidadCarga = (float) value; }
 
-    public Float getCapacidadCarga() {
-        return capacidadCarga;
-    }
-
-    public LocalDate getFechaFinITV() {
-        return fechaFinITV;
-    }
-
-    public LocalDate getFechaInicioPNC() {
-        return fechaInicioPNC;
-    }
-
-    public LocalDate getFechaFinPNC() {
-        return fechaFinPNC;
-    }
-
+    @JsonProperty("pnc")
     public int getPnc() { return pnc; }
+    @JsonProperty("pnc")
+    public void setPnc(int value) { this.pnc = value; }
+
+    @JsonProperty("fechaFinITV")
+    public LocalDate getFechaFinITV() { return fechaFinITV; }
+    @JsonProperty("fechaFinITV")
+    public void setFechaFinITV(LocalDate value) { this.fechaFinITV = value; }
+
+    @JsonProperty("fechaInicioPNC")
+    public LocalDate getFechaInicioPNC() { return fechaInicioPNC; }
+    @JsonProperty("fechaInicioPNC")
+    public void setFechaInicioPNC(LocalDate value) { this.fechaInicioPNC = value; }
+
+    @JsonProperty("fechaFinPNC")
+    public LocalDate getFechaFinPNC() { return fechaFinPNC; }
+    @JsonProperty("fechaFinPNC")
+    public void setFechaFinPNC(LocalDate value) { this.fechaFinPNC = value; }
 
 }

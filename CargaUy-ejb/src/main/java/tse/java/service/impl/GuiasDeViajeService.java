@@ -67,6 +67,7 @@ public class GuiasDeViajeService implements IGuiaDeViajesService{
         String msg = "Me pasaron por rest " + guiasViaje.size() + " guias de viaje y fecha=" + fecha;
         Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
         for(GuiaDeViajeDTO g:guiasViaje){
+            System.out.println(g + " Llega");
             msg = "Busco la guiaid=" + g.getId();
             Logger.getLogger(GuiasDeViajeService.class.getName()).log(Level.INFO, msg);
             LocalDate fechaInicioGuia = g.getInicio();

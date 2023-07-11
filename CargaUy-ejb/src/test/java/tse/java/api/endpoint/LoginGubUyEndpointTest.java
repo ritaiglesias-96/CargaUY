@@ -43,7 +43,7 @@ public class LoginGubUyEndpointTest {
 
         Response response =  loginGubUyEndpoint.gubUyAuth(string);
 
-        assertEquals(Response.Status.TEMPORARY_REDIRECT.getStatusCode(), response.getStatus());
+        assertEquals(Response.Status.FOUND.getStatusCode(), response.getStatus());
     }
     @Test
     public void testGubUyAuthFalseMobile() throws URISyntaxException, IOException {
@@ -53,17 +53,18 @@ public class LoginGubUyEndpointTest {
 
         Response response =  loginGubUyEndpoint.gubUyAuth(null);
 
-        assertEquals(Response.Status.TEMPORARY_REDIRECT.getStatusCode(), response.getStatus());
+        assertEquals(Response.Status.FOUND.getStatusCode(), response.getStatus());
     }
     @Test
-    public void testGetToken() throws URISyntaxException, IOException, FirebaseMessagingException {
+    public void testGetToken() throws Exception {
         CiudadanoJwtDTO ciudadanoJwtDTO = new CiudadanoJwtDTO();
         String code =" hola",state = "chau";
+        when(gubUyService.loginGubUy(code, state)).thenReturn(ciudadanoJwtDTO);
         Response response = loginGubUyEndpoint.getToken(code, state);
-        assertEquals(Response.Status.SEE_OTHER.getStatusCode(), response.getStatus());
+        assertEquals(Response.Status.FOUND.getStatusCode(), response.getStatus());
     }
     @Test
-    public void testGetTokenMobile() throws URISyntaxException, IOException, FirebaseMessagingException {
+    public void testGetTokenMobile() throws Exception {
         CiudadanoJwtDTO ciudadanoJwtDTO = new CiudadanoJwtDTO();
         ciudadanoJwtDTO.setJwt("CVSWETG");
         ciudadanoJwtDTO.setCedula("5184968");

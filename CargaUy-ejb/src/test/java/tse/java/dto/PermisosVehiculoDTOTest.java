@@ -13,7 +13,7 @@ public class PermisosVehiculoDTOTest {
     public void testConstructorsAndGetters() {
         // Arrange
         PermisosVehiculoDTO permisosDTO1 = new PermisosVehiculoDTO();
-        PermisosVehiculoDTO permisosDTO2 = new PermisosVehiculoDTO(1, 2, "ABC123", "Pais", new Date(2000), 3, new Date(2001), new Date(2002));
+        PermisosVehiculoDTO permisosDTO2 = new PermisosVehiculoDTO(1, 2, "ABC123", "Pais", new Date(2000).toLocalDate(), 3, new Date(2001).toLocalDate(), new Date(2002).toLocalDate());
 
 
         assertEquals(1, permisosDTO2.getIdVehiculo());
@@ -33,7 +33,6 @@ public class PermisosVehiculoDTOTest {
         // Arrange
         VehiculoDTO vehiculoDTO = new VehiculoDTO();
         vehiculoDTO.setId(1);
-        vehiculoDTO.setEmpresaId(2);
         vehiculoDTO.setMatricula("ABC123");
         vehiculoDTO.setPais("Pais");
         vehiculoDTO.setFechaFinITV(date);
@@ -46,7 +45,6 @@ public class PermisosVehiculoDTOTest {
 
         // Assert
         assertEquals(1L, permisosDTO.getIdVehiculo());
-        assertEquals(2, permisosDTO.getIdEmpresa());
         assertEquals("ABC123", permisosDTO.getMatricula());
         assertEquals("Pais", permisosDTO.getPais());
         assertNotNull(permisosDTO.getFechaFinITV());

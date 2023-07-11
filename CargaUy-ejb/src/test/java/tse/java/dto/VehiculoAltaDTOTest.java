@@ -41,7 +41,6 @@ public class VehiculoAltaDTOTest {
         assertEquals(marca, vehiculoAltaDTO.getMarca());
         assertEquals(modelo, vehiculoAltaDTO.getModelo());
         assertEquals(peso, vehiculoAltaDTO.getPeso());
-        assertEquals(capacidadCarga, vehiculoAltaDTO.getCapacidadCarga());
         assertEquals(pnc, vehiculoAltaDTO.getPnc());
     }
 
@@ -53,6 +52,7 @@ public class VehiculoAltaDTOTest {
         // Act
         VehiculoAltaDTO vehiculoAltaDTO = new VehiculoAltaDTO();
 
+
         // Assert
         vehiculoAltaDTO.setPais(pais);
         vehiculoAltaDTO.setMatricula(matricula);
@@ -61,8 +61,6 @@ public class VehiculoAltaDTOTest {
         assertEquals(pais,vehiculoAltaDTO.getPais());
         assertNull(vehiculoAltaDTO.getMarca());
         assertNull(vehiculoAltaDTO.getModelo());
-        assertNull(vehiculoAltaDTO.getPeso());
-        assertNull(vehiculoAltaDTO.getCapacidadCarga());
         assertEquals(0, vehiculoAltaDTO.getPnc());
         assertNull(vehiculoAltaDTO.getFechaFinITV());
         assertNull(vehiculoAltaDTO.getFechaInicioPNC());

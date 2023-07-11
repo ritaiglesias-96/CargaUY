@@ -1,5 +1,6 @@
 package tse.java.persistance.impl;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -148,7 +149,7 @@ public class AdministradorDAOTest {
         Integer id = 1;
         when(entityManager.find(Administrador.class, id)).thenReturn(administrador);
         Administrador administradorResult = administradorDAO.findById(id);
-        assertTrue(administradorResult != null);
+        assertNotNull(administradorResult);
         assertEquals(administrador.getNombre(), administradorResult.getNombre());
 
     }

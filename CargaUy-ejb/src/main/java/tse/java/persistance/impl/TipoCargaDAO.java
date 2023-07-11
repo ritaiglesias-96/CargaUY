@@ -25,6 +25,7 @@ public class TipoCargaDAO implements ITipoCargaDAO {
 
     @Override
     public void altaTipoCarga(TipoCargaDTO tdt) throws TipoCargaExisteException {
+        System.out.println(buscarTipoCargaPorId(tdt.getId())!=null);
         if(buscarTipoCargaPorId(tdt.getId())!=null){
             throw new TipoCargaExisteException("Ya existe un tipo de carga con el id=" + tdt.getId());
         } else if(buscarTipoCargaPorNombre(tdt.getNombre())!=null){
@@ -40,6 +41,7 @@ public class TipoCargaDAO implements ITipoCargaDAO {
 
     @Override
     public TipoCargaDTO buscarTipoCargaPorId(Long id) {
+        System.out.println(id);
         if (id == null) {
             return null;
         } else {

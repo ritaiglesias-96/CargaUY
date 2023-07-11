@@ -9,9 +9,10 @@ public class ChoferDTO extends CiudadanoDTO{
 
     private List<AsignacionDTO> asignaciones = new ArrayList<AsignacionDTO>();
 
-    public ChoferDTO() {
 
-    }
+    public ChoferDTO(){
+        super();
+    };
     public ChoferDTO(int idCiudadano, String email, String cedula, RolCiudadano rol) {
         super(idCiudadano, email, cedula, rol);
     }
@@ -20,8 +21,6 @@ public class ChoferDTO extends CiudadanoDTO{
         super(idCiudadano, email, cedula, rol);
         this.asignaciones = asignaciones;
     }
-
-
 
     public List<AsignacionDTO> getAsignaciones() {
         return asignaciones;

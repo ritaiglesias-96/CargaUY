@@ -21,11 +21,13 @@ public class RubrosDAO implements IRubrosDAO {
 
     @Override
     public void altaRubro(RubroDTO dtr) throws RubroExisteException {
+        System.out.println(dtr.getId());
         if(buscarRubroPorId(dtr.getId())!=null){
             throw new RubroExisteException("Ya existe un rubro con el id=" + dtr.getId());
         } else if(buscarRubroPorNombre(dtr.getNombre())!=null){
             throw new RubroExisteException("Ya existe un rubro con el nombre " + dtr.getNombre());
         } else {
+
             Rubro r = new Rubro();
             r.setId(dtr.getId());
             r.setNombre(dtr.getNombre());
