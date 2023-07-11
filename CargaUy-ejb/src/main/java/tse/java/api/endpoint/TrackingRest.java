@@ -26,10 +26,6 @@ public class TrackingRest {
     @EJB
     ITrackingService service;
 
-
-    public TrackingRest() {
-    }
-
     @POST
     @Path("/trackings")
     public Response addTracking(String body) throws JsonProcessingException {

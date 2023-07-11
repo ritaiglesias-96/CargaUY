@@ -68,6 +68,8 @@ public class GestionGuiasDeViajeEndpoint {
             int id = asignacionesService.ultimaAsignacionViaje(a.getGuia().getNumero());
             if (a.getGuia().getFin() == null && vehiculosService.viajeContieneGuia(v, a.getGuia()) && a.getId() == id)
                 result.add(a.getGuia());
+
+
         }
         if (result.size() > 0)
             return Response.status(Response.Status.OK).entity(result).build();
@@ -129,7 +131,6 @@ public class GestionGuiasDeViajeEndpoint {
                 GuiaDeViajeDTO dtguia = new GuiaDeViajeDTO(nuevaGuia);
                 dtguia.setNumero(guiaDeViajesService.getNextNumeroViaje());
                 LocalDate today = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                System.out.println(today);
                 dtguia.setFecha(today);
                 guiaDeViajesService.crearGuiaDeViaje(dtguia, choferDTO, empresaDTO, vehiculoDTO);
                 GuiaDeViajeDTO guiaNueva = guiaDeViajesService.buscarGuiaViajePorNumero(dtguia.getNumero());
@@ -227,10 +228,8 @@ public class GestionGuiasDeViajeEndpoint {
         } catch (Exception e) {
             Logger.getLogger(GestionGuiasDeViajeEndpoint.class.getName()).log(Level.SEVERE, null, e);
         }
-
         g = guiaDeViajesService.buscarGuiaViajePorNumero(g.getNumero());
         LocalDate today = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        System.out.println(today);
         g.setFin(today);
         guiaDeViajesService.modificarGuiaDeViajeSinAsignacion(g);
         return Response.status(Response.Status.OK).entity(g).build();
@@ -268,10 +267,8 @@ public class GestionGuiasDeViajeEndpoint {
         try {
             GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorId(idGuia);
             if (g != null) {
-                System.out.println("Guia id: " + g.getId());
                 EmpresaDTO e = empresasService.obtenerEmpresa(idEmpresa);
                 if (e != null) {
-                    System.out.println("Empresa id: " + e.getId());
                     guiaDeViajesService.borrarGuiaDeViaje(g.getId(), e.getId());
                     return Response.status(Response.Status.OK).build();
                 } else {
@@ -280,7 +277,7 @@ public class GestionGuiasDeViajeEndpoint {
             } else {
                 return Response.status(Response.Status.NOT_FOUND).entity("No existe guia con el id " + idGuia).build();
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Vaya uno a saber que mierda le pinto").build();
         }
 

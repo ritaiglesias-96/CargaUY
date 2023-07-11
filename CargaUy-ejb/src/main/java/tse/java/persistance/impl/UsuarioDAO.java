@@ -46,6 +46,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     public List<UsuarioDTO> listarUsuarios() {
         List<UsuarioDTO> lista = new ArrayList<>();
         Query q = em.createQuery("select u from Usuario u");
+        System.out.println(q);
         List<Usuario> usuarios = q.getResultList();
         for(Usuario u:usuarios) {
             if(u instanceof Administrador){

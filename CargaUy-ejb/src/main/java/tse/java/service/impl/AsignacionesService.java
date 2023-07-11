@@ -15,28 +15,7 @@ public class AsignacionesService implements IAsignacionesService {
     @EJB
     IAsignacionDAO asignacionDAO;
 
-    @Override
-    public void borrarGuiaEnAsignacion(int numeroViaje) {
-        List<Integer> asignacionesBorrar = new ArrayList<>();
-        for(AsignacionDTO a : asignacionDAO.listarAsignaciones()){
-            if(a.getGuia().getNumero() == numeroViaje){
-                a.setGuia(null);
-                asignacionDAO.modificarAsignacion(a);
-                asignacionesBorrar.add(a.getId());
-            }
-        }
-        for(int id:asignacionesBorrar)
-            asignacionDAO.borrarAsignacion(id);
-    }
 
-    @Override
-    public void agregarAsignacion(AsignacionDTO asignacionDTO){
-        asignacionDAO.altaAsignacion(asignacionDTO);    
-    }
-    @Override
-    public AsignacionDTO ultimaIngresada(){
-        return asignacionDAO.ultimaIngresada();
-    }
 
     @Override
     public int ultimaAsignacionViaje(int numeroViaje) {

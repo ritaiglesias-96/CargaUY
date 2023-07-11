@@ -38,22 +38,16 @@ public class LoginGubUyEndpoint {
     private static final String registrationToken = "e9Pqtl7GRJaiRPuL22Uw_m:APA91bFKZPhVcnkRAcMCXTaWTc7lwXl9U9TXrZyu-M-WzlJ7B8A-EdfuJRC9F1ncQIJLctgBBmVSou_Y0m4RBLLgdO0LapLF_VYwN4iPoKd4mfv2XEgOGQlh4M3nW1P9PsDJ7vqyXBiz";
 
 
+
+
     private static boolean isMobile;
-
-    public LoginGubUyEndpoint() {
-    }
-
-    public LoginGubUyEndpoint(IGubUyService gubUyService) {
-        this.gubUyService = gubUyService;
-    }
-
 
     public boolean getisMobile() {
         return isMobile;
     }
 
-    public void setMobile(boolean mobile) {
-        isMobile = mobile;
+    public void setIsMobile(boolean isMobile) {
+        LoginGubUyEndpoint.isMobile = isMobile;
     }
 
     public void FirebaseConfig() throws IOException {
@@ -86,8 +80,9 @@ public class LoginGubUyEndpoint {
     @Path("/tokens")
     public Response getToken(@QueryParam("code") String accessCode, @QueryParam("state") String state) throws Exception {
         CiudadanoJwtDTO ciudadanoJwtDTO = gubUyService.loginGubUy(accessCode, state);
-        boolean mobile = getisMobile();
-        if(mobile){
+        System.out.println("mobile linea 70 :" + isMobile);
+        if(isMobile){
+            System.out.println("entro aca");
             FirebaseConfig();
             Message message = Message.builder()
                     .putData("title", "Redirect Notification")
@@ -105,22 +100,6 @@ public class LoginGubUyEndpoint {
 
     }
 
-    @GET
-    @Path("/test-push")
-    public Response getPush() throws FirebaseMessagingException, IOException {
-        FirebaseConfig();
-        Message message = Message.builder()
-                .setNotification(
-                        Notification.builder()
-                                .setTitle("Redirect Notification")
-                                .setBody("Click para volver a la aplicación")
-                                .build())
-                .setToken(registrationToken)
-                .build();
-        FirebaseMessaging.getInstance().send(message);
-        return Response.status(Response.Status.OK).build();
-    }
-
     @POST
     @Path("/user-info")
     public Response userInfo(@QueryParam("jwtToken") String jwt){
@@ -136,12 +115,12 @@ public class LoginGubUyEndpoint {
         return Response.status(Response.Status.OK).build();
     }
 
-
     @GET
     @Path("/logout")
     public Response logout(@QueryParam("token") String token) {
         gubUyService.logout(token);
         return Response.status(Response.Status.OK).build();
     }
+
 }
 //TODO Despues de redirigir a la pagina de auth gub uy, hay que ver si existe o no el usuario, si existe se redirige y si no se crea una instancia del usuario con un rol cualquiera que despues se puede cambiar, el tema es como pedir los datos del usuario a gub uy ya sea UserInfo Reuqest o ver si se pueden sacar del token

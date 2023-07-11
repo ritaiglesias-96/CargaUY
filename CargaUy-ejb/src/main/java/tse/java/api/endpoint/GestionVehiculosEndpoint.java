@@ -55,10 +55,6 @@ public class GestionVehiculosEndpoint {
 
     @POST
     public Response agregarVehiculo(VehiculoAltaDTO vehiculo){
-        System.out.println(vehiculo.getIdEmpresa());
-        System.out.println(vehiculo.getMatricula());
-        JSONObject v = new JSONObject(vehiculo);
-        System.out.println(v);
         EmpresaDTO e = es.obtenerEmpresa(vehiculo.getIdEmpresa());
         if(e == null){
             return Response.status(Response.Status.NOT_FOUND).entity("No existe empresa con la id " + vehiculo.getIdEmpresa()).build();

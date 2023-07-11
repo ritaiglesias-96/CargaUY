@@ -130,8 +130,8 @@ public class EmpresasService implements IEmpresasService {
 
     @Override
     public boolean contieneVehiculo(int vehiculoId, EmpresaDTO empresaDTO) {
-        for (VehiculoDTO v: empresaDTO.getVehiculos()){
-            if(v.getId() == vehiculoId){
+        for (VehiculoDTO v : empresaDTO.getVehiculos()) {
+            if (v.getId() == vehiculoId) {
                 return true;
             }
         }
@@ -153,7 +153,7 @@ public class EmpresasService implements IEmpresasService {
     }
 
     // Auxiliar
-    private List<AsignacionDTO> listaAsignacionesConGuia(EmpresaDTO e, int numeroGuia) {
+    /*private List<AsignacionDTO> listaAsignacionesConGuia(EmpresaDTO e, int numeroGuia) {
         List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
         for (AsignacionDTO a : e.getAsignaciones()) {
             if (a.getGuia().getNumero() == numeroGuia)
@@ -161,10 +161,10 @@ public class EmpresasService implements IEmpresasService {
         }
         return result;
     }
-
+*/
     private int crearEmpresaPdi(String rut) {
         // 0 - no existe la empresa, 1 - Creada ok, 2 - Error al comunicarse con la plataforma, 3 - La empresa ya existe
-        try {
+        try{
             EmpresaServicePortService empresaService = new EmpresaServicePortService();
             EmpresaServicePort empresaPort = empresaService.getEmpresaServicePortSoap11();
             GetEmpresaRequest empresaRequest = new GetEmpresaRequest();
@@ -176,7 +176,7 @@ public class EmpresasService implements IEmpresasService {
                 return 0;
             } else if (empresasDAO.obtenerEmpresaPorNumero(empresa.getNroEmpresa()) != null) {
                 return 3;
-            } else {
+            }else {
                 empresasDAO.guardarEmpresa(empresa.getNombrePublico(), empresa.getRazonSocial(), empresa.getNroEmpresa(), empresa.getDirPrincipal());
                 return 1;
             }
@@ -185,5 +185,5 @@ public class EmpresasService implements IEmpresasService {
             return 2;
         }
     }
-}
 
+}

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Local
 public interface IAdministradorDAO {
-    void persist(Administrador administrador);
+    void persist(Administrador administrador) throws Exception;
 
     void merge(Administrador administrador);
 

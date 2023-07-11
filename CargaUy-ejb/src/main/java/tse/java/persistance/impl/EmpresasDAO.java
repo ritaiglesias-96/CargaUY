@@ -49,7 +49,6 @@ public class EmpresasDAO implements IEmpresasDAO {
     public void guardarEmpresa(String nombrePublico, String razonSocial, int nroEmpresa, String dirPrincipal) {
         Empresa e = new Empresa(nombrePublico, razonSocial, nroEmpresa, dirPrincipal);
         em.persist(e);
-
     }
 
     @Override

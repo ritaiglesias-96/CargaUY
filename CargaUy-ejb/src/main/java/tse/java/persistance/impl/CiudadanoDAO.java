@@ -43,7 +43,6 @@ public class CiudadanoDAO implements ICiudadanoDAO {
 
     @Override
     public void modificarCiudadano(Ciudadano ciudadano) {
-        //if(ciudadano instanceof Chofer)
         em.merge(ciudadano);
     }
 

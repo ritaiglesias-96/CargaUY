@@ -29,13 +29,6 @@ public abstract class Usuario implements Serializable {
 
     private String password;
 
-    public Usuario(String nombre, String apellido, String correo, String username) {
-        super();
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
-        this.username = username;
-    }
 
     public Usuario(String nombre, String apellido, Date fechaNacimiento, String correo, String username, String password) {
         super();
@@ -59,7 +52,6 @@ public abstract class Usuario implements Serializable {
         this.correo = usuario.getCorreo();
         this.username = usuario.getUsername();
         this.password = usuario.getPassword();
-
     }
 
     public int getIdUsuario() {
@@ -116,6 +108,10 @@ public abstract class Usuario implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setId(int id) {
+        this.idUsuario = id;
     }
 }
 

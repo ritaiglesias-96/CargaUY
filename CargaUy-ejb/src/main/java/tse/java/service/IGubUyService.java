@@ -14,4 +14,5 @@ public interface IGubUyService {
     void verificarJwt(String jwt);
     CiudadanoFrontDTO getCurrentUser(String jwt);
     void logout(String token);
+    String generateRandomString(int length) ;
 }

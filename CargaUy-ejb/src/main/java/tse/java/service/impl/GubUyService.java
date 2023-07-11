@@ -50,10 +50,12 @@ import java.util.logging.Logger;
 public class GubUyService implements IGubUyService {
 
     private static final Logger LOGGER = Logger.getLogger(GubUyService.class.getName());
+
     private static final String TOKEN_ENDPOINT = "https://auth-testing.iduruguay.gub.uy/oidc/v1/token";
     private static final String END_SESSION_ENDPOINT = "https://auth-testing.iduruguay.gub.uy/oidc/v1/logout";
     private static final String CLIENT_ID = "890192";
     private static final String CLIENT_SECRET = "457d52f181bf11804a3365b49ae4d29a2e03bbabe74997a2f510b179";
+    private static final String POST_LOGOUT_REDIRECT_URI = "https://carga-uy-13.web.elasticloud.uy/CargaUy-web/api/gubuy/logout";
     private static final String key = "xbmbLFSsxidkGlcKEQPTBhsIvoOOACgROSKMhCcQLILuNamzTZtFjXgShyqs";
 
     @EJB
@@ -69,12 +71,11 @@ public class GubUyService implements IGubUyService {
             String url = "https://auth-testing.iduruguay.gub.uy/oidc/v1/authorize?";
             url += "response_type=code";
             url += "&scope=openid%20personal_info%20document%20email";
-            url += "&client_id=" + "890192";
+            url += "&client_id=890192";
             url += "&state=" + randomState;
             url += "&redirect_uri=" + URLEncoder.encode("https://carga-uy-13.web.elasticloud.uy/CargaUy-web/api/gubuy/tokens", StandardCharsets.UTF_8.toString());
             return url;
         } catch (UnsupportedEncodingException e) {
-            System.out.println("hola");
         }
         return null;
     }
@@ -82,7 +83,6 @@ public class GubUyService implements IGubUyService {
     @Override
     public CiudadanoJwtDTO loginGubUy(String accessCode, String state) throws Exception {
         JSONObject tokens = getTokens(accessCode);
-        System.out.println(tokens);
         String token = tokens.getString("id_token");
         sessionBean.setIdToken(token);
         Map<String, Claim> tokenDecodeado = decodeToken(token);
@@ -104,10 +104,7 @@ public class GubUyService implements IGubUyService {
 
     @Override
     public void verificarJwt(String jwt) {
-        System.out.println(jwt);
-        System.out.println("En verificar JWT : " + sessionBean.getJwt());
-        System.out.println("En verificar IDTOKEN : " + jwt.equals(sessionBean.getJwt()));
-        Algorithm algorithm = Algorithm.HMAC256(key);
+     Algorithm algorithm = Algorithm.HMAC256(key);
         JWTVerifier jwtVerifier = JWT.require(algorithm)
                 .acceptExpiresAt(60) // Permite 60 segundos de gracia
                 .build();
@@ -123,7 +120,6 @@ public class GubUyService implements IGubUyService {
     public CiudadanoFrontDTO getCurrentUser(String jwt) {
         Map<String, Claim> tokenDecoded = decodeToken(jwt);
         String cedula = tokenDecoded.get("cedula").asString();
-        System.out.println("EN CURRENT USER: " + sessionBean.getIdToken());
         String token = sessionBean.getIdToken();
         Ciudadano ciudadano = ciudadanosService.obtenerCiudadanoPorCedula(cedula);
 
@@ -177,15 +173,12 @@ public class GubUyService implements IGubUyService {
             }
 
             String responseBody = response.body().string();
-            System.out.println(responseBody);
-            System.out.println(new JSONObject(responseBody));
             return new JSONObject(responseBody);
         } catch (Exception e) {
             JSONObject a = new JSONObject();
             return a;
         }
     }
-
     public String generateRandomString(int length) {
         String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder sb = new StringBuilder(length);
@@ -212,9 +205,7 @@ public class GubUyService implements IGubUyService {
     private CiudadanoJwtDTO crearUsuarioJWT(Ciudadano ciudadano, String token) {
         int expireTimeMinutes = 30;
         try {
-            System.out.println("Key: " + key);
             Algorithm alg = Algorithm.HMAC256(key);
-            System.out.println("Algoritmo: " + alg);
             JWTCreator.Builder jwt = JWT.create()
                     .withIssuedAt(new Date())//Se pasa la date actual para controlar la vigencia del usuario
                     .withClaim("id", ciudadano.getIdCiudadano())
@@ -230,25 +221,14 @@ public class GubUyService implements IGubUyService {
             Date expireDate = new Date(expireTime);
             jwt.withExpiresAt(expireDate);
             sessionBean.setJwt(jwt.sign(alg));
-            System.out.println(sessionBean.getJwt());
-            System.out.println(sessionBean.getIdToken());
             CiudadanoJwtDTO ciudadanoJwtDTO = new CiudadanoJwtDTO(jwt.sign(alg), ciudadano.getCedula(), token);
             return ciudadanoJwtDTO;
         } catch (IllegalArgumentException e) {
-            System.out.println(e);
             return null;
         }
     }
 
-    private SecretKey getKey() {
-        SecureRandom secureRandom = new SecureRandom();
-        byte[] keyBytes = new byte[32];
-        secureRandom.nextBytes(keyBytes);
-        SecretKey signingKey = new SecretKeySpec(keyBytes, "HMACSHA256");
-        return signingKey;
-    }
-
-    private Ciudadano crearCiudadanoPdi(String cedula) throws Exception {
+    public Ciudadano crearCiudadanoPdi(String cedula) throws Exception {
         try {
             EmpresaServicePortService empresaService = new EmpresaServicePortService();
             EmpresaServicePort empresaPort = empresaService.getEmpresaServicePortSoap11();
@@ -271,7 +251,6 @@ public class GubUyService implements IGubUyService {
 
     @Override
     public void logout(String token) {
-        System.out.println("en logout : " + token);
         try {
             OkHttpClient httpClient = new OkHttpClient();
 
@@ -285,7 +264,6 @@ public class GubUyService implements IGubUyService {
                     .build();
 
             Response response = httpClient.newCall(request).execute();
-            System.out.println(response.body() != null ? response.body().string() : response.message());
             if (!response.isSuccessful()) {
                 throw new Exception("Algo salió mal intentando cerrar tu sesión");
             }

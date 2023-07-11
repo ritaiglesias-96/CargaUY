@@ -8,6 +8,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 import java.sql.Date;
@@ -20,9 +21,11 @@ public class AdministradorDAO implements IAdministradorDAO {
     @Inject
     public EntityManager em;
 
+
+
     @Override
-    public void persist(Administrador administrador) {
-        em.persist(administrador);
+    public void persist(Administrador administrador){
+       em.persist(administrador);
     }
 
     @Override
@@ -32,6 +35,7 @@ public class AdministradorDAO implements IAdministradorDAO {
 
     @Override
     public List<Administrador> findAll() {
+
         Query q = em.createQuery("SELECT r FROM Administrador r", Administrador.class);
         return q.getResultList();
     }

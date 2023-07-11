@@ -47,14 +47,14 @@ public class GestionCiudadanosEndpoint {
     public Response agregarCiudadano(Ciudadano ciudadano){
         try{
             Ciudadano c = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
-            if (c != null) {
+           // if (c != null) { //TODO Esto esta como el orto o soy yo?
                 ciudadanosService.agregarCiudadano(ciudadano);
                 return Response.status(Response.Status.OK).entity(ciudadano).build();
-            } else {
-                return Response.status(Response.Status.CONFLICT).entity("El ciudadano que quiere agregar ya existe en la base de datos").build();
-            }
-        }catch (Exception e){
-            throw new RuntimeException(e);
+            //} else {
+                //return Response.status(Response.Status.CONFLICT).entity("El ciudadano que quiere agregar ya existe en la base de datos").build(); //TODO NOT ENTITY
+            //}
+        }catch (NoResultException e){
+            return Response.status(Response.Status.CONFLICT).entity("El ciudadano que quiere agregar ya existe en la base de datos").build();
         }
     }
 
@@ -62,14 +62,14 @@ public class GestionCiudadanosEndpoint {
     @Path("/{id}")
     public Response modificarCiudadano(Ciudadano ciudadano,@PathParam("id")int id){
         try{
-            Ciudadano c = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
-            if (c != null) {
+           // Ciudadano c = ciudadanosService.obtenerCiudadanoPorCedula(ciudadano.getCedula());
+           // if (c != null) {
                 ciudadano.setIdCiudadano(id);
                 ciudadanosService.modificarCiudadano(ciudadano);
                 return Response.status(Response.Status.OK).entity(ciudadano).build();
-            }else {
-                return Response.status(Response.Status.NOT_FOUND).entity("El ciudadano ingresado no existe").build();
-            }
+            //}else {
+              //  return Response.status(Response.Status.NOT_FOUND).entity("El ciudadano ingresado no existe").build();
+           // }
         } catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -80,7 +80,7 @@ public class GestionCiudadanosEndpoint {
     public Response eliminarCiudadano(@PathParam("id")int id){
         try{
             ciudadanosService.eliminarCiudadano(id);
-            return Response.status(Response.Status.OK).entity(ciudadanosService.obtenerCiudadano(id)).build();
+            return Response.status(Response.Status.OK).build();
         }catch (NoResultException e){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -93,8 +93,8 @@ public class GestionCiudadanosEndpoint {
         try {
             ciudadanosService.agregarHijoCiudadano(funcionario);
             return Response.status(Response.Status.OK).entity(funcionario).build();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.CONFLICT).build();
         }
     }
     @POST
@@ -104,8 +104,8 @@ public class GestionCiudadanosEndpoint {
         try {
             ciudadanosService.agregarHijoCiudadano(responsable);
             return Response.status(Response.Status.OK).entity(responsable).build();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.CONFLICT).build();
         }
     }
     @POST
@@ -115,8 +115,8 @@ public class GestionCiudadanosEndpoint {
         try {
             ciudadanosService.agregarHijoCiudadano(chofer);
             return Response.status(Response.Status.OK).entity(chofer).build();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.CONFLICT).build();
         }
     }
 
@@ -195,7 +195,7 @@ public class GestionCiudadanosEndpoint {
             empresa.setId(empresaId);
             ciudadanosService.asignarEmpresa(id, empresa);
             return Response.status(Response.Status.OK).entity(empresa).build();
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -206,7 +206,7 @@ public class GestionCiudadanosEndpoint {
             empresa.setId(empresaId);
             ciudadanosService.eliminarEmpresa(id, empresa);
             return Response.status(Response.Status.OK).entity(empresa).build();
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -217,7 +217,7 @@ public class GestionCiudadanosEndpoint {
             empresa.setId(empresaId);
             ciudadanosService.asignarEmpresaChofer(id, empresa);
             return Response.status(Response.Status.OK).entity(empresa).build();
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -228,7 +228,7 @@ public class GestionCiudadanosEndpoint {
             empresa.setId(empresaId);
             ciudadanosService.eliminarEmpresaChofer(id, empresa);
             return Response.status(Response.Status.OK).entity(empresa).build();
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }

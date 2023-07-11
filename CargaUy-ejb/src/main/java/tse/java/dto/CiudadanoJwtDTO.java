@@ -6,6 +6,7 @@ public class CiudadanoJwtDTO {
 
     private String cedula;
 
+
     private String idToken;
 
 
@@ -32,5 +33,14 @@ public class CiudadanoJwtDTO {
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
+
+    public String getIdToken() {
+        return idToken;
+    }
+
+    public void setIdToken(String idToken) {
+        this.idToken = idToken;
+    }
+
 
 }

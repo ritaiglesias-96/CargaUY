@@ -127,7 +127,7 @@ public class UsuariosService implements IUsuariosService {
     }
 
     /* AUXILIAR */
-    private String hashPassword(String clave) throws NoSuchAlgorithmException {
+    public String hashPassword(String clave) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(clave.getBytes());
         byte[] digest = md.digest();
