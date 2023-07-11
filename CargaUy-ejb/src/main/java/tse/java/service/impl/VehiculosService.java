@@ -1,6 +1,5 @@
 package tse.java.service.impl;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,21 +8,13 @@ import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
 
 import tse.java.dto.*;
-import tse.java.entity.Administrador;
-import tse.java.entity.Autoridad;
-import tse.java.entity.Empresa;
 import tse.java.entity.Vehiculo;
-import tse.java.model.Empresas;
-import tse.java.model.Vehiculos;
 import tse.java.persistance.IEmpresasDAO;
 import tse.java.persistance.IGuiaDeViajeDAO;
 import tse.java.persistance.IVehiculosDAO;
 import tse.java.service.IAsignacionesService;
-import tse.java.service.IEmpresasService;
 import tse.java.service.IGuiaDeViajesService;
 import tse.java.service.IVehiculosService;
 
@@ -45,10 +36,8 @@ public class VehiculosService implements IVehiculosService{
     IAsignacionesService asignacionService;
 
     @Override
-    public Vehiculos obtenerVehiculos() {
-        Vehiculos vehiculos = new Vehiculos();
-        vehiculos.setListaVehiculos(vehiculosDAO.obtenerVehiculos());
-        return vehiculos;
+    public List<VehiculoDTO> obtenerVehiculos() {
+        return (List<VehiculoDTO>) vehiculosDAO.obtenerVehiculos();
     }
 
     public void agregarVehiculo(Vehiculo nuevoVehiculo){

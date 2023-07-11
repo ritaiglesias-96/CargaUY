@@ -11,7 +11,7 @@ import java.io.IOException;
 public interface IGubUyService {
     String getAuthGubUy();
     CiudadanoJwtDTO loginGubUy(String accessCode, String state) throws Exception;
-    String agarrarUrl(Response r) throws IOException;
     void verificarJwt(String jwt);
     CiudadanoFrontDTO getCurrentUser(String jwt);
+    void logout(String token);
 }

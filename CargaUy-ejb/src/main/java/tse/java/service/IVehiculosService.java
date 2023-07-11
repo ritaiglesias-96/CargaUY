@@ -2,8 +2,6 @@ package tse.java.service;
 
 import tse.java.dto.*;
 import tse.java.entity.Vehiculo;
-import tse.java.model.Empresas;
-import tse.java.model.Vehiculos;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +11,7 @@ import javax.ejb.Local;
 @Local
 public interface IVehiculosService {
 
-    public Vehiculos obtenerVehiculos();
+    public List<VehiculoDTO> obtenerVehiculos();
     public VehiculoDTO obtenerVehiculoPorId(Long id);
     public void agregarVehiculo(Vehiculo nuevoVehiculo);
     public void modificarVehiculo(VehiculoDTO vehiculoModificado);

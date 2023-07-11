@@ -8,12 +8,14 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import org.springframework.core.io.ClassPathResource;
+import tse.java.api.SessionBean;
 import tse.java.dto.CiudadanoFrontDTO;
 import tse.java.dto.CiudadanoJwtDTO;
 import tse.java.service.IGubUyService;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.FileInputStream;
@@ -30,6 +32,7 @@ public class LoginGubUyEndpoint {
 
     @EJB
     IGubUyService gubUyService;
+
     private static final String FRONTOFFICE_URI = "https://carga-uy-13.web.elasticloud.uy/";
     private static final String pathToServiceAccountJson = "google-services.json";
     private static final String registrationToken = "e9Pqtl7GRJaiRPuL22Uw_m:APA91bFKZPhVcnkRAcMCXTaWTc7lwXl9U9TXrZyu-M-WzlJ7B8A-EdfuJRC9F1ncQIJLctgBBmVSou_Y0m4RBLLgdO0LapLF_VYwN4iPoKd4mfv2XEgOGQlh4M3nW1P9PsDJ7vqyXBiz";
@@ -77,8 +80,10 @@ public class LoginGubUyEndpoint {
             setMobile(false);
         }
         String url =  gubUyService.getAuthGubUy();
-        URI uri=new URI(url);
-        return Response.temporaryRedirect(uri).build();
+        URI uri = new URI(url);
+        System.out.println(uri);
+        return Response.status(Response.Status.FOUND).location(uri).build();
+
     }
 
     @GET
@@ -96,9 +101,10 @@ public class LoginGubUyEndpoint {
                     .setToken(registrationToken)
                     .build();
             FirebaseMessaging.getInstance().send(message);
+
             return Response.status(Response.Status.OK).build();
         }else{
-            return Response.status(Response.Status.SEE_OTHER).location(new URI(FRONTOFFICE_URI + "?code=" + ciudadanoJwtDTO.getJwt())).build();
+            return Response.status(Response.Status.FOUND).location(new URI(FRONTOFFICE_URI + "?code=" + ciudadanoJwtDTO.getJwt())).build();
         }
 
     }
@@ -131,6 +137,14 @@ public class LoginGubUyEndpoint {
     @Path("/jwt-control")
     public Response tokenControl(@QueryParam("jwt") String jwt){
         gubUyService.verificarJwt(jwt);
+        return Response.status(Response.Status.OK).build();
+    }
+
+
+    @GET
+    @Path("/logout")
+    public Response logout(@QueryParam("token") String token) {
+        gubUyService.logout(token);
         return Response.status(Response.Status.OK).build();
     }
 }
