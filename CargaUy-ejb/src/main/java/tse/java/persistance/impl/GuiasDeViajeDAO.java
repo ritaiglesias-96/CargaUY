@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import tse.java.dto.ChoferDTO;
@@ -129,15 +130,7 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
     @Override
     public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg, ChoferDTO c, EmpresaDTO e, VehiculoDTO v) {
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, dtg.getId());
-        gv.setDestino(dtg.getDestino());
-        gv.setFecha(Date.valueOf(dtg.getFecha()));
-        gv.setFin(Date.valueOf(dtg.getFin()));
-        gv.setInicio(Date.valueOf(dtg.getInicio()));
-        gv.setOrigen(dtg.getOrigen());
-        gv.setRubroCliente(dtg.getRubroCliente());
-        gv.setVolumenCarga(dtg.getVolumenCarga());
-        gv.setTipoCarga(dtg.getTipoCarga());
-        gv.setPesajes(gv.procesarListaPesajes(dtg.getPesajes()));
+        gv.modificarGuia(dtg);
         for (Pesaje p : gv.getPesajes()) {
             em.merge(p);
         }
@@ -177,12 +170,11 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
 
     @Override
     public GuiaDeViajeDTO buscarGuiaViajePorNumero(int numeroGuia) {
-        Query q = em.createQuery("select g from GuiaDeViaje g where g.numero=" + numeroGuia);
-        if (q.getResultList().isEmpty()) {
-            return null;
-        } else {
-            GuiaDeViaje g = (GuiaDeViaje) q.getResultList().get(0);
+        try{
+            GuiaDeViaje g =  (GuiaDeViaje) em.createQuery("FROM GuiaDeViaje WHERE numero = :numero").setParameter("numero", numeroGuia).getSingleResult();
             return new GuiaDeViajeDTO(g);
+        }catch (NoResultException e) {
+            return null;
         }
     }
 

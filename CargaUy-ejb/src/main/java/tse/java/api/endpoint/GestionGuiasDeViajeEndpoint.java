@@ -146,9 +146,9 @@ public class GestionGuiasDeViajeEndpoint {
     @PUT
     @Path("/modificar")
     public Response modificarGuiaDeViaje(GuiaDeViajeModificacionDTO dtmodificacion) {
-        GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(dtmodificacion.getNumeroViaje());
+        GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(dtmodificacion.getNumero());
         if (g == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe viaje con el identificador " + dtmodificacion.getNumeroViaje()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe viaje con el identificador " + dtmodificacion.getNumero()).build();
         } else {
             VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(dtmodificacion.getMatriculaVehiculo(), dtmodificacion.getPaisVehiculo());
             if (v == null) {

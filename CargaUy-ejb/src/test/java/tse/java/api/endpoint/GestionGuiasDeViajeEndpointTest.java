@@ -330,7 +330,7 @@ public class GestionGuiasDeViajeEndpointTest {
         String matricula = "AX13", paisVehiculo = "URU", cedulaChofer = "587498";
         guiaDeViajeModificacionDTO.setMatriculaVehiculo(matricula);
         guiaDeViajeModificacionDTO.setPaisVehiculo(paisVehiculo);
-        guiaDeViajeModificacionDTO.setNumeroViaje(numeroViaje);
+        guiaDeViajeModificacionDTO.setNumero(numeroViaje);
         guiaDeViajeModificacionDTO.setIdEmpresa(idEmpresa);
         guiaDeViajeModificacionDTO.setCedulaChofer(cedulaChofer);
         guiaDeViajeModificacionDTO.setDestino("destino");
@@ -370,7 +370,7 @@ public class GestionGuiasDeViajeEndpointTest {
         String matricula = "AX13", paisVehiculo = "URU";
         guiaDeViajeModificacionDTO.setMatriculaVehiculo(matricula);
         guiaDeViajeModificacionDTO.setPaisVehiculo(paisVehiculo);
-        guiaDeViajeModificacionDTO.setNumeroViaje(numeroViaje);
+        guiaDeViajeModificacionDTO.setNumero(numeroViaje);
 
         when(guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje)).thenReturn(guiaDeViajeDTO);
         when(vehiculosService.obtenerVehiculoMatriculaPais(matricula,paisVehiculo)).thenReturn(null);
@@ -391,7 +391,7 @@ public class GestionGuiasDeViajeEndpointTest {
         String matricula = "AX13", paisVehiculo = "URU", cedulaChofer = "587498";
         guiaDeViajeModificacionDTO.setMatriculaVehiculo(matricula);
         guiaDeViajeModificacionDTO.setPaisVehiculo(paisVehiculo);
-        guiaDeViajeModificacionDTO.setNumeroViaje(numeroViaje);
+        guiaDeViajeModificacionDTO.setNumero(numeroViaje);
         guiaDeViajeModificacionDTO.setIdEmpresa(idEmpresa);
 
         when(guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje)).thenReturn(guiaDeViajeDTO);
@@ -414,7 +414,7 @@ public class GestionGuiasDeViajeEndpointTest {
         String matricula = "AX13", paisVehiculo = "URU", cedulaChofer = "587498";
         guiaDeViajeModificacionDTO.setMatriculaVehiculo(matricula);
         guiaDeViajeModificacionDTO.setPaisVehiculo(paisVehiculo);
-        guiaDeViajeModificacionDTO.setNumeroViaje(numeroViaje);
+        guiaDeViajeModificacionDTO.setNumero(numeroViaje);
         guiaDeViajeModificacionDTO.setIdEmpresa(idEmpresa);
         guiaDeViajeModificacionDTO.setCedulaChofer(cedulaChofer);
         guiaDeViajeModificacionDTO.setDestino("destino");

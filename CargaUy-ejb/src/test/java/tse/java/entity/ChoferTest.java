@@ -22,10 +22,12 @@ public class ChoferTest {
         // Arrange
         String email = "chofer@example.com";
         String cedula = "123456789";
+        String nombre = "Pablo";
+        String apellido = "Gomex";
         RolCiudadano rol = RolCiudadano.CHOFER;
 
         // Act
-        Chofer chofer = new Chofer(email, cedula);
+        Chofer chofer = new Chofer(email, cedula, nombre, apellido);
 
         // Assert
         assertEquals(email, chofer.getEmail());
@@ -40,12 +42,14 @@ public class ChoferTest {
         // Arrange
         String email = "chofer@example.com";
         String cedula = "123456789";
+        String nombre = "Pablo";
+        String apellido = "Gomex";
         List<Asignacion> asignaciones = new ArrayList<>();
         asignaciones.add(new Asignacion());
         asignaciones.add(new Asignacion());
 
         // Act
-        Chofer chofer = new Chofer(email, cedula, asignaciones);
+        Chofer chofer = new Chofer(email, cedula, nombre, apellido, asignaciones);
 
         // Assert
         assertEquals(email, chofer.getEmail());

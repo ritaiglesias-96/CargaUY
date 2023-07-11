@@ -4,10 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class GuiaDeViajeAltaDTO{
 
-    private String rubroCliente, tipoCarga;
+    private String rubroCliente;
+    private String tipoCarga;
     private float volumenCarga;
-    private String origen, destino, paisVehiculo, matriculaVehiculo, cedulaChofer;
-
+    private String origen;
+    private String destino;
+    private String paisVehiculo;
+    private String matriculaVehiculo;
+    private String cedulaChofer;
     private Integer idEmpresa;
 
     public GuiaDeViajeAltaDTO(String rubroCliente, String tipoCarga, float volumenCarga, String origen, String destino, String paisVehiculo, String matriculaVehiculo, String cedulaChofer, int idEmpresa) {
@@ -24,34 +28,37 @@ public class GuiaDeViajeAltaDTO{
 
     public GuiaDeViajeAltaDTO(){}
 
+    @JsonProperty("pais")
     public String getPaisVehiculo() {
         return paisVehiculo;
     }
-
+    @JsonProperty("pais")
     public void setPaisVehiculo(String paisVehiculo) {
         this.paisVehiculo = paisVehiculo;
     }
-
+    @JsonProperty("matricula")
     public String getMatriculaVehiculo() {
         return matriculaVehiculo;
     }
-
+    @JsonProperty("matricula")
     public void setMatriculaVehiculo(String matriculaVehiculo) {
         this.matriculaVehiculo = matriculaVehiculo;
     }
-
+    @JsonProperty("cedulaChofer")
     public String getCedulaChofer() {
         return cedulaChofer;
     }
 
+    @JsonProperty("cedulaChofer")
     public void setCedulaChofer(String cedulaChofer) {
         this.cedulaChofer = cedulaChofer;
     }
-
+    @JsonProperty("idEmpresa")
     public int getIdEmpresa() {
         return idEmpresa;
     }
 
+    @JsonProperty("idEmpresa")
     public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
     }

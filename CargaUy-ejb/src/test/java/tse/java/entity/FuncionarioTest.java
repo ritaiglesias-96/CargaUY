@@ -13,9 +13,12 @@ public class FuncionarioTest {
         // Arrange
         String email = "funcionario@example.com";
         String cedula = "1234567890";
+        String nombre = "Pablo";
+        String apellido = "Gomex";
+
 
         // Act
-        Funcionario funcionario = new Funcionario(email, cedula);
+        Funcionario funcionario = new Funcionario(email, cedula, nombre, apellido);
 
         // Assert
         assertEquals(email, funcionario.getEmail());

@@ -241,7 +241,7 @@ public class GubUyService implements IGubUyService {
                 throw new CiudadanoPDIException("No existe un ciudadano con el documento " + cedula);
             } else {
                 LOGGER.info("Datos adicionales del ciudadano " + ciudadano.getCedula() + ": Nombre -> " + ciudadano.getNombre() + ", Apellido -> " + ciudadano.getApellido());
-                return new Ciudadano(ciudadano.getEmail(), ciudadano.getCedula(), null);
+                return new Ciudadano(ciudadano.getEmail(), ciudadano.getCedula(), null, ciudadano.getNombre(), ciudadano.getApellido());
             }
         } catch (Exception var7) {
             LOGGER.log(Level.SEVERE, "Hubo un error al comunicarse con la plataforma", var7);

@@ -25,9 +25,11 @@ public class ResponsableTest {
         // Arrange
         String email = "responsable@example.com";
         String cedula = "1234567890";
+        String nombre = "Pablo";
+        String apellido = "Gomex";
 
         // Act
-        Responsable responsable = new Responsable(email, cedula);
+        Responsable responsable = new Responsable(email, cedula, nombre, apellido);
 
         // Assert
         assertEquals(email, responsable.getEmail());

@@ -17,11 +17,11 @@ public class Funcionario extends Ciudadano implements Serializable{
         super();
     }
 
-    public Funcionario(String email, String cedula) {
-        super(email, cedula, RolCiudadano.FUNCIONARIO);
+    public Funcionario(String email, String cedula, String nombre, String apellido) {
+        super(email, cedula, RolCiudadano.FUNCIONARIO, nombre, apellido);
     }
 
     public FuncionarioDTO darDTO() {
-        return new FuncionarioDTO(this.getIdCiudadano(), this.getEmail(), this.getCedula(), RolCiudadano.FUNCIONARIO);
+        return new FuncionarioDTO(this.getIdCiudadano(), this.getEmail(), this.getCedula(), RolCiudadano.FUNCIONARIO, this.getNombre(), this.getApellido());
     }
 }
