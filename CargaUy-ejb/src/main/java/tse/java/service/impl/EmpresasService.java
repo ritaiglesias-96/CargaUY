@@ -152,16 +152,6 @@ public class EmpresasService implements IEmpresasService {
         return empresas;
     }
 
-    // Auxiliar
-    /*private List<AsignacionDTO> listaAsignacionesConGuia(EmpresaDTO e, int numeroGuia) {
-        List<AsignacionDTO> result = new ArrayList<AsignacionDTO>();
-        for (AsignacionDTO a : e.getAsignaciones()) {
-            if (a.getGuia().getNumero() == numeroGuia)
-                result.add(a);
-        }
-        return result;
-    }
-*/
     private int crearEmpresaPdi(String rut) {
         // 0 - no existe la empresa, 1 - Creada ok, 2 - Error al comunicarse con la plataforma, 3 - La empresa ya existe
         try{
