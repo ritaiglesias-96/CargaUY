@@ -21,18 +21,18 @@ public class Chofer extends Ciudadano implements Serializable {
         super();
     }
 
-    public Chofer(String email, String cedula){
-        super(email, cedula,RolCiudadano.CHOFER);
+    public Chofer(String email, String cedula, String nombre, String apellido){
+        super(email, cedula,RolCiudadano.CHOFER, nombre, apellido);
 
     }
 
-    public Chofer(String email, String cedula, List<Asignacion> asignaciones) {
-        super(email, cedula, RolCiudadano.CHOFER);
+    public Chofer(String email, String cedula, String nombre, String apellido, List<Asignacion> asignaciones) {
+        super(email, cedula, RolCiudadano.CHOFER, nombre, apellido);
         this.asignaciones = asignaciones;
     }
 
     public Chofer(ChoferDTO c) {
-        super(c.getEmail(), c.getCedula(), c.getRol());
+        super(c.getEmail(), c.getCedula(), c.getRol(), c.getNombre(), c.getApellido());
         for(AsignacionDTO a:c.getAsignaciones()){
             this.asignaciones.add(new Asignacion(a));
         }
@@ -53,7 +53,7 @@ public class Chofer extends Ciudadano implements Serializable {
         return result;
     }
     public ChoferDTO darDTO(){
-        return new ChoferDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(), RolCiudadano.CHOFER, procesarListaAsignaciones(this.getAsignaciones()));
+        return new ChoferDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(), RolCiudadano.CHOFER, this.getNombre(), this.getApellido(), procesarListaAsignaciones(this.getAsignaciones()));
     }
 
 }

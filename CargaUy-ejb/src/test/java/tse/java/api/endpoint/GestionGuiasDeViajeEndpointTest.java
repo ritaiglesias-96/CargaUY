@@ -326,15 +326,16 @@ public class GestionGuiasDeViajeEndpointTest {
         EmpresaDTO empresaDTO = new EmpresaDTO();
         ChoferDTO choferDTO = new ChoferDTO();
         choferDTO.setIdCiudadano(4);
-        int numeroViaje = 3, idEmpresa = 1891, id = 1;
+        int numeroViaje = 3, idEmpresa = 1891, id = 1002;
         String matricula = "AX13", paisVehiculo = "URU", cedulaChofer = "587498";
         guiaDeViajeModificacionDTO.setMatriculaVehiculo(matricula);
         guiaDeViajeModificacionDTO.setPaisVehiculo(paisVehiculo);
-        guiaDeViajeModificacionDTO.setNumeroViaje(numeroViaje);
+        guiaDeViajeModificacionDTO.setNumero(numeroViaje);
         guiaDeViajeModificacionDTO.setIdEmpresa(idEmpresa);
         guiaDeViajeModificacionDTO.setCedulaChofer(cedulaChofer);
         guiaDeViajeModificacionDTO.setDestino("destino");
-        when(guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje)).thenReturn(guiaDeViajeDTO);
+        guiaDeViajeModificacionDTO.setId(id);
+        when(guiaDeViajesService.buscarGuiaViajePorId(id)).thenReturn(guiaDeViajeDTO);
         when(vehiculosService.obtenerVehiculoMatriculaPais(matricula,paisVehiculo)).thenReturn(vehiculoDTO);
         when(empresasService.obtenerEmpresa(guiaDeViajeModificacionDTO.getIdEmpresa())).thenReturn(empresaDTO);
         when(ciudadanosService.obtenerChofer(guiaDeViajeModificacionDTO.getCedulaChofer())).thenReturn(choferDTO);
@@ -366,13 +367,13 @@ public class GestionGuiasDeViajeEndpointTest {
     public void testModificarGuiaDeViajeVehiculoNotFound() {
         GuiaDeViajeModificacionDTO guiaDeViajeModificacionDTO = new GuiaDeViajeModificacionDTO();
         GuiaDeViajeDTO guiaDeViajeDTO = new GuiaDeViajeDTO();
-        int numeroViaje = 3;
+        int id = 3;
         String matricula = "AX13", paisVehiculo = "URU";
         guiaDeViajeModificacionDTO.setMatriculaVehiculo(matricula);
         guiaDeViajeModificacionDTO.setPaisVehiculo(paisVehiculo);
-        guiaDeViajeModificacionDTO.setNumeroViaje(numeroViaje);
+        guiaDeViajeModificacionDTO.setId(id);
 
-        when(guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje)).thenReturn(guiaDeViajeDTO);
+        when(guiaDeViajesService.buscarGuiaViajePorId(id)).thenReturn(guiaDeViajeDTO);
         when(vehiculosService.obtenerVehiculoMatriculaPais(matricula,paisVehiculo)).thenReturn(null);
 
         Response response = gestionGuiasDeViajeEndpoint.modificarGuiaDeViaje(guiaDeViajeModificacionDTO);
@@ -391,10 +392,10 @@ public class GestionGuiasDeViajeEndpointTest {
         String matricula = "AX13", paisVehiculo = "URU", cedulaChofer = "587498";
         guiaDeViajeModificacionDTO.setMatriculaVehiculo(matricula);
         guiaDeViajeModificacionDTO.setPaisVehiculo(paisVehiculo);
-        guiaDeViajeModificacionDTO.setNumeroViaje(numeroViaje);
+        guiaDeViajeModificacionDTO.setId(id);
         guiaDeViajeModificacionDTO.setIdEmpresa(idEmpresa);
 
-        when(guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje)).thenReturn(guiaDeViajeDTO);
+        when(guiaDeViajesService.buscarGuiaViajePorId(id)).thenReturn(guiaDeViajeDTO);
         when(vehiculosService.obtenerVehiculoMatriculaPais(matricula,paisVehiculo)).thenReturn(vehiculoDTO);
         when(empresasService.obtenerEmpresa(guiaDeViajeModificacionDTO.getIdEmpresa())).thenReturn(null);
 
@@ -414,11 +415,11 @@ public class GestionGuiasDeViajeEndpointTest {
         String matricula = "AX13", paisVehiculo = "URU", cedulaChofer = "587498";
         guiaDeViajeModificacionDTO.setMatriculaVehiculo(matricula);
         guiaDeViajeModificacionDTO.setPaisVehiculo(paisVehiculo);
-        guiaDeViajeModificacionDTO.setNumeroViaje(numeroViaje);
+        guiaDeViajeModificacionDTO.setId(id);
         guiaDeViajeModificacionDTO.setIdEmpresa(idEmpresa);
         guiaDeViajeModificacionDTO.setCedulaChofer(cedulaChofer);
         guiaDeViajeModificacionDTO.setDestino("destino");
-        when(guiaDeViajesService.buscarGuiaViajePorNumero(numeroViaje)).thenReturn(guiaDeViajeDTO);
+        when(guiaDeViajesService.buscarGuiaViajePorId(id)).thenReturn(guiaDeViajeDTO);
         when(vehiculosService.obtenerVehiculoMatriculaPais(matricula,paisVehiculo)).thenReturn(vehiculoDTO);
         when(empresasService.obtenerEmpresa(guiaDeViajeModificacionDTO.getIdEmpresa())).thenReturn(empresaDTO);
         when(ciudadanosService.obtenerChofer(guiaDeViajeModificacionDTO.getCedulaChofer())).thenReturn(null);
@@ -631,7 +632,7 @@ public class GestionGuiasDeViajeEndpointTest {
             return null;
         }).when(guiaDeViajesService).borrarGuiaDeViaje(id, idEmpresa);
 
-        Response response = gestionGuiasDeViajeEndpoint.borrarGuia(id, idEmpresa);
+        Response response = gestionGuiasDeViajeEndpoint.borrarGuia(idEmpresa, id);
 
         System.out.println(response.getEntity());
 
@@ -646,7 +647,7 @@ public class GestionGuiasDeViajeEndpointTest {
         when(guiaDeViajesService.buscarGuiaViajePorId(id)).thenReturn(guiaDeViajeDTO);
         when(empresasService.obtenerEmpresa(idEmpresa)).thenReturn(empresaDTO);
 
-        Response response = gestionGuiasDeViajeEndpoint.borrarGuia(id, idEmpresa);
+        Response response = gestionGuiasDeViajeEndpoint.borrarGuia(idEmpresa, id);
         System.out.println(response.getEntity());
 
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(),response.getStatus());
@@ -655,7 +656,7 @@ public class GestionGuiasDeViajeEndpointTest {
     public void borrarGuiaGuiaNotFound() {
         int idEmpresa = 3,  id = 1;
 
-        Response response = gestionGuiasDeViajeEndpoint.borrarGuia(id, idEmpresa);
+        Response response = gestionGuiasDeViajeEndpoint.borrarGuia(idEmpresa, id);
 
         System.out.println(response.getEntity());
 
@@ -670,7 +671,7 @@ public class GestionGuiasDeViajeEndpointTest {
         when(guiaDeViajesService.buscarGuiaViajePorId(id)).thenReturn(guiaDeViajeDTO);
         when(empresasService.obtenerEmpresa(idEmpresa)).thenReturn(null);
 
-        Response response = gestionGuiasDeViajeEndpoint.borrarGuia(id, idEmpresa);
+        Response response = gestionGuiasDeViajeEndpoint.borrarGuia(idEmpresa, id);
 
         System.out.println(response.getEntity());
 

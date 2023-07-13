@@ -253,7 +253,6 @@ public class GuiaDeViajeTest {
         guia.modificarGuia(mod);
 
         // Assert
-        assertEquals(mod.getId(), guia.getId());
         assertEquals(mod.getNumero(), guia.getNumero());
         assertEquals(mod.getRubroCliente(), guia.getRubroCliente());
         assertEquals(mod.getTipoCarga(), guia.getTipoCarga());

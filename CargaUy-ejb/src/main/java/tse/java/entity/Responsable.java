@@ -26,8 +26,8 @@ public class Responsable extends Ciudadano implements Serializable {
         this.empresa = empresa;
     }
 
-    public Responsable(String email, String cedula) {
-        super(email, cedula, RolCiudadano.RESPONSABLE);
+    public Responsable(String email, String cedula, String nombre, String apellido) {
+        super(email, cedula, RolCiudadano.RESPONSABLE, nombre, apellido);
     }
 
 
@@ -40,7 +40,7 @@ public class Responsable extends Ciudadano implements Serializable {
     }
 
     public ResponsableDTO darDto(){
-        return new ResponsableDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(),RolCiudadano.RESPONSABLE);
+        return new ResponsableDTO(this.getIdCiudadano(),this.getEmail(),this.getCedula(),RolCiudadano.RESPONSABLE, this.getNombre(), this.getApellido());
     }
 
 }

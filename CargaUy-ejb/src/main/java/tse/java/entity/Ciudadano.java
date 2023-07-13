@@ -18,6 +18,8 @@ public class Ciudadano  implements Serializable {
     @Column(name="id")
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int idCiudadano;
+    private String nombre;
+    private String apellido;
     private String email;
     @Column(unique = true)
     private String cedula;
@@ -30,10 +32,12 @@ public class Ciudadano  implements Serializable {
         super();
     }
 
-    public Ciudadano(String email, String cedula, RolCiudadano rol) {
+    public Ciudadano(String email, String cedula, RolCiudadano rol, String nombre, String apellido) {
         super();
         this.email = email;
         this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
         if (rol!=null){
             this.rol=rol;
         }else {
@@ -74,6 +78,20 @@ public class Ciudadano  implements Serializable {
         this.rol = rol;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
 }

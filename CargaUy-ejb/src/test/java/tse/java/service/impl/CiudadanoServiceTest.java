@@ -146,8 +146,10 @@ public class CiudadanoServiceTest {
         ciudadano.setRol(RolCiudadano.FUNCIONARIO);
         ciudadano.setEmail("test@example.com");
         ciudadano.setCedula("123456789");
+        ciudadano.setApellido("Gomez");
+        ciudadano.setNombre("Pablo");
 
-        Funcionario funcionario = new Funcionario(ciudadano.getEmail(), ciudadano.getCedula());
+        Funcionario funcionario = new Funcionario(ciudadano.getEmail(), ciudadano.getCedula(), ciudadano.getNombre(), ciudadano.getApellido());
 
         ciudadanoService.agregarHijoCiudadano(funcionario);
 
@@ -161,8 +163,11 @@ public class CiudadanoServiceTest {
         ciudadano.setRol(RolCiudadano.RESPONSABLE);
         ciudadano.setEmail("test@example.com");
         ciudadano.setCedula("123456789");
+        ciudadano.setApellido("Gomez");
+        ciudadano.setNombre("Pablo");
 
-        Responsable responsable = new Responsable(ciudadano.getEmail(), ciudadano.getCedula());
+
+        Responsable responsable = new Responsable(ciudadano.getEmail(), ciudadano.getCedula(), ciudadano.getNombre(), ciudadano.getApellido());
 
         ciudadanoService.agregarHijoCiudadano(ciudadano);
 
@@ -176,8 +181,11 @@ public class CiudadanoServiceTest {
         ciudadano.setRol(RolCiudadano.CHOFER);
         ciudadano.setEmail("test@example.com");
         ciudadano.setCedula("123456789");
+        ciudadano.setApellido("Gomez");
+        ciudadano.setNombre("Pablo");
 
-        Chofer chofer = new Chofer(ciudadano.getEmail(), ciudadano.getCedula());
+
+        Chofer chofer = new Chofer(ciudadano.getEmail(), ciudadano.getCedula(), ciudadano.getNombre(), ciudadano.getApellido());
 
         ciudadanoService.agregarHijoCiudadano(ciudadano);
 
@@ -200,8 +208,11 @@ public class CiudadanoServiceTest {
     public void testModificarHijoCiudadano_WhenResponsable() {
         Ciudadano ciudadano = new Ciudadano();
         ciudadano.setRol(RolCiudadano.RESPONSABLE);
+        ciudadano.setApellido("Gomez");
+        ciudadano.setNombre("Pablo");
 
-        Responsable responsable = new Responsable(ciudadano.getEmail(), ciudadano.getCedula());
+
+        Responsable responsable = new Responsable(ciudadano.getEmail(), ciudadano.getCedula(), ciudadano.getNombre(), ciudadano.getApellido());
 
         ciudadanoService.modificarHijoCiudadano(responsable);
 
@@ -213,8 +224,11 @@ public class CiudadanoServiceTest {
     public void testModificarHijoCiudadano_WhenChofer() {
         Ciudadano ciudadano = new Ciudadano();
         ciudadano.setRol(RolCiudadano.CHOFER);
+        ciudadano.setApellido("Gomez");
+        ciudadano.setNombre("Pablo");
 
-        Chofer chofer = new Chofer(ciudadano.getEmail(), ciudadano.getCedula());
+
+        Chofer chofer = new Chofer(ciudadano.getEmail(), ciudadano.getCedula(), ciudadano.getNombre(), ciudadano.getApellido());
 
         ciudadanoService.modificarHijoCiudadano(chofer);
 
@@ -228,7 +242,7 @@ public class CiudadanoServiceTest {
         int id = 1;
         Ciudadano ciudadano = new Funcionario();
 
-        Funcionario funcionario = new Funcionario(ciudadano.getEmail(), ciudadano.getCedula());
+        Funcionario funcionario = new Funcionario(ciudadano.getEmail(), ciudadano.getCedula(), ciudadano.getNombre(), ciudadano.getApellido());
         funcionario.setRol(RolCiudadano.RESPONSABLE);
         funcionario.setIdCiudadano(id);
         when(ciudadanoDAO.buscarCiudadanoPorId(id)).thenReturn(funcionario);
@@ -245,7 +259,7 @@ public class CiudadanoServiceTest {
         Ciudadano ciudadano = new Ciudadano();
         ciudadano.setRol(RolCiudadano.RESPONSABLE);
 
-        Responsable responsable = new Responsable(ciudadano.getEmail(), ciudadano.getCedula());
+        Responsable responsable = new Responsable(ciudadano.getEmail(), ciudadano.getCedula(), ciudadano.getNombre(), ciudadano.getApellido());
         responsable.setRol(RolCiudadano.RESPONSABLE);
         responsable.setIdCiudadano(id);
         when(ciudadanoDAO.buscarCiudadanoPorId(id)).thenReturn(responsable);
@@ -263,7 +277,7 @@ public class CiudadanoServiceTest {
         ciudadano.setRol(RolCiudadano.CHOFER);
         ciudadano.setIdCiudadano(1);
 
-        Chofer chofer = new Chofer(ciudadano.getEmail(), ciudadano.getCedula());
+        Chofer chofer = new Chofer(ciudadano.getEmail(), ciudadano.getCedula(), ciudadano.getNombre(), ciudadano.getApellido());
         chofer.setRol(RolCiudadano.CHOFER);
         chofer.setIdCiudadano(id);
         when(ciudadanoDAO.buscarCiudadanoPorId(id)).thenReturn(chofer);

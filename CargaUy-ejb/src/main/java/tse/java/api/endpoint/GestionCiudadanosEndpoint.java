@@ -30,9 +30,6 @@ public class GestionCiudadanosEndpoint {
     @EJB
     ICiudadanosService ciudadanosService;
 
-    @EJB
-    IEmpresasService empresasService;
-
     @GET
     public Response getCiudadanos(){
         try{

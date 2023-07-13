@@ -13,12 +13,12 @@ public class ChoferDTO extends CiudadanoDTO{
     public ChoferDTO(){
         super();
     };
-    public ChoferDTO(int idCiudadano, String email, String cedula, RolCiudadano rol) {
-        super(idCiudadano, email, cedula, rol);
+    public ChoferDTO(int idCiudadano, String email, String cedula, RolCiudadano rol, String nombre, String apellido) {
+        super(idCiudadano, email, cedula, rol, nombre, apellido);
     }
 
-    public ChoferDTO(int idCiudadano, String email, String cedula, RolCiudadano rol, List<AsignacionDTO> asignaciones) {
-        super(idCiudadano, email, cedula, rol);
+    public ChoferDTO(int idCiudadano, String email, String cedula, RolCiudadano rol, String nombre, String apellido, List<AsignacionDTO> asignaciones) {
+        super(idCiudadano, email, cedula, rol, nombre, apellido);
         this.asignaciones = asignaciones;
     }
 

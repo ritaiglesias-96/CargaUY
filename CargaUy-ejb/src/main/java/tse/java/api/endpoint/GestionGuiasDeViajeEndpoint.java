@@ -8,6 +8,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.primefaces.shaded.json.JSONObject;
 import tse.java.dto.*;
 import tse.java.entity.*;
 import tse.java.persistance.*;
@@ -69,7 +70,6 @@ public class GestionGuiasDeViajeEndpoint {
             if (a.getGuia().getFin() == null && vehiculosService.viajeContieneGuia(v, a.getGuia()) && a.getId() == id)
                 result.add(a.getGuia());
 
-
         }
         if (result.size() > 0)
             return Response.status(Response.Status.OK).entity(result).build();
@@ -80,17 +80,22 @@ public class GestionGuiasDeViajeEndpoint {
     @GET
     @Path("/listar/{idEmpresa}")
     public Response listarGuiasDeEmpresa(@PathParam("idEmpresa") int idEmpresa) {
-        List<GuiaDeViajeDTO> result = new ArrayList<GuiaDeViajeDTO>();
+        List<GuiaDeViajeDTO> guiasEmpresa = new ArrayList<GuiaDeViajeDTO>();
+        List<Integer> idGuias = new ArrayList<>();
         EmpresaDTO e = empresasService.obtenerEmpresa(idEmpresa);
-        if (e.getAsignaciones() != null) {
-            List<AsignacionDTO> asignaciones = e.getAsignaciones();
-            for (AsignacionDTO a : asignaciones) {
-                if (!result.contains(a.getGuia())) {
-                    result.add(a.getGuia());
+        if (!e.getAsignaciones().isEmpty()) {
+            for (AsignacionDTO a : e.getAsignaciones()) {
+                GuiaDeViajeDTO g = a.getGuia();
+                if(!idGuias.contains(g.getId())){
+                    idGuias.add(g.getId());
                 }
             }
-            if (result.size() > 0)
-                return Response.status(Response.Status.OK).entity(result).build();
+                for (Integer g : idGuias
+                ) {
+                    guiasEmpresa.add(guiaDeViajesService.buscarGuiaViajePorId(g));
+                    System.out.println("tiene estas guias: " + g);
+                }
+                return Response.status(Response.Status.OK).entity(guiasEmpresa).build();
         }
         return Response.status(Response.Status.OK).entity("No tiene guias de viaje en su empresa!").build();
     }
@@ -146,9 +151,9 @@ public class GestionGuiasDeViajeEndpoint {
     @PUT
     @Path("/modificar")
     public Response modificarGuiaDeViaje(GuiaDeViajeModificacionDTO dtmodificacion) {
-        GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorNumero(dtmodificacion.getNumeroViaje());
+        GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorId(dtmodificacion.getId());
         if (g == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe viaje con el identificador " + dtmodificacion.getNumeroViaje()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe la guia con id" + dtmodificacion.getId()).build();
         } else {
             VehiculoDTO v = vehiculosService.obtenerVehiculoMatriculaPais(dtmodificacion.getMatriculaVehiculo(), dtmodificacion.getPaisVehiculo());
             if (v == null) {
@@ -162,11 +167,7 @@ public class GestionGuiasDeViajeEndpoint {
                     if (c == null) {
                         return Response.status(Response.Status.NOT_FOUND).entity("No existe chofer con la cedula " + dtmodificacion.getCedulaChofer()).build();
                     } else {
-                        g.setOrigen(dtmodificacion.getOrigen());
-                        g.setDestino(dtmodificacion.getDestino());
-                        g.setRubroCliente(dtmodificacion.getRubroCliente());
-                        g.setTipoCarga(dtmodificacion.getTipoCarga());
-                        g.setVolumenCarga(dtmodificacion.getVolumenCarga());
+                        g.modificarGuia(dtmodificacion);
                         guiaDeViajesService.modificarGuiaDeViaje(g, c, e, v);
                         return Response.status(Response.Status.CREATED).build();
                     }
@@ -263,12 +264,14 @@ public class GestionGuiasDeViajeEndpoint {
 
     @DELETE
     @Path("/borrar/{idEmpresa}/{idGuia}")
-    public Response borrarGuia(@PathParam("idGuia") int idGuia, @PathParam("idEmpresa") int idEmpresa) {
+    public Response borrarGuia(@PathParam("idEmpresa") int idEmpresa, @PathParam("idGuia") int idGuia) {
         try {
             GuiaDeViajeDTO g = guiaDeViajesService.buscarGuiaViajePorId(idGuia);
             if (g != null) {
+                System.out.println("Agarra la guia");
                 EmpresaDTO e = empresasService.obtenerEmpresa(idEmpresa);
                 if (e != null) {
+                    System.out.println("Agarra la empresa");
                     guiaDeViajesService.borrarGuiaDeViaje(g.getId(), e.getId());
                     return Response.status(Response.Status.OK).build();
                 } else {

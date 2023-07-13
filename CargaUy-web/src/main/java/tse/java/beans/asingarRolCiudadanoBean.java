@@ -37,9 +37,6 @@ public class asingarRolCiudadanoBean {
     @EJB
     ICiudadanoDAO ciudadanoDAO;
 
-    @EJB
-    IUsuariosService iUsuariosService;
-
     private List<CiudadanoDTO> listaCiudadanos = new ArrayList<CiudadanoDTO>();
 
     private String rol="";
@@ -57,7 +54,7 @@ public class asingarRolCiudadanoBean {
         Logger.getLogger(asingarRolCiudadanoBean.class.getName()).log(Level.INFO, msg);
         Ciudadano c = ciudadanoDAO.buscarCiudadanoPorId(dtr.getIdCiudadano());
         if(rol.equals("Chofer") && !(c instanceof Chofer)) {
-            Chofer ch = new Chofer(c.getEmail(),c.getCedula(),new ArrayList<Asignacion>());
+            Chofer ch = new Chofer(c.getEmail(),c.getCedula(), c.getNombre(), c.getApellido(), new ArrayList<Asignacion>());
             if((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario))
                 ciudadanosService.eliminarHijoCiudadano(c.getIdCiudadano());
             else
@@ -65,7 +62,7 @@ public class asingarRolCiudadanoBean {
             ciudadanosService.agregarHijoCiudadano(ch);
             recargarPagina();
         } else if(rol.equals("Responsable") && !(c instanceof Responsable)){
-            Responsable r = new Responsable(c.getEmail(),c.getCedula());
+            Responsable r = new Responsable(c.getEmail(),c.getCedula(), c.getNombre(), c.getApellido());
             if((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario)) {
                 if (c instanceof Chofer) {
                     Chofer ch = (Chofer) c;
@@ -79,7 +76,7 @@ public class asingarRolCiudadanoBean {
             ciudadanosService.agregarHijoCiudadano(r);
             recargarPagina();
         } else if(rol.equals("Funcionario") && !(c instanceof Funcionario)){
-            Funcionario f = new Funcionario(c.getEmail(),c.getCedula());
+            Funcionario f = new Funcionario(c.getEmail(),c.getCedula(), c.getNombre(), c.getApellido());
             if((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario)) {
                 if (c instanceof Chofer) {
                     Chofer ch = (Chofer) c;
@@ -93,7 +90,7 @@ public class asingarRolCiudadanoBean {
             ciudadanosService.agregarHijoCiudadano(f);
             recargarPagina();
         } else if(rol.equals("Ciudadano") && ((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario))){
-            Ciudadano cnew = new Ciudadano(c.getEmail(),c.getCedula(),null);
+            Ciudadano cnew = new Ciudadano(c.getEmail(),c.getCedula(),null, c.getNombre(), c.getApellido());
             if((c instanceof Chofer) || (c instanceof Responsable) || (c instanceof Funcionario)) {
                 if (c instanceof Chofer) {
                     Chofer ch = (Chofer) c;

@@ -44,7 +44,9 @@ public class GuiaDeViajeDTO {
     }
 
     public GuiaDeViajeDTO(GuiaDeViaje guia) {
-        this.id = guia.getId();
+        if(guia.getId() != null){
+        System.out.println();
+        this.id = guia.getId();}
         this.numero = guia.getNumero();
         this.rubroCliente = guia.getRubroCliente();
         this.tipoCarga = guia.getTipoCarga();
@@ -66,6 +68,16 @@ public class GuiaDeViajeDTO {
         this.origen = guiaDeViajeAltaDTO.getOrigen();
         this.destino = guiaDeViajeAltaDTO.getDestino();
     }
+
+    public void modificarGuia(GuiaDeViajeModificacionDTO guia) {
+        this.numero = guia.getNumero();
+        this.rubroCliente = guia.getRubroCliente();
+        this.tipoCarga = guia.getTipoCarga();
+        this.volumenCarga = guia.getVolumenCarga();
+        this.origen = guia.getOrigen();
+        this.destino = guia.getDestino();
+    }
+
 
     public GuiaDeViajeDTO(){}
 

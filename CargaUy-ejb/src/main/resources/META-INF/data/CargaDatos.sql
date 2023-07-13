@@ -2,17 +2,17 @@ INSERT INTO public."Usuario"(tipo_usuario, id, apellido, nombre, fechaNacimiento
 INSERT INTO public."Usuario"(tipo_usuario, id, apellido, nombre, fechaNacimiento, correo, username, password) values('autoridad', 101, 'Bravo', 'Marcelo', '1995-04-26 00:00:00', 'marceb95@gmail.com', 'autoridad', '21232F297A57A5A743894A0E4A801FC3');
 
 --- Ciudadano
-INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Ciudadano', 1956, '1452159', 'ciudadano@com', null, null);
-INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Ciudadano', 2568, '1458745', 'ciudadano2@com', null, null);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Ciudadano', 1956, 'Juan', 'Perez', '1452159', 'ciudadano@com', null, null);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Ciudadano', 2568, 'Eduardo', 'Ruiz', '1458745', 'ciudadano2@com', null, null);
 
 --- Funcionario
-INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Funcionario', 3568, '1234567', 'funcionario@com', 0, null);
-INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Funcionario', 4858, '2345678', 'funcionario2@com', 0, null);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Funcionario', 3568, 'Diego', 'Bronc', '51002930', 'funcionario@com', 0, null);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Funcionario', 4858, 'Julio', 'Rodriguez', '2345678', 'funcionario2@com', 0, null);
 
 --- Responsable
-INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Responsable', 7856, '3456789', 'responsable@com', 1, null);
-INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Responsable', 8856, '4567891', 'responsable2@com', 1, null);
-INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Responsable', 4567, '56587008', 'rita@gmail.com', 1, null);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Responsable', 7856, 'Santiago', 'Gimenez', '3456789', 'responsable@com', 1, null);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Responsable', 8856, 'David', 'Gomez', '4567891', 'responsable2@com', 1, null);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Responsable', 4567, 'Rita', 'Iglesias', '56587008', 'rita@gmail.com', 1, null);
 
 ---Empresas
 INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razonsocial, responsable_id) VALUES (1586, 'Rivera 1234', 'TATA', 1254,'tatasa',4567);
@@ -21,8 +21,8 @@ INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razon
 
 UPDATE public."Ciudadano" SET empresa_id = 1586  WHERE id = 4567;
 --- Choferes
-INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Chofer', 5856, '51002930', 'chofer@com', 2, 1586);
-INSERT INTO public."Ciudadano" (dtype, id, cedula, email, rol, empresa_id) VALUES ('Chofer', 6856, '2547856', 'chofer2@com', 2, 1587);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Chofer', 5856,  'Diego', 'Bronc', '510029', 'chofer@com', 2, 1586);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Chofer', 6856,'Gustavo', 'Mendez', '2547856', 'chofer2@com', 2, 1586);
 
 
 --- Vehiculos
@@ -38,7 +38,7 @@ INSERT INTO public."Empresa_Vehiculo" ("Empresa_id", vehiculos_id) values(1586,3
 -- Empresa-Ciudadano
 
 INSERT INTO public."Empresa_Ciudadano" ("Empresa_id", "choferes_id") values (1586, 5856);
-INSERT INTO public."Empresa_Ciudadano" ("Empresa_id", "choferes_id") values (1587, 6856);
+INSERT INTO public."Empresa_Ciudadano" ("Empresa_id", "choferes_id") values (1586, 6856);
 
 -- Guia de viaje
 -- Datos historicos

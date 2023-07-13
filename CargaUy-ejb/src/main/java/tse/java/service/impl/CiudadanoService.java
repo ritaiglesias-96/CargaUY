@@ -74,10 +74,10 @@ public class CiudadanoService implements ICiudadanosService {
         if (ciudadano.getRol() == RolCiudadano.FUNCIONARIO) {
             funcionarioDAO.agregarFuncionario((Funcionario) ciudadano);
         } else if (ciudadano.getRol() == RolCiudadano.RESPONSABLE) {
-            ciudadano = new Responsable(ciudadano.getEmail(), ciudadano.getCedula());
+            ciudadano = new Responsable(ciudadano.getEmail(), ciudadano.getCedula(), ciudadano.getNombre(), ciudadano.getApellido());
             responsableDAO.agregarResponsable((Responsable) ciudadano);
         } else {
-            ciudadano = new Chofer(ciudadano.getEmail(), ciudadano.getCedula());
+            ciudadano = new Chofer(ciudadano.getEmail(), ciudadano.getCedula(), ciudadano.getNombre(), ciudadano.getApellido());
             choferDAO.agregarChofer((Chofer) ciudadano);
         }
     }

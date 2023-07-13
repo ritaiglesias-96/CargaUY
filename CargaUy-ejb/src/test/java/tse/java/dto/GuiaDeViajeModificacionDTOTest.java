@@ -20,7 +20,7 @@ public class GuiaDeViajeModificacionDTOTest {
         assertNull(guiaDeViajeModificacionDTO.getMatriculaVehiculo());
         assertNull(guiaDeViajeModificacionDTO.getCedulaChofer());
        // assertEquals(0, guiaDeViajeModificacionDTO.getNumeroEmpresa());
-        assertEquals(0, guiaDeViajeModificacionDTO.getNumeroViaje());
+        assertEquals(0, guiaDeViajeModificacionDTO.getNumero());
     }
 
     @Test
@@ -34,9 +34,10 @@ public class GuiaDeViajeModificacionDTOTest {
         String matriculaVehiculo = "Matricula 1";
         String cedulaChofer = "Cedula 1";
         int numeroEmpresa = 1;
+        int id = 1000;
         int numeroViaje = 123;
 
-        GuiaDeViajeModificacionDTO guiaDeViajeModificacionDTO = new GuiaDeViajeModificacionDTO(
+        GuiaDeViajeModificacionDTO guiaDeViajeModificacionDTO = new GuiaDeViajeModificacionDTO(id,
                 rubroCliente, tipoCarga, volumenCarga, origen, destino, paisVehiculo, matriculaVehiculo,
                 cedulaChofer, numeroEmpresa, numeroViaje);
 
@@ -50,16 +51,16 @@ public class GuiaDeViajeModificacionDTOTest {
         assertEquals(matriculaVehiculo, guiaDeViajeModificacionDTO.getMatriculaVehiculo());
         assertEquals(cedulaChofer, guiaDeViajeModificacionDTO.getCedulaChofer());
        // assertEquals(numeroEmpresa, guiaDeViajeModificacionDTO.getNumeroEmpresa());
-        assertEquals(numeroViaje, guiaDeViajeModificacionDTO.getNumeroViaje());
+        assertEquals(numeroViaje, guiaDeViajeModificacionDTO.getNumero());
     }
 
     @Test
     public void testSetter() {
         GuiaDeViajeModificacionDTO guiaDeViajeModificacionDTO = new GuiaDeViajeModificacionDTO();
         int numeroViaje = 1;
-        guiaDeViajeModificacionDTO.setNumeroViaje(numeroViaje);
+        guiaDeViajeModificacionDTO.setNumero(numeroViaje);
 
-        assertEquals(numeroViaje,guiaDeViajeModificacionDTO.getNumeroViaje());
+        assertEquals(numeroViaje,guiaDeViajeModificacionDTO.getNumero());
     }
 
 

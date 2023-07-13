@@ -80,9 +80,7 @@ public class LoginGubUyEndpoint {
     @Path("/tokens")
     public Response getToken(@QueryParam("code") String accessCode, @QueryParam("state") String state) throws Exception {
         CiudadanoJwtDTO ciudadanoJwtDTO = gubUyService.loginGubUy(accessCode, state);
-        System.out.println("mobile linea 70 :" + isMobile);
         if(isMobile){
-            System.out.println("entro aca");
             FirebaseConfig();
             Message message = Message.builder()
                     .putData("title", "Redirect Notification")
