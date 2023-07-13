@@ -83,6 +83,7 @@ public class GubUyService implements IGubUyService {
     @Override
     public CiudadanoJwtDTO loginGubUy(String accessCode, String state) throws Exception {
         JSONObject tokens = getTokens(accessCode);
+        System.out.println(tokens);
         String token = tokens.getString("id_token");
         sessionBean.setIdToken(token);
         Map<String, Claim> tokenDecodeado = decodeToken(token);
@@ -172,7 +173,10 @@ public class GubUyService implements IGubUyService {
                 throw new Exception("No se pudo intercambiar el access code por el token en el servicio de GubUy.");
             }
 
+            assert response.body() != null;
             String responseBody = response.body().string();
+            System.out.println(responseBody);
+            response.body().close();
             return new JSONObject(responseBody);
         } catch (Exception e) {
             JSONObject a = new JSONObject();

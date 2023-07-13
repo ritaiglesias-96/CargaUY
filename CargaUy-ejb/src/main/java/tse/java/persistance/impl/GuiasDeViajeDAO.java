@@ -2,12 +2,11 @@ package tse.java.persistance.impl;
 
 
 import java.time.LocalDateTime;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -20,7 +19,6 @@ import tse.java.dto.GuiaDeViajeDTO;
 import tse.java.dto.VehiculoDTO;
 import tse.java.entity.*;
 import tse.java.persistance.IGuiaDeViajeDAO;
-import tse.java.service.IAsignacionesService;
 import tse.java.util.qualifier.TSE2023DB;
 
 @Stateless
@@ -58,7 +56,7 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
         Query q = em.createQuery("select g from GuiaDeViaje g");
         List<GuiaDeViaje> guias = q.getResultList();
         for (GuiaDeViaje g : guias) {
-            ret.add(g.darDto());
+            ret.add(new GuiaDeViajeDTO(g));
         }
         return ret;
     }
@@ -68,67 +66,55 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, id);
         Empresa e = em.find(Empresa.class, idEmpresa);
         List<Asignacion> aRemover = new ArrayList<>();
-        List<Asignacion> nueva = new ArrayList<>();
 
-        if (!e.getAsignaciones().isEmpty()) {
-            for (Asignacion a : e.getAsignaciones()) {
-                if (Objects.equals(a.getGuia().getId(), gv.getId())) {
+        // Remove Asignaciones from Empresa
+        e.getAsignaciones().removeIf(a -> {
+            if (a.getGuia().getId() == id) {
+                aRemover.add(a);
+                return true;
+            }
+            return false;
+        });
+        em.merge(e);
+
+        // Remove Asignaciones from Vehiculos
+        e.getVehiculos().forEach(v -> {
+            v.getAsignaciones().removeIf(a -> {
+                if (a.getGuia().getId() == id) {
                     aRemover.add(a);
-                } else {
-                    nueva.add(a);
+                    return true;
                 }
-            }
-            e.setAsignaciones(nueva);
-            em.merge(e);
-        }
-        nueva.clear();
-        if (!e.getVehiculos().isEmpty()) {
-            for (Vehiculo v : e.getVehiculos()) {
-                if (!v.getAsignaciones().isEmpty()) {
-                    for (Asignacion a : v.getAsignaciones()) {
-                        if (Objects.equals(a.getGuia().getId(), gv.getId())) {
-                            aRemover.add(a);
-                        } else {
-                            nueva.add(a);
-                        }
-                    }
-                    v.setAsignaciones(nueva);
-                    em.merge(v);
+                return false;
+            });
+            em.merge(v);
+        });
+
+        // Remove Asignaciones from Choferes
+        e.getChoferes().forEach(c -> {
+            c.getAsignaciones().removeIf(a -> {
+                if (a.getGuia().getId() == id) {
+                    aRemover.add(a);
+                    return true;
                 }
-            }
-        }
-        nueva.clear();
-        if (!e.getChoferes().isEmpty()) {
-            for (Chofer c : e.getChoferes()) {
-                if (!c.getAsignaciones().isEmpty()) {
-                    for (Asignacion a : c.getAsignaciones()) {
-                        if (Objects.equals(a.getGuia().getId(), gv.getId())) {
-                            aRemover.add(a);
-                        } else {
-                            nueva.add(a);
-                        }
-                    }
-                    c.setAsignaciones(nueva);
-                    em.merge(c);
-                }
-            }
-        }
+                return false;
+            });
+            em.merge(c);
+        });
 
-        if (!aRemover.isEmpty()) {
-            for (Asignacion a : aRemover) {
-                em.remove(a);
-            }
-        }
+        // Remove Asignaciones from entity manager
+        aRemover.forEach(em::remove);
 
-        for (Pesaje p:gv.getPesajes()){
-            em.remove(p);
-        }
+        // Remove Pesajes
+        gv.getPesajes().forEach(em::remove);
 
+        // Remove GuiaDeViaje
         em.remove(gv);
     }
 
+
     @Override
     public void modificarGuiaDeViaje(GuiaDeViajeDTO dtg, ChoferDTO c, EmpresaDTO e, VehiculoDTO v) {
+        System.out.println(dtg.getId());
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, dtg.getId());
         gv.modificarGuia(dtg);
         for (Pesaje p : gv.getPesajes()) {
@@ -138,6 +124,7 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
 
         Asignacion a = new Asignacion(gv, LocalDateTime.now());
         em.persist(a);
+
         Chofer chofer = em.find(Chofer.class, c.getIdCiudadano());
         chofer.getAsignaciones().add(a);
         em.merge(chofer);
@@ -187,7 +174,10 @@ public class GuiasDeViajeDAO implements IGuiaDeViajeDAO {
     @Override
     public GuiaDeViajeDTO buscarGuiaViajePorId(int idGuia) {
         GuiaDeViaje gv = em.find(GuiaDeViaje.class, idGuia);
-        return new GuiaDeViajeDTO(gv);
+        if (gv != null)
+            return new GuiaDeViajeDTO(gv);
+        else
+            return null;
     }
 
 

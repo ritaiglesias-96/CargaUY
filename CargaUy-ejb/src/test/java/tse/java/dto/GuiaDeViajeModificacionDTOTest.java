@@ -34,9 +34,10 @@ public class GuiaDeViajeModificacionDTOTest {
         String matriculaVehiculo = "Matricula 1";
         String cedulaChofer = "Cedula 1";
         int numeroEmpresa = 1;
+        int id = 1000;
         int numeroViaje = 123;
 
-        GuiaDeViajeModificacionDTO guiaDeViajeModificacionDTO = new GuiaDeViajeModificacionDTO(
+        GuiaDeViajeModificacionDTO guiaDeViajeModificacionDTO = new GuiaDeViajeModificacionDTO(id,
                 rubroCliente, tipoCarga, volumenCarga, origen, destino, paisVehiculo, matriculaVehiculo,
                 cedulaChofer, numeroEmpresa, numeroViaje);
 

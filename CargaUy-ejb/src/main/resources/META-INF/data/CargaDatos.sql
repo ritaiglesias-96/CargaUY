@@ -6,7 +6,7 @@ INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol,
 INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Ciudadano', 2568, 'Eduardo', 'Ruiz', '1458745', 'ciudadano2@com', null, null);
 
 --- Funcionario
-INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Funcionario', 3568, 'Juan', 'Alonso', '1234567', 'funcionario@com', 0, null);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Funcionario', 3568, 'Diego', 'Bronc', '51002930', 'funcionario@com', 0, null);
 INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Funcionario', 4858, 'Julio', 'Rodriguez', '2345678', 'funcionario2@com', 0, null);
 
 --- Responsable
@@ -21,7 +21,7 @@ INSERT INTO public."Empresa" (id, dirprincipal, nombrepublico, nroempresa, razon
 
 UPDATE public."Ciudadano" SET empresa_id = 1586  WHERE id = 4567;
 --- Choferes
-INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Chofer', 5856,  'Diego', 'Bronc', '51002930', 'chofer@com', 2, 1586);
+INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Chofer', 5856,  'Diego', 'Bronc', '510029', 'chofer@com', 2, 1586);
 INSERT INTO public."Ciudadano" (dtype, id, nombre, apellido, cedula, email, rol, empresa_id) VALUES ('Chofer', 6856,'Gustavo', 'Mendez', '2547856', 'chofer2@com', 2, 1586);
 
 
